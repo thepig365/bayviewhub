@@ -189,38 +189,38 @@ export default function ChineseHomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始策展人 / 画廊总监
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 建立展览、艺术家关系和销售运营。
               </p>
-              <Button href="/zh/partners/curator" variant="accent" size="sm" className="w-full">
+              <Button href="/zh/partners/curator" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始艺术疗愈项目负责人
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 设计安全、符合道德的项目和可扩展的工作坊系统。
               </p>
-              <Button href="/zh/partners/art-therapy" variant="accent" size="sm" className="w-full">
+              <Button href="/zh/partners/art-therapy" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始可食花园运营负责人
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 将花园转变为具有可靠交付的订阅模式。
               </p>
-              <Button href="/zh/partners/garden-ops" variant="accent" size="sm" className="w-full">
+              <Button href="/zh/partners/garden-ops" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>

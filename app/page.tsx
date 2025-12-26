@@ -170,23 +170,25 @@ export default function HomePage() {
             {FOUNDING_ROLES.map((role) => (
               <div
                 key={role.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-primary-700"
               >
-                <h3 className="text-xl font-serif font-bold text-natural-900 mb-4">
+                <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                   {role.title}
                 </h3>
-                <p className="text-natural-600 mb-6 leading-relaxed">
-                  {role.summary}
-                </p>
-                <ul className="space-y-2 mb-6">
-                  {role.responsibilities.slice(0, 3).map((resp, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-natural-600">
-                      <span className="text-primary-600 mr-2">•</span>
-                      <span>{resp}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button href={`/partners/${role.id}`} variant="accent" size="sm" className="w-full">
+                <div className="flex-1">
+                  <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+                    {role.summary}
+                  </p>
+                  <ul className="space-y-2">
+                    {role.responsibilities.slice(0, 3).map((resp, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-natural-600 dark:text-natural-200">
+                        <span className="text-primary-600 mr-2 dark:text-primary-300">•</span>
+                        <span>{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Button href={`/partners/${role.id}`} variant="accent" size="sm" className="w-full mt-6">
                   View Role
                 </Button>
               </div>
