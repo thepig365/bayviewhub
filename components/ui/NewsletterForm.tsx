@@ -9,11 +9,12 @@ export function NewsletterForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const interestOptions = [
-    { id: 'music', label: 'Music' },
-    { id: 'dining', label: 'Dining' },
-    { id: 'gardens', label: 'Gardens' },
-    { id: 'workshops', label: 'Workshops' },
-    { id: 'gallery', label: 'Gallery' },
+    { id: 'music', label: 'The Shed Music (Live Music)' },
+    { id: 'dining', label: 'Winery Restaurant (Pig & Whistle)' },
+    { id: 'cellar', label: 'Wine Cellar / Cellar Door Tastings' },
+    { id: 'gardens', label: 'Edible Gardens Subscriptions' },
+    { id: 'workshops', label: 'Art Workshops & Art Therapy' },
+    { id: 'gallery', label: 'Bayview Arts Gallery' },
   ]
 
   const handleInterestToggle = (id: string) => {
