@@ -71,6 +71,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <a
+                  href="https://www.thepigandwhistle.com.au/what-s-on"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                >
+                  The Shed Music
+                </a>
+              </li>
+              <li>
                 <Link href="/workshops" className="text-natural-300 hover:text-primary-400 transition-colors">
                   Workshops
                 </Link>
@@ -78,6 +88,11 @@ export function Footer() {
               <li>
                 <Link href="/gardens" className="text-natural-300 hover:text-primary-400 transition-colors">
                   Edible Gardens
+                </Link>
+              </li>
+              <li>
+                <Link href="/cellar-door" className="text-natural-300 hover:text-primary-400 transition-colors">
+                  Wine Tasting
                 </Link>
               </li>
               <li>
