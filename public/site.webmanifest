@@ -1,0 +1,22 @@
+{
+  "name": "Bayview Hub",
+  "short_name": "Bayview Hub",
+  "description": "A destination hub with winery dining, live music, and spaces for art, wellbeing, and edible gardens.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#15803d",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
