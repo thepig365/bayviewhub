@@ -132,7 +132,7 @@ export default function CellarDoorPage() {
   }
 
   return (
-    <main className="bg-white">
+    <main className="bg-white dark:bg-primary-900">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('/images/cellar.jpg')" }}>
       </section>
@@ -167,20 +167,20 @@ export default function CellarDoorPage() {
       </section>
 
       {/* About Cellar Door */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-6 dark:text-natural-50">
                 Welcome to Bayview Estate Cellar Door
               </h2>
-              <p className="text-lg text-natural-700 mb-4 leading-relaxed">
+              <p className="text-lg text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
                 Nestled in the heart of Main Ridge, our cellar door offers an intimate and authentic wine tasting experience on the Mornington Peninsula.
               </p>
-              <p className="text-lg text-natural-700 mb-4 leading-relaxed">
+              <p className="text-lg text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
                 Our vineyard spans 30 acres of rolling hills, where cool climate and coastal breezes create the perfect conditions for growing exceptional Pinot Noir, Chardonnay, and other premium varietals.
               </p>
-              <p className="text-lg text-natural-700 mb-6 leading-relaxed">
+              <p className="text-lg text-natural-700 mb-6 leading-relaxed dark:text-natural-200">
                 Whether you're a wine enthusiast or just beginning your wine journey, our passionate team will guide you through our range, sharing stories of the land, the vines, and the craft behind every bottle.
               </p>
               <Button href="#book" variant="primary" size="lg">
@@ -200,33 +200,33 @@ export default function CellarDoorPage() {
       </section>
 
       {/* Tasting Experiences */}
-      <section className="py-20 bg-primary-400/30">
+      <section className="py-20 bg-primary-400/30 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4 dark:text-natural-50">
               Tasting Experiences
             </h2>
-            <p className="text-lg md:text-xl text-natural-700">
+            <p className="text-lg md:text-xl text-natural-700 dark:text-natural-200">
               Choose the perfect tasting experience for your visit
             </p>
           </div>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             {tastingExperiences.map((experience, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
+              <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 dark:bg-primary-900/60 dark:border dark:border-primary-700">
                 <experience.icon className="w-12 h-12 text-primary mb-4" />
-                <h3 className="text-2xl font-serif font-bold text-primary-800 mb-2">
+                <h3 className="text-2xl font-serif font-bold text-primary-800 mb-2 dark:text-natural-50">
                   {experience.title}
                 </h3>
                 <p className="text-3xl font-bold text-accent mb-2">{experience.price}</p>
-                <p className="text-sm text-natural-600 mb-4 flex items-center">
+                <p className="text-sm text-natural-600 mb-4 flex items-center dark:text-natural-200">
                   <Clock className="w-4 h-4 mr-2" />
                   {experience.duration}
                 </p>
-                <p className="text-natural-700 mb-4 leading-relaxed">
+                <p className="text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
                   {experience.description}
                 </p>
-                <div className="bg-primary-400/20 rounded-lg p-3 mb-6">
-                  <p className="text-sm font-semibold text-primary-800">Includes: {experience.wines}</p>
+                <div className="bg-primary-400/20 rounded-lg p-3 mb-6 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+                  <p className="text-sm font-semibold text-primary-800 dark:text-primary-200">Includes: {experience.wines}</p>
                 </div>
                 <Button href="#book" variant="primary" className="w-full">
                   Book This Experience
@@ -238,14 +238,14 @@ export default function CellarDoorPage() {
       </section>
 
       {/* Wine List */}
-      <section id="wine-list" className="py-20 bg-white">
+      <section id="wine-list" className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4 dark:text-natural-50">
                 Our Wine Collection
               </h2>
-              <p className="text-lg md:text-xl text-natural-700 mb-8">
+              <p className="text-lg md:text-xl text-natural-700 mb-8 dark:text-natural-200">
                 Handcrafted wines that capture the essence of the Mornington Peninsula
               </p>
               
@@ -423,9 +423,9 @@ export default function CellarDoorPage() {
 
             {/* Membership Tiers */}
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white rounded-2xl p-8 text-primary-800">
-                <h3 className="text-2xl font-serif font-bold mb-2 text-primary-800">Classic Membership</h3>
-                <p className="text-4xl font-bold text-primary-800 mb-4">$150 <span className="text-lg font-normal text-natural-600">/year</span></p>
+              <div className="bg-white rounded-2xl p-8 text-primary-800 dark:bg-primary-900/60 dark:text-natural-50 dark:border dark:border-primary-700">
+                <h3 className="text-2xl font-serif font-bold mb-2 text-primary-800 dark:text-natural-50">Classic Membership</h3>
+                <p className="text-4xl font-bold text-primary-800 mb-4 dark:text-natural-50">$150 <span className="text-lg font-normal text-natural-600 dark:text-natural-200">/year</span></p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <span className="text-accent-600 mr-2 font-bold">✓</span>

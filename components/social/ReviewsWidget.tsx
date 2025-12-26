@@ -36,7 +36,7 @@ export function ReviewsWidget() {
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-2xl font-serif font-bold text-natural-900">
+          <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
             What Our Visitors Say
           </h3>
           <div className="flex items-center mt-2">
@@ -45,12 +45,12 @@ export function ReviewsWidget() {
                 <Star key={i} className="w-5 h-5 fill-accent-500 text-accent-500" />
               ))}
             </div>
-            <span className="ml-2 text-sm text-natural-600">4.9 average rating</span>
+            <span className="ml-2 text-sm text-natural-600 dark:text-natural-200">4.9 average rating</span>
           </div>
         </div>
         <a
           href="#"
-          className="text-primary-700 hover:text-primary-800 font-medium text-sm"
+          className="text-primary-700 hover:text-primary-800 font-medium text-sm dark:text-primary-300 dark:hover:text-primary-200"
         >
           Write a review →
         </a>
@@ -58,10 +58,10 @@ export function ReviewsWidget() {
 
       <div className="space-y-4">
         {sampleReviews.map((review) => (
-          <div key={review.id} className="bg-white rounded-xl p-6 shadow-md">
+          <div key={review.id} className="bg-white rounded-xl p-6 shadow-md dark:bg-primary-900/60 dark:border dark:border-primary-700">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h4 className="font-bold text-natural-900">{review.author}</h4>
+                <h4 className="font-bold text-natural-900 dark:text-natural-50">{review.author}</h4>
                 <div className="flex items-center space-x-2 mt-1">
                   <div className="flex">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -70,30 +70,30 @@ export function ReviewsWidget() {
                         className={`w-4 h-4 ${
                           i < review.rating
                             ? 'fill-accent-500 text-accent-500'
-                            : 'text-natural-300'
+                            : 'text-natural-300 dark:text-primary-700'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-natural-500">{review.date}</span>
+                  <span className="text-xs text-natural-500 dark:text-natural-300">{review.date}</span>
                 </div>
               </div>
-              <span className="text-xs text-natural-500 capitalize">{review.platform}</span>
+              <span className="text-xs text-natural-500 capitalize dark:text-natural-300">{review.platform}</span>
             </div>
-            <p className="text-natural-700 leading-relaxed">{review.text}</p>
+            <p className="text-natural-700 leading-relaxed dark:text-natural-200">{review.text}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg">
-        <h4 className="font-bold text-natural-900 mb-2 flex items-center">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg dark:bg-primary-800/30 dark:border dark:border-primary-700">
+        <h4 className="font-bold text-natural-900 mb-2 flex items-center dark:text-natural-50">
           <MessageCircle className="w-4 h-4 mr-2" />
           Integration Options
         </h4>
-        <p className="text-sm text-natural-600">
+        <p className="text-sm text-natural-600 dark:text-natural-200">
           Connect with review platforms:
         </p>
-        <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-natural-600">
+        <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-natural-600 dark:text-natural-200">
           <li>Google Business Profile API for Google reviews</li>
           <li>Facebook Graph API for Facebook reviews</li>
           <li>TripAdvisor Content API</li>

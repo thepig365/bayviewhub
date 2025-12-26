@@ -17,7 +17,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-serif font-bold text-natural-900 flex items-center">
+        <h3 className="text-2xl font-serif font-bold text-natural-900 flex items-center dark:text-natural-50">
           <Instagram className="w-6 h-6 mr-2 text-primary-600" />
           @{username}
         </h3>
@@ -25,7 +25,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
           href={`https://instagram.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary-700 hover:text-primary-800 font-medium text-sm"
+          className="text-primary-700 hover:text-primary-800 font-medium text-sm dark:text-primary-300 dark:hover:text-primary-200"
         >
           Follow →
         </a>
@@ -36,7 +36,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         {Array.from({ length: limit }).map((_, i) => (
           <div
             key={i}
-            className="aspect-square bg-natural-200 rounded-lg overflow-hidden group cursor-pointer relative"
+            className="aspect-square bg-natural-200 rounded-lg overflow-hidden group cursor-pointer relative dark:bg-primary-800"
           >
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Instagram className="w-8 h-8 text-white" />
@@ -47,7 +47,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-natural-600">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-natural-600 dark:bg-primary-800/30 dark:text-natural-200 dark:border dark:border-primary-700">
         <p>
           <strong>Implementation Note:</strong> Replace this component with actual Instagram feed using:
         </p>

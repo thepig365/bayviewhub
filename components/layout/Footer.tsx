@@ -14,7 +14,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="bg-natural-900 text-natural-100">
+    <footer className="bg-primary-900 text-natural-100">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About */}
@@ -34,7 +34,7 @@ export function Footer() {
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-natural-800 hover:bg-primary-700 rounded-full transition-colors"
+                    className="p-2 bg-primary-800 hover:bg-primary-700 rounded-full transition-colors"
                     aria-label={platform.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -126,7 +126,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-natural-800">
+        <div className="pt-8 border-t border-primary-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-natural-400 text-sm">
               © {currentYear} {SITE_CONFIG.name}. All rights reserved.

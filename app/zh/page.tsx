@@ -14,27 +14,27 @@ export const metadata = genMeta({
 
 export default function ChineseHomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen dark:bg-primary-900">
       {/* Language Switcher */}
-      <div className="bg-natural-100 border-b border-natural-200">
+      <div className="bg-natural-100 border-b border-natural-200 dark:bg-primary-900 dark:border-primary-700">
         <div className="container mx-auto px-4 py-2">
           <div className="flex justify-end space-x-4 text-sm">
-            <Link href="/" className="text-natural-600 hover:text-primary-700">
+            <Link href="/" className="text-natural-600 hover:text-primary-700 dark:text-natural-200 dark:hover:text-primary-200">
               English
             </Link>
-            <span className="text-primary-700 font-bold">中文</span>
+            <span className="text-primary-700 font-bold dark:text-primary-200">中文</span>
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32">
+      <section className="relative bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               吃、住、连接、创造、修复
             </h1>
-            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
               一个目的地Hub：酒庄餐饮、住宿、艺术空间、健康项目和可食花园。
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -59,44 +59,44 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Proof Bar */}
-      <section className="bg-white py-12 border-y border-natural-200">
+      <section className="bg-white py-12 border-y border-natural-200 dark:bg-primary-900 dark:border-primary-700">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">50k+</div>
-              <div className="text-sm text-natural-600">年度访客</div>
+              <div className="text-sm text-natural-600 dark:text-natural-200">年度访客</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🍷</div>
-              <div className="text-sm text-natural-600">酒庄餐厅</div>
+              <div className="text-sm text-natural-600 dark:text-natural-200">酒庄餐厅</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🎵</div>
-              <div className="text-sm text-natural-600">周末现场音乐</div>
+              <div className="text-sm text-natural-600 dark:text-natural-200">周末现场音乐</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🌏</div>
-              <div className="text-sm text-natural-600">国际目的地</div>
+              <div className="text-sm text-natural-600 dark:text-natural-200">国际目的地</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Experiences Grid */}
-      <section className="py-20 bg-natural-50">
+      <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
               Bayview Hub 体验项目
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto">
+            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
               探索我们的餐饮、艺术、音乐和自然体验
             </p>
           </div>
 
           {/* New Additions */}
           <div className="mb-12">
-            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
+            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6 dark:text-natural-50">
               新增项目
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -173,23 +173,23 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Now Building - Recruitment */}
-      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50">
+      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50 dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               我们正在建造 Bayview Hub 的下一章
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto">
+            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
               我们正在寻找创始领导者来建立我们的画廊、艺术项目和可食花园运营。
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始策展人 / 画廊总监
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
                 建立展览、艺术家关系和销售运营。
               </p>
               <Button href="/zh/partners/curator" variant="accent" size="sm" className="w-full">
@@ -197,11 +197,11 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始艺术疗愈项目负责人
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
                 设计安全、符合道德的项目和可扩展的工作坊系统。
               </p>
               <Button href="/zh/partners/art-therapy" variant="accent" size="sm" className="w-full">
@@ -209,11 +209,11 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 创始可食花园运营负责人
               </h3>
-              <p className="text-natural-600 mb-6 leading-relaxed">
+              <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
                 将花园转变为具有可靠交付的订阅模式。
               </p>
               <Button href="/zh/partners/garden-ops" variant="accent" size="sm" className="w-full">
@@ -231,18 +231,18 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 与 Bayview Hub 保持联系
               </h2>
-              <p className="text-natural-600">
+              <p className="text-natural-600 dark:text-natural-200">
                 获取根据您的兴趣定制的更新
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <NewsletterForm />
             </div>
           </div>
@@ -250,9 +250,9 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Back to English */}
-      <section className="py-8 bg-natural-100">
+      <section className="py-8 bg-natural-100 dark:bg-primary-900">
         <div className="container mx-auto px-4 text-center">
-          <Link href="/" className="text-primary-700 hover:text-primary-800 font-medium">
+          <Link href="/" className="text-primary-700 hover:text-primary-800 font-medium dark:text-primary-200 dark:hover:text-primary-100">
             ← Switch to English
           </Link>
         </div>

@@ -37,7 +37,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
   return (
     <div className={className}>
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-natural-600">Share:</span>
+        <span className="text-sm font-medium text-natural-600 dark:text-natural-200">Share:</span>
         <div className="flex gap-2">
           {platforms.map((platform) => {
             const Icon = platform.icon
@@ -45,20 +45,20 @@ export function SocialShare({ url, title, description, className }: SocialShareP
               <button
                 key={platform.name}
                 onClick={() => handleShare(platform.name)}
-                className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors"
+                className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
                 aria-label={platform.label}
               >
-                <Icon className="w-4 h-4 text-natural-700" />
+                <Icon className="w-4 h-4 text-natural-700 dark:text-natural-100" />
               </button>
             )
           })}
           {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
             <button
               onClick={() => handleShare('native')}
-              className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors"
+              className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
               aria-label="Share via device"
             >
-              <Share2 className="w-4 h-4 text-natural-700" />
+              <Share2 className="w-4 h-4 text-natural-700 dark:text-natural-100" />
             </button>
           )}
         </div>

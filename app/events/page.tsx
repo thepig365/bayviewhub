@@ -88,14 +88,14 @@ export default function EventsPage() {
       : events.filter((event) => event.category === activeCategory)
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 dark:bg-primary-900">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif font-bold text-natural-900 mb-4">
+          <h1 className="text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
             What's On
           </h1>
-          <p className="text-xl text-natural-600 max-w-2xl mx-auto">
+          <p className="text-xl text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
             Upcoming events, performances, exhibitions, and workshops at Bayview Hub
           </p>
         </div>
@@ -112,7 +112,7 @@ export default function EventsPage() {
                   'flex items-center space-x-2 px-5 py-3 rounded-full font-medium transition-all',
                   activeCategory === cat.id
                     ? 'bg-primary-700 text-white shadow-md'
-                    : 'bg-white text-natural-700 hover:bg-natural-100'
+                    : 'bg-white text-natural-700 hover:bg-natural-100 dark:bg-primary-900/60 dark:text-natural-100 dark:border dark:border-primary-700 dark:hover:bg-primary-800'
                 )}
               >
                 <Icon className="w-4 h-4" />
@@ -129,17 +129,17 @@ export default function EventsPage() {
             return (
               <div
                 key={event.id}
-                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-6 dark:bg-primary-900/60 dark:border dark:border-primary-700"
               >
                 <div className="flex items-start space-x-4">
-                  <div className="bg-primary-100 rounded-xl p-3 flex-shrink-0">
+                  <div className="bg-primary-100 rounded-xl p-3 flex-shrink-0 dark:bg-primary-800">
                     <Icon className="w-6 h-6 text-primary-700" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-serif font-bold text-natural-900 mb-2">
+                    <h3 className="text-xl font-serif font-bold text-natural-900 mb-2 dark:text-natural-50">
                       {event.title}
                     </h3>
-                    <div className="space-y-1 text-sm text-natural-600">
+                    <div className="space-y-1 text-sm text-natural-600 dark:text-natural-200">
                       <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-2" />
                         {event.date} • {event.time}

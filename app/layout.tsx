@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
@@ -88,17 +86,19 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className="font-sans" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body className="min-h-screen flex flex-col bg-natural-50 text-natural-900 dark:bg-primary-900 dark:text-natural-50 transition-colors">
+        <ThemeProvider>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -49,7 +49,7 @@ export function NewsletterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-natural-700 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
           Email Address
         </label>
         <input
@@ -58,13 +58,13 @@ export function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
           placeholder="your@email.com"
         />
       </div>
 
       <div>
-        <p className="block text-sm font-medium text-natural-700 mb-3">
+        <p className="block text-sm font-medium text-natural-700 mb-3 dark:text-natural-200">
           I'm interested in: (select all that apply)
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -77,9 +77,9 @@ export function NewsletterForm() {
                 type="checkbox"
                 checked={interests.includes(option.id)}
                 onChange={() => handleInterestToggle(option.id)}
-                className="w-4 h-4 text-primary-600 border-natural-300 rounded focus:ring-primary-500"
+                className="w-4 h-4 text-primary-600 border-natural-300 rounded focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:focus:ring-primary-300"
               />
-              <span className="text-sm text-natural-700">{option.label}</span>
+              <span className="text-sm text-natural-700 dark:text-natural-200">{option.label}</span>
             </label>
           ))}
         </div>
@@ -95,7 +95,7 @@ export function NewsletterForm() {
       </Button>
 
       {status === 'success' && (
-        <p className="text-sm text-primary-700 text-center">
+        <p className="text-sm text-primary-700 text-center dark:text-primary-300">
           ✓ Successfully subscribed! Check your email.
         </p>
       )}

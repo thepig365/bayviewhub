@@ -15,13 +15,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32">
+      <section className="relative bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               Eat, Stay, Connect, Create, Mend
             </h1>
-            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
               A destination hub with winery dining, accommodation, art spaces, wellbeing programs, and edible gardens.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -46,7 +46,7 @@ export default function HomePage() {
       </section>
 
       {/* Proof Bar */}
-      <section className="bg-white py-12 border-y border-natural-200">
+      <section className="bg-white py-12 border-y border-natural-200 dark:bg-primary-900 dark:border-primary-700">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -70,13 +70,13 @@ export default function HomePage() {
       </section>
 
       {/* Experiences Grid */}
-      <section className="py-20 bg-natural-50">
+      <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
               Experiences at Bayview Hub
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto">
+            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
               Discover our expanding collection of dining, arts, music, and nature experiences
             </p>
           </div>
@@ -121,13 +121,13 @@ export default function HomePage() {
       </section>
 
       {/* Now Building - Recruitment */}
-      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50">
+      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50 dark:from-primary-800 dark:to-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               We're building the next chapter of Bayview Hub
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto">
+            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
               We're seeking founding leaders to establish our Gallery, Art Programs, and Edible Gardens operations.
             </p>
           </div>
@@ -136,7 +136,7 @@ export default function HomePage() {
             {FOUNDING_ROLES.map((role) => (
               <div
                 key={role.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700"
               >
                 <h3 className="text-xl font-serif font-bold text-natural-900 mb-4">
                   {role.title}
@@ -168,18 +168,18 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 Stay Connected with Bayview Hub
               </h2>
-              <p className="text-natural-600">
+              <p className="text-natural-600 dark:text-natural-200">
                 Get updates tailored to your interests
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-800/30 dark:border dark:border-primary-700">
               <NewsletterForm />
             </div>
           </div>

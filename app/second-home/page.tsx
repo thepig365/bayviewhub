@@ -126,18 +126,18 @@ export default function SecondHomePage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen dark:bg-primary-900">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32">
+      <section className="bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm font-medium text-primary-700 mb-4 uppercase tracking-wide">
+            <div className="text-sm font-medium text-primary-700 mb-4 uppercase tracking-wide dark:text-primary-200">
               Small Second Home Builder
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               Small Second Home Builder, for all Victorians
             </h1>
-            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
               Turn your unused backyard into a beautiful small second home or granny flat. Create extra space for family, guests or work — and unlock the potential for long-term rental income.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -153,69 +153,69 @@ export default function SecondHomePage() {
       </section>
 
       {/* Why Build Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               Why Build a Backyard Second Home?
             </h2>
-            <p className="text-xl text-natural-700 leading-relaxed">
+            <p className="text-xl text-natural-700 leading-relaxed dark:text-natural-200">
               Your backyard holds more potential than you might think. A well-designed small second home or granny flat creates secondary income in your own backyard, expands your living space, and makes better use of land you already own.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
                 <DollarSign className="w-8 h-8 text-primary-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3">
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">
                 Generate Rental Income
               </h3>
-              <p className="text-natural-700">
+              <p className="text-natural-700 dark:text-natural-200">
                 Suitable for students, Airbnb guests, or extended family. Turn your backyard into a steady income stream.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
                 <TrendingUp className="w-8 h-8 text-primary-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3">
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">
                 Solid Asset Investment
               </h3>
-              <p className="text-natural-700">
+              <p className="text-natural-700 dark:text-natural-200">
                 A quality small second home can increase property value and appeal for future buyers.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
                 <Maximize2 className="w-8 h-8 text-primary-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3">
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">
                 Expand Your Living Space
               </h3>
-              <p className="text-natural-700">
+              <p className="text-natural-700 dark:text-natural-200">
                 Add room for hobbies, guests, or a growing family without moving to a larger property.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
                 <CheckCircle2 className="w-8 h-8 text-primary-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3">
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">
                 Peace of Mind
               </h3>
-              <p className="text-natural-700">
+              <p className="text-natural-700 dark:text-natural-200">
                 Bayview guides you through design, permits and construction with trusted local partners.
               </p>
             </div>
           </div>
 
           <div className="text-center mt-12">
-            <p className="text-lg text-natural-700 italic">
+            <p className="text-lg text-natural-700 italic dark:text-natural-200">
               Your backyard doesn't have to sit idle. It can become your most flexible and rewarding space.
             </p>
           </div>
@@ -223,17 +223,17 @@ export default function SecondHomePage() {
       </section>
 
       {/* House Types */}
-      <section id="house-types" className="py-20 bg-natural-50">
+      <section id="house-types" className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
               Explore Our Small Second Home Concepts
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {houseTypes.map((house, idx) => (
-              <div key={idx} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <div key={idx} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700">
                 <div className="h-64 bg-gradient-to-br from-primary-200 to-accent-200 relative overflow-hidden">
                   <Image 
                     src={house.image} 
@@ -243,10 +243,10 @@ export default function SecondHomePage() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-serif font-bold text-natural-900 mb-3">
+                  <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">
                     {house.title}
                   </h3>
-                  <p className="text-natural-700 leading-relaxed mb-6">
+                  <p className="text-natural-700 leading-relaxed mb-6 dark:text-natural-200">
                     {house.description}
                   </p>
                   <Button 
@@ -265,13 +265,13 @@ export default function SecondHomePage() {
       </section>
 
       {/* Design Philosophy */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-natural-50">
               Calm, Garden-Inspired Design with Bayview DNA
             </h2>
-            <div className="prose prose-lg max-w-none text-natural-700 space-y-6">
+            <div className="prose prose-lg max-w-none text-natural-700 space-y-6 dark:text-natural-200 dark:prose-invert">
               <p className="text-xl leading-relaxed">
                 Every Bayview Backyard Second Home is designed with warm, natural materials and light timber tones. We frame views with gardens, trees, and sky, creating spaces that invite you to slow down.
               </p>
@@ -293,10 +293,10 @@ export default function SecondHomePage() {
       </section>
 
       {/* Use Cases */}
-      <section className="py-20 bg-natural-50">
+      <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
               One Small Second Home. Many Possibilities.
             </h2>
           </div>
@@ -305,16 +305,16 @@ export default function SecondHomePage() {
             {useCases.map((useCase, idx) => {
               const Icon = useCase.icon
               return (
-                <div key={idx} className="bg-white rounded-2xl p-8 shadow-lg">
+                <div key={idx} className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-primary-100 rounded-full p-3 flex-shrink-0">
+                    <div className="bg-primary-100 rounded-full p-3 flex-shrink-0 dark:bg-primary-800">
                       <Icon className="w-6 h-6 text-primary-700" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-natural-900 mb-3">
+                      <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">
                         {useCase.title}
                       </h3>
-                      <p className="text-natural-700 leading-relaxed">
+                      <p className="text-natural-700 leading-relaxed dark:text-natural-200">
                         {useCase.description}
                       </p>
                     </div>
@@ -333,7 +333,7 @@ export default function SecondHomePage() {
       </section>
 
       {/* Process */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-16 text-center">
@@ -411,22 +411,22 @@ export default function SecondHomePage() {
       </section>
 
       {/* Registration Form */}
-      <section id="register" className="py-20 bg-gradient-to-br from-primary-50 to-accent-50">
+      <section id="register" className="py-20 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
                 Register Your Interest in a Small Second Home
               </h2>
-              <p className="text-lg text-natural-700">
+              <p className="text-lg text-natural-700 dark:text-natural-200">
                 Share a few details below and we'll contact you for a no-pressure, honest conversation about whether a small second home or granny flat is a good fit for your property.
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
+            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     Name *
                   </label>
                   <input
@@ -434,12 +434,12 @@ export default function SecondHomePage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     Email *
                   </label>
                   <input
@@ -447,24 +447,24 @@ export default function SecondHomePage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     Phone
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     Suburb / Postcode *
                   </label>
                   <input
@@ -472,12 +472,12 @@ export default function SecondHomePage() {
                     required
                     value={formData.suburb}
                     onChange={(e) => setFormData({ ...formData, suburb: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     How big is your backyard? *
                   </label>
                   <input
@@ -486,19 +486,19 @@ export default function SecondHomePage() {
                     placeholder="e.g., 200 sqm, 0.1 acre"
                     value={formData.backyardSize}
                     onChange={(e) => setFormData({ ...formData, backyardSize: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     Property Type *
                   </label>
                   <select
                     required
                     value={formData.propertyType}
                     onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   >
                     <option value="">Select property type</option>
                     <option value="house">House</option>
@@ -508,25 +508,25 @@ export default function SecondHomePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     What would you like this second home to be used for?
                   </label>
                   <textarea
                     rows={3}
                     value={formData.usage}
                     onChange={(e) => setFormData({ ...formData, usage: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                     When are you hoping to start?
                   </label>
                   <select
                     value={formData.timeframe}
                     onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
                   >
                     <option value="">Select timeframe</option>
                     <option value="0-6months">0–6 months</option>
@@ -545,8 +545,8 @@ export default function SecondHomePage() {
                 </Button>
 
                 {submitStatus === 'success' && (
-                  <div className="mt-4 p-4 bg-primary-50 border border-primary-200 rounded-lg text-center">
-                    <p className="text-primary-800 font-medium">
+                  <div className="mt-4 p-4 bg-primary-50 border border-primary-200 rounded-lg text-center dark:bg-primary-800/30 dark:border-primary-700">
+                    <p className="text-primary-800 font-medium dark:text-primary-200">
                       ✓ Thank you! We've received your registration and will contact you within 2 business days.
                     </p>
                   </div>

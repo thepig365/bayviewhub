@@ -7,6 +7,7 @@ import { NAV_ITEMS, PRIMARY_CTAS, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/consta
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
+import { ThemeMenu } from '@/components/theme/ThemeMenu'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -25,8 +26,8 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-white/80 backdrop-blur-sm'
+          ? 'bg-white/95 backdrop-blur-md shadow-md dark:bg-primary-900/90'
+          : 'bg-white/80 backdrop-blur-sm dark:bg-primary-900/75'
       )}
     >
       <div className="container mx-auto px-4">
@@ -42,7 +43,7 @@ export function Header() {
                 href={SOCIAL_LINKS.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors"
+                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                 aria-label="Facebook"
               >
                 <Facebook size={20} />
@@ -51,7 +52,7 @@ export function Header() {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors"
+                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                 aria-label="Instagram"
               >
                 <Instagram size={20} />
@@ -60,7 +61,7 @@ export function Header() {
                 href={SOCIAL_LINKS.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors"
+                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                 aria-label="Twitter"
               >
                 <Twitter size={20} />
@@ -69,7 +70,7 @@ export function Header() {
                 href={SOCIAL_LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors"
+                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={20} />
@@ -79,7 +80,7 @@ export function Header() {
             {/* Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-natural-700"
+              className="p-2 text-natural-700 dark:text-natural-50"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -96,13 +97,13 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-natural-700 hover:text-primary-700 font-medium py-2"
+                  className="text-natural-700 hover:text-primary-700 font-medium py-2 dark:text-natural-100 dark:hover:text-primary-300"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-col space-y-2 pt-4 border-t border-natural-200">
+            <div className="flex flex-col space-y-2 pt-4 border-t border-natural-200 dark:border-primary-700">
               {PRIMARY_CTAS.map((cta) => (
                 <Button
                   key={cta.href}
@@ -118,26 +119,31 @@ export function Header() {
             </div>
             
             {/* Language Switcher */}
-            <div className="pt-4 border-t border-natural-200">
+            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
               <Link 
                 href="/zh" 
-                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors"
+                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-primary-800 dark:hover:bg-primary-700 dark:text-natural-50"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Globe size={20} />
                 <span className="font-medium">切换到中文</span>
               </Link>
             </div>
+
+            {/* Theme */}
+            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
+              <ThemeMenu />
+            </div>
             
             {/* Menu Social Links */}
-            <div className="pt-4 border-t border-natural-200">
-              <p className="text-xs font-medium text-natural-600 mb-3">Follow Us</p>
+            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
+              <p className="text-xs font-medium text-natural-600 mb-3 dark:text-natural-200">Follow Us</p>
               <div className="flex items-center space-x-4">
                 <a
                   href={SOCIAL_LINKS.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors"
+                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                   aria-label="Facebook"
                 >
                   <Facebook size={20} />
@@ -147,7 +153,7 @@ export function Header() {
                   href={SOCIAL_LINKS.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors"
+                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                   aria-label="Instagram"
                 >
                   <Instagram size={20} />
@@ -159,7 +165,7 @@ export function Header() {
                   href={SOCIAL_LINKS.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors"
+                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                   aria-label="Twitter"
                 >
                   <Twitter size={20} />
@@ -169,7 +175,7 @@ export function Header() {
                   href={SOCIAL_LINKS.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors"
+                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={20} />

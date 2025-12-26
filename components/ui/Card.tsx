@@ -29,13 +29,13 @@ export function Card({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl',
+        'group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-primary-900/60 dark:border dark:border-primary-700',
         isHighlight && 'ring-2 ring-accent-500',
         className
       )}
     >
       {image && (
-        <div className="relative h-64 w-full overflow-hidden bg-natural-200">
+        <div className="relative h-64 w-full overflow-hidden bg-natural-200 dark:bg-primary-800">
           <Image
             src={image}
             alt={title}
@@ -50,10 +50,10 @@ export function Card({
         </div>
       )}
       <div className="p-6">
-        <h3 className="text-2xl font-serif font-bold mb-3 text-natural-900">
+        <h3 className="text-2xl font-serif font-bold mb-3 text-natural-900 dark:text-natural-50">
           {title}
         </h3>
-        <p className="text-natural-600 mb-6 leading-relaxed">
+        <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
           {description}
         </p>
         {cta && (
