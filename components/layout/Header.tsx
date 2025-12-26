@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Menu, X, Facebook, Instagram, Twitter, Linkedin, Globe } from 'lucide-react'
 import { NAV_ITEMS, PRIMARY_CTAS, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
+import { PrelaunchButton } from '@/components/ui/PrelaunchButton'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
 import { ThemeMenu } from '@/components/theme/ThemeMenu'
@@ -105,16 +106,29 @@ export function Header() {
             </nav>
             <div className="flex flex-col space-y-2 pt-4 border-t border-natural-200 dark:border-primary-700">
               {PRIMARY_CTAS.map((cta) => (
-                <Button
-                  key={cta.href}
-                  href={cta.href}
-                  variant={cta.variant as any}
-                  size="md"
-                  external={cta.external}
-                  className="w-full"
-                >
-                  {cta.label}
-                </Button>
+                (cta as any).prelaunch ? (
+                  <PrelaunchButton
+                    key={cta.href}
+                    href={cta.href}
+                    variant={cta.variant as any}
+                    size="md"
+                    className="w-full"
+                    onOpen={() => setIsMenuOpen(false)}
+                  >
+                    {cta.label}
+                  </PrelaunchButton>
+                ) : (
+                  <Button
+                    key={cta.href}
+                    href={cta.href}
+                    variant={cta.variant as any}
+                    size="md"
+                    external={cta.external}
+                    className="w-full"
+                  >
+                    {cta.label}
+                  </Button>
+                )
               ))}
             </div>
             

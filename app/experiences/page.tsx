@@ -73,6 +73,7 @@ export default function ExperiencesPage() {
               description={exp.blurb}
               image={exp.image}
               cta={exp.cta}
+              prelaunch={(exp as any).prelaunch}
               variant={EXPERIENCES.new.includes(exp) ? 'highlight' : 'default'}
             />
           ))}

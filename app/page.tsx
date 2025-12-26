@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { NewsletterForm } from '@/components/ui/NewsletterForm'
+import { PrelaunchButton } from '@/components/ui/PrelaunchButton'
 import { EXPERIENCES, FOUNDING_ROLES, SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
@@ -34,9 +35,9 @@ export default function HomePage() {
               <Button href="/second-home#register" variant="accent" size="lg">
                 Build Second Home
               </Button>
-              <Button href="/workshops" variant="primary" size="lg">
+              <PrelaunchButton href="/workshops" variant="primary" size="lg">
                 Book Workshops
-              </Button>
+              </PrelaunchButton>
               <Button href="/events" variant="outline" size="lg">
                 What's On
               </Button>
@@ -94,6 +95,7 @@ export default function HomePage() {
                   description={exp.blurb}
                   image={exp.image}
                   cta={exp.cta}
+                  prelaunch={(exp as any).prelaunch}
                   variant="highlight"
                 />
               ))}
@@ -113,6 +115,7 @@ export default function HomePage() {
                   description={exp.blurb}
                   image={exp.image}
                   cta={exp.cta}
+                  prelaunch={(exp as any).prelaunch}
                 />
               ))}
               {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}

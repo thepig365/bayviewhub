@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from './Button'
+import { PrelaunchButton } from './PrelaunchButton'
 
 interface CardProps {
   title: string
@@ -12,6 +13,7 @@ interface CardProps {
     href: string
     external?: boolean
   }
+  prelaunch?: boolean
   className?: string
   variant?: 'default' | 'highlight'
 }
@@ -21,6 +23,7 @@ export function Card({
   description,
   image,
   cta,
+  prelaunch = false,
   className,
   variant = 'default',
 }: CardProps) {
@@ -57,14 +60,25 @@ export function Card({
           {description}
         </p>
         {cta && (
-          <Button
-            href={cta.href}
-            external={cta.external}
-            variant={isHighlight ? 'accent' : 'outline'}
-            size="sm"
-          >
-            {cta.label}
-          </Button>
+          prelaunch ? (
+            <PrelaunchButton
+              href={cta.href}
+              external={cta.external}
+              variant={isHighlight ? 'accent' : 'outline'}
+              size="sm"
+            >
+              {cta.label}
+            </PrelaunchButton>
+          ) : (
+            <Button
+              href={cta.href}
+              external={cta.external}
+              variant={isHighlight ? 'accent' : 'outline'}
+              size="sm"
+            >
+              {cta.label}
+            </Button>
+          )
         )}
       </div>
     </div>

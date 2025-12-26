@@ -105,6 +105,7 @@ export default function ChineseHomePage() {
                 description="策展展览、开幕式和收藏作品。"
                 image="/images/gallery.jpg"
                 cta={{ label: '探索画廊', href: '/zh/experiences/gallery' }}
+                prelaunch
                 variant="highlight"
               />
               <Card
@@ -112,6 +113,7 @@ export default function ChineseHomePage() {
                 description="由专业人士指导的表达性艺术健康项目。"
                 image="/images/workshops.jpg"
                 cta={{ label: '预订工作坊', href: '/zh/workshops' }}
+                prelaunch
                 variant="highlight"
               />
               <Card
@@ -119,6 +121,7 @@ export default function ChineseHomePage() {
                 description="季节性收获、家庭花园日和会员体验。"
                 image="/images/gardens.jpg"
                 cta={{ label: '订阅', href: '/zh/gardens' }}
+                prelaunch
                 variant="highlight"
               />
               <Card
@@ -148,6 +151,7 @@ export default function ChineseHomePage() {
                 description="品酒和酒窖体验。"
                 image="/images/cellar.jpg"
                 cta={{ label: '品酒与参观', href: '/zh/visit#cellar' }}
+                prelaunch
               />
               <Card
                 title="The Shed 音乐"

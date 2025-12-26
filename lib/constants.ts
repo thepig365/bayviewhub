@@ -33,7 +33,7 @@ export const NAV_ITEMS = [
 // Primary CTAs
 export const PRIMARY_CTAS = [
   { label: 'Become a Partner', href: '/partners', variant: 'primary', external: false },
-  { label: 'Book Wine Tasting', href: '/cellar-door#book', variant: 'accent', external: false },
+  { label: 'Book Wine Tasting', href: '/cellar-door#book', variant: 'accent', external: false, prelaunch: true },
 ]
 
 // Experiences data
@@ -44,6 +44,7 @@ export const EXPERIENCES = {
       title: 'Bayview Arts Gallery',
       blurb: 'Curated exhibitions, openings, and collectible works.',
       cta: { label: 'Explore Gallery', href: '/experiences/gallery' },
+      prelaunch: true,
       image: '/images/gallery.jpg',
       category: 'create',
     },
@@ -52,6 +53,7 @@ export const EXPERIENCES = {
       title: 'Art Workshops & Art Therapy',
       blurb: 'Expressive arts programs for wellbeing, guided by professionals.',
       cta: { label: 'Book a Workshop', href: '/workshops' },
+      prelaunch: true,
       image: '/images/workshops.jpg',
       category: 'create',
     },
@@ -60,6 +62,7 @@ export const EXPERIENCES = {
       title: 'Edible Gardens Subscriptions',
       blurb: 'Seasonal harvest, family-friendly garden days, and member experiences.',
       cta: { label: 'Subscribe', href: '/gardens' },
+      prelaunch: true,
       image: '/images/gardens.jpg',
       category: 'grow',
     },
@@ -86,6 +89,7 @@ export const EXPERIENCES = {
       title: 'Cellar Door',
       blurb: 'Wine tastings and cellar door experiences.',
       cta: { label: 'Taste & Visit', href: '/visit#cellar' },
+      prelaunch: true,
       image: '/images/cellar.jpg',
       category: 'drink',
     },
