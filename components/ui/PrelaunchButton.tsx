@@ -18,7 +18,16 @@ type PrelaunchButtonProps = {
 
 const DEFAULT_HEADING = 'Pre-launch Program'
 const DEFAULT_MESSAGE =
-  "Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development. Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest. Dates, inclusions and pricing are indicative and subject to change."
+  `Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development. Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest. Dates, inclusions and pricing are indicative and subject to change.
+
+Program Status & Expressions of Interest (EOI)
+The Bayview Arts Gallery, Art Workshops & Art Therapy, Edible Gardens Subscriptions, and Cellar Door wine tastings (“Programs”) may be shown on this website before public launch.
+
+Expressions of interest are not bookings. Submitting an EOI does not create a binding agreement, does not guarantee availability, and does not confirm dates or inclusions.
+
+Information may change. Program details (including pricing, inclusions, schedules, capacity, facilitators, and venue access) may be updated, delayed, or withdrawn at any time due to operational requirements, safety, weather, supplier availability, licensing, or other factors.
+
+No reliance for critical decisions. Please contact us for confirmation before making travel plans or other commitments based on information on this website.`
 
 export function PrelaunchButton({
   href,
@@ -82,7 +91,10 @@ export function PrelaunchButton({
             >
               {heading}
             </h3>
-            <p id={descId} className="mt-3 text-sm leading-relaxed text-natural-700 dark:text-natural-200">
+            <p
+              id={descId}
+              className="mt-3 text-sm leading-relaxed whitespace-pre-line text-natural-700 dark:text-natural-200"
+            >
               {message}
             </p>
 

@@ -131,6 +131,23 @@ export default function HomePage() {
                   Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest.
                   Dates, inclusions and pricing are indicative and subject to change.
                 </p>
+                <h5 className="mt-6 text-lg font-serif font-bold text-natural-900 dark:text-natural-50">
+                  Program Status &amp; Expressions of Interest (EOI)
+                </h5>
+                <div className="mt-3 space-y-3 text-sm leading-relaxed text-natural-700 dark:text-natural-200">
+                  <p>
+                    The Bayview Arts Gallery, Art Workshops &amp; Art Therapy, Edible Gardens Subscriptions, and Cellar Door wine tastings (“Programs”) may be shown on this website before public launch.
+                  </p>
+                  <p>
+                    <strong>Expressions of interest are not bookings.</strong> Submitting an EOI does not create a binding agreement, does not guarantee availability, and does not confirm dates or inclusions.
+                  </p>
+                  <p>
+                    <strong>Information may change.</strong> Program details (including pricing, inclusions, schedules, capacity, facilitators, and venue access) may be updated, delayed, or withdrawn at any time due to operational requirements, safety, weather, supplier availability, licensing, or other factors.
+                  </p>
+                  <p>
+                    <strong>No reliance for critical decisions.</strong> Please contact us for confirmation before making travel plans or other commitments based on information on this website.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
