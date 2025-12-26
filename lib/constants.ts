@@ -32,8 +32,8 @@ export const NAV_ITEMS = [
 
 // Primary CTAs
 export const PRIMARY_CTAS = [
-  { label: 'Become a Partner', href: '/partners', variant: 'primary' },
-  { label: 'Book Wine Tasting', href: '/cellar-door#book', variant: 'accent' },
+  { label: 'Become a Partner', href: '/partners', variant: 'primary', external: false },
+  { label: 'Book Wine Tasting', href: '/cellar-door#book', variant: 'accent', external: false },
 ]
 
 // Experiences data
