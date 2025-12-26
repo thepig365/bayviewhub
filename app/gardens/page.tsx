@@ -7,8 +7,6 @@ import { Check, Calendar, HelpCircle } from 'lucide-react'
 const pricingTiers = [
   {
     name: 'Family',
-    price: '$299',
-    period: '/season',
     features: [
       'Seasonal harvest box (fortnightly)',
       '4 family garden days per season',
@@ -21,8 +19,6 @@ const pricingTiers = [
   },
   {
     name: 'Standard',
-    price: '$179',
-    period: '/season',
     features: [
       'Seasonal harvest box (monthly)',
       '2 garden visit days per season',
@@ -34,8 +30,6 @@ const pricingTiers = [
   },
   {
     name: 'Premium',
-    price: '$499',
-    period: '/season',
     features: [
       'Weekly harvest box',
       'Unlimited garden access',
@@ -111,12 +105,6 @@ export default function GardensPage() {
                   </div>
                 )}
                 <h3 className="text-2xl font-serif font-bold mb-2">{tier.name}</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">{tier.price}</span>
-                  <span className={tier.highlight ? 'text-primary-100' : 'text-natural-600 dark:text-natural-200'}>
-                    {tier.period}
-                  </span>
-                </div>
                 <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
@@ -230,17 +218,13 @@ export default function GardensPage() {
               Founding Subscribers
             </h2>
             <p className="text-xl text-natural-700 mb-8 dark:text-natural-200">
-              Join our first 50 subscribers and lock in special founding rates, plus early access to all programs
+              Join our first 50 subscribers for early access to seasonal harvest boxes, garden days, and program updates
             </p>
             <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <div className="flex items-center justify-center space-x-4 mb-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary-700">50</div>
                   <div className="text-sm text-natural-600 dark:text-natural-200">Spots Available</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-700">20%</div>
-                  <div className="text-sm text-natural-600 dark:text-natural-200">Founding Discount</div>
                 </div>
               </div>
               <Button variant="primary" size="lg" className="w-full">
