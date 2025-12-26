@@ -52,7 +52,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
               </button>
             )
           })}
-          {navigator.share && (
+          {typeof navigator !== 'undefined' && navigator.share && (
             <button
               onClick={() => handleShare('native')}
               className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors"
