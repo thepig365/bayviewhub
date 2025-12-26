@@ -115,6 +115,20 @@ export default function HomePage() {
                   cta={exp.cta}
                 />
               ))}
+              {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
+              <div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
+                <div className="inline-flex items-center rounded-full bg-accent-500/15 text-accent-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-accent-500/20 dark:text-accent-200">
+                  Pre-Launch / Founding Partners
+                </div>
+                <h4 className="mt-4 text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
+                  Pre-Launch Notice
+                </h4>
+                <p className="mt-3 text-sm leading-relaxed text-natural-700 dark:text-natural-200">
+                  Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development.
+                  Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest.
+                  Dates, inclusions and pricing are indicative and subject to change.
+                </p>
+              </div>
             </div>
           </div>
         </div>
