@@ -105,7 +105,7 @@ export const EXPERIENCES = {
       id: 'functions',
       title: 'Functions & Groups',
       blurb: 'Private events, weddings, and corporate gatherings on our beautiful 30-acre property.',
-      cta: { label: 'Venue Enquiry', href: 'https://www.thepigandwhistle.com.au/accommodation', external: true },
+      cta: { label: 'Venue Enquiry', href: 'https://www.thepigandwhistle.com.au/function-bookings', external: true },
       image: '/images/functions.jpg',
       category: 'celebrate',
     },
