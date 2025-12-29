@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, Facebook, Instagram, Twitter, Linkedin, Globe } from 'lucide-react'
-import { NAV_ITEMS, PRIMARY_CTAS, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
+import { Menu, X, Globe } from 'lucide-react'
+import { NAV_ITEMS, PRIMARY_CTAS } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { PrelaunchButton } from '@/components/ui/PrelaunchButton'
 import { Logo } from '@/components/ui/Logo'
@@ -36,49 +36,8 @@ export function Header() {
           {/* Logo */}
           <Logo />
 
-          {/* Social Icons & Menu Toggle (All Screens) */}
-          <div className="flex items-center space-x-2">
-            {/* Social Icons */}
-            <div className="flex items-center space-x-1">
-              <a
-                href={SOCIAL_LINKS.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                aria-label="Twitter"
-              >
-                <Twitter size={20} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} />
-              </a>
-            </div>
-            
-            {/* Menu Toggle */}
+          {/* Menu Toggle */}
+          <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 text-natural-700 dark:text-natural-50"
@@ -149,54 +108,6 @@ export function Header() {
               <ThemeMenu />
             </div>
             
-            {/* Menu Social Links */}
-            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
-              <p className="text-xs font-medium text-natural-600 mb-3 dark:text-natural-200">Follow Us</p>
-              <div className="flex items-center space-x-4">
-                <a
-                  href={SOCIAL_LINKS.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                  aria-label="Facebook"
-                >
-                  <Facebook size={20} />
-                  <span className="text-sm">Facebook</span>
-                </a>
-                <a
-                  href={SOCIAL_LINKS.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={20} />
-                  <span className="text-sm">Instagram</span>
-                </a>
-              </div>
-              <div className="flex items-center space-x-4 mt-2">
-                <a
-                  href={SOCIAL_LINKS.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                  aria-label="Twitter"
-                >
-                  <Twitter size={20} />
-                  <span className="text-sm">Twitter</span>
-                </a>
-                <a
-                  href={SOCIAL_LINKS.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-natural-600 hover:text-primary-700 transition-colors dark:text-natural-200 dark:hover:text-primary-300"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={20} />
-                  <span className="text-sm">LinkedIn</span>
-                </a>
-              </div>
-            </div>
           </div>
         )}
       </div>
