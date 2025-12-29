@@ -23,7 +23,7 @@ export default function HomePage() {
               Eat, Stay, Connect, Create, Mend
             </h1>
             <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
-              A destination hub with winery dining, accommodation, art spaces, wellbeing programs, and edible gardens.
+              Bayview Hub is the visitor gateway to Bayview Estate—home to the Arts Gallery, Edible Gardens, Workshops, Cellar Door wine tastings, events, and the Pig &amp; Whistle.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button href="/partners" variant="primary" size="lg">
