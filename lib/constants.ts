@@ -61,7 +61,7 @@ export const EXPERIENCES = {
       id: 'gardens',
       title: 'Edible Gardens Subscriptions',
       blurb: 'Seasonal harvest, family-friendly garden days, and member experiences.',
-      cta: { label: 'Subscribe', href: '/gardens' },
+      cta: { label: 'Founding Partner', href: '/partners/edible-gardens' },
       prelaunch: true,
       image: '/images/gardens.jpg',
       category: 'grow',
