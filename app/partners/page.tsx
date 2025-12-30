@@ -36,9 +36,14 @@ export default function PartnersPage() {
             <p className="text-xl text-natural-700 mb-8 leading-relaxed dark:text-natural-200">
               A destination hub with existing footfall and hospitality engine. Now expanding into Gallery, Art Programs, and Gardens.
             </p>
-            <Button href="#apply" variant="primary" size="lg">
-              Apply Now
-            </Button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button href="#apply" variant="primary" size="lg">
+                Apply Now
+              </Button>
+              <Button href="/partners/edible-gardens" variant="outline" size="lg">
+                Edible Gardens Opportunity
+              </Button>
+            </div>
           </div>
         </div>
       </section>

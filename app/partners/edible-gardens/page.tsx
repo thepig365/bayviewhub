@@ -13,9 +13,38 @@ export const metadata = genMeta({
 
 export default function EdibleGardensFoundingPartnerPage() {
   const bookCallHref = `mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent('Edible Gardens Founding Partner — 10-min Call')}`
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || SITE_CONFIG.url
+
+  const pageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Founding Partner Opportunity — Edible Gardens | ${SITE_CONFIG.name}`,
+    url: `${baseUrl}/partners/edible-gardens`,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SITE_CONFIG.name,
+      url: baseUrl,
+    },
+    about: [
+      { '@type': 'Thing', name: 'Edible gardens' },
+      { '@type': 'Thing', name: 'Subscription program' },
+      { '@type': 'Thing', name: 'Founding partner opportunity' },
+    ],
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_CONFIG.name,
+      url: baseUrl,
+    },
+    potentialAction: {
+      '@type': 'ApplyAction',
+      name: 'Submit Expression of Interest',
+      target: `${baseUrl}/partners/edible-gardens#apply`,
+    },
+  }
 
   return (
     <div className="min-h-screen dark:bg-primary-900">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }} />
       {/* Hero */}
       <section className="bg-gradient-to-br from-accent-50 to-primary-50 py-20 dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">

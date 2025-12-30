@@ -31,7 +31,7 @@ export function generateMetadata(page: {
 }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bayviewhub.com.au'
   const fullUrl = `${baseUrl}${page.path || ''}`
-  const ogImage = page.image || `${baseUrl}/og-image.jpg`
+  const ogImage = page.image || `${baseUrl}/og-image.png`
 
   return {
     title: page.title,

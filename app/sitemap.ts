@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/events',
     '/second-home',
     '/partners',
+    '/partners/edible-gardens',
     '/invest',
     '/visit',
     '/gardens',

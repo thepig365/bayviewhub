@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     'art gallery',
     'workshops',
     'edible gardens',
-    'NSW',
+    'Victoria',
+    'Mornington Peninsula',
     'destination',
     'experiences',
   ],
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     description: SITE_CONFIG.description,
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: SITE_CONFIG.name,
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
-    images: ['/og-image.jpg'],
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -79,7 +80,9 @@ export default function RootLayout({
     email: SITE_CONFIG.email,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'NSW',
+      streetAddress: SITE_CONFIG.address,
+      addressLocality: 'Main Ridge',
+      addressRegion: 'VIC',
       addressCountry: 'AU',
     },
     sameAs: Object.values(SOCIAL_LINKS),
