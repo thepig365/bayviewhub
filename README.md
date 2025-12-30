@@ -77,7 +77,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 Go to Project Settings → Environment Variables and add:
 
-- `NEXT_PUBLIC_BASE_URL`: Your production URL (e.g., https://bayviewhub.com.au)
+- `NEXT_PUBLIC_BASE_URL`: Your production URL (e.g., https://www.bayviewhub.me)
 - Email service keys (Mailchimp, SendGrid, etc.)
 - Analytics IDs (Google Analytics, Facebook Pixel)
 - Instagram token (if using feed integration)

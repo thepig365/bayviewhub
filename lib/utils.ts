@@ -29,7 +29,7 @@ export function generateMetadata(page: {
   image?: string
   path?: string
 }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bayviewhub.com.au'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me'
   const fullUrl = `${baseUrl}${page.path || ''}`
   const ogImage = page.image || `${baseUrl}/og-image.png`
 
