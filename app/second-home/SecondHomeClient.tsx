@@ -29,8 +29,8 @@ const houseTypes = [
     description:
       'A flexible small second home for teens, young adults or short-stay rentals. Versatile design for changing needs.',
     image: '/images/second-home/family-pod.jpg',
-    priceRange: '$95k - $140k',
-    size: '40-50 sqm',
+    priceRange: '$90k - $169k',
+    size: 'Up to 60 sqm',
   },
   {
     title: 'Modern Minimalist Studio',
