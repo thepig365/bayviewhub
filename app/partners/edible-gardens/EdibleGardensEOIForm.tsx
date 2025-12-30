@@ -8,6 +8,11 @@ type FormState = {
   email: string
   phone: string
   website: string
+  applicantType: 'Individual' | 'Team' | 'Business' | ''
+  pilotStart: '0–30 days' | '30–60 days' | '60–90 days' | 'Later' | ''
+  hasRunProgramsBefore: 'Yes' | 'No' | ''
+  programExperience: string
+  availability: string
   message: string
 }
 
@@ -16,6 +21,11 @@ const INITIAL_STATE: FormState = {
   email: '',
   phone: '',
   website: '',
+  applicantType: '',
+  pilotStart: '',
+  hasRunProgramsBefore: '',
+  programExperience: '',
+  availability: '',
   message: '',
 }
 
@@ -107,6 +117,89 @@ export function EdibleGardensEOIForm() {
             className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
           />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+            I’m applying as *
+          </label>
+          <select
+            required
+            value={form.applicantType}
+            onChange={(e) => setForm({ ...form, applicantType: e.target.value as FormState['applicantType'] })}
+            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+          >
+            <option value="">Select one</option>
+            <option value="Individual">Individual</option>
+            <option value="Team">Team</option>
+            <option value="Business">Business</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+            I can start a pilot *
+          </label>
+          <select
+            required
+            value={form.pilotStart}
+            onChange={(e) => setForm({ ...form, pilotStart: e.target.value as FormState['pilotStart'] })}
+            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+          >
+            <option value="">Select a timeframe</option>
+            <option value="0–30 days">0–30 days</option>
+            <option value="30–60 days">30–60 days</option>
+            <option value="60–90 days">60–90 days</option>
+            <option value="Later">Later</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+            Have you run subscriptions/workshops before? *
+          </label>
+          <select
+            required
+            value={form.hasRunProgramsBefore}
+            onChange={(e) => setForm({ ...form, hasRunProgramsBefore: e.target.value as FormState['hasRunProgramsBefore'] })}
+            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+          >
+            <option value="">Select one</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+            Availability / time commitment
+          </label>
+          <input
+            type="text"
+            value={form.availability}
+            onChange={(e) => setForm({ ...form, availability: e.target.value })}
+            placeholder="e.g., weekends only / 3 days per week / full-time"
+            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          Briefly describe your subscription/workshop experience
+          {form.hasRunProgramsBefore === 'Yes' ? ' *' : ''}
+        </label>
+        <textarea
+          required={form.hasRunProgramsBefore === 'Yes'}
+          rows={4}
+          value={form.programExperience}
+          onChange={(e) => setForm({ ...form, programExperience: e.target.value })}
+          placeholder="What did you run? How many subscribers/attendees? What worked?"
+          className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+        />
       </div>
 
       <div>

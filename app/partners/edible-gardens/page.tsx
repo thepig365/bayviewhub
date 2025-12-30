@@ -1,6 +1,7 @@
 import React from 'react'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { SITE_CONFIG } from '@/lib/constants'
+import { Button } from '@/components/ui/Button'
 import { EdibleGardensEOIForm } from './EdibleGardensEOIForm'
 
 export const metadata = genMeta({
@@ -11,6 +12,8 @@ export const metadata = genMeta({
 })
 
 export default function EdibleGardensFoundingPartnerPage() {
+  const bookCallHref = `mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent('Edible Gardens Founding Partner — 10-min Call')}`
+
   return (
     <div className="min-h-screen dark:bg-primary-900">
       {/* Hero */}
@@ -25,8 +28,17 @@ export default function EdibleGardensFoundingPartnerPage() {
                 Edible Gardens at Bayview Hub
               </h1>
               <p className="mt-6 text-xl text-natural-700 leading-relaxed dark:text-natural-200">
-                Build your own subscription-based edible garden business — within a thriving destination.
+                Build a subscription-based edible gardens program — with land, audience, and real-world infrastructure
+                behind you.
               </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Button href="#apply" variant="primary" size="lg">
+                  Apply Now
+                </Button>
+                <Button href={bookCallHref} variant="outline" size="lg" external>
+                  Book a 10-min Call
+                </Button>
+              </div>
             </div>
 
             <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
@@ -39,21 +51,39 @@ export default function EdibleGardensFoundingPartnerPage() {
                 business — supported by land, space, and an existing destination audience.
               </p>
 
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="rounded-xl p-4 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
-                  <p className="font-semibold text-natural-900 dark:text-natural-50">This is not a job.</p>
-                </div>
-                <div className="rounded-xl p-4 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
-                  <p className="font-semibold text-natural-900 dark:text-natural-50">This is not a franchise.</p>
-                </div>
-                <div className="rounded-xl p-4 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
-                  <p className="font-semibold text-natural-900 dark:text-natural-50">This is not a pay-to-rent scheme.</p>
-                </div>
+              <div className="mt-6 rounded-xl p-4 bg-natural-50 text-center dark:bg-primary-800/30 dark:border dark:border-primary-700">
+                <p className="font-semibold text-natural-900 dark:text-natural-50">
+                  Not employment. Not a franchise. Not pay-to-rent.
+                </p>
               </div>
 
               <p className="mt-6 text-natural-700 leading-relaxed dark:text-natural-200">
                 This is a partner-led collaboration, designed for someone who wants to build, grow, and own what they
                 create.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Proof / Context */}
+      <section className="bg-white border-y border-natural-200 dark:bg-primary-900 dark:border-primary-700">
+        <div className="container mx-auto px-4 py-10">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <p className="text-3xl font-bold text-primary-700 dark:text-primary-300">50k+</p>
+              <p className="mt-1 text-sm text-natural-600 dark:text-natural-200">annual visitors (existing destination)</p>
+            </div>
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <p className="font-semibold text-natural-900 dark:text-natural-50">Established destination context</p>
+              <p className="mt-2 text-sm text-natural-600 dark:text-natural-200">
+                Restaurant, cellar door, and events provide year-round visitor flow.
+              </p>
+            </div>
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <p className="font-semibold text-natural-900 dark:text-natural-50">Hospitality ecosystem</p>
+              <p className="mt-2 text-sm text-natural-600 dark:text-natural-200">
+                On-site offerings + cross-promo to support subscription and workshop demand.
               </p>
             </div>
           </div>
@@ -106,41 +136,79 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
             </div>
 
+            <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 dark:text-natural-50">
+                ✅ What success looks like in 90 days
+              </h2>
+              <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
+                A pilot is about proving demand and operational reality. Example targets:
+              </p>
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+                <li>Pilot beds set up + planting plan agreed</li>
+                <li>First 30–100 founding subscribers waitlisted</li>
+                <li>2–4 paid workshops delivered (even small)</li>
+                <li>Simple operations + safety + access rules agreed</li>
+              </ul>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8">
               <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
                 <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
-                  🏡 What Bayview Hub Provides
+                  🏡 Bayview provides
                 </h3>
-                <p className="mt-4 text-natural-700 dark:text-natural-200">
-                  We provide the infrastructure and context, including:
-                </p>
                 <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
-                  <li>Dedicated land suitable for edible gardens</li>
-                  <li>A destination with existing foot traffic</li>
-                  <li>Shared amenities and operational support</li>
-                  <li>Visibility under the Bayview Hub brand</li>
-                  <li>A supportive ecosystem of food, wine, art, and music</li>
-                  <li>Freedom to test, iterate, and grow organically</li>
+                  <li>Land allocation + access schedule (agreed during pilot)</li>
+                  <li>Water access / storage / basic amenities (confirm on-site; may be TBC)</li>
+                  <li>Marketing inclusion (website)</li>
+                  <li>Visitor flow + cross-promo via the hub</li>
+                  <li>Shared context: parking, guest flow, safety expectations</li>
                 </ul>
               </div>
 
               <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
                 <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
-                  🌾 What the Partner Builds
+                  🌾 Partner provides
                 </h3>
-                <p className="mt-4 text-natural-700 dark:text-natural-200">
-                  You build and operate the business, including:
-                </p>
                 <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
-                  <li>program structure and offerings</li>
-                  <li>pricing and subscription models</li>
-                  <li>day-to-day operations</li>
-                  <li>community engagement</li>
-                  <li>growth direction and long-term vision</li>
+                  <li>Program design + customer service + day-to-day operations</li>
+                  <li>Tools / team / operations to deliver consistently</li>
+                  <li>Pricing, subscriptions, workshop delivery</li>
+                  <li>Compliance with site rules, safety, access requirements</li>
+                  <li>Insurance and compliance if required (e.g., public liability)</li>
                 </ul>
                 <p className="mt-6 text-natural-700 dark:text-natural-200">
                   You remain an independent operator. This is your business.
                 </p>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 dark:text-natural-50">
+                💡 Example models (not prescriptive)
+              </h2>
+              <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
+                Some great candidates don’t apply because they can’t picture the model. Here are three examples you could
+                adapt:
+              </p>
+              <div className="mt-6 grid md:grid-cols-3 gap-6">
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+                  <p className="font-semibold text-natural-900 dark:text-natural-50">Family Plot Memberships</p>
+                  <p className="mt-2 text-sm text-natural-600 dark:text-natural-200">
+                    Weekly access + seasonal planting days + family routines.
+                  </p>
+                </div>
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+                  <p className="font-semibold text-natural-900 dark:text-natural-50">Market Garden Subscription</p>
+                  <p className="mt-2 text-sm text-natural-600 dark:text-natural-200">
+                    Monthly produce + garden meetups + harvest moments.
+                  </p>
+                </div>
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+                  <p className="font-semibold text-natural-900 dark:text-natural-50">Workshops &amp; Education</p>
+                  <p className="mt-2 text-sm text-natural-600 dark:text-natural-200">
+                    Kids programs, permaculture intro, seasonal classes.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -231,6 +299,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-8 text-xs text-natural-600 dark:text-natural-300">
                 <strong>Footer Note:</strong> Bayview Hub partners with independent operators on a pilot-first basis. All
                 collaborations are subject to mutual agreement and alignment.
+                <span> Submitting an EOI does not create any obligation for either party.</span>
               </p>
             </div>
           </div>
