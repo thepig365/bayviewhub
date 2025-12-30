@@ -101,7 +101,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
                 Bayview Hub is a growing destination that brings together:
               </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>hospitality and wine</li>
                 <li>arts and creative programs</li>
                 <li>music and cultural gatherings</li>
@@ -122,7 +122,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 We are offering dedicated land and shared resources to a founding partner to design, launch, and operate
                 an Edible Gardens program that may include:
               </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>subscription-based garden memberships</li>
                 <li>family and children’s gardening programs</li>
                 <li>seasonal planting and harvest experiences</li>
@@ -130,10 +130,16 @@ export default function EdibleGardensFoundingPartnerPage() {
                 <li>produce-based offerings or garden events</li>
                 <li>community-driven food education</li>
               </ul>
-              <p className="mt-6 text-natural-700 leading-relaxed dark:text-natural-200">The exact model is yours to design.</p>
-              <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
-                We are not prescribing a formula. We are offering a platform.
-              </p>
+              <ul className="mt-6 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
+                <li>
+                  <span className="font-semibold text-natural-900 dark:text-natural-50">The exact model is yours to design.</span>
+                </li>
+                <li>
+                  <span className="font-semibold text-natural-900 dark:text-natural-50">
+                    We are not prescribing a formula. We are offering a platform.
+                  </span>
+                </li>
+              </ul>
             </div>
 
             <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
@@ -143,7 +149,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
                 A pilot is about proving demand and operational reality. Example targets:
               </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>Pilot beds set up + planting plan agreed</li>
                 <li>First 30–100 founding subscribers waitlisted</li>
                 <li>2–4 paid workshops delivered (even small)</li>
@@ -156,7 +162,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
                   🏡 Bayview provides
                 </h3>
-                <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+                <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                   <li>Land allocation + access schedule (agreed during pilot)</li>
                   <li>Water access / storage / basic amenities (confirm on-site; may be TBC)</li>
                   <li>Marketing inclusion (website)</li>
@@ -169,7 +175,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
                   🌾 Partner provides
                 </h3>
-                <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+                <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                   <li>Program design + customer service + day-to-day operations</li>
                   <li>Tools / team / operations to deliver consistently</li>
                   <li>Pricing, subscriptions, workshop delivery</li>
@@ -219,7 +225,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
                 This opportunity is suited to someone who:
               </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>is entrepreneurial and self-motivated</li>
                 <li>
                   has experience (or strong capability) in:
@@ -245,7 +251,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
                 To avoid confusion, Bayview Hub is not offering:
               </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>employment or salary</li>
                 <li>a franchise or license</li>
                 <li>a short-term pop-up rental</li>
@@ -283,7 +289,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 If this opportunity resonates with you, we’d love to hear from you.
               </p>
               <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">Please tell us:</p>
-              <ul className="mt-2 space-y-2 text-natural-700 dark:text-natural-200">
+              <ul className="mt-2 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>who you are</li>
                 <li>what you want to build</li>
                 <li>how you see an edible garden serving people and community</li>
