@@ -239,6 +239,17 @@ Example (Facebook ad):
 - `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`
 - `gclid`, `fbclid`, `msclkid`
 
+### Prebuilt campaign links: /second-home
+
+Use these as starting points (adjust `utm_source` / `utm_medium` for your channel):
+
+- **Parents / in-laws (granny flat)**:
+  - `https://www.bayviewhub.me/second-home?utm_source=linkedin&utm_medium=post&utm_campaign=second_home&utm_content=parents`
+- **Rental income (Airbnb / tenant)**:
+  - `https://www.bayviewhub.me/second-home?utm_source=linkedin&utm_medium=post&utm_campaign=second_home&utm_content=income`
+- **Studio / work-from-home**:
+  - `https://www.bayviewhub.me/second-home?utm_source=linkedin&utm_medium=post&utm_campaign=second_home&utm_content=studio`
+
 ## 📈 How to view analytics
 
 ### Plausible

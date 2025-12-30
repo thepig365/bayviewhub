@@ -3,7 +3,11 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, suburb, backyardSize, propertyType, usage, timeframe } = body
+    const form = body?.form ?? body
+    const utm = body?.utm
+    const page = body?.page
+
+    const { name, email, phone, suburb, backyardSize, propertyType, usage, timeframe } = form
 
     // Validate required fields
     if (!name || !email || !suburb || !backyardSize || !propertyType) {
@@ -65,6 +69,8 @@ export async function POST(request: Request) {
 
     // Log the submission (you can save to database here)
     console.log('Second Home Registration:', {
+      page,
+      utm,
       name,
       email,
       phone,
