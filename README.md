@@ -193,16 +193,61 @@ Already implemented! Social share buttons work out of the box for:
 
 ## 📊 Analytics Setup
 
-### Google Analytics
+### Plausible (preferred)
 
-1. Create GA4 property
-2. Get Measurement ID (G-XXXXXXXXXX)
-3. Add to environment variables as `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-4. Add script to `app/layout.tsx`:
+1. Create a Plausible account and add your site
+2. Set this env var in Vercel:
+   - `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` = `bayviewhub.me` (or your canonical domain)
 
-```typescript
-<Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`} />
-```
+The Plausible script is automatically loaded site-wide in `app/layout.tsx` when this env var is set.
+
+**Tracked events (current):**
+
+- `eg_apply_click` (CTA click)
+- `eg_book_call_click` (CTA click)
+- `eg_form_submit_success` (EOI form success)
+- `eg_form_submit_error` (EOI form error)
+
+Event properties include attribution fields when present (e.g. `utm_source`, `utm_campaign`, `gclid`).
+
+### Google Analytics (GA4) (optional fallback)
+
+If you don't want Plausible, or you want GA4 as an additional sink, set:
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` = `G-XXXXXXXXXX`
+
+GA4 is loaded site-wide from `app/layout.tsx` when the env var is set.
+
+## 🔗 How to generate trackable links (UTM)
+
+Use UTMs when sharing the Edible Gardens landing page:
+
+Base URL:
+
+- `https://www.bayviewhub.me/partners/edible-gardens`
+
+Example (Facebook ad):
+
+- `https://www.bayviewhub.me/partners/edible-gardens?utm_source=facebook&utm_medium=paid_social&utm_campaign=edible_gardens_founding_partner&utm_content=video_a`
+
+**Supported attribution params (captured + included in EOI payload + events):**
+
+- `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`
+- `gclid`, `fbclid`, `msclkid`
+
+## 📈 How to view analytics
+
+### Plausible
+
+1. Open your Plausible dashboard
+2. Filter by page: `/partners/edible-gardens`
+3. View events: `eg_apply_click`, `eg_book_call_click`, `eg_form_submit_success`
+
+### GA4
+
+1. Open GA4 → Reports → Engagement → Events
+2. Look for events: `eg_apply_click`, `eg_book_call_click`, `eg_form_submit_success`
+3. Use Explorations to break down by UTM parameters (when present)
 
 ### Facebook Pixel
 

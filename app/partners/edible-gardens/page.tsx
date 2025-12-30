@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { SITE_CONFIG } from '@/lib/constants'
-import { Button } from '@/components/ui/Button'
 import { EdibleGardensEOIForm } from './EdibleGardensEOIForm'
+import { EdibleGardensHeroCtas } from './EdibleGardensHeroCtas'
 
 export const metadata = genMeta({
   title: `Founding Partner Opportunity — Edible Gardens | ${SITE_CONFIG.name}`,
@@ -12,7 +12,6 @@ export const metadata = genMeta({
 })
 
 export default function EdibleGardensFoundingPartnerPage() {
-  const bookCallHref = `mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent('Edible Gardens Founding Partner — 10-min Call')}`
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || SITE_CONFIG.url
 
   const pageJsonLd = {
@@ -60,14 +59,12 @@ export default function EdibleGardensFoundingPartnerPage() {
                 Build a subscription-based edible gardens program — with land, audience, and real-world infrastructure
                 behind you.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button href="#apply" variant="primary" size="lg">
-                  Apply Now
-                </Button>
-                <Button href={bookCallHref} variant="outline" size="lg" external>
-                  Book a 10-min Call
-                </Button>
-              </div>
+              <Suspense fallback={<div className="mt-8 h-12" />}>
+                <EdibleGardensHeroCtas
+                  email={SITE_CONFIG.email}
+                  subject="Edible Gardens Founding Partner — 10-min Call"
+                />
+              </Suspense>
             </div>
 
             <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
@@ -335,7 +332,9 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
 
               <div className="mt-8">
-                <EdibleGardensEOIForm />
+                <Suspense fallback={<div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700" />}>
+                  <EdibleGardensEOIForm />
+                </Suspense>
               </div>
 
               <p className="mt-8 text-xs text-natural-600 dark:text-natural-300">

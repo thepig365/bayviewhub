@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
+import { getAttribution, track } from '@/lib/analytics'
 
 type FormState = {
   name: string
@@ -31,20 +33,43 @@ const INITIAL_STATE: FormState = {
 
 export function EdibleGardensEOIForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle')
+  const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState<FormState>(INITIAL_STATE)
+  const params = useSearchParams()
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (status !== 'idle') return
 
+    setError(null)
     setStatus('submitting')
 
-    // NOTE: This matches the current pattern in /partners (simple client-side capture).
-    // If/when you want, we can wire this to an API route + email.
-    console.log('EOI submitted (Edible Gardens):', form)
+    const utm = getAttribution(params)
+    const pageUrl = typeof window !== 'undefined' ? window.location.href : '/partners/edible-gardens'
 
-    await new Promise((r) => setTimeout(r, 350))
-    setStatus('submitted')
+    try {
+      const res = await fetch('/api/eoi-edible-gardens', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page: pageUrl,
+          utm,
+          form,
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data?.ok) {
+        throw new Error(data?.error || 'Submission failed')
+      }
+
+      track('eg_form_submit_success', utm)
+      setStatus('submitted')
+    } catch (err: any) {
+      setStatus('idle')
+      setError(err?.message || 'Something went wrong. Please try again.')
+      track('eg_form_submit_error', getAttribution(params))
+    }
   }
 
   if (status === 'submitted') {
@@ -65,6 +90,11 @@ export function EdibleGardensEOIForm() {
       onSubmit={onSubmit}
       className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700"
     >
+      {error ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">
+          {error}
+        </div>
+      ) : null}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
