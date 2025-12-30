@@ -46,7 +46,7 @@ const houseTypes = [
       'Craftsman-style bungalow with two bedrooms, featuring wide eaves, tapered columns, and a welcoming front porch. Classic charm with modern comfort.',
     image: '/images/second-home/california-bungalow.jpg',
     priceRange: '$122k - $168k',
-    size: 'Up to 80 sqm',
+    size: 'Up to 60 sqm',
   },
   {
     title: 'Two-Bedroom Family Unit',
