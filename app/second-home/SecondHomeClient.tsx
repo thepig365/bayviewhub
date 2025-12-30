@@ -13,7 +13,7 @@ const houseTypes = [
     description:
       'A light-filled garden studio for work, art, or quiet guest stays. Perfect for creative pursuits and peaceful mornings.',
     image: '/images/second-home/garden-studio.jpg',
-    priceRange: '$140k - $148k',
+    priceRange: '$118k - $168k',
     size: 'Up to 60 sqm',
   },
   {
