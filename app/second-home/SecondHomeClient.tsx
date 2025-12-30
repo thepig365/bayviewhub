@@ -53,8 +53,8 @@ const houseTypes = [
     description:
       'Spacious layout with two bedrooms and open living areas. Ideal for extended family living or generating substantial rental income.',
     image: '/images/second-home/two-bedroom.jpg',
-    priceRange: '$200k - $280k',
-    size: '80-100 sqm',
+    priceRange: '$122k - $168k',
+    size: 'Up to 60 sqm',
   },
 ]
 
