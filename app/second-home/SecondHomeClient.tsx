@@ -21,8 +21,8 @@ const houseTypes = [
     description:
       'A self-contained granny flat ideal for parents, in-laws, or long-stay guests. Independent living with nearby connection.',
     image: '/images/second-home/guest-cottage.jpg',
-    priceRange: '$120k - $180k',
-    size: '50-65 sqm',
+    priceRange: '$80k - $135k',
+    size: 'Up to 60 sqm',
   },
   {
     title: 'Family Pod & Rental Option',
