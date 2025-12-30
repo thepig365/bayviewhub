@@ -13,6 +13,20 @@ export const metadata = genMeta({
 })
 
 export default function HomePage() {
+  const featuredExperienceIds = ['gardens', 'gallery', 'workshops', 'cellar'] as const
+
+  const allExperiences = [...EXPERIENCES.new, ...EXPERIENCES.core]
+  const featuredExperiences = featuredExperienceIds
+    .map((id) => allExperiences.find((exp) => exp.id === id))
+    .filter(Boolean)
+
+  const remainingNewExperiences = EXPERIENCES.new.filter(
+    (exp) => !featuredExperienceIds.includes(exp.id as (typeof featuredExperienceIds)[number])
+  )
+  const remainingCoreExperiences = EXPERIENCES.core.filter(
+    (exp) => !featuredExperienceIds.includes(exp.id as (typeof featuredExperienceIds)[number])
+  )
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -82,13 +96,33 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* Featured (Ordered) */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
+              Featured
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {featuredExperiences.map((exp: any) => (
+                <Card
+                  key={exp.id}
+                  title={exp.title}
+                  description={exp.blurb}
+                  image={exp.image}
+                  cta={exp.cta}
+                  prelaunch={exp.prelaunch}
+                  variant="highlight"
+                />
+              ))}
+            </div>
+          </div>
+
           {/* New Additions */}
           <div className="mb-12">
             <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
               New Additions
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {EXPERIENCES.new.map((exp) => (
+              {remainingNewExperiences.map((exp) => (
                 <Card
                   key={exp.id}
                   title={exp.title}
@@ -108,7 +142,7 @@ export default function HomePage() {
               Our Foundations
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {EXPERIENCES.core.map((exp) => (
+              {remainingCoreExperiences.map((exp) => (
                 <Card
                   key={exp.id}
                   title={exp.title}
