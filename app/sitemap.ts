@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/second-home',
     '/partners',
     '/partners/edible-gardens',
+    '/tools/utm',
     '/invest',
     '/visit',
     '/gardens',

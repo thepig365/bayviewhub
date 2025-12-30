@@ -226,6 +226,10 @@ Base URL:
 
 - `https://www.bayviewhub.me/partners/edible-gardens`
 
+Built-in helper:
+
+- Open `https://www.bayviewhub.me/tools/utm` (noindex) to generate a trackable link and copy it.
+
 Example (Facebook ad):
 
 - `https://www.bayviewhub.me/partners/edible-gardens?utm_source=facebook&utm_medium=paid_social&utm_campaign=edible_gardens_founding_partner&utm_content=video_a`
@@ -248,6 +252,39 @@ Example (Facebook ad):
 1. Open GA4 → Reports → Engagement → Events
 2. Look for events: `eg_apply_click`, `eg_book_call_click`, `eg_form_submit_success`
 3. Use Explorations to break down by UTM parameters (when present)
+
+## 📨 Lead routing (don’t lose EOIs)
+
+By default, Edible Gardens EOIs are:
+
+- **Logged to Vercel logs** via `POST /api/eoi-edible-gardens`
+
+To route leads to your inbox / Sheets / Airtable / HubSpot without adding heavy dependencies, use one (or both) of the options below.
+
+### Option A (recommended): Webhook to Zapier/Make/Google Apps Script
+
+Set these env vars in Vercel:
+
+- `EOI_EDIBLE_GARDENS_WEBHOOK_URL` = your webhook endpoint
+- `EOI_EDIBLE_GARDENS_WEBHOOK_SECRET` = optional bearer token used as `Authorization: Bearer ...`
+
+The payload includes:
+
+- `receivedAt`, `page`, `utm` (UTMs + click IDs), and `form`
+
+### Option B: Email notifications + auto-reply (Resend, no SDK)
+
+Set these env vars in Vercel:
+
+- `RESEND_API_KEY`
+- `RESEND_FROM` (e.g. `Bayview Hub <noreply@yourdomain>`)
+- `EOI_EDIBLE_GARDENS_NOTIFY_EMAIL` (your inbox)
+- `EOI_EDIBLE_GARDENS_AUTOREPLY` = `true` (optional)
+
+Notes:
+
+- Owner email uses `reply-to` as the applicant email for easy responses.
+- Auto-reply is optional and sends a simple confirmation.
 
 ### Facebook Pixel
 
