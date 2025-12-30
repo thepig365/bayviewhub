@@ -37,16 +37,16 @@ const houseTypes = [
     description:
       'Ultra-contemporary design with clean lines and expansive glass. Perfect for those seeking a sleek, sophisticated workspace or guest retreat.',
     image: '/images/second-home/minimalist-studio.jpg',
-    priceRange: '$110k - $160k',
-    size: '35-45 sqm',
+    priceRange: '$70k - $110k',
+    size: 'Up to 60 sqm',
   },
   {
     title: 'California Bungalow Two Bedroom',
     description:
       'Craftsman-style bungalow with two bedrooms, featuring wide eaves, tapered columns, and a welcoming front porch. Classic charm with modern comfort.',
     image: '/images/second-home/california-bungalow.jpg',
-    priceRange: '$180k - $250k',
-    size: '70-85 sqm',
+    priceRange: '$122k - $168k',
+    size: 'Up to 80 sqm',
   },
   {
     title: 'Two-Bedroom Family Unit',
