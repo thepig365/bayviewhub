@@ -7,7 +7,7 @@ import { EdibleGardensEOIForm } from './EdibleGardensEOIForm'
 export const metadata = genMeta({
   title: `Founding Partner Opportunity — Edible Gardens | ${SITE_CONFIG.name}`,
   description:
-    'Build your own subscription-based edible garden business within a thriving destination. Expressions of interest now open for a founding partner.',
+    'Build a subscription-based edible gardens program within an established destination with hospitality, wine, and events. Expressions of interest now open for a founding partner.',
   path: '/partners/edible-gardens',
 })
 
@@ -108,10 +108,16 @@ export default function EdibleGardensFoundingPartnerPage() {
                 <li>nature-based and slow-living experiences</li>
               </ul>
               <p className="mt-6 text-natural-700 leading-relaxed dark:text-natural-200">
-                We already welcome significant visitor traffic through our restaurant, cellar door, and events. Our next
-                chapter is to activate the land — not with short-term hires, but with long-term, mission-aligned
-                partners.
+                We already welcome significant visitor traffic through our restaurant, cellar door, and events.
               </p>
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
+                <li>
+                  <span className="font-semibold text-natural-900 dark:text-natural-50">Proof:</span> Bayview Hub welcomes{' '}
+                  <span className="font-semibold text-natural-900 dark:text-natural-50">50k+</span> visitors per year
+                  through restaurant, cellar door and events.
+                </li>
+                <li>Our next chapter is to activate the land with long-term, mission-aligned partners.</li>
+              </ul>
             </div>
 
             <div>
@@ -139,21 +145,6 @@ export default function EdibleGardensFoundingPartnerPage() {
                     We are not prescribing a formula. We are offering a platform.
                   </span>
                 </li>
-              </ul>
-            </div>
-
-            <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 dark:text-natural-50">
-                ✅ What success looks like in 90 days
-              </h2>
-              <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
-                A pilot is about proving demand and operational reality. Example targets:
-              </p>
-              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
-                <li>Pilot beds set up + planting plan agreed</li>
-                <li>First 30–100 founding subscribers waitlisted</li>
-                <li>2–4 paid workshops delivered (even small)</li>
-                <li>Simple operations + safety + access rules agreed</li>
               </ul>
             </div>
 
@@ -279,6 +270,22 @@ export default function EdibleGardensFoundingPartnerPage() {
               <p className="mt-6 text-natural-700 leading-relaxed dark:text-natural-200">
                 Everything is built step by step, based on mutual fit.
               </p>
+            </div>
+
+            <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 dark:text-natural-50">
+                ✅ 90-Day Pilot Focus
+              </h2>
+              <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
+                This is an operator-led pilot. Example focus points:
+              </p>
+              <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
+                <li>Define the membership offer + pricing</li>
+                <li>Prepare initial beds / planting plan</li>
+                <li>Recruit first 30–100 founding subscribers (waitlist counts)</li>
+                <li>Run 1–2 garden sessions or workshops</li>
+                <li>Agree simple operations, safety, and access rules</li>
+              </ul>
             </div>
 
             <div id="apply">
