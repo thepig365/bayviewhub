@@ -11,7 +11,7 @@ const events = [
   {
     id: 1,
     title: 'Live Jazz Night',
-    date: 'Sat, Jan 20',
+    date: 'Sat, Jan 17',
     time: '7:00 PM',
     category: 'music',
     location: 'The Shed',
@@ -31,7 +31,7 @@ const events = [
   {
     id: 3,
     title: 'Gallery Opening: Local Artists',
-    date: 'Fri, Jan 26',
+    date: 'Fri, Jan 30',
     time: '6:00 PM',
     category: 'gallery',
     location: 'Arts Gallery',
@@ -41,7 +41,7 @@ const events = [
   {
     id: 4,
     title: 'Expressive Painting Workshop',
-    date: 'Sun, Jan 21',
+    date: 'Sun, Jan 18',
     time: '10:00 AM',
     category: 'workshops',
     location: 'Workshop Studio',
@@ -50,8 +50,8 @@ const events = [
   },
   {
     id: 5,
-    title: 'Spring Planting Day',
-    date: 'Sat, Jan 27',
+    title: 'Autumn Planting Day',
+    date: 'Sat, Feb 7',
     time: '9:00 AM',
     category: 'gardens',
     location: 'Edible Gardens',

@@ -21,20 +21,30 @@ export default function GalleryPage() {
     e.preventDefault()
     setStatus('loading')
     
-    // Simulate form submission - replace with actual API endpoint
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      setStatus('success')
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        background: '',
-        vision: '',
-        experience: '',
-        availability: '',
-        message: '',
+      const res = await fetch('/api/eoi-gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       })
+      
+      const data = await res.json()
+      
+      if (data.ok) {
+        setStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          background: '',
+          vision: '',
+          experience: '',
+          availability: '',
+          message: '',
+        })
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }

@@ -17,6 +17,7 @@ declare global {
       EOI_EDIBLE_GARDENS_WEBHOOK_SECRET?: string
       EOI_EDIBLE_GARDENS_NOTIFY_EMAIL?: string
       EOI_EDIBLE_GARDENS_AUTOREPLY?: string
+      EOI_GALLERY_NOTIFY_EMAIL?: string
       RESEND_API_KEY?: string
       RESEND_FROM?: string
       SENDGRID_API_KEY?: string
