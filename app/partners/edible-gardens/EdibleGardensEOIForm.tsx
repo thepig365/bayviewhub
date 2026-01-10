@@ -63,7 +63,12 @@ export function EdibleGardensEOIForm() {
         throw new Error(data?.error || 'Submission failed')
       }
 
-      track('eg_form_submit_success', utm)
+      track('eg_form_submit_success', {
+        ...utm,
+        forwardedWebhook: String(Boolean(data?.forwardedWebhook)),
+        emailedOwner: String(Boolean(data?.emailedOwner)),
+        emailedApplicant: String(Boolean(data?.emailedApplicant)),
+      })
       setStatus('submitted')
     } catch (err: any) {
       setStatus('idle')

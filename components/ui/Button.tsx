@@ -11,6 +11,7 @@ interface ButtonProps {
   className?: string
   external?: boolean
   disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export function Button({
@@ -22,6 +23,7 @@ export function Button({
   className,
   external = false,
   disabled = false,
+  type = 'button',
 }: ButtonProps) {
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-primary-900'
   
@@ -68,7 +70,7 @@ export function Button({
   }
 
   return (
-    <button onClick={onClick} className={styles} disabled={disabled}>
+    <button type={type} onClick={onClick} className={styles} disabled={disabled}>
       {children}
     </button>
   )
