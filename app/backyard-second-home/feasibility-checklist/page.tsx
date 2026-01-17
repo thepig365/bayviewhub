@@ -490,6 +490,50 @@ export default function FeasibilityChecklistPage() {
         </div>
       </section>
 
+      {/* Quick Answers (GEO) */}
+      <section className="py-16 md:py-20 bg-background border-b border-border/30">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight">
+            Quick Answers (Victoria, 2026)
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="rounded-xl border border-border/50 bg-card p-6">
+              <h3 className="font-semibold text-foreground mb-2">Do I need a permit?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Often yes. Zoning, overlays, access, and servicing can trigger planning and building requirements.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-6">
+              <h3 className="font-semibold text-foreground mb-2">What usually kills feasibility?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Tight access, steep slope, major overlays, and expensive service upgrades are common deal-breakers.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-6">
+              <h3 className="font-semibold text-foreground mb-2">Typical timeline?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Feasibility → design → approvals → build. The checklist helps identify delays early.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-6">
+              <h3 className="font-semibold text-foreground mb-2">Rough cost range?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Costs vary by site and spec. We provide a conservative range after reviewing your answers.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-6 md:col-span-2">
+              <h3 className="font-semibold text-foreground mb-2">What info do you need from me?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Suburb/address plus a few basics (lot size, slope, access) is enough to start.
+              </p>
+            </div>
+          </div>
+          <p className="mt-6 text-sm text-muted-foreground">
+            We review zoning/overlays and council controls after you submit — then reply with the next step.
+          </p>
+        </div>
+      </section>
+
       {/* Why This Matters */}
       <section className="py-20 md:py-28 bg-background border-b border-border/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
