@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/cellar-door',
     '/events',
     '/second-home',
+    '/backyard-second-home/feasibility-checklist',
     '/partners',
     '/partners/edible-gardens',
     '/tools/utm',
