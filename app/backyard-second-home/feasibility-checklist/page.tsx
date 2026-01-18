@@ -20,6 +20,7 @@ import {
   Lightbulb,
   Building,
   Sparkles,
+  Share2,
 } from "lucide-react";
 
 interface FAQItemProps {
@@ -419,6 +420,7 @@ export default function FeasibilityChecklistPage() {
   });
 
   const [outcome, setOutcome] = useState<string>("");
+  const [shareMessage, setShareMessage] = useState("");
 
   const toggleCheck = (key: keyof typeof checklist) => {
     setChecklist((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -436,6 +438,36 @@ export default function FeasibilityChecklistPage() {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: "Backyard Second Home Feasibility Checklist (Victoria)",
+      text: "Check feasibility before you pay for design.",
+      url: typeof window !== "undefined" ? window.location.href : "",
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareMessage("Thanks for sharing!");
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        setShareMessage("Link copied!");
+      }
+      setTimeout(() => setShareMessage(""), 3000);
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") {
+        try {
+          await navigator.clipboard.writeText(shareData.url);
+          setShareMessage("Link copied!");
+          setTimeout(() => setShareMessage(""), 3000);
+        } catch {
+          setShareMessage("Could not share");
+          setTimeout(() => setShareMessage(""), 3000);
+        }
+      }
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -450,11 +482,16 @@ export default function FeasibilityChecklistPage() {
           </div>
 
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-8 leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 leading-tight"
             data-testid="text-hero-title"
           >
             Backyard Second Home Feasibility Checklist (Victoria)
           </h1>
+
+          {/* GEO Capsule - below H1 */}
+          <p className="text-xs md:text-sm text-white/60 mb-8 max-w-3xl mx-auto">
+            Check feasibility before you pay for design: a quick self-check plus follow-up review of zoning, overlays, access, and services for Victoria sites.
+          </p>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-4 leading-relaxed font-light">
             Build a second compliant home on the land you already own — for
@@ -490,50 +527,6 @@ export default function FeasibilityChecklistPage() {
         </div>
       </section>
 
-      {/* Quick Answers (GEO) */}
-      <section className="py-16 md:py-20 bg-background border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight">
-            Quick Answers (Victoria, 2026)
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold text-foreground mb-2">Do I need a permit?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Often yes. Zoning, overlays, access, and servicing can trigger planning and building requirements.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold text-foreground mb-2">What usually kills feasibility?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Tight access, steep slope, major overlays, and expensive service upgrades are common deal-breakers.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold text-foreground mb-2">Typical timeline?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Feasibility → design → approvals → build. The checklist helps identify delays early.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6">
-              <h3 className="font-semibold text-foreground mb-2">Rough cost range?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Costs vary by site and spec. We provide a conservative range after reviewing your answers.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-6 md:col-span-2">
-              <h3 className="font-semibold text-foreground mb-2">What info do you need from me?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Suburb/address plus a few basics (lot size, slope, access) is enough to start.
-              </p>
-            </div>
-          </div>
-          <p className="mt-6 text-sm text-muted-foreground">
-            We review zoning/overlays and council controls after you submit — then reply with the next step.
-          </p>
-        </div>
-      </section>
-
       {/* Why This Matters */}
       <section className="py-20 md:py-28 bg-background border-b border-border/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -549,6 +542,72 @@ export default function FeasibilityChecklistPage() {
             access, easements, slope, services, approvals, and the cost drivers
             that blow budgets up.
           </p>
+        </div>
+      </section>
+
+      {/* Quick Answers (GEO) */}
+      <section className="py-16 md:py-20 bg-muted/30 border-b border-border/30">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight text-center">
+            Quick Answers
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-2">Do I need a permit?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Often yes. Zoning, overlays, and servicing can trigger planning and building requirements.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-2">What usually kills feasibility?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Tight access, steep slopes, major overlays, and expensive service upgrades.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-2">Typical timeline?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Feasibility → design → approvals → build. This checklist helps identify delays early.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-2">Rough cost range?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Varies by site and spec. We provide a conservative range after reviewing your answers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Evidence Chain - What we check */}
+      <section className="py-12 md:py-16 bg-background border-b border-border/30">
+        <div className="max-w-3xl mx-auto px-6">
+          <h3 className="text-lg md:text-xl font-semibold text-foreground mb-5">
+            What we check after you submit
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span>Zoning and any obvious overlays</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span>Access constraints (driveway, working space, build access)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span>Services likely to impact cost (sewer, stormwater, power)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span>Common design blockers (privacy, setbacks, slope)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span>Approval pathway risk level (simple / medium / complex)</span>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -915,6 +974,23 @@ export default function FeasibilityChecklistPage() {
           </div>
 
           <FeasibilityForm />
+
+          {/* Share Loop */}
+          <div className="mt-10 pt-8 border-t border-border/40 flex flex-col items-center gap-2">
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors border border-border/50 rounded-full px-4 py-2 hover:bg-muted/50"
+            >
+              <Share2 className="w-4 h-4" />
+              Share this checklist
+            </button>
+            <p className="text-xs text-muted-foreground/70">
+              Share with a friend — special consideration may be provided when possible.
+            </p>
+            {shareMessage && (
+              <span className="text-sm text-primary">{shareMessage}</span>
+            )}
+          </div>
         </div>
       </section>
 
