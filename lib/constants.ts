@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me',
   pigAndWhistleUrl: 'https://thepigandwhistle.com.au',
   email: 'leonzh@bayviewestate.com.au',
-  phone: '(03) 5989 6130',
+  phone: '0499 6666 88',
   address: '365 Purves Road, Main Ridge, Victoria 3928, Australia',
 }
 

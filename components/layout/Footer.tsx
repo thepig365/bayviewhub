@@ -153,6 +153,9 @@ export function Footer() {
               <Link href="/terms" className="text-natural-400 hover:text-primary-400 transition-colors">
                 Terms of Service
               </Link>
+              <a href="/llms.txt" className="text-natural-400 hover:text-primary-400 transition-colors">
+                LLM Access: /llms.txt
+              </a>
             </div>
           </div>
         </div>
