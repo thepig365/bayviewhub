@@ -14,6 +14,7 @@ export default function GalleryPage() {
     vision: '',
     structure: '',
     availability: '',
+    neverShow: '',
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
@@ -46,6 +47,7 @@ export default function GalleryPage() {
           vision: '',
           structure: '',
           availability: '',
+          neverShow: '',
         })
       } else {
         setStatus('error')
@@ -55,44 +57,24 @@ export default function GalleryPage() {
     }
   }
 
-  const pillars = [
+  const buildingItems = [
     {
-      title: 'The Earth',
-      subtitle: 'Edible Gardens',
-      description: 'Living Art. Farm-to-Soul connection grounding the visitor.',
-      icon: '🌱',
-    },
-    {
-      title: 'The Hearth',
-      subtitle: 'Pig & Whistle',
-      description: "The social anchor providing warmth and 'unbuttoned' comfort.",
-      icon: '🔥',
-    },
-    {
-      title: 'The Pulse',
-      subtitle: 'Live Music',
-      description: 'Weekly live music at The Shed accelerates the heartbeat, keeping crowds engaged.',
-      icon: '🎵',
-    },
-    {
-      title: 'The Elixir',
-      subtitle: 'Wine & Coffee',
-      description: 'Sensory openers that relax the mind.',
-      icon: '🍷',
-    },
-    {
-      title: 'The Vision',
-      subtitle: 'The Gallery',
-      description: 'Where YOU come in. Aesthetic contemplation.',
+      title: 'The Gallery',
+      subtitle: 'Founding Partner-led',
+      description: 'Curation, artist development, exhibitions, collector relationships.',
       icon: '🎨',
-      highlight: true,
     },
     {
-      title: 'The Mending',
-      subtitle: 'Wellness',
-      description: 'Where YOU lead. Restoration and creative therapy.',
+      title: 'Therapeutic Arts Workshops',
+      subtitle: 'Founding Partner-led',
+      description: 'Restorative creative workshops (non-clinical) that bring people from viewing into participation.',
       icon: '✨',
-      highlight: true,
+    },
+    {
+      title: 'The Destination Ecosystem',
+      subtitle: 'Bayview Hub',
+      description: 'Hospitality + events + gardens + music — the context that keeps attention and return visits alive.',
+      icon: '🌿',
     },
   ]
 
@@ -109,24 +91,21 @@ export default function GalleryPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto">
             <div className="inline-block bg-black text-white px-4 py-2 text-xs font-mono tracking-widest uppercase mb-8">
-              Strategic Partnership Prospectus
+              Founding Partnership
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-natural-900 mb-8 leading-tight dark:text-natural-50">
-              The Gallery Model is Broken.
-              <span className="block text-primary-700 dark:text-primary-400">We Have Re-Engineered It.</span>
+              A Gallery Inside a Living Destination
+              <span className="block text-primary-700 dark:text-primary-400">— Not a White Cube in Isolation.</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-natural-700 leading-relaxed max-w-3xl mb-12 dark:text-natural-200">
-              Dining. Wine. Music. Nature. Art. Wellness.
-              <span className="block mt-2 font-medium text-natural-900 dark:text-natural-100">
-                A Strategic Partnership to Build the Complete 'Third Place.'
-              </span>
+              A founding partnership to build a contemporary gallery and therapeutic arts workshop within Bayview Hub's estate — with dining, wine, music, gardens, and a year-round visitor audience already in motion.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <Button href="#inquiry" variant="primary" size="lg">
-                Inquire About Partnership
+                Inquire About Founding Partnership
               </Button>
               <Button href="#ecosystem" variant="outline" size="lg">
                 Explore the Ecosystem
@@ -149,43 +128,46 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* PART B: The Six Pillars of Traffic */}
+      {/* PART B: Why This Works */}
       <section id="ecosystem" className="py-24 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <p className="text-sm font-mono tracking-widest text-primary-600 uppercase mb-4">The Ecosystem</p>
+            <p className="text-sm font-mono tracking-widest text-primary-600 uppercase mb-4">Why This Works</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
-              Six Pillars of Traffic
+              The audience is already here.
             </h2>
-            <p className="text-lg text-natural-600 dark:text-natural-300">
-              Each pillar feeds the others. The gallery doesn't compete for attention—it completes the experience.
+            <p className="text-lg text-natural-600 dark:text-natural-300 max-w-3xl mx-auto">
+              Conventional galleries collapse under rent and attention scarcity. Bayview flips the equation: visitors already arrive for food, wine, music, gardens, and events. The work is to curate what they encounter — and convert passive visitors into long-term patrons.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {pillars.map((pillar, index) => (
+      {/* PART C: What We Are Building */}
+      <section className="py-24 bg-natural-50 dark:bg-primary-800/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <p className="text-sm font-mono tracking-widest text-primary-600 uppercase mb-4">What We Are Building</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
+              Three Pillars
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {buildingItems.map((item, index) => (
               <div
                 key={index}
-                className={`relative p-8 rounded-2xl transition-all ${
-                  pillar.highlight
-                    ? 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-xl ring-2 ring-primary-500 ring-offset-4 dark:ring-offset-primary-900'
-                    : 'bg-natural-50 dark:bg-primary-800/50 hover:shadow-lg'
-                }`}
+                className="relative p-8 rounded-2xl bg-white dark:bg-primary-900/60 hover:shadow-lg transition-all dark:border dark:border-primary-700"
               >
-                {pillar.highlight && (
-                  <div className="absolute -top-3 right-6 bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    YOUR DOMAIN
-                  </div>
-                )}
-                <div className="text-4xl mb-4">{pillar.icon}</div>
-                <h3 className={`text-xl font-serif font-bold mb-1 ${pillar.highlight ? 'text-white' : 'text-natural-900 dark:text-natural-50'}`}>
-                  {pillar.title}
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-xl font-serif font-bold mb-1 text-natural-900 dark:text-natural-50">
+                  {item.title}
                 </h3>
-                <p className={`text-sm font-medium mb-3 ${pillar.highlight ? 'text-primary-200' : 'text-primary-600 dark:text-primary-400'}`}>
-                  {pillar.subtitle}
+                <p className="text-sm font-medium mb-3 text-primary-600 dark:text-primary-400">
+                  {item.subtitle}
                 </p>
-                <p className={pillar.highlight ? 'text-primary-100' : 'text-natural-600 dark:text-natural-300'}>
-                  {pillar.description}
+                <p className="text-natural-600 dark:text-natural-300">
+                  {item.description}
                 </p>
               </div>
             ))}
@@ -193,89 +175,102 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* PART C: The Business Logic */}
+      {/* PART D: The Business Logic */}
       <section className="py-24 bg-natural-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <p className="text-sm font-mono tracking-widest text-primary-400 uppercase mb-4">The Business Logic</p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-              Shift Capital from Rent to Reach.
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-16">
+              Why the numbers work.
             </h2>
-            <p className="text-xl text-natural-300 mb-16 max-w-3xl">
-              Traditional galleries bleed money on prime real estate, leaving nothing for the work that matters: artist development, marketing, and experience design.
-            </p>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {/* Capital Efficiency */}
+              {/* No Commercial Rent */}
               <div className="border-l-2 border-primary-500 pl-6">
                 <h3 className="text-lg font-bold text-primary-400 mb-2">Capital Efficiency</h3>
-                <p className="text-2xl font-serif font-bold mb-4">$0 Commercial Rent</p>
+                <p className="text-2xl font-serif font-bold mb-4">No Commercial Rent</p>
                 <p className="text-natural-400">
-                  We eliminate commercial rent so you can invest in Global Marketing, artist acquisition, and programming that moves the needle.
+                  The partnership is designed to allocate more resources to programming, artists, and collectors.
                 </p>
               </div>
 
-              {/* The Audience */}
+              {/* Seed Traffic */}
               <div className="border-l-2 border-accent-500 pl-6">
                 <h3 className="text-lg font-bold text-accent-400 mb-2">The Audience</h3>
                 <p className="text-2xl font-serif font-bold mb-4">50,000+ Seed Traffic</p>
                 <p className="text-natural-400">
-                  Annual visitors already primed for experience. International tourists become Global Amplification Vectors for your artists.
+                  Bayview Hub's destination activity provides ongoing discovery. Annual visitors already primed for experience.
                 </p>
               </div>
 
-              {/* The Mindset */}
+              {/* Relaxed, Not Rushed */}
               <div className="border-l-2 border-neutral-500 pl-6">
                 <h3 className="text-lg font-bold text-neutral-400 mb-2">Lifestyle Modulation</h3>
                 <p className="text-2xl font-serif font-bold mb-4">Relaxed, Not Rushed</p>
                 <p className="text-natural-400">
-                  Selling to people who've had wine, enjoyed nature, heard music. Not stressed urban commuters between meetings.
+                  Art is encountered in a lived environment, where people stay longer and return.
                 </p>
               </div>
             </div>
 
             {/* Key insight callout */}
             <div className="mt-16 p-8 bg-white/5 rounded-2xl border border-white/10">
-              <p className="text-lg text-natural-300 italic">
-                "The question isn't how to get people through the door—they're already here. 
-                The question is: <span className="text-white font-medium">what do you want to show them?</span>"
+              <p className="text-lg text-natural-300">
+                You're not solving "traffic." You're designing conversion: <span className="text-white font-medium">visitors → patrons → collectors → members.</span>
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PART D: The Deal */}
+      {/* PART E: The Partnership */}
       <section className="py-24 bg-gradient-to-br from-primary-50 to-white dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <p className="text-sm font-mono tracking-widest text-primary-600 dark:text-primary-400 uppercase mb-4">The Offer</p>
+            <p className="text-sm font-mono tracking-widest text-primary-600 dark:text-primary-400 uppercase mb-4">The Partnership</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               Not an Employee.<br />
               <span className="text-primary-700 dark:text-primary-400">A Founding Partner.</span>
             </h2>
-            <p className="text-xl text-natural-600 mb-12 dark:text-natural-300">
-              This is not a job listing. This is an invitation to co-build an institution.
+            <p className="text-xl text-natural-600 mb-8 dark:text-natural-300">
+              This is a partner-led collaboration for an operator who wants to build a real, independent gallery business with a physical base and an existing destination audience behind it.
+            </p>
+            <p className="text-lg text-natural-500 mb-12 dark:text-natural-400 italic">
+              Partnership structure can be discussed after alignment (revenue share / equity / hybrid).
             </p>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            {/* Roles and Boundaries */}
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
               <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6 dark:bg-primary-800">
                   <span className="text-2xl">🏛️</span>
                 </div>
-                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Asset Leverage</h3>
+                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Leon's Role</h3>
                 <p className="text-natural-600 dark:text-natural-300">
-                  Full access to a 30-acre estate, existing infrastructure, and operational hospitality ecosystem. Build on a foundation, not from scratch.
+                  Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, and initial artist platforming (starting with Chelsey).
                 </p>
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
                 <div className="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center mb-6 dark:bg-accent-900/30">
-                  <span className="text-2xl">📊</span>
+                  <span className="text-2xl">🎯</span>
                 </div>
-                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Revenue Share / Equity</h3>
+                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Founding Partner Role</h3>
                 <p className="text-natural-600 dark:text-natural-300">
-                  Structured partnership using "Slicing Pie" or equivalent dynamic equity model. Your contribution builds your stake. Skin in the game.
+                  The Founding Partner leads curation, exhibition programming, and collector development day-to-day.
+                </p>
+              </div>
+            </div>
+
+            {/* Asset Cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
+                <div className="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center mb-6 dark:bg-neutral-900/30">
+                  <span className="text-2xl">🌿</span>
+                </div>
+                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">30-Acre Estate</h3>
+                <p className="text-natural-600 dark:text-natural-300">
+                  Full access to the estate, existing infrastructure, and operational hospitality ecosystem. Build on a foundation, not from scratch.
                 </p>
               </div>
 
@@ -288,14 +283,37 @@ export default function GalleryPage() {
                   Complete creative control over curation, programming, artist relationships, and brand positioning. Your vision. Your execution.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
-                <div className="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center mb-6 dark:bg-neutral-900/30">
-                  <span className="text-2xl">🌏</span>
-                </div>
-                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Global Platform</h3>
-                <p className="text-natural-600 dark:text-natural-300">
-                  Position yourself at the intersection of international tourism and contemporary art. Build a reputation, not just a business.
+      {/* PART F: Who This Is For */}
+      <section className="py-24 bg-white dark:bg-primary-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-sm font-mono tracking-widest text-primary-600 dark:text-primary-400 uppercase mb-4">Who This Is For</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-12 dark:text-natural-50">
+              The right fit.
+            </h2>
+
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+                <span className="text-2xl">✓</span>
+                <p className="text-lg text-natural-700 dark:text-natural-200">
+                  A curator / dealer / operator who can build a collector-facing program.
+                </p>
+              </div>
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+                <span className="text-2xl">✓</span>
+                <p className="text-lg text-natural-700 dark:text-natural-200">
+                  Someone who treats a gallery as long-term cultural practice, not a short-term project.
+                </p>
+              </div>
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+                <span className="text-2xl">✓</span>
+                <p className="text-lg text-natural-700 dark:text-natural-200">
+                  A person comfortable working inside a living destination (not an isolated white-cube model).
                 </p>
               </div>
             </div>
@@ -303,8 +321,8 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* PART E: Call to Action / Form */}
-      <section id="inquiry" className="py-24 bg-white dark:bg-primary-900">
+      {/* PART G: Call to Action / Form */}
+      <section id="inquiry" className="py-24 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <p className="text-sm font-mono tracking-widest text-primary-600 dark:text-primary-400 uppercase mb-4 text-center">Next Step</p>
@@ -324,7 +342,7 @@ export default function GalleryPage() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+              <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
                 <div className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
@@ -384,7 +402,7 @@ export default function GalleryPage() {
                       Professional Background *
                     </label>
                     <p className="text-sm text-natural-500 mb-2 dark:text-natural-400">
-                      Curation, gallery, art therapy, hospitality, or relevant entrepreneurial experience.
+                      Curation, gallery, creative workshops, hospitality, or relevant entrepreneurial experience.
                     </p>
                     <textarea
                       required
@@ -407,6 +425,19 @@ export default function GalleryPage() {
                       rows={4}
                       value={formData.vision}
                       onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-primary-900 dark:border-primary-600 dark:text-natural-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+                      What kind of artist would you never show — and why? *
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={formData.neverShow}
+                      onChange={(e) => setFormData({ ...formData, neverShow: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg border border-natural-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-primary-900 dark:border-primary-600 dark:text-natural-100"
                     />
                   </div>
@@ -462,6 +493,15 @@ export default function GalleryPage() {
               </form>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="py-8 bg-white dark:bg-primary-900">
+        <div className="container mx-auto px-4">
+          <p className="text-sm text-natural-500 text-center dark:text-natural-400 max-w-3xl mx-auto">
+            Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services.
+          </p>
         </div>
       </section>
 
