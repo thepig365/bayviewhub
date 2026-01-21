@@ -127,9 +127,9 @@ export default function FoundingGalleryPackPage() {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-primary-700">
-                <h3 className="font-bold text-natural-900 mb-4 dark:text-natural-50">Leon's role</h3>
+                <h3 className="font-bold text-natural-900 mb-4 dark:text-natural-50">Bayview's role</h3>
                 <p className="text-natural-700 dark:text-natural-300">
-                  Owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). Responsible for site integration, brand governance, and initial artist platforming (starting with Chelsey).
+                  Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, artist development.
                 </p>
               </div>
               <div className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-primary-700">

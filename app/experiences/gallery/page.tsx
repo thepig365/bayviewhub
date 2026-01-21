@@ -245,9 +245,9 @@ export default function GalleryPage() {
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6 dark:bg-primary-800">
                   <span className="text-2xl">🏛️</span>
                 </div>
-                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Leon's Role</h3>
+                <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Bayview's Role</h3>
                 <p className="text-natural-600 dark:text-natural-300">
-                  Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, and initial artist platforming (starting with Chelsey).
+                  Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, artist development.
                 </p>
               </div>
 
