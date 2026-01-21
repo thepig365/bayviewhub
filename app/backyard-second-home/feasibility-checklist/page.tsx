@@ -471,7 +471,7 @@ export default function FeasibilityChecklistPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900">
+      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-15" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
 
@@ -510,7 +510,7 @@ export default function FeasibilityChecklistPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-white text-stone-900 hover:bg-white/90 h-11 px-8 transition-colors"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-white text-neutral-900 hover:bg-white/90 h-11 px-8 transition-colors"
               data-testid="button-primary-cta"
             >
               Get a 48-hour Feasibility Reply

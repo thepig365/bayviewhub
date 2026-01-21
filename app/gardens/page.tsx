@@ -68,7 +68,7 @@ export default function GardensPage() {
   return (
     <div className="min-h-screen dark:bg-primary-900">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-50 to-natural-50 py-20 dark:from-primary-900 dark:to-primary-800">
+      <section className="bg-gradient-to-br from-neutral-100 to-neutral-50 py-20 dark:from-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
@@ -211,7 +211,7 @@ export default function GardensPage() {
       </section>
 
       {/* Founding Subscribers CTA */}
-      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50 dark:from-primary-900 dark:to-primary-800">
+      <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">

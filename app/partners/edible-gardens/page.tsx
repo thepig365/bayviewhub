@@ -45,11 +45,11 @@ export default function EdibleGardensFoundingPartnerPage() {
     <div className="min-h-screen dark:bg-primary-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }} />
       {/* Hero */}
-      <section className="bg-gradient-to-br from-accent-50 to-primary-50 py-20 dark:from-primary-900 dark:to-primary-800">
+      <section className="bg-gradient-to-br from-neutral-100 to-neutral-50 py-20 dark:from-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
-              <p className="text-xs font-bold tracking-wide uppercase text-accent-800 dark:text-accent-200">
+              <p className="text-xs font-bold tracking-wide uppercase text-neutral-800 dark:text-neutral-200">
                 Founding Partner Opportunity
               </p>
               <h1 className="mt-4 text-5xl md:text-6xl font-serif font-bold text-natural-900 dark:text-natural-50">
@@ -261,7 +261,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl p-8 bg-accent-50 border border-accent-200 dark:bg-primary-800/30 dark:border-primary-700">
+            <div className="rounded-2xl p-8 bg-neutral-100 border border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700">
               <h2 className="text-2xl md:text-3xl font-serif font-bold text-natural-900 dark:text-natural-50">
                 🚫 What This Is Not
               </h2>

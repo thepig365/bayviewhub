@@ -82,7 +82,7 @@ export function PrelaunchButton({
             onClick={() => setOpen(false)}
           />
           <div className="relative w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-natural-200 dark:bg-primary-900 dark:border-primary-700">
-            <div className="inline-flex items-center rounded-full bg-accent-500/15 text-accent-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-accent-500/20 dark:text-accent-200">
+            <div className="inline-flex items-center rounded-full bg-neutral-100 text-neutral-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-neutral-800 dark:text-neutral-200">
               Pre-Launch Notice
             </div>
             <h3

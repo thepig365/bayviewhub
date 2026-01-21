@@ -103,7 +103,7 @@ export default function GalleryPage() {
         {/* Split background */}
         <div className="absolute inset-0 flex">
           <div className="w-1/2 bg-neutral-100 dark:bg-neutral-900" />
-          <div className="w-1/2 bg-gradient-to-br from-primary-50 via-green-50 to-accent-50 dark:from-primary-900 dark:via-primary-800 dark:to-primary-900" />
+          <div className="w-1/2 bg-gradient-to-br from-primary-50 via-neutral-50 to-accent-50 dark:from-primary-900 dark:via-neutral-800 dark:to-primary-900" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
@@ -143,7 +143,7 @@ export default function GalleryPage() {
           </span>
           <span className="text-natural-300">vs</span>
           <span className="flex items-center gap-2">
-            <span className="w-3 h-3 bg-green-500 rounded-full" />
+            <span className="w-3 h-3 bg-neutral-500 rounded-full" />
             Living Ecosystem
           </span>
         </div>
@@ -225,8 +225,8 @@ export default function GalleryPage() {
               </div>
 
               {/* The Mindset */}
-              <div className="border-l-2 border-green-500 pl-6">
-                <h3 className="text-lg font-bold text-green-400 mb-2">Lifestyle Modulation</h3>
+              <div className="border-l-2 border-neutral-500 pl-6">
+                <h3 className="text-lg font-bold text-neutral-400 mb-2">Lifestyle Modulation</h3>
                 <p className="text-2xl font-serif font-bold mb-4">Relaxed, Not Rushed</p>
                 <p className="text-natural-400">
                   Selling to people who've had wine, enjoyed nature, heard music. Not stressed urban commuters between meetings.
@@ -280,7 +280,7 @@ export default function GalleryPage() {
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6 dark:bg-green-900/30">
+                <div className="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center mb-6 dark:bg-neutral-900/30">
                   <span className="text-2xl">🎯</span>
                 </div>
                 <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Full Autonomy</h3>
@@ -290,7 +290,7 @@ export default function GalleryPage() {
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6 dark:bg-purple-900/30">
+                <div className="w-12 h-12 bg-neutral-100 rounded-xl flex items-center justify-center mb-6 dark:bg-neutral-900/30">
                   <span className="text-2xl">🌏</span>
                 </div>
                 <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Global Platform</h3>
@@ -316,10 +316,10 @@ export default function GalleryPage() {
             </p>
 
             {status === 'success' ? (
-              <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center dark:bg-green-900/20 dark:border-green-800">
+              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-8 text-center dark:bg-neutral-900/20 dark:border-neutral-800">
                 <div className="text-4xl mb-4">✓</div>
-                <h3 className="text-xl font-bold text-green-800 mb-2 dark:text-green-200">Inquiry Received</h3>
-                <p className="text-green-700 dark:text-green-300">
+                <h3 className="text-xl font-bold text-neutral-800 mb-2 dark:text-neutral-200">Inquiry Received</h3>
+                <p className="text-neutral-700 dark:text-neutral-300">
                   We review all inquiries personally. If there's strategic alignment, we'll reach out to arrange a conversation.
                 </p>
               </div>
@@ -450,7 +450,7 @@ export default function GalleryPage() {
                   </Button>
 
                   {status === 'error' && (
-                    <p className="text-red-600 text-center text-sm dark:text-red-400">
+                    <p className="text-neutral-600 text-center text-sm dark:text-neutral-400">
                       Something went wrong. Please email directly: {SITE_CONFIG.email}
                     </p>
                   )}

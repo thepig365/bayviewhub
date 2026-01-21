@@ -30,7 +30,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
+      <section className="relative bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-50 py-20 md:py-32 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
@@ -154,7 +154,7 @@ export default function HomePage() {
               ))}
               {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
               <div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
-                <div className="inline-flex items-center rounded-full bg-accent-500/15 text-accent-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-accent-500/20 dark:text-accent-200">
+                <div className="inline-flex items-center rounded-full bg-neutral-100 text-neutral-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-neutral-800 dark:text-neutral-200">
                   Pre-Launch / Founding Partners
                 </div>
                 <h4 className="mt-4 text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
@@ -189,7 +189,7 @@ export default function HomePage() {
       </section>
 
       {/* Now Building - Recruitment */}
-      <section className="py-20 bg-gradient-to-br from-accent-50 to-primary-50 dark:from-primary-800 dark:to-primary-900">
+      <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
