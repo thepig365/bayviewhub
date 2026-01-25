@@ -1,49 +1,61 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SSD Feasibility Checklist (Victoria 2026) | Small Second Dwelling Compliance Tool",
-  description: "Check your site against Victorian SSD Deemed-to-Comply criteria (Clause 54.03) before paying for design. 60 sqm max, no subdivision, all-electric.",
+  title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
+  description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process. Victorian VC253/VC282 compliance tool.",
   alternates: {
     canonical: "https://www.bayviewhub.me/backyard-second-home/feasibility-checklist",
   },
   openGraph: {
-    title: "SSD Feasibility Checklist (Victoria 2026)",
-    description: "Small Second Dwelling compliance tool: check feasibility against Clause 54.03 Deemed-to-Comply criteria before you pay for design.",
+    title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
+    description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process.",
     url: "https://www.bayviewhub.me/backyard-second-home/feasibility-checklist",
     siteName: "Bayview Hub",
     type: "website",
   },
+  keywords: [
+    "SSD Victoria",
+    "Small Second Dwelling",
+    "Clause 54.03",
+    "Deemed-to-Comply",
+    "VicSmart",
+    "VC253",
+    "VC282",
+    "Victorian planning",
+    "60 sqm dwelling",
+    "no planning permit",
+  ],
 };
 
-// FAQ data for JSON-LD (SSR) - SSD focused
+// FAQ data for JSON-LD
 const faqData = [
   {
-    question: "What is a Small Second Dwelling (SSD) in Victoria?",
-    answer: "An SSD is a self-contained dwelling of up to 60 sqm built on the same lot as an existing house. Under Clause 54.03 of the Victorian Planning Provisions, SSDs meeting specific criteria qualify for 'Deemed-to-Comply' status — meaning no planning permit is required."
+    question: "What is the Green Lane pathway for SSDs in Victoria?",
+    answer: "Green Lane means your SSD meets all Deemed-to-Comply criteria under Clause 54.03: ≤60sqm, behind front wall, no gas, 25sqm POS retained, compliant setbacks, no triggered overlays. No planning permit required. Proceed directly to building permit."
   },
   {
-    question: "What are the key SSD requirements in Victoria?",
-    answer: "Maximum 60 sqm floor area, must be behind the front wall line of the main dwelling, cannot connect to reticulated gas (all-electric required), cannot be subdivided from the main lot, and main dwelling must retain at least 25 sqm of private open space."
+    question: "What triggers VicSmart instead of Green Lane?",
+    answer: "VicSmart applies when your SSD is otherwise compliant but triggers minor overlays (Heritage, Flood, etc.) or requires minor setback variations. Council must decide within 10 business days under VC282. No neighbor notification required."
   },
   {
-    question: "Do I need a planning permit for an SSD?",
-    answer: "If your SSD meets all Deemed-to-Comply criteria under Clause 54.03, no planning permit is required. You proceed directly to building permit with a registered building surveyor."
+    question: "What puts an SSD project in the Red Zone?",
+    answer: "GFA exceeding 60 sqm or front-yard siting immediately disqualifies SSD pathway. Expect standard planning permit: 12-18 months, neighbor notification, potential objections, VCAT risk."
+  },
+  {
+    question: "What are the VC253/VC282 hard constraints for SSDs?",
+    answer: "Maximum 60 sqm GFA, siting behind front wall line, all-electric (no reticulated gas), no subdivision from main lot, main dwelling retains 25 sqm private open space."
+  },
+  {
+    question: "Is building permit still required for Green Lane SSDs?",
+    answer: "Yes. Building permit is always mandatory for structural safety, energy compliance, and NCC requirements. Green Lane bypasses planning permit, not building permit."
   },
   {
     question: "Can I subdivide an SSD from my property?",
-    answer: "No. An SSD cannot be subdivided from the main lot. It must remain on the same title as the main dwelling."
-  },
-  {
-    question: "What kills SSD feasibility?",
-    answer: "Common blockers include inadequate site access, easements in the buildable area, steep slopes, insufficient lot size to meet siting and POS requirements, and restrictive planning overlays."
-  },
-  {
-    question: "What happens if my site doesn't meet Deemed-to-Comply criteria?",
-    answer: "You may still be able to build, but you'll need a planning permit. This adds time and uncertainty. We'll tell you early if your site doesn't meet the criteria."
+    answer: "No. Under VC253/VC282, SSDs cannot be subdivided from the main lot. Subdivision intent disqualifies you from the SSD framework entirely."
   }
 ];
 
-// JSON-LD structured data (SSR) - SSD focused
+// JSON-LD structured data - Victorian SSD Regulatory Expert
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -59,10 +71,15 @@ const jsonLd = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Victorian Small Second Dwelling (SSD) Feasibility Service",
-    "description": "Professional feasibility assessment for Small Second Dwellings (SSDs) in Victoria, Australia. Compliance check against Clause 54.03 Deemed-to-Comply criteria. 60 sqm maximum, no subdivision, all-electric design.",
-    "serviceType": "Small Second Dwelling Feasibility Assessment",
+    "@type": "ProfessionalService",
+    "name": "Victorian SSD Regulatory Compliance Service",
+    "description": "Small Second Dwelling feasibility assessment and Path to Approval determination under Victorian Planning Provisions VC253/VC282. Green Lane, VicSmart, and standard pathway analysis. Clause 54.03 Deemed-to-Comply specialist.",
+    "serviceType": [
+      "SSD Feasibility Assessment",
+      "Path to Approval Analysis",
+      "Clause 54.03 Compliance",
+      "VicSmart Pathway Provider"
+    ],
     "areaServed": {
       "@type": "State",
       "name": "Victoria",
@@ -83,14 +100,28 @@ const jsonLd = [
     },
     "offers": {
       "@type": "Offer",
-      "description": "48-hour professional feasibility report for SSD compliance"
-    }
+      "description": "48-hour feasibility assessment with Path to Approval determination"
+    },
+    "knowsAbout": [
+      "Victorian Planning Provisions",
+      "Clause 54.03 Deemed-to-Comply",
+      "VC253 Small Second Dwelling regulations",
+      "VC282 VicSmart expedited pathway",
+      "Residential development Victoria"
+    ]
   },
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Bayview Hub",
-    "url": "https://www.bayviewhub.me"
+    "@type": "WebApplication",
+    "name": "SSD Path to Approval Engine",
+    "description": "Interactive tool to determine Victorian SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day approval), or Red Zone (standard planning process).",
+    "applicationCategory": "Planning Tool",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "AUD"
+    }
   }
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -21,7 +21,14 @@ import {
   Building,
   Sparkles,
   Share2,
+  Zap,
+  FileText,
+  Shield,
+  ExternalLink,
 } from "lucide-react";
+
+// Path to Approval Types
+type ApprovalPath = "green" | "vicsmart" | "red" | null;
 
 interface FAQItemProps {
   question: string;
@@ -35,14 +42,13 @@ function FAQItem({ question, answer }: FAQItemProps) {
     <div className="border-b border-border/40 last:border-b-0">
       <button
         onClick={() => answer && setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group"
-        data-testid={`faq-toggle-${question.slice(0, 20).replace(/\s/g, "-").toLowerCase()}`}
+        className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-medium text-base md:text-lg text-foreground pr-6 group-hover:text-primary transition-colors">
+        <span className="font-medium text-base text-foreground pr-6 group-hover:text-primary transition-colors">
           {question}
         </span>
         {answer && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+          <div className="flex-shrink-0 w-7 h-7 rounded-full bg-muted/50 flex items-center justify-center">
             {isOpen ? (
               <ChevronUp className="w-4 h-4 text-muted-foreground" />
             ) : (
@@ -52,7 +58,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
         )}
       </button>
       {isOpen && answer && (
-        <div className="pb-6 text-muted-foreground leading-relaxed pl-0 pr-12">
+        <div className="pb-5 text-muted-foreground leading-relaxed pr-12 text-sm">
           {answer}
         </div>
       )}
@@ -69,7 +75,7 @@ interface ChecklistItemProps {
 function ChecklistItem({ label, checked, onChange }: ChecklistItemProps) {
   return (
     <div
-      className="flex items-start gap-3.5 cursor-pointer group py-1"
+      className="flex items-start gap-3 cursor-pointer group py-1"
       onClick={onChange}
       role="checkbox"
       aria-checked={checked}
@@ -84,15 +90,13 @@ function ChecklistItem({ label, checked, onChange }: ChecklistItemProps) {
       <div
         className={`w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
           checked
-            ? "bg-primary border-primary shadow-sm"
+            ? "bg-primary border-primary"
             : "border-border group-hover:border-primary/60"
         }`}
       >
         {checked && <Check className="w-3 h-3 text-primary-foreground" />}
       </div>
-      <span className="text-sm md:text-base text-foreground leading-relaxed">
-        {label}
-      </span>
+      <span className="text-sm text-foreground leading-relaxed">{label}</span>
     </div>
   );
 }
@@ -127,16 +131,13 @@ function FeasibilityForm() {
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (
-    field: keyof FeasibilityFormData,
-    value: string
-  ) => {
+  const handleInputChange = (field: keyof FeasibilityFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const validateForm = (): boolean => {
     if (!formData.suburb.trim()) {
-      setFormError("Suburb or address is required");
+      setFormError("Suburb or address required");
       return false;
     }
     setFormError("");
@@ -145,10 +146,7 @@ function FeasibilityForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
     setFormError("");
@@ -180,23 +178,18 @@ function FeasibilityForm() {
       if (response.ok && result.ok) {
         router.push("/backyard-second-home/feasibility-checklist/thank-you");
       } else {
-        setFormError(result.error || "Something went wrong. Please try again.");
+        setFormError(result.error || "Submission failed. Retry or email directly.");
         setIsSubmitting(false);
       }
-    } catch (err) {
-      setFormError("Network error. Please check your connection and try again.");
+    } catch {
+      setFormError("Network error. Check connection and retry.");
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-card border border-border/60 rounded-xl p-6 md:p-10 shadow-sm">
-      <p className="text-sm text-muted-foreground mb-8 p-4 bg-muted/40 rounded-lg border border-border/40">
-        Prefer not to use email? Copy the details and text us, or we can follow
-        up by phone.
-      </p>
-
-      <form onSubmit={handleSubmit} className="space-y-8">
+    <div className="bg-card border border-border/60 rounded-xl p-6 md:p-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="absolute -left-[9999px]" aria-hidden="true">
           <input
             type="text"
@@ -205,70 +198,32 @@ function FeasibilityForm() {
             autoComplete="off"
             value={formData.website}
             onChange={(e) => handleInputChange("website", e.target.value)}
-            className="h-11 w-full rounded-md border border-input bg-background px-4 py-2"
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-          <div className="space-y-2.5">
-            <label htmlFor="phone" className="text-sm font-medium">
-              Phone (optional)
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              placeholder="Your phone number"
-              value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
-              className="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="input-phone"
-            />
-          </div>
-
-          <div className="space-y-2.5">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email (optional)
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Your email address"
-              value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              className="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="input-email"
-            />
-          </div>
-
-          <div className="space-y-2.5">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="space-y-1.5">
             <label htmlFor="suburb" className="text-sm font-medium">
-              Suburb (or Address) <span className="text-destructive">*</span>
+              Suburb/Address (VIC) <span className="text-destructive">*</span>
             </label>
             <input
               id="suburb"
               name="suburb"
-              placeholder="Enter suburb or full address"
+              placeholder="Enter suburb or address"
               value={formData.suburb}
               onChange={(e) => {
                 handleInputChange("suburb", e.target.value);
                 if (formError) setFormError("");
               }}
-              className={`flex h-11 w-full rounded-md border bg-background px-4 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors ${
+              className={`flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 formError ? "border-destructive" : "border-input"
               }`}
-              data-testid="input-suburb"
             />
-            {formError && (
-              <p className="text-sm text-destructive" data-testid="text-form-error">
-                {formError}
-              </p>
-            )}
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-1.5">
             <label htmlFor="lotSize" className="text-sm font-medium">
-              Approx lot size (m²)
+              Lot Size (sqm)
             </label>
             <input
               id="lotSize"
@@ -276,23 +231,51 @@ function FeasibilityForm() {
               placeholder="e.g. 600"
               value={formData.lotSize}
               onChange={(e) => handleInputChange("lotSize", e.target.value)}
-              className="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="input-lot-size"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-1.5">
+            <label htmlFor="email" className="text-sm font-medium">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="your@email.com"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label htmlFor="phone" className="text-sm font-medium">
+              Phone
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="0400 000 000"
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
+
+          <div className="space-y-1.5">
             <label htmlFor="slope" className="text-sm font-medium">
-              Slope
+              Site Slope
             </label>
             <select
               id="slope"
               value={formData.slope}
               onChange={(e) => handleInputChange("slope", e.target.value)}
-              className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="select-slope"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select slope type</option>
+              <option value="">Select</option>
               <option value="flat">Flat</option>
               <option value="mild">Mild</option>
               <option value="steep">Steep</option>
@@ -300,18 +283,17 @@ function FeasibilityForm() {
             </select>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-1.5">
             <label htmlFor="access" className="text-sm font-medium">
-              Access
+              Site Access
             </label>
             <select
               id="access"
               value={formData.access}
               onChange={(e) => handleInputChange("access", e.target.value)}
-              className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="select-access"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select access type</option>
+              <option value="">Select</option>
               <option value="narrow">Narrow</option>
               <option value="ok">OK</option>
               <option value="wide">Wide</option>
@@ -319,107 +301,387 @@ function FeasibilityForm() {
             </select>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-1.5">
             <label htmlFor="intention" className="text-sm font-medium">
-              Primary intention
+              Primary Use
             </label>
             <select
               id="intention"
               value={formData.intention}
               onChange={(e) => handleInputChange("intention", e.target.value)}
-              className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="select-intention"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select primary intention</option>
-              <option value="family">Family living</option>
-              <option value="rental">Long-term rental</option>
-              <option value="both">Both (family now, rental later)</option>
+              <option value="">Select</option>
+              <option value="family">Multi-generational</option>
+              <option value="rental">Rental income</option>
+              <option value="both">Both</option>
             </select>
           </div>
 
-          <div className="space-y-2.5">
-            <label htmlFor="budget" className="text-sm font-medium">
-              Budget range
-            </label>
-            <select
-              id="budget"
-              value={formData.budget}
-              onChange={(e) => handleInputChange("budget", e.target.value)}
-              className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="select-budget"
-            >
-              <option value="">Select budget range</option>
-              <option value="not-sure">Not sure yet</option>
-              <option value="150-250">$150k–$250k</option>
-              <option value="250-400">$250k–$400k</option>
-              <option value="400+">$400k+</option>
-            </select>
-          </div>
-
-          <div className="space-y-2.5 md:col-span-2">
+          <div className="space-y-1.5">
             <label htmlFor="readyToProceed" className="text-sm font-medium">
-              Ready to proceed within 6 months?
+              Timeline
             </label>
             <select
               id="readyToProceed"
               value={formData.readyToProceed}
-              onChange={(e) =>
-                handleInputChange("readyToProceed", e.target.value)
-              }
-              className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              data-testid="select-ready"
+              onChange={(e) => handleInputChange("readyToProceed", e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select your timeline</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-              <option value="not-sure">Not sure</option>
+              <option value="">Select</option>
+              <option value="yes">Within 6 months</option>
+              <option value="no">6-12 months</option>
+              <option value="not-sure">Exploring</option>
             </select>
           </div>
         </div>
 
-        <div className="pt-4 border-t border-border/40">
-          <p className="text-sm text-muted-foreground mb-6">
-            By submitting, you agree we can contact you about your feasibility
-            request.
-          </p>
+        {formError && (
+          <p className="text-sm text-destructive font-medium">{formError}</p>
+        )}
 
-          {formError && (
-            <p
-              className="text-sm text-destructive font-medium mb-4"
-              data-testid="text-form-error-message"
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 w-full md:w-auto disabled:opacity-50"
+        >
+          {isSubmitting ? "Processing..." : "Submit for Assessment"}
+          {!isSubmitting && <ArrowRight className="w-4 h-4" />}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+// Logic Engine Component
+function PathToApprovalEngine() {
+  const [gfa, setGfa] = useState<string>("");
+  const [siting, setSiting] = useState<string>("");
+  const [overlays, setOverlays] = useState<string>("");
+  const [setbacks, setSetbacks] = useState<string>("");
+  const [result, setResult] = useState<ApprovalPath>(null);
+
+  useEffect(() => {
+    calculatePath();
+  }, [gfa, siting, overlays, setbacks]);
+
+  const calculatePath = () => {
+    // Red Zone: Non-compliant
+    if (gfa === "over60" || siting === "front") {
+      setResult("red");
+      return;
+    }
+
+    // Need all inputs
+    if (!gfa || !siting) {
+      setResult(null);
+      return;
+    }
+
+    // Green Lane: Full compliance
+    if (gfa === "under60" && siting === "behind" && overlays === "none" && setbacks === "compliant") {
+      setResult("green");
+      return;
+    }
+
+    // VicSmart: Partial compliance with overlays or minor variations
+    if (gfa === "under60" && siting === "behind") {
+      if (overlays === "some" || setbacks === "minor") {
+        setResult("vicsmart");
+        return;
+      }
+      // Default to green if no overlays specified but otherwise compliant
+      if (!overlays || !setbacks) {
+        setResult(null);
+        return;
+      }
+      setResult("green");
+    }
+  };
+
+  return (
+    <div className="bg-card border border-border rounded-xl overflow-hidden">
+      <div className="p-6 border-b border-border bg-muted/30">
+        <h3 className="text-lg font-bold text-foreground">Path to Approval Engine</h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          Input your site parameters. The engine determines your approval pathway.
+        </p>
+      </div>
+
+      <div className="p-6 space-y-5">
+        {/* GFA Input */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Proposed GFA (Gross Floor Area)</label>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setGfa("under60")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                gfa === "under60"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:border-primary/50"
+              }`}
             >
-              {formError}
-            </p>
+              ≤ 60 sqm
+            </button>
+            <button
+              onClick={() => setGfa("over60")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                gfa === "over60"
+                  ? "bg-destructive text-white border-destructive"
+                  : "bg-background border-border hover:border-destructive/50"
+              }`}
+            >
+              &gt; 60 sqm
+            </button>
+          </div>
+        </div>
+
+        {/* Siting Input */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Proposed Siting</label>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setSiting("behind")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                siting === "behind"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:border-primary/50"
+              }`}
+            >
+              Behind Front Wall
+            </button>
+            <button
+              onClick={() => setSiting("front")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                siting === "front"
+                  ? "bg-destructive text-white border-destructive"
+                  : "bg-background border-border hover:border-destructive/50"
+              }`}
+            >
+              Front Yard
+            </button>
+          </div>
+        </div>
+
+        {/* Overlays Input */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Planning Overlays (Heritage, Flood, etc.)</label>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setOverlays("none")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                overlays === "none"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:border-primary/50"
+              }`}
+            >
+              None
+            </button>
+            <button
+              onClick={() => setOverlays("some")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                overlays === "some"
+                  ? "bg-amber-500 text-white border-amber-500"
+                  : "bg-background border-border hover:border-amber-500/50"
+              }`}
+            >
+              Some Present
+            </button>
+          </div>
+        </div>
+
+        {/* Setbacks Input */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Clause 54.03 Setbacks</label>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setSetbacks("compliant")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                setbacks === "compliant"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:border-primary/50"
+              }`}
+            >
+              Compliant
+            </button>
+            <button
+              onClick={() => setSetbacks("minor")}
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                setbacks === "minor"
+                  ? "bg-amber-500 text-white border-amber-500"
+                  : "bg-background border-border hover:border-amber-500/50"
+              }`}
+            >
+              Minor Variation
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Result Output */}
+      {result && (
+        <div className={`p-6 border-t ${
+          result === "green" ? "bg-emerald-50 dark:bg-emerald-950/30" :
+          result === "vicsmart" ? "bg-amber-50 dark:bg-amber-950/30" :
+          "bg-red-50 dark:bg-red-950/30"
+        }`}>
+          {result === "green" && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-emerald-700 dark:text-emerald-400">GREEN LANE: No Planning Permit</h4>
+                  <p className="text-sm text-emerald-600 dark:text-emerald-500">100% Compliant</p>
+                </div>
+              </div>
+              <p className="text-sm text-emerald-800 dark:text-emerald-300 leading-relaxed">
+                Result: Site meets Deemed-to-Comply criteria under Clause 54.03. <strong>No Planning Permit required.</strong> Proceed directly to Building Permit application with a registered building surveyor.
+              </p>
+            </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 w-full md:w-auto min-w-[200px] disabled:pointer-events-none disabled:opacity-50 transition-colors"
-            data-testid="button-submit-form"
-          >
-            {isSubmitting ? "Sending..." : "Send my details"}
-            {!isSubmitting && <ArrowRight className="w-5 h-5 ml-2" />}
-          </button>
+          {result === "vicsmart" && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-amber-700 dark:text-amber-400">VICSMART FAST TRACK: 10-Day Approval</h4>
+                  <p className="text-sm text-amber-600 dark:text-amber-500">VC282 Expedited Pathway</p>
+                </div>
+              </div>
+              <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
+                Result: Site is SSD-eligible but triggers overlay or requires minor setback variation. <strong>VicSmart pathway applies.</strong> Council must decide within 10 business days. No neighbor notification required. Reference: VC282 Fast-Track provisions.
+              </p>
+            </div>
+          )}
+
+          {result === "red" && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
+                  <XCircle className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-red-700 dark:text-red-400">RED ZONE: Non-SSD Project</h4>
+                  <p className="text-sm text-red-600 dark:text-red-500">Outside Framework</p>
+                </div>
+              </div>
+              <p className="text-sm text-red-800 dark:text-red-300 leading-relaxed">
+                Result: Project falls outside the Small Second Dwelling framework. <strong>Expect 12-18 months in Planning</strong> with standard permit process. Neighbor notification, potential objections, and VCAT risk. Consider engaging a traditional developer or reducing scope to comply with SSD requirements.
+              </p>
+            </div>
+          )}
         </div>
-      </form>
+      )}
+    </div>
+  );
+}
+
+// Permit Explainer Component
+function PermitExplainer() {
+  const [activeTab, setActiveTab] = useState<"planning" | "building">("planning");
+
+  return (
+    <div className="bg-card border border-border rounded-xl overflow-hidden">
+      <div className="p-6 border-b border-border bg-muted/30">
+        <h3 className="text-lg font-bold text-foreground">Do I Need a Permit?</h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          Understanding the difference between Planning Permit and Building Permit.
+        </p>
+      </div>
+
+      <div className="flex border-b border-border">
+        <button
+          onClick={() => setActiveTab("planning")}
+          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+            activeTab === "planning"
+              ? "bg-primary/10 text-primary border-b-2 border-primary"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Planning Permit
+        </button>
+        <button
+          onClick={() => setActiveTab("building")}
+          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+            activeTab === "building"
+              ? "bg-primary/10 text-primary border-b-2 border-primary"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Building Permit
+        </button>
+      </div>
+
+      <div className="p-6">
+        {activeTab === "planning" && (
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-primary mt-0.5" />
+              <div>
+                <h4 className="font-medium text-foreground">Planning Permit</h4>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Assesses land use, neighborhood impact, overlays. Required when you <em>don&apos;t</em> meet Deemed-to-Comply criteria.
+                </p>
+              </div>
+            </div>
+            <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-lg p-4">
+              <p className="text-sm text-emerald-800 dark:text-emerald-300">
+                <strong>SSD Advantage:</strong> If your SSD meets Clause 54.03 criteria (≤60sqm, behind front wall, no gas, 25sqm POS retained), planning permit is <strong>bypassed entirely</strong>. That is the value proposition.
+              </p>
+            </div>
+            <div className="bg-amber-50 dark:bg-amber-950/30 rounded-lg p-4">
+              <p className="text-sm text-amber-800 dark:text-amber-300">
+                <strong>VicSmart Alternative:</strong> If overlays are present but SSD otherwise compliant, VicSmart expedites approval to 10 business days with no neighbor notification.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "building" && (
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <Building className="w-5 h-5 text-primary mt-0.5" />
+              <div>
+                <h4 className="font-medium text-foreground">Building Permit</h4>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Assesses structural safety, energy compliance, bushfire (BAL), NCC requirements. <strong>Always mandatory</strong> for any dwelling.
+                </p>
+              </div>
+            </div>
+            <div className="bg-muted/50 rounded-lg p-4">
+              <p className="text-sm text-muted-foreground">
+                <strong>Process:</strong> Engage a Registered Building Surveyor (RBS). Submit working drawings, engineering, energy report. Surveyor issues permit. Inspections during build. Certificate of Occupancy on completion.
+              </p>
+            </div>
+            <div className="bg-primary/5 rounded-lg p-4">
+              <p className="text-sm text-foreground">
+                <strong>Timeline:</strong> Building permit typically 2-4 weeks once documentation complete. No council discretion — surveyor assesses against code. If compliant, permit issued.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 export default function FeasibilityChecklistPage() {
   const [checklist, setChecklist] = useState({
+    gfa60: false,
+    siting: false,
+    electric: false,
+    noSubdivision: false,
+    pos25: false,
     access: false,
-    easements: false,
-    backyard: false,
+    services: false,
     slope: false,
-    power: false,
-    stormwater: false,
-    privacy: false,
-    approvals: false,
   });
 
-  const [outcome, setOutcome] = useState<string>("");
   const [shareMessage, setShareMessage] = useState("");
 
   const toggleCheck = (key: keyof typeof checklist) => {
@@ -427,38 +689,34 @@ export default function FeasibilityChecklistPage() {
   };
 
   const scrollToForm = () => {
-    document
-      .getElementById("feasibility-form")
-      ?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("feasibility-form")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToChecklist = () => {
-    document
-      .getElementById("quick-check")
-      ?.scrollIntoView({ behavior: "smooth" });
+  const scrollToEngine = () => {
+    document.getElementById("logic-engine")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleShare = async () => {
     const shareData = {
-      title: "SSD Feasibility Checklist (Victoria 2026)",
-      text: "Check your site against Deemed-to-Comply criteria before paying for design.",
+      title: "SSD Feasibility Logic Engine — Victoria 2026",
+      text: "Determine your approval pathway: Green Lane (no permit), VicSmart (10-day), or standard planning.",
       url: typeof window !== "undefined" ? window.location.href : "",
     };
 
     try {
       if (navigator.share) {
         await navigator.share(shareData);
-        setShareMessage("Thanks for sharing!");
+        setShareMessage("Shared");
       } else {
         await navigator.clipboard.writeText(shareData.url);
-        setShareMessage("Link copied!");
+        setShareMessage("Link copied");
       }
       setTimeout(() => setShareMessage(""), 3000);
     } catch (err) {
       if ((err as Error).name !== "AbortError") {
         try {
           await navigator.clipboard.writeText(shareData.url);
-          setShareMessage("Link copied!");
+          setShareMessage("Link copied");
           setTimeout(() => setShareMessage(""), 3000);
         } catch {
           setShareMessage("Could not share");
@@ -468,629 +726,355 @@ export default function FeasibilityChecklistPage() {
     }
   };
 
+  const checkedCount = Object.values(checklist).filter(Boolean).length;
+  const totalChecks = Object.keys(checklist).length;
+
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-15" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
-
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 md:py-28 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 px-4 py-2 rounded-full text-sm mb-10 border border-white/10">
-            <CheckCircle2 className="w-4 h-4" />
-            <span>No sales pressure. Honest feasibility assessment.</span>
+      {/* Hero */}
+      <section className="bg-neutral-900 text-white py-16 md:py-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-xs font-mono text-neutral-500 mb-6 uppercase tracking-widest">
+            Victorian SSD Logic Engine · VC253/VC282 · 2026
           </div>
-
-          <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 leading-tight"
-            data-testid="text-hero-title"
-          >
-            SSD Feasibility Checklist — Victoria 2026
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+            SSD Feasibility Checklist
+            <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
           </h1>
-
-          {/* GEO Capsule - below H1 */}
-          <p className="text-xs md:text-sm text-white/60 mb-8 max-w-3xl mx-auto">
-            Small Second Dwelling (SSD) compliance tool: check feasibility against Clause 54.03 Deemed-to-Comply criteria before you pay for design.
+          <p className="text-lg text-neutral-300 mb-4 leading-relaxed max-w-3xl">
+            This tool determines your approval pathway. Green Lane bypasses planning entirely. 
+            VicSmart delivers 10-day council decision. Red Zone means standard permit process.
           </p>
-
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-4 leading-relaxed font-light">
-            Build a compliant Small Second Dwelling (SSD) on your existing lot — for
-            multi-generational living or long-term rental. 60 sqm max, no subdivision.
+          <p className="text-neutral-500 mb-8">
+            We navigate the constraints. You get certainty.
           </p>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto mb-6 font-light">
-            Start with feasibility and cost control before you spend serious
-            money.
-          </p>
-
-          <p className="text-sm text-white/60 mb-12 max-w-xl mx-auto">
-            If it's not feasible (or not financially sensible), we'll tell you
-            early — and explain why.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-wrap gap-4">
+            <button
+              onClick={scrollToEngine}
+              className="inline-flex items-center gap-2 bg-white text-neutral-900 hover:bg-neutral-100 h-10 px-6 rounded-md text-sm font-medium"
+            >
+              Run Path to Approval Engine
+              <ArrowRight className="w-4 h-4" />
+            </button>
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-white text-neutral-900 hover:bg-white/90 h-11 px-8 transition-colors"
-              data-testid="button-primary-cta"
+              className="inline-flex items-center gap-2 border border-neutral-600 text-white hover:bg-neutral-800 h-10 px-6 rounded-md text-sm font-medium"
             >
-              Get a 48-hour Feasibility Reply
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </button>
-            <button
-              onClick={scrollToChecklist}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-white/40 text-white hover:bg-white/10 h-11 px-8 transition-colors"
-              data-testid="button-secondary-cta"
-            >
-              Start the 2-minute Checklist
+              Submit for Assessment
             </button>
           </div>
         </div>
       </section>
 
-      {/* Why This Matters */}
-      <section className="py-20 md:py-28 bg-background border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2
-            className="text-3xl md:text-4xl font-bold text-foreground mb-8 tracking-tight"
-            data-testid="text-section-why"
-          >
-            Why SSD feasibility matters
+      {/* Framework Summary */}
+      <section className="py-12 bg-muted/30 border-b border-border">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-xl font-bold text-foreground mb-6 text-center">
+            VC253/VC282 Hard Constraints
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            A Small Second Dwelling can be a practical response to housing pressure — but only if your site meets 
-            the Deemed-to-Comply criteria. We validate constraints before you spend money on design.
-          </p>
-        </div>
-      </section>
-
-      {/* Quick Answers (GEO) */}
-      <section className="py-16 md:py-20 bg-muted/30 border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight text-center">
-            Quick Answers
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">Do I need a planning permit?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                If your SSD meets Deemed-to-Comply criteria under Clause 54.03 (60 sqm max, behind front wall, no gas, 25 sqm POS for main house), no planning permit is required. Straight to building permit.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">What are the SSD hard limits?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                60 sqm maximum floor area. Must be behind front wall line. No reticulated gas (all-electric). Cannot be subdivided. Main dwelling must retain 25 sqm private open space.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">What kills SSD feasibility?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Tight access, steep slopes, major overlays, expensive service upgrades, or insufficient lot size to meet siting and POS requirements.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">What if I want more than 60 sqm?</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                The SSD pathway is not for you. Larger dwellings require standard planning permit process with longer timeframes and less certainty.
-              </p>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {[
+              { label: "Max GFA", value: "60 sqm", icon: Home },
+              { label: "Siting", value: "Behind front wall", icon: Target },
+              { label: "Utilities", value: "All-electric", icon: Zap },
+              { label: "Title", value: "No subdivision", icon: FileText },
+              { label: "Main POS", value: "25 sqm min", icon: Shield },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={idx} className="bg-card border border-border rounded-lg p-4 text-center">
+                  <Icon className="w-5 h-5 mx-auto mb-2 text-primary" />
+                  <div className="text-xs text-muted-foreground">{item.label}</div>
+                  <div className="text-sm font-medium text-foreground">{item.value}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Evidence Chain - What we check */}
-      <section className="py-12 md:py-16 bg-background border-b border-border/30">
+      {/* Logic Engine */}
+      <section id="logic-engine" className="py-16 md:py-20 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-6">
-          <h3 className="text-lg md:text-xl font-semibold text-foreground mb-5">
-            What we check after you submit
-          </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2">
-              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Zoning and any obvious overlays</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Access constraints (driveway, working space, build access)</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Services likely to impact cost (sewer, stormwater, power)</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Common design blockers (privacy, setbacks, slope)</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Approval pathway risk level (simple / medium / complex)</span>
-            </li>
-          </ul>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Path to Approval Engine
+            </h2>
+            <p className="text-muted-foreground">
+              Input your site parameters. The engine outputs your approval pathway.
+            </p>
+          </div>
+          <PathToApprovalEngine />
         </div>
       </section>
 
-      {/* Quick Self-Check */}
-      <section
-        id="quick-check"
-        className="py-20 md:py-28 bg-muted/30 border-b border-border/30"
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground mb-5 tracking-tight"
-              data-testid="text-section-checklist"
-            >
-              2-Minute Quick Self-Check (Go / Maybe / No)
+      {/* Permit Explainer */}
+      <section className="py-16 md:py-20 bg-muted/30 border-b border-border">
+        <div className="max-w-3xl mx-auto px-6">
+          <PermitExplainer />
+        </div>
+      </section>
+
+      {/* SSD Compliance Checklist */}
+      <section className="py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              SSD Compliance Self-Check
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Tick what you know. If you're unsure, that's normal — the form
-              below is designed to fill the gaps.
+            <p className="text-muted-foreground">
+              Verify your site against the framework. {checkedCount}/{totalChecks} confirmed.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {/* Access & Buildability */}
-            <div className="rounded-xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-row items-center gap-4 p-6 pb-4">
-                <div className="p-2.5 bg-primary/10 rounded-xl">
-                  <Truck className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Access & Buildability</h3>
-              </div>
-              <div className="p-6 pt-0 space-y-4">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                Regulatory Compliance
+              </h3>
+              <div className="space-y-3">
                 <ChecklistItem
-                  label="Practical construction access (or a workable access plan)"
+                  label="Proposed GFA ≤ 60 sqm"
+                  checked={checklist.gfa60}
+                  onChange={() => toggleCheck("gfa60")}
+                />
+                <ChecklistItem
+                  label="Siting behind front wall line of main dwelling"
+                  checked={checklist.siting}
+                  onChange={() => toggleCheck("siting")}
+                />
+                <ChecklistItem
+                  label="All-electric design (no reticulated gas)"
+                  checked={checklist.electric}
+                  onChange={() => toggleCheck("electric")}
+                />
+                <ChecklistItem
+                  label="No intention to subdivide"
+                  checked={checklist.noSubdivision}
+                  onChange={() => toggleCheck("noSubdivision")}
+                />
+                <ChecklistItem
+                  label="Main dwelling retains 25 sqm POS"
+                  checked={checklist.pos25}
+                  onChange={() => toggleCheck("pos25")}
+                />
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
+                <Truck className="w-5 h-5 text-primary" />
+                Site Buildability
+              </h3>
+              <div className="space-y-3">
+                <ChecklistItem
+                  label="Adequate construction access"
                   checked={checklist.access}
                   onChange={() => toggleCheck("access")}
                 />
                 <ChecklistItem
-                  label="No obvious easements blocking the build zone"
-                  checked={checklist.easements}
-                  onChange={() => toggleCheck("easements")}
+                  label="Services feasible (power, water, sewer)"
+                  checked={checklist.services}
+                  onChange={() => toggleCheck("services")}
                 />
                 <ChecklistItem
-                  label="Usable backyard area for a compact dwelling + outdoor space"
-                  checked={checklist.backyard}
-                  onChange={() => toggleCheck("backyard")}
-                />
-                <ChecklistItem
-                  label="Slope is flat/mild or you accept extra site-works cost"
+                  label="Slope manageable or budget for siteworks"
                   checked={checklist.slope}
                   onChange={() => toggleCheck("slope")}
                 />
               </div>
             </div>
-
-            {/* Services */}
-            <div className="rounded-xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-row items-center gap-4 p-6 pb-4">
-                <div className="p-2.5 bg-primary/10 rounded-xl">
-                  <Home className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Services</h3>
-              </div>
-              <div className="p-6 pt-0 space-y-4">
-                <ChecklistItem
-                  label="Power / water / sewer are feasible (or you accept upgrades)"
-                  checked={checklist.power}
-                  onChange={() => toggleCheck("power")}
-                />
-                <ChecklistItem
-                  label="Stormwater can be managed without extreme engineering"
-                  checked={checklist.stormwater}
-                  onChange={() => toggleCheck("stormwater")}
-                />
-              </div>
-            </div>
-
-            {/* Neighbour & Planning Reality */}
-            <div className="rounded-xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-row items-center gap-4 p-6 pb-4">
-                <div className="p-2.5 bg-primary/10 rounded-xl">
-                  <Users className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">
-                  Neighbour & Planning Reality
-                </h3>
-              </div>
-              <div className="p-6 pt-0 space-y-4">
-                <ChecklistItem
-                  label="Open to privacy-led design (setbacks, screening, window control)"
-                  checked={checklist.privacy}
-                  onChange={() => toggleCheck("privacy")}
-                />
-                <ChecklistItem
-                  label="Accept that approvals may require drawings / reports"
-                  checked={checklist.approvals}
-                  onChange={() => toggleCheck("approvals")}
-                />
-              </div>
-            </div>
-
-            {/* Your Outcome */}
-            <div className="rounded-xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-row items-center gap-4 p-6 pb-4">
-                <div className="p-2.5 bg-primary/10 rounded-xl">
-                  <Target className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Your outcome</h3>
-              </div>
-              <div
-                className="p-6 pt-0 space-y-3"
-                role="radiogroup"
-                aria-label="Your outcome"
-              >
-                {[
-                  { value: "family", label: "Family living (parents / adult kids)" },
-                  { value: "rental", label: "Long-term rental income" },
-                  { value: "both", label: "Both (family now, rental later)" },
-                ].map((option) => (
-                  <div
-                    key={option.value}
-                    role="radio"
-                    aria-checked={outcome === option.value}
-                    tabIndex={0}
-                    className="flex items-center gap-3 cursor-pointer group"
-                    onClick={() => setOutcome(option.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === " " || e.key === "Enter") {
-                        e.preventDefault();
-                        setOutcome(option.value);
-                      }
-                    }}
-                    data-testid={`radio-outcome-${option.value}`}
-                  >
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        outcome === option.value
-                          ? "border-primary bg-primary"
-                          : "border-gray-300 dark:border-gray-600 group-hover:border-primary"
-                      }`}
-                    >
-                      {outcome === option.value && (
-                        <div className="w-2 h-2 bg-primary-foreground rounded-full" />
-                      )}
-                    </div>
-                    <span className="text-foreground">{option.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
+
+          {checkedCount === totalChecks && (
+            <div className="mt-8 p-6 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-xl text-center">
+              <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-3" />
+              <p className="text-emerald-800 dark:text-emerald-300 font-medium">
+                All compliance criteria confirmed. Site appears eligible for Green Lane (no planning permit).
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Risk List */}
-      <section className="py-20 md:py-28 bg-background border-b border-border/30">
+      {/* Risk Factors */}
+      <section className="py-16 md:py-20 bg-muted/30 border-b border-border">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-destructive/10 rounded-2xl mb-6">
-              <AlertTriangle className="w-7 h-7 text-destructive" />
-            </div>
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground tracking-tight"
-              data-testid="text-section-risks"
-            >
-              The "No / Risk" List — what kills feasibility or blows budgets
+          <div className="text-center mb-10">
+            <AlertTriangle className="w-10 h-10 text-destructive mx-auto mb-4" />
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Feasibility Blockers
             </h2>
           </div>
 
           <div className="space-y-3">
             {[
-              "Access constraints with no workable plan",
-              "Critical easements in the only buildable location",
-              "Steep slope / poor soil requiring heavy excavation + retaining",
-              "Service upgrades that push cost beyond your comfort zone",
-              "Planning constraints that shrink envelope or trigger redesign loops",
-            ].map((risk, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-4 p-5 bg-destructive/5 border border-destructive/15 rounded-xl"
-              >
+              "GFA requirement exceeds 60 sqm",
+              "Front-yard siting requirement",
+              "Access constraints with no workable solution",
+              "Critical easements in buildable zone",
+              "Steep slope requiring major excavation/retaining",
+              "Service upgrades exceeding budget tolerance",
+              "Heritage or flood overlays requiring extensive assessment",
+            ].map((risk, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-4 bg-destructive/5 border border-destructive/15 rounded-lg">
                 <XCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                <span className="text-foreground leading-relaxed">{risk}</span>
+                <span className="text-foreground text-sm">{risk}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Cost Buckets */}
-      <section className="py-20 md:py-28 bg-muted/30 border-b border-border/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-primary/10 rounded-2xl mb-6">
-              <DollarSign className="w-7 h-7 text-primary" />
-            </div>
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-5"
-              data-testid="text-section-cost"
-            >
-              Cost buckets (ballpark)
+      {/* Cost Tiers */}
+      <section className="py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <DollarSign className="w-10 h-10 text-primary mx-auto mb-4" />
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Cost Tiers (Indicative)
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We don't sell "cheap builds". We focus on predictable cost
-              control. Your feasibility reply includes a range and the top 3
-              drivers on your site.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
-              {
-                tier: "Tier 1",
-                title: "Smart & Simple",
-                description:
-                  "Compact, compliant, practical finishes. Minimal complexity.",
-                Icon: Lightbulb,
-              },
-              {
-                tier: "Tier 2",
-                title: "Comfortable & Rental-ready",
-                description:
-                  "Better fit-out, durability, storage, thermal comfort.",
-                Icon: Building,
-              },
-              {
-                tier: "Tier 3",
-                title: "Premium & Architectural",
-                description:
-                  "Higher spec, complex site works, custom detailing.",
-                Icon: Sparkles,
-              },
-            ].map((tier, index) => (
-              <div
-                key={index}
-                className="rounded-xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow text-center"
-                data-testid={`card-tier-${index + 1}`}
-              >
-                <div className="p-6 pb-4">
-                  <div className="flex justify-center mb-4">
-                    <div className="p-4 bg-primary/10 rounded-2xl">
-                      <tier.Icon className="w-7 h-7 text-primary" />
-                    </div>
-                  </div>
-                  <div className="text-xs font-semibold text-primary uppercase tracking-widest mb-2">
-                    {tier.tier}
-                  </div>
-                  <h3 className="text-xl font-bold">{tier.title}</h3>
+              { tier: "Tier 1", title: "Compliant & Compact", desc: "Practical finishes. Minimal complexity. Budget-optimized.", Icon: Lightbulb },
+              { tier: "Tier 2", title: "Rental-Ready", desc: "Better fit-out, durability, thermal comfort.", Icon: Building },
+              { tier: "Tier 3", title: "Architectural", desc: "Higher spec. Complex siteworks. Custom detailing.", Icon: Sparkles },
+            ].map((item, idx) => {
+              const Icon = item.Icon;
+              return (
+                <div key={idx} className="bg-card border border-border rounded-xl p-6 text-center">
+                  <Icon className="w-8 h-8 text-primary mx-auto mb-4" />
+                  <div className="text-xs font-medium text-primary uppercase tracking-wider mb-1">{item.tier}</div>
+                  <h3 className="font-bold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
-                <div className="p-6 pt-0">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {tier.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-20 md:py-28 bg-background border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-primary/10 rounded-2xl mb-6">
-              <Clock className="w-7 h-7 text-primary" />
-            </div>
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground tracking-tight"
-              data-testid="text-section-timeline"
-            >
-              Timeline (what actually happens)
+      <section className="py-16 md:py-20 bg-muted/30 border-b border-border">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <Clock className="w-10 h-10 text-primary mx-auto mb-4" />
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Process Timeline
             </h2>
           </div>
 
-          <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border/60 hidden md:block" />
-
-            <div className="space-y-4">
-              {[
-                "Constraints scan",
-                "2–3 feasible concept pathways",
-                "Ballpark cost range + scope lock",
-                "Approval strategy aligned to your site",
-                "Drawings + only necessary reports",
-                "Build prep (quotes / contracts / services planning)",
-                "Build + handover",
-              ].map((step, index) => (
-                <div key={index} className="flex items-start gap-5 md:gap-6">
-                  <div className="relative z-10 w-12 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-sm">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1 rounded-xl border border-border/50 bg-card shadow-sm">
-                    <div className="py-4 px-5 md:px-6">
-                      <p className="text-base md:text-lg text-foreground">
-                        {step}
-                      </p>
-                    </div>
-                  </div>
+          <div className="space-y-3">
+            {[
+              "Feasibility assessment (48 hours)",
+              "Path to Approval determination",
+              "Scope lock + cost estimate",
+              "Design documentation",
+              "Building permit (2-4 weeks)",
+              "Construction + handover",
+            ].map((step, idx) => (
+              <div key={idx} className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  {idx + 1}
                 </div>
-              ))}
-            </div>
+                <div className="flex-1 bg-card border border-border rounded-lg py-3 px-4">
+                  <span className="text-foreground text-sm">{step}</span>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* Our Role */}
-      <section className="py-20 md:py-28 bg-muted/30 border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-primary/10 rounded-2xl mb-6">
-            <Users className="w-7 h-7 text-primary" />
-          </div>
-          <h2
-            className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-6"
-            data-testid="text-section-role"
-          >
-            Our role (Project Manager + Build Partner)
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            We reduce risk by managing the pathway end-to-end: feasibility-first
-            decisions, approvals strategy alignment, coordination across
-            design/consultants/build delivery, and guardrails to prevent
-            blowouts.
-          </p>
         </div>
       </section>
 
       {/* Form Section */}
-      <section
-        id="feasibility-form"
-        className="py-20 md:py-28 bg-background border-b border-border/30"
-      >
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-6"
-              data-testid="text-form-heading"
-            >
-              Get a 48-hour Feasibility Reply
+      <section id="feasibility-form" className="py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-2xl mx-auto px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Submit for Feasibility Assessment
             </h2>
-
-            <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-primary" />
-                go/no-go feasibility view
-              </span>
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-primary" />
-                key constraints
-              </span>
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-primary" />
-                ballpark cost range
-              </span>
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-primary" />
-                main cost drivers
-              </span>
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-primary" />
-                recommended next step
-              </span>
-            </div>
+            <p className="text-muted-foreground">
+              48-hour response. Path to Approval determination included.
+            </p>
           </div>
-
           <FeasibilityForm />
 
-          {/* Share Loop */}
-          <div className="mt-10 pt-8 border-t border-border/40 flex flex-col items-center gap-2">
+          <div className="mt-8 flex flex-col items-center gap-2">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors border border-border/50 rounded-full px-4 py-2 hover:bg-muted/50"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-full px-4 py-2 hover:bg-muted/50"
             >
               <Share2 className="w-4 h-4" />
-              Share this checklist
+              Share this tool
             </button>
-            <p className="text-xs text-muted-foreground/70">
-              Share with a friend — special consideration may be provided when possible.
-            </p>
-            {shareMessage && (
-              <span className="text-sm text-primary">{shareMessage}</span>
-            )}
+            {shareMessage && <span className="text-sm text-primary">{shareMessage}</span>}
           </div>
         </div>
       </section>
 
-      {/* Next Links */}
-      <section className="py-10 md:py-12 bg-muted/30 border-b border-border/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-5">
-            Explore More
-          </h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/backyard-second-home/cost-victoria-2026"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 transition-colors"
-              data-testid="link-cost"
-            >
-              Cost Victoria 2026
-            </Link>
-            <Link
-              href="/backyard-second-home/permit-pathway-victoria"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 transition-colors"
-              data-testid="link-permit"
-            >
-              Permit Pathway Victoria
-            </Link>
-            <Link
-              href="/backyard-second-home/rental-income"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 transition-colors"
-              data-testid="link-rental"
-            >
-              Rental Income
-            </Link>
-            <Link
-              href="/backyard-second-home/mornington-peninsula"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 transition-colors"
-              data-testid="link-mornington"
-            >
-              Mornington Peninsula
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-foreground tracking-tight"
-              data-testid="text-section-faq"
-            >
-              Frequently Asked Questions
-            </h2>
-          </div>
-
+      {/* FAQ */}
+      <section className="py-16 md:py-20 bg-muted/30 border-b border-border">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+            FAQ
+          </h2>
           <div className="divide-y divide-border/50">
             <FAQItem
-              question="What is a Small Second Dwelling (SSD) in Victoria?"
-              answer="An SSD is a self-contained dwelling of up to 60 sqm built on the same lot as an existing house. Under Clause 54.03 of the Victorian Planning Provisions, SSDs meeting specific criteria qualify for 'Deemed-to-Comply' status — meaning no planning permit is required."
+              question="What is the Green Lane pathway?"
+              answer="If your SSD meets all Deemed-to-Comply criteria under Clause 54.03 (≤60sqm, behind front wall, no gas, 25sqm POS for main house, compliant setbacks, no triggered overlays), no planning permit is required. Proceed directly to building permit. Council cannot refuse."
             />
             <FAQItem
-              question="What are the key SSD requirements?"
-              answer="Maximum 60 sqm floor area. Must be located behind the front wall line of the main dwelling. Cannot connect to reticulated gas (all-electric required). Cannot be subdivided from the main lot. Main dwelling must retain at least 25 sqm of private open space."
+              question="What triggers VicSmart instead of Green Lane?"
+              answer="If you have minor overlay triggers (Heritage, Flood, etc.) or require minor setback variations but otherwise comply with SSD requirements, VicSmart fast-track applies. Council must decide within 10 business days. No neighbor notification. Reference: VC282."
             />
             <FAQItem
-              question="Can I design for family now and long-term rental later?"
-              answer="Yes, this is one of the most common approaches. We design with rental compliance in mind from the start, so when your family situation changes, transitioning to a rental is straightforward without requiring additional modifications."
+              question="What puts me in the Red Zone?"
+              answer="GFA exceeding 60 sqm or front-yard siting requirement immediately disqualifies SSD pathway. Expect standard planning permit process: 12-18 months, neighbor notification, potential objections, VCAT risk. Consider reducing scope or engaging traditional developer."
             />
             <FAQItem
-              question="Why is long-term rental demand still strong?"
-              answer="Victoria's rental vacancy rates remain historically low, and population growth continues to outpace housing supply. A well-designed, compliant SSD in a good location attracts quality long-term tenants."
-            />
-            <FAQItem
-              question="What are the biggest SSD feasibility blockers?"
-              answer="Common blockers include inadequate site access for construction, easements in the buildable area, steep slopes or poor soil conditions, insufficient lot size to meet siting and POS requirements, and restrictive planning overlays."
+              question="Is building permit still required for Green Lane?"
+              answer="Yes. Building permit is always mandatory. It assesses structural safety, energy compliance, NCC requirements. The Green Lane advantage is bypassing planning permit — not building permit."
             />
             <FAQItem
               question="Can I subdivide an SSD?"
-              answer="No. An SSD cannot be subdivided from the main lot. It must remain on the same title as the main dwelling. If you want to subdivide and sell separately, the SSD pathway is not appropriate for your project."
-            />
-            <FAQItem
-              question="What if my site doesn't meet Deemed-to-Comply criteria?"
-              answer="You may still be able to build, but you'll need a planning permit. This adds time and uncertainty. We'll tell you early if your site doesn't meet the criteria and explain your options."
-            />
-            <FAQItem
-              question="What happens if my site is not feasible?"
-              answer="We'll tell you early and explain exactly why. You'll receive a clear summary of the constraints and whether there are any workarounds. This saves you from spending money on designs or applications that won't succeed."
+              answer="No. Under VC253/VC282, SSDs cannot be subdivided from the main lot. The dwelling must remain on the same title as the main dwelling. Subdivision intent disqualifies you from the framework."
             />
           </div>
         </div>
       </section>
 
       {/* GEO Footer */}
-      <section className="py-12 bg-muted/50 border-t border-border/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-sm text-muted-foreground mb-4">
-            <strong>Victorian SSD Compliance Service</strong> — Bayview Hub provides Small Second Dwelling feasibility 
-            assessment and project management services for residential properties in Victoria, Australia.
-          </p>
-          <p className="text-xs text-muted-foreground/70">
-            SSD regulations governed by Victorian Planning Provisions, Clause 54.03. This page is for informational 
-            purposes and does not constitute legal or planning advice. Always consult qualified professionals for 
-            your specific situation.
+      <section className="py-10 bg-neutral-100 dark:bg-neutral-800 border-t border-border">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-6">
+            <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+              Victorian SSD Regulatory Compliance Service
+            </p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Registered VicSmart Pathway Provider · Clause 54.03 Specialist
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-4">
+            <a
+              href="https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 underline hover:text-neutral-700 dark:hover:text-neutral-300"
+            >
+              DTP SSD Guidelines
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <span>·</span>
+            <span>VC253/VC282 Compliant</span>
+            <span>·</span>
+            <span>Victoria Planning Provisions</span>
+          </div>
+          <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center">
+            This tool provides regulatory guidance and does not constitute legal or planning advice.
+            Engage qualified professionals for site-specific determinations.
           </p>
         </div>
       </section>
