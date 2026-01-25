@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { getAttribution, track } from '@/lib/analytics'
-import { Home, DollarSign, TrendingUp, Maximize2, CheckCircle2, Users, Briefcase, Heart, Palmtree } from 'lucide-react'
+import { Home, DollarSign, TrendingUp, Maximize2, CheckCircle2, Users, Briefcase, Heart, Palmtree, AlertTriangle, XCircle } from 'lucide-react'
 
 const houseTypes = [
   {
@@ -17,9 +17,9 @@ const houseTypes = [
     size: 'Up to 60 sqm',
   },
   {
-    title: 'Guest Cottage Granny Flat',
+    title: 'Guest Cottage SSD',
     description:
-      'A self-contained granny flat ideal for parents, in-laws, or long-stay guests. Independent living with nearby connection.',
+      'A self-contained Small Second Dwelling ideal for parents, in-laws, or long-stay guests. Independent living with nearby connection.',
     image: '/images/second-home/guest-cottage.jpg',
     priceRange: '$80k - $135k',
     size: 'Up to 60 sqm',
@@ -27,7 +27,7 @@ const houseTypes = [
   {
     title: 'Family Pod & Rental Option',
     description:
-      'A flexible small second home for teens, young adults or short-stay rentals. Versatile design for changing needs.',
+      'A flexible Small Second Dwelling for teens, young adults or long-term rentals. Versatile design for changing needs.',
     image: '/images/second-home/family-pod.jpg',
     priceRange: '$90k - $169k',
     size: 'Up to 60 sqm',
@@ -60,7 +60,7 @@ const houseTypes = [
 
 const useCases = [
   {
-    title: 'Granny Flat for Parents or In-Laws',
+    title: 'SSD for Parents or In-Laws',
     description:
       'Independent, nearby living with dignity and closeness. Help aging parents stay on familiar ground while maintaining their independence.',
     icon: Heart,
@@ -78,11 +78,41 @@ const useCases = [
     icon: Briefcase,
   },
   {
-    title: 'Short-Stay Rental or Airbnb',
+    title: 'Long-Term Rental',
     description:
-      'Tap into Victorian tourism demand with a tasteful, private stay. Generate income from visitors year-round.',
+      "Tap into Victoria's strong rental demand with a compliant, private dwelling. Generate income from quality tenants year-round.",
     icon: Palmtree,
   },
+]
+
+const ssdConstraints = [
+  {
+    title: '60 sqm Maximum',
+    description: 'The SSD framework caps floor area at 60 sqm. This is non-negotiable under Victorian regulations.',
+  },
+  {
+    title: 'No Subdivision',
+    description: 'An SSD cannot be subdivided from the main lot. It stays on your title. Period.',
+  },
+  {
+    title: 'Siting Requirements',
+    description: 'The SSD must be located behind the front wall line of the main dwelling.',
+  },
+  {
+    title: 'No Reticulated Gas',
+    description: 'SSDs cannot connect to reticulated gas. All-electric design is required.',
+  },
+  {
+    title: '25 sqm POS for Main Dwelling',
+    description: 'Your main house must retain at least 25 sqm of private open space after the SSD is built.',
+  },
+]
+
+const notForYou = [
+  'You want to subdivide and sell the dwelling separately',
+  'You need more than 60 sqm (mansion expectations)',
+  'You expect to connect to gas',
+  'You want to bypass proper compliance pathways',
 ]
 
 export function SecondHomeClient() {
@@ -152,18 +182,21 @@ export function SecondHomeClient() {
   return (
     <div className="min-h-screen dark:bg-primary-900">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 via-natural-50 to-accent-50 py-20 md:py-32 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
+      <section className="bg-gradient-to-br from-neutral-100 via-neutral-50 to-neutral-100 py-20 md:py-32 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm font-medium text-primary-700 mb-4 uppercase tracking-wide dark:text-primary-200">
-              Small Second Home Builder
+            <div className="text-sm font-medium text-neutral-700 mb-4 uppercase tracking-wide dark:text-neutral-200">
+              Victorian SSD Framework 2026
             </div>
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
-              Small Second Home Builder, for all Victorians
+              Small Second Dwelling (SSD) Builder — Victoria
             </h1>
-            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
-              Turn your unused backyard into a beautiful small second home or granny flat. Create extra space for family,
-              guests or work — and unlock the potential for long-term rental income.
+            <p className="text-xl md:text-2xl text-natural-700 mb-6 leading-relaxed dark:text-natural-200">
+              Build a compliant Small Second Dwelling on your existing lot. 60 sqm max. No subdivision. 
+              Designed for multi-generational living or long-term rental income.
+            </p>
+            <p className="text-lg text-natural-600 mb-10 dark:text-natural-300">
+              We validate feasibility before you spend serious money. If your site doesn't work, we tell you early.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button
@@ -172,7 +205,7 @@ export function SecondHomeClient() {
                 size="lg"
                 onClick={() => track('sh_register_click', attribution)}
               >
-                Register Your Interest
+                Request SSD Feasibility Check
               </Button>
               <Button
                 href="#house-types"
@@ -180,9 +213,65 @@ export function SecondHomeClient() {
                 size="lg"
                 onClick={() => track('sh_view_house_types_click', attribution)}
               >
-                View House Types
+                View SSD Concepts
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Boundary of the Game - SSD Constraints */}
+      <section className="py-20 bg-neutral-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-center">
+              Boundary of the Game
+            </h2>
+            <p className="text-xl text-neutral-300 mb-12 text-center max-w-3xl mx-auto">
+              The Victorian SSD framework has hard constraints. Understand them before you proceed.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
+              {ssdConstraints.map((constraint, idx) => (
+                <div key={idx} className="border-l-2 border-neutral-500 pl-6">
+                  <h3 className="text-lg font-bold text-white mb-2">{constraint.title}</h3>
+                  <p className="text-neutral-400">{constraint.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-8 bg-white/5 rounded-2xl border border-white/10">
+              <p className="text-lg text-neutral-300">
+                These constraints exist for a reason. They enable speed — 'Deemed-to-Comply' under Clause 54.03 means 
+                <span className="text-white font-medium"> no planning permit required</span> if you meet the criteria. 
+                That's the trade-off: smaller scope, faster delivery.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* This Is NOT For You */}
+      <section className="py-16 bg-neutral-100 dark:bg-neutral-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-4 mb-8">
+              <AlertTriangle className="w-8 h-8 text-neutral-600 dark:text-neutral-400" />
+              <h2 className="text-2xl font-bold text-natural-900 dark:text-natural-50">
+                This Service Is NOT For You If...
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {notForYou.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-4 p-4 bg-white rounded-xl dark:bg-neutral-700">
+                  <XCircle className="w-5 h-5 text-neutral-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-natural-700 dark:text-natural-200">{item}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-natural-600 dark:text-natural-300">
+              If any of the above applies, we're not the right fit. We focus on compliant SSD builds within the Victorian framework.
+            </p>
           </div>
         </div>
       </section>
@@ -192,61 +281,54 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
-              Why Build a Backyard Second Home?
+              Why Build an SSD?
             </h2>
             <p className="text-xl text-natural-700 leading-relaxed dark:text-natural-200">
-              Your backyard holds more potential than you might think. A well-designed small second home or granny flat
-              creates secondary income in your own backyard, expands your living space, and makes better use of land you
-              already own.
+              Your backyard holds more potential than you might think. A well-designed Small Second Dwelling 
+              creates secondary income, expands your living space, and makes better use of land you already own.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
-                <DollarSign className="w-8 h-8 text-primary-700" />
+              <div className="bg-neutral-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-neutral-800">
+                <DollarSign className="w-8 h-8 text-neutral-700" />
               </div>
               <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Generate Rental Income</h3>
               <p className="text-natural-700 dark:text-natural-200">
-                Suitable for students, Airbnb guests, or extended family. Turn your backyard into a steady income stream.
+                Long-term rental demand in Victoria remains strong. Turn your backyard into a steady income stream.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
-                <TrendingUp className="w-8 h-8 text-primary-700" />
+              <div className="bg-neutral-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-neutral-800">
+                <TrendingUp className="w-8 h-8 text-neutral-700" />
               </div>
               <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Solid Asset Investment</h3>
               <p className="text-natural-700 dark:text-natural-200">
-                A quality small second home can increase property value and appeal for future buyers.
+                A quality SSD can increase property value and appeal for future buyers.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
-                <Maximize2 className="w-8 h-8 text-primary-700" />
+              <div className="bg-neutral-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-neutral-800">
+                <Maximize2 className="w-8 h-8 text-neutral-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Expand Your Living Space</h3>
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Expand Living Space</h3>
               <p className="text-natural-700 dark:text-natural-200">
-                Add room for hobbies, guests, or a growing family without moving to a larger property.
+                Add room for family, guests, or work without moving to a larger property.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-primary-800">
-                <CheckCircle2 className="w-8 h-8 text-primary-700" />
+              <div className="bg-neutral-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 dark:bg-neutral-800">
+                <CheckCircle2 className="w-8 h-8 text-neutral-700" />
               </div>
-              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Peace of Mind</h3>
+              <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">Faster Approval</h3>
               <p className="text-natural-700 dark:text-natural-200">
-                Bayview guides you through design, permits and construction with trusted local partners.
+                'Deemed-to-Comply' pathway under Clause 54.03 means no planning permit if you meet criteria.
               </p>
             </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-lg text-natural-700 italic dark:text-natural-200">
-              Your backyard doesn't have to sit idle. It can become your most flexible and rewarding space.
-            </p>
           </div>
         </div>
       </section>
@@ -256,8 +338,11 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
-              Explore Our Small Second Home Concepts
+              SSD Concepts (All Under 60 sqm)
             </h2>
+            <p className="text-lg text-natural-600 dark:text-natural-300">
+              Every design complies with Victorian SSD requirements. No exceptions.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -266,7 +351,7 @@ export function SecondHomeClient() {
                 key={idx}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow dark:bg-primary-900/60 dark:border dark:border-primary-700"
               >
-                <div className="h-64 bg-gradient-to-br from-primary-200 to-accent-200 relative overflow-hidden">
+                <div className="h-64 bg-gradient-to-br from-neutral-200 to-neutral-300 relative overflow-hidden">
                   <Image
                     src={house.image}
                     alt={house.title}
@@ -293,10 +378,10 @@ export function SecondHomeClient() {
                   </div>
 
                   <Button
-                    href={`mailto:leonzh@bayviewestate.com.au?subject=Interest in Small Second Home - ${encodeURIComponent(
+                    href={`mailto:leonzh@bayviewestate.com.au?subject=SSD Inquiry - ${encodeURIComponent(
                       house.title
                     )}&body=${encodeURIComponent(
-                      `Hi, I'm interested in learning more about the ${house.title}.\n\nPage: ${
+                      `Hi, I'm interested in learning more about the ${house.title} SSD concept.\n\nPage: ${
                         typeof window !== 'undefined' ? window.location.href : 'https://www.bayviewhub.me/second-home'
                       }\nAttribution: ${JSON.stringify(attribution)}`
                     )}`}
@@ -306,7 +391,7 @@ export function SecondHomeClient() {
                     external
                     onClick={() => track('sh_house_register_click', { ...attribution, house: house.title })}
                   >
-                    Register Your Interest
+                    Request Feasibility Check
                   </Button>
                 </div>
               </div>
@@ -315,51 +400,12 @@ export function SecondHomeClient() {
         </div>
       </section>
 
-      {/* Design Philosophy */}
-      <section className="py-20 bg-white dark:bg-primary-900">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-natural-50">
-              Calm, Garden-Inspired Design with Bayview DNA
-            </h2>
-            <div className="prose prose-lg max-w-none text-natural-700 space-y-6 dark:text-natural-200 dark:prose-invert">
-              <p className="text-xl leading-relaxed">
-                Every Bayview Backyard Second Home is designed with warm, natural materials and light timber tones. We
-                frame views with gardens, trees, and sky, creating spaces that invite you to slow down.
-              </p>
-              <p className="text-xl leading-relaxed">
-                These are spaces designed for art, books, and slow mornings. Spaces that feel connected to the land and
-                the changing seasons of Victoria.
-              </p>
-              <p className="text-xl leading-relaxed">
-                Our small second homes carry the same thoughtful approach you'll find across the broader Bayview
-                ecosystem:
-              </p>
-              <ul className="space-y-2 text-lg">
-                <li>
-                  <strong>Bayview Arts &amp; Framing Studio</strong> — Custom framing and gallery space
-                </li>
-                <li>
-                  <strong>Pig &amp; Whistle / Bayview Estate</strong> — Hospitality and gathering spaces
-                </li>
-                <li>
-                  <strong>Market Garden Project</strong> — Sustainable local food growing
-                </li>
-                <li>
-                  <strong>Mend</strong> — Digital reflection platform
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Use Cases */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
-              One Small Second Home. Many Possibilities.
+              One SSD. Many Possibilities.
             </h2>
           </div>
 
@@ -369,11 +415,11 @@ export function SecondHomeClient() {
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700"
+                  className="bg-neutral-50 rounded-2xl p-8 dark:bg-primary-900/60 dark:border dark:border-primary-700"
                 >
                   <div className="flex items-start space-x-4">
-                    <div className="bg-primary-100 rounded-full p-3 flex-shrink-0 dark:bg-primary-800">
-                      <Icon className="w-6 h-6 text-primary-700" />
+                    <div className="bg-neutral-200 rounded-full p-3 flex-shrink-0 dark:bg-neutral-800">
+                      <Icon className="w-6 h-6 text-neutral-700" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-natural-900 mb-3 dark:text-natural-50">{useCase.title}</h3>
@@ -384,71 +430,60 @@ export function SecondHomeClient() {
               )
             })}
           </div>
-
-          <div className="text-center mt-12">
-            <Button
-              href="#register"
-              variant="primary"
-              size="lg"
-              onClick={() => track('sh_register_click', attribution)}
-            >
-              Start Your Journey
-            </Button>
-          </div>
         </div>
       </section>
 
       {/* Process */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-16 text-center">
-              From Backyard Idea to Completed Second Home
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-16 text-center dark:text-natural-50">
+              From Feasibility to Handover
             </h2>
 
             <div className="space-y-12">
               {[
                 {
                   step: '1',
-                  title: 'Register Your Interest',
+                  title: 'SSD Feasibility Check',
                   description:
-                    "You share your property details, goals and timeframe. We listen and ask questions to understand what you're hoping to create.",
+                    "We review your site against SSD criteria: lot size, siting, access, services, overlays. If it doesn't work, we tell you early.",
                   icon: Home,
                 },
                 {
                   step: '2',
-                  title: 'Feasibility & Concept',
+                  title: 'Compliance Design',
                   description:
-                    "We map potential layouts, highlight council considerations, and outline a budget range. This stage helps you decide if it's the right fit.",
+                    'Design within the 60 sqm limit, behind front wall line, no gas. All compliant with Clause 54.03 for Deemed-to-Comply pathway.',
                   icon: CheckCircle2,
                 },
                 {
                   step: '3',
-                  title: 'Design & Approvals',
+                  title: 'Building Permit',
                   description:
-                    'We guide you through detailed design and, with local professionals, help navigate planning and building permits across Victoria.',
+                    'If Deemed-to-Comply criteria are met, no planning permit required. Straight to building permit with a registered building surveyor.',
                   icon: Briefcase,
                 },
                 {
                   step: '4',
-                  title: 'Build & Bayview Finishing Touches',
+                  title: 'Build & Handover',
                   description:
-                    'Your second home is built and optionally finished with styling and garden touches that reflect the Bayview feel. Move in and enjoy.',
+                    'Construction by vetted builders. Quality control throughout. Handover with all compliance documentation.',
                   icon: Heart,
                 },
               ].map((item, idx) => {
                 const Icon = item.icon
                 return (
                   <div key={idx} className="flex items-start space-x-6">
-                    <div className="bg-primary-700 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold">
+                    <div className="bg-neutral-700 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold">
                       {item.step}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 flex items-center space-x-2">
+                      <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 flex items-center space-x-2 dark:text-natural-50">
                         <span>{item.title}</span>
-                        <Icon className="w-5 h-5 text-primary-700" />
+                        <Icon className="w-5 h-5 text-neutral-700" />
                       </h3>
-                      <p className="text-natural-700 leading-relaxed text-lg">{item.description}</p>
+                      <p className="text-natural-700 leading-relaxed text-lg dark:text-natural-200">{item.description}</p>
                     </div>
                   </div>
                 )
@@ -458,174 +493,129 @@ export function SecondHomeClient() {
         </div>
       </section>
 
-      {/* Bayview Family */}
-      <section className="py-20 bg-natural-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 text-center">
-              Part of the Bayview Estate Family
-            </h2>
-            <div className="prose prose-lg max-w-none text-natural-700 space-y-6">
-              <p className="text-xl leading-relaxed">
-                Bayview Backyard Second Home is part of <strong>Bayview Estate Holdings</strong>, a collection of
-                businesses and projects that share a common philosophy: creating physical and digital spaces where
-                families slow down, reconnect and feel at home.
-              </p>
-              <p className="text-xl leading-relaxed">Alongside Bayview Backyard Second Home, the Bayview family includes:</p>
-              <ul className="space-y-2 text-lg">
-                <li>
-                  <strong>Bayview Arts &amp; Framing Studio</strong> – custom framing and gallery space
-                </li>
-                <li>
-                  <strong>Pig &amp; Whistle / Bayview Estate</strong> – hospitality and gathering
-                </li>
-                <li>
-                  <strong>Market Garden Project</strong> – sustainable local food growing
-                </li>
-                <li>
-                  <strong>Mend</strong> – a digital reflection platform
-                </li>
-              </ul>
-              <p className="text-xl leading-relaxed">
-                Each of these projects reflects our belief in thoughtful design, connection to place, and making space
-                for what matters most.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Registration Form */}
+      {/* SSD Entry Point - Registration Form */}
       <section
         id="register"
-        className="py-20 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900 dark:to-primary-800"
+        className="py-20 bg-neutral-900 text-white"
       >
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
-                Register Your Interest in a Small Second Home
+              <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+                SSD Feasibility Entry Point
               </h2>
-              <p className="text-lg text-natural-700 dark:text-natural-200">
-                Share a few details below and we'll contact you for a no-pressure, honest conversation about whether a
-                small second home or granny flat is a good fit for your property.
+              <p className="text-lg text-neutral-300">
+                Submit your details. We'll validate whether your site meets SSD criteria and provide a 
+                professional feasibility report within 48 hours.
+              </p>
+              <p className="text-sm text-neutral-500 mt-4">
+                No sales pressure. If your site doesn't work, we'll explain why.
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="bg-white rounded-2xl p-8 text-natural-900">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">Name *</label>
+                  <label className="block text-sm font-medium text-natural-700 mb-2">Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">Email *</label>
+                  <label className="block text-sm font-medium text-natural-700 mb-2">Email *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">Phone</label>
+                  <label className="block text-sm font-medium text-natural-700 mb-2">Phone</label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
-                    Suburb / Postcode *
+                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                    Suburb / Postcode (Victoria) *
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.suburb}
                     onChange={(e) => setFormData({ ...formData, suburb: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
-                    How big is your backyard? *
+                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                    Approximate lot size (sqm) *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g., 200 sqm, 0.1 acre"
+                    placeholder="e.g., 600"
                     value={formData.backyardSize}
                     onChange={(e) => setFormData({ ...formData, backyardSize: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
-                    Property Type *
+                  <label className="block text-sm font-medium text-natural-700 mb-2">
+                    Primary Use *
                   </label>
                   <select
                     required
                     value={formData.propertyType}
                     onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   >
-                    <option value="">Select property type</option>
-                    <option value="house">House</option>
-                    <option value="acreage">Acreage</option>
-                    <option value="other">Other</option>
+                    <option value="">Select primary use</option>
+                    <option value="family">Multi-generational family living</option>
+                    <option value="rental">Long-term rental income</option>
+                    <option value="both">Both (family now, rental later)</option>
+                    <option value="office">Home office / studio</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
-                    What would you like this second home to be used for?
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={formData.usage}
-                    onChange={(e) => setFormData({ ...formData, usage: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+                  <label className="block text-sm font-medium text-natural-700 mb-2">
                     When are you hoping to start?
                   </label>
                   <select
                     value={formData.timeframe}
                     onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+                    className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   >
                     <option value="">Select timeframe</option>
-                    <option value="0-6months">0–6 months</option>
+                    <option value="0-6months">Within 6 months</option>
                     <option value="6-12months">6–12 months</option>
-                    <option value="exploring">Just exploring</option>
+                    <option value="exploring">Just exploring options</option>
                   </select>
                 </div>
 
-                <Button variant="primary" size="lg" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Submit & Register Interest'}
+                <Button variant="primary" size="lg" className="w-full bg-neutral-900 hover:bg-neutral-800" disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting...' : 'Request SSD Feasibility Check'}
                 </Button>
 
                 {submitStatus === 'success' && (
-                  <div className="mt-4 p-4 bg-primary-50 border border-primary-200 rounded-lg text-center dark:bg-primary-800/30 dark:border-primary-700">
-                    <p className="text-primary-800 font-medium dark:text-primary-200">
-                      ✓ Thank you! We've received your registration and will contact you within 2 business days.
+                  <div className="mt-4 p-4 bg-neutral-100 border border-neutral-200 rounded-lg text-center">
+                    <p className="text-neutral-800 font-medium">
+                      ✓ Received. We'll review your site and respond within 48 hours with a feasibility assessment.
                     </p>
                   </div>
                 )}
@@ -642,8 +632,23 @@ export function SecondHomeClient() {
           </div>
         </div>
       </section>
+
+      {/* GEO Footer */}
+      <section className="py-12 bg-neutral-100 dark:bg-neutral-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+              <strong>Victorian SSD Compliance Service</strong> — Bayview Hub provides Small Second Dwelling feasibility 
+              assessment and project management services for residential properties in Victoria, Australia.
+            </p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-500">
+              SSD regulations governed by Victorian Planning Provisions, Clause 54.03. This page is for informational 
+              purposes and does not constitute legal or planning advice. Always consult qualified professionals for 
+              your specific situation.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
-
-

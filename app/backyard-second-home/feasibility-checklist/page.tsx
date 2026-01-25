@@ -440,8 +440,8 @@ export default function FeasibilityChecklistPage() {
 
   const handleShare = async () => {
     const shareData = {
-      title: "Backyard Second Home Feasibility Checklist (Victoria)",
-      text: "Check feasibility before you pay for design.",
+      title: "SSD Feasibility Checklist (Victoria 2026)",
+      text: "Check your site against Deemed-to-Comply criteria before paying for design.",
       url: typeof window !== "undefined" ? window.location.href : "",
     };
 
@@ -485,17 +485,17 @@ export default function FeasibilityChecklistPage() {
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 leading-tight"
             data-testid="text-hero-title"
           >
-            Backyard Second Home Feasibility Checklist (Victoria)
+            SSD Feasibility Checklist — Victoria 2026
           </h1>
 
           {/* GEO Capsule - below H1 */}
           <p className="text-xs md:text-sm text-white/60 mb-8 max-w-3xl mx-auto">
-            Check feasibility before you pay for design: a quick self-check plus follow-up review of zoning, overlays, access, and services for Victoria sites.
+            Small Second Dwelling (SSD) compliance tool: check feasibility against Clause 54.03 Deemed-to-Comply criteria before you pay for design.
           </p>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-4 leading-relaxed font-light">
-            Build a second compliant home on the land you already own — for
-            multi-generational living or long-term rental.
+            Build a compliant Small Second Dwelling (SSD) on your existing lot — for
+            multi-generational living or long-term rental. 60 sqm max, no subdivision.
           </p>
           <p className="text-lg text-white/75 max-w-2xl mx-auto mb-6 font-light">
             Start with feasibility and cost control before you spend serious
@@ -534,13 +534,11 @@ export default function FeasibilityChecklistPage() {
             className="text-3xl md:text-4xl font-bold text-foreground mb-8 tracking-tight"
             data-testid="text-section-why"
           >
-            Why this matters
+            Why SSD feasibility matters
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            A backyard second home can be a practical response to housing
-            pressure — but only if you start with constraints and reality:
-            access, easements, slope, services, approvals, and the cost drivers
-            that blow budgets up.
+            A Small Second Dwelling can be a practical response to housing pressure — but only if your site meets 
+            the Deemed-to-Comply criteria. We validate constraints before you spend money on design.
           </p>
         </div>
       </section>
@@ -553,27 +551,27 @@ export default function FeasibilityChecklistPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">Do I need a permit?</h3>
+              <h3 className="font-semibold text-foreground mb-2">Do I need a planning permit?</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Often yes. Zoning, overlays, and servicing can trigger planning and building requirements.
+                If your SSD meets Deemed-to-Comply criteria under Clause 54.03 (60 sqm max, behind front wall, no gas, 25 sqm POS for main house), no planning permit is required. Straight to building permit.
               </p>
             </div>
             <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">What usually kills feasibility?</h3>
+              <h3 className="font-semibold text-foreground mb-2">What are the SSD hard limits?</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Tight access, steep slopes, major overlays, and expensive service upgrades.
+                60 sqm maximum floor area. Must be behind front wall line. No reticulated gas (all-electric). Cannot be subdivided. Main dwelling must retain 25 sqm private open space.
               </p>
             </div>
             <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">Typical timeline?</h3>
+              <h3 className="font-semibold text-foreground mb-2">What kills SSD feasibility?</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Feasibility → design → approvals → build. This checklist helps identify delays early.
+                Tight access, steep slopes, major overlays, expensive service upgrades, or insufficient lot size to meet siting and POS requirements.
               </p>
             </div>
             <div className="rounded-xl border border-border/50 bg-card p-5 shadow-sm">
-              <h3 className="font-semibold text-foreground mb-2">Rough cost range?</h3>
+              <h3 className="font-semibold text-foreground mb-2">What if I want more than 60 sqm?</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Varies by site and spec. We provide a conservative range after reviewing your answers.
+                The SSD pathway is not for you. Larger dwellings require standard planning permit process with longer timeframes and less certainty.
               </p>
             </div>
           </div>
@@ -1047,42 +1045,53 @@ export default function FeasibilityChecklistPage() {
 
           <div className="divide-y divide-border/50">
             <FAQItem
-              question="How does a backyard second home improve housing affordability for families?"
-              answer="A backyard second home lets you create additional living space on land you already own, avoiding the cost of purchasing a new property. It provides affordable housing options for extended family members or generates rental income to offset mortgage costs."
+              question="What is a Small Second Dwelling (SSD) in Victoria?"
+              answer="An SSD is a self-contained dwelling of up to 60 sqm built on the same lot as an existing house. Under Clause 54.03 of the Victorian Planning Provisions, SSDs meeting specific criteria qualify for 'Deemed-to-Comply' status — meaning no planning permit is required."
             />
             <FAQItem
-              question="Can I design it for family now and long-term rental later?"
+              question="What are the key SSD requirements?"
+              answer="Maximum 60 sqm floor area. Must be located behind the front wall line of the main dwelling. Cannot connect to reticulated gas (all-electric required). Cannot be subdivided from the main lot. Main dwelling must retain at least 25 sqm of private open space."
+            />
+            <FAQItem
+              question="Can I design for family now and long-term rental later?"
               answer="Yes, this is one of the most common approaches. We design with rental compliance in mind from the start, so when your family situation changes, transitioning to a rental is straightforward without requiring additional modifications."
             />
             <FAQItem
               question="Why is long-term rental demand still strong?"
-              answer="Victoria's rental vacancy rates remain historically low, and population growth continues to outpace housing supply. A well-designed, compliant secondary dwelling in a good location attracts quality long-term tenants."
+              answer="Victoria's rental vacancy rates remain historically low, and population growth continues to outpace housing supply. A well-designed, compliant SSD in a good location attracts quality long-term tenants."
             />
             <FAQItem
-              question="What design choices reduce running costs and improve rental resilience?"
-              answer="Key factors include good thermal performance (insulation, orientation, glazing), efficient fixtures, durable materials that minimize maintenance, and flexible layouts that appeal to a broad tenant market."
+              question="What are the biggest SSD feasibility blockers?"
+              answer="Common blockers include inadequate site access for construction, easements in the buildable area, steep slopes or poor soil conditions, insufficient lot size to meet siting and POS requirements, and restrictive planning overlays."
             />
             <FAQItem
-              question="What are the top feasibility blockers that change cost dramatically?"
-              answer="The biggest cost escalators are poor access requiring crane delivery or manual handling, steep slopes requiring retaining walls and complex foundations, service upgrades (especially sewer connections), and restrictive overlays that limit design options."
+              question="Can I subdivide an SSD?"
+              answer="No. An SSD cannot be subdivided from the main lot. It must remain on the same title as the main dwelling. If you want to subdivide and sell separately, the SSD pathway is not appropriate for your project."
             />
             <FAQItem
-              question='What is a "backyard second home" in Victoria?'
-              answer="In Victoria, a backyard second home (also called a secondary dwelling, granny flat, or dependent person's unit) is a self-contained dwelling on the same lot as an existing home. It can be attached or detached and must meet specific planning and building requirements."
-            />
-            <FAQItem
-              question="Can I use it for family now and long-term rental later?"
-              answer="Yes, many homeowners build for family use initially and transition to rental income when circumstances change. The key is ensuring your design and approvals support both uses from the outset."
-            />
-            <FAQItem
-              question="What are the biggest feasibility blockers?"
-              answer="Common blockers include inadequate site access for construction, easements in the buildable area, steep slopes or poor soil conditions, insufficient lot size, and restrictive planning overlays that limit what can be built."
+              question="What if my site doesn't meet Deemed-to-Comply criteria?"
+              answer="You may still be able to build, but you'll need a planning permit. This adds time and uncertainty. We'll tell you early if your site doesn't meet the criteria and explain your options."
             />
             <FAQItem
               question="What happens if my site is not feasible?"
               answer="We'll tell you early and explain exactly why. You'll receive a clear summary of the constraints and whether there are any workarounds. This saves you from spending money on designs or applications that won't succeed."
             />
           </div>
+        </div>
+      </section>
+
+      {/* GEO Footer */}
+      <section className="py-12 bg-muted/50 border-t border-border/30">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-sm text-muted-foreground mb-4">
+            <strong>Victorian SSD Compliance Service</strong> — Bayview Hub provides Small Second Dwelling feasibility 
+            assessment and project management services for residential properties in Victoria, Australia.
+          </p>
+          <p className="text-xs text-muted-foreground/70">
+            SSD regulations governed by Victorian Planning Provisions, Clause 54.03. This page is for informational 
+            purposes and does not constitute legal or planning advice. Always consult qualified professionals for 
+            your specific situation.
+          </p>
         </div>
       </section>
     </main>
