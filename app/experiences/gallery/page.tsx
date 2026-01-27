@@ -60,9 +60,13 @@ export default function GalleryPage() {
     <div className="min-h-screen bg-[#121212]">
       {/* Hero: Split Screen */}
       <section className="min-h-[80vh] flex">
-        <div className="hidden md:flex w-1/2 bg-neutral-800 items-center justify-center grayscale">
-          <div className="w-full h-full bg-gradient-to-br from-neutral-700 to-neutral-900 flex items-center justify-center">
-            <span className="text-neutral-500 text-sm tracking-widest uppercase">Gallery Space</span>
+        <div className="hidden md:flex w-1/2 bg-neutral-800 items-center justify-center">
+          <div className="w-full h-full relative overflow-hidden">
+            <img 
+              src="/images/gallery-artwork.jpg" 
+              alt="Gallery artwork" 
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            />
           </div>
         </div>
 
