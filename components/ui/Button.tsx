@@ -6,7 +6,7 @@ interface ButtonProps {
   children: React.ReactNode
   href?: string
   onClick?: () => void
-  variant?: 'primary' | 'secondary' | 'accent' | 'outline'
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'gold'
   size?: 'sm' | 'md' | 'lg'
   className?: string
   external?: boolean
@@ -25,19 +25,20 @@ export function Button({
   disabled = false,
   type = 'button',
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-primary-900'
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 tracking-wide uppercase text-sm'
   
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-    secondary: 'bg-primary-800 text-white hover:bg-primary-900 focus:ring-primary-600',
-    accent: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-400',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-primary-500 dark:border-primary-300 dark:text-primary-300 dark:hover:bg-primary-300 dark:hover:text-primary-900',
+    primary: 'bg-white text-sanctuary hover:bg-neutral-200',
+    secondary: 'bg-neutral-800 text-white hover:bg-neutral-700',
+    accent: 'bg-gold text-sanctuary hover:bg-gold/90',
+    gold: 'bg-gold text-sanctuary hover:bg-gold/90',
+    outline: 'border border-neutral-600 text-white hover:border-white hover:bg-white/5',
   }
   
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
+    sm: 'px-4 py-2',
+    md: 'px-6 py-3',
+    lg: 'px-8 py-4',
   }
 
   const styles = cn(
@@ -75,4 +76,3 @@ export function Button({
     </button>
   )
 }
-

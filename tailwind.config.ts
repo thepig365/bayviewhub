@@ -10,6 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Sanctuary palette
+        sanctuary: '#121212',
+        gold: '#FDFE9A',
+        bone: '#F5F5F0',
+        
+        // Semantic colors
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -29,49 +35,48 @@ const config: Config = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
-          50: '#f9f9f9',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#737373',
-          500: '#525252',
-          600: '#404040',
-          700: '#262626',
-          800: '#171717',
-          900: '#000000',
         },
         accent: {
-          50: '#ffffff',
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        
+        // Grayscale system
+        neutral: {
+          50: '#fafafa',
           100: '#f5f5f5',
           200: '#e5e5e5',
           300: '#d4d4d4',
-          400: '#737373',
-          500: '#525252',
-          600: '#404040',
-          700: '#262626',
-          800: '#171717',
-          900: '#000000',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+          950: '#0a0a0a',
         },
         natural: {
           50: '#fafafa',
           100: '#f5f5f5',
           200: '#e5e5e5',
           300: '#d4d4d4',
-          400: '#737373',
-          500: '#525252',
-          600: '#404040',
-          700: '#262626',
-          800: '#171717',
-          900: '#000000',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
       },
       fontFamily: {
-        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        serif: ['Playfair Display', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        none: '0',
       },
     },
   },
   plugins: [],
 }
 export default config
-
