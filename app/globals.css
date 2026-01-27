@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,10 +37,28 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .dark body,
+  .dark p,
+  .dark span,
+  .dark li,
+  .dark a {
+    color: rgba(255, 255, 255, 0.9);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
   }
 }
 

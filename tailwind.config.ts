@@ -66,8 +66,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        serif: ['Cormorant Garamond', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
     },
   },
