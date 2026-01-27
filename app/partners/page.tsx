@@ -278,7 +278,7 @@ export default function PartnersPage() {
                 </div>
               )}
 
-              <Button variant="primary" size="lg" className="w-full" disabled={status === 'loading'}>
+              <Button variant="primary" size="lg" className="w-full" disabled={status === 'loading'} type="submit">
                 {status === 'loading' ? 'Submitting...' : 'Submit Application'}
               </Button>
 
