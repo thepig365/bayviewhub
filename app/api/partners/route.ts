@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
 async function sendResendEmail(opts: { to: string; subject: string; html: string; replyTo?: string }) {
   const apiKey = process.env.RESEND_API_KEY
@@ -49,6 +50,34 @@ export async function POST(req: Request) {
 
     // Log for Vercel logs
     console.log('[Application] founding-partners', payload)
+
+    // Save to Supabase
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+        )
+        
+        const { error } = await supabase.from('partner_applications').insert({
+          name: payload.form.name,
+          email: payload.form.email,
+          linkedin: payload.form.linkedin,
+          role: payload.form.role,
+          plan: payload.form.plan,
+          availability: payload.form.availability,
+          has_qualification: payload.form.hasQualification,
+          has_insurance: payload.form.hasInsurance,
+          created_at: payload.receivedAt,
+        })
+        
+        if (error) {
+          console.error('[Application] Supabase insert error:', error)
+        }
+      } catch (e) {
+        console.warn('[Application] Supabase save failed', e)
+      }
+    }
 
     // Send notification email to owner
     let emailedOwner = false
