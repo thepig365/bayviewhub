@@ -114,14 +114,6 @@ export default function PartnersPage() {
                     </li>
                   ))}
                 </ul>
-                {role.requirements && (
-                  <div className="bg-accent-50 rounded-lg p-4 mb-6">
-                    <p className="text-xs font-semibold text-accent-900 mb-2">Requirements:</p>
-                    {role.requirements.map((req, idx) => (
-                      <p key={idx} className="text-xs text-accent-800">• {req}</p>
-                    ))}
-                  </div>
-                )}
                 <Button href="#apply" variant="accent" size="sm" className="w-full">
                   Apply for This Role
                 </Button>
