@@ -248,7 +248,7 @@ export function SecondHomeClient() {
                         <Icon className="w-5 h-5 text-white dark:text-neutral-900" />
                       </div>
                       <div>
-                        <div className="text-sm text-neutral-500 dark:text-neutral-400">{item.constraint}</div>
+                        <div className="text-sm text-neutral-700 dark:text-neutral-400">{item.constraint}</div>
                         <div className="font-bold text-neutral-900 dark:text-white">{item.value}</div>
                       </div>
                     </div>

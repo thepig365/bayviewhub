@@ -15,7 +15,7 @@ export default function FoundingGalleryPackPage() {
       <section className="py-20 md:py-28 border-b border-natural-200 dark:border-primary-700">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <p className="text-sm font-mono tracking-widest text-natural-500 uppercase mb-6">
+            <p className="text-sm font-mono tracking-widest text-natural-600 uppercase mb-6">
               Founding Partner Pack — Gallery
             </p>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 leading-tight dark:text-natural-50">
@@ -99,19 +99,19 @@ export default function FoundingGalleryPackPage() {
             </p>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
-                <p className="text-natural-500 text-sm mb-2 dark:text-natural-400">Not</p>
+                <p className="text-natural-600 text-sm mb-2 dark:text-natural-400">Not</p>
                 <p className="font-medium text-natural-900 dark:text-natural-50">Employment</p>
-                <p className="text-sm text-natural-600 mt-2 dark:text-natural-400">You're not staff. You lead your own practice.</p>
+                <p className="text-sm text-natural-700 mt-2 dark:text-natural-400">You're not staff. You lead your own practice.</p>
               </div>
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
-                <p className="text-natural-500 text-sm mb-2 dark:text-natural-400">Not</p>
+                <p className="text-natural-600 text-sm mb-2 dark:text-natural-400">Not</p>
                 <p className="font-medium text-natural-900 dark:text-natural-50">Franchising</p>
-                <p className="text-sm text-natural-600 mt-2 dark:text-natural-400">No playbook to follow. You shape the program.</p>
+                <p className="text-sm text-natural-700 mt-2 dark:text-natural-400">No playbook to follow. You shape the program.</p>
               </div>
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
-                <p className="text-natural-500 text-sm mb-2 dark:text-natural-400">Not</p>
+                <p className="text-natural-600 text-sm mb-2 dark:text-natural-400">Not</p>
                 <p className="font-medium text-natural-900 dark:text-natural-50">Rent / Tenancy</p>
-                <p className="text-sm text-natural-600 mt-2 dark:text-natural-400">No lease. Partnership structure discussed after alignment.</p>
+                <p className="text-sm text-natural-700 mt-2 dark:text-natural-400">No lease. Partnership structure discussed after alignment.</p>
               </div>
             </div>
           </div>
@@ -263,7 +263,7 @@ export default function FoundingGalleryPackPage() {
       {/* Contact */}
       <section className="py-12 bg-natural-900 text-center">
         <div className="container mx-auto px-4">
-          <p className="text-natural-400 mb-4">Ready to start a conversation?</p>
+          <p className="text-natural-300 mb-4">Ready to start a conversation?</p>
           <p className="text-white mb-6">
             <a href={`mailto:${SITE_CONFIG.email}`} className="underline hover:text-primary-400 transition-colors">
               {SITE_CONFIG.email}
@@ -278,7 +278,7 @@ export default function FoundingGalleryPackPage() {
       {/* Disclaimer */}
       <section className="py-6 bg-natural-900">
         <div className="container mx-auto px-4">
-          <p className="text-xs text-natural-500 text-center max-w-2xl mx-auto">
+          <p className="text-xs text-natural-400 text-center max-w-2xl mx-auto">
             Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services. This document is for exploratory conversation only and does not constitute an offer or contract.
           </p>
         </div>

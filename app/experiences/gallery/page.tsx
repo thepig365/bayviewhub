@@ -115,12 +115,12 @@ export default function GalleryPage() {
         </div>
 
         {/* Visual contrast indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-8 text-sm text-natural-500">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-8 text-sm text-natural-700">
           <span className="flex items-center gap-2">
             <span className="w-3 h-3 bg-neutral-300 rounded-full" />
             Sterile White Cube
           </span>
-          <span className="text-natural-300">vs</span>
+          <span className="text-natural-500">vs</span>
           <span className="flex items-center gap-2">
             <span className="w-3 h-3 bg-neutral-500 rounded-full" />
             Living Ecosystem
@@ -189,7 +189,7 @@ export default function GalleryPage() {
               <div className="border-l-2 border-primary-500 pl-6">
                 <h3 className="text-lg font-bold text-primary-400 mb-2">Capital Efficiency</h3>
                 <p className="text-2xl font-serif font-bold mb-4">No Commercial Rent</p>
-                <p className="text-natural-400">
+                <p className="text-natural-300">
                   The partnership is designed to allocate more resources to programming, artists, and collectors.
                 </p>
               </div>
@@ -198,16 +198,16 @@ export default function GalleryPage() {
               <div className="border-l-2 border-accent-500 pl-6">
                 <h3 className="text-lg font-bold text-accent-400 mb-2">The Audience</h3>
                 <p className="text-2xl font-serif font-bold mb-4">50,000+ Seed Traffic</p>
-                <p className="text-natural-400">
+                <p className="text-natural-300">
                   Bayview Hub's destination activity provides ongoing discovery. Annual visitors already primed for experience.
                 </p>
               </div>
 
               {/* Relaxed, Not Rushed */}
               <div className="border-l-2 border-neutral-500 pl-6">
-                <h3 className="text-lg font-bold text-neutral-400 mb-2">Lifestyle Modulation</h3>
+                <h3 className="text-lg font-bold text-neutral-300 mb-2">Lifestyle Modulation</h3>
                 <p className="text-2xl font-serif font-bold mb-4">Relaxed, Not Rushed</p>
-                <p className="text-natural-400">
+                <p className="text-natural-300">
                   Art is encountered in a lived environment, where people stay longer and return.
                 </p>
               </div>
@@ -401,7 +401,7 @@ export default function GalleryPage() {
                     <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                       Professional Background *
                     </label>
-                    <p className="text-sm text-natural-500 mb-2 dark:text-natural-400">
+                    <p className="text-sm text-natural-600 mb-2 dark:text-natural-400">
                       Curation, gallery, creative workshops, hospitality, or relevant entrepreneurial experience.
                     </p>
                     <textarea
@@ -417,7 +417,7 @@ export default function GalleryPage() {
                     <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                       Your Strategic Vision *
                     </label>
-                    <p className="text-sm text-natural-500 mb-2 dark:text-natural-400">
+                    <p className="text-sm text-natural-600 mb-2 dark:text-natural-400">
                       How would you leverage this ecosystem? What would you build?
                     </p>
                     <textarea
@@ -446,7 +446,7 @@ export default function GalleryPage() {
                     <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                       Preferred Partnership Structure
                     </label>
-                    <p className="text-sm text-natural-500 mb-2 dark:text-natural-400">
+                    <p className="text-sm text-natural-600 mb-2 dark:text-natural-400">
                       Equity partner, revenue share, hybrid model, or other arrangement.
                     </p>
                     <textarea
@@ -486,7 +486,7 @@ export default function GalleryPage() {
                     </p>
                   )}
 
-                  <p className="text-xs text-natural-500 text-center dark:text-natural-400">
+                  <p className="text-xs text-natural-600 text-center dark:text-natural-400">
                     This is not a job application. Submitting an inquiry does not create any obligation for either party.
                   </p>
                 </div>
@@ -499,7 +499,7 @@ export default function GalleryPage() {
       {/* Disclaimer */}
       <section className="py-8 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
-          <p className="text-sm text-natural-500 text-center dark:text-natural-400 max-w-3xl mx-auto">
+          <p className="text-sm text-natural-600 text-center dark:text-natural-400 max-w-3xl mx-auto">
             Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services.
           </p>
         </div>
@@ -508,7 +508,7 @@ export default function GalleryPage() {
       {/* Footer CTA */}
       <section className="py-12 bg-natural-900 text-center">
         <div className="container mx-auto px-4">
-          <p className="text-natural-400 mb-2">Prefer a direct conversation?</p>
+          <p className="text-natural-300 mb-2">Prefer a direct conversation?</p>
           <p className="text-white">
             <a href={`mailto:${SITE_CONFIG.email}`} className="underline hover:text-primary-400 transition-colors">
               {SITE_CONFIG.email}

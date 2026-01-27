@@ -63,19 +63,19 @@ export default function FoundingPartnersPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-natural-400 mt-1">—</span>
+                <span className="text-natural-500 mt-1">—</span>
                 <p className="text-natural-700 dark:text-natural-300">
                   Not employment
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-natural-400 mt-1">—</span>
+                <span className="text-natural-500 mt-1">—</span>
                 <p className="text-natural-700 dark:text-natural-300">
                   Not franchising
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-natural-400 mt-1">—</span>
+                <span className="text-natural-500 mt-1">—</span>
                 <p className="text-natural-700 dark:text-natural-300">
                   Not short-term activation
                 </p>
