@@ -17,11 +17,39 @@ export default function PartnersPage() {
     hasInsurance: false,
   })
 
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
-    alert('Application submitted! We will be in touch soon.')
+    setStatus('loading')
+    
+    try {
+      const res = await fetch('/api/partners', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await res.json()
+      
+      if (data.ok) {
+        setStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          linkedin: '',
+          role: '',
+          plan: '',
+          availability: '',
+          hasQualification: false,
+          hasInsurance: false,
+        })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -130,7 +158,15 @@ export default function PartnersPage() {
             <h2 className="text-4xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-natural-50">
               Apply Now
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-primary-900/60 dark:border dark:border-primary-700">
+
+            {status === 'success' ? (
+              <div className="bg-natural-50 rounded-2xl p-12 text-center dark:bg-primary-900/60 dark:border dark:border-primary-700">
+                <div className="text-accent-600 text-5xl mb-4">✓</div>
+                <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">Application Received</h3>
+                <p className="text-natural-600 dark:text-natural-200">We'll review your application and reach out if aligned.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <div>
                 <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
                   Name *
@@ -242,10 +278,17 @@ export default function PartnersPage() {
                 </div>
               )}
 
-              <Button variant="primary" size="lg" className="w-full">
-                Submit Application
+              <Button variant="primary" size="lg" className="w-full" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Submitting...' : 'Submit Application'}
               </Button>
+
+              {status === 'error' && (
+                <p className="text-natural-600 text-center text-sm dark:text-natural-300">
+                  Error submitting. Please try again or contact us directly.
+                </p>
+              )}
             </form>
+            )}
           </div>
         </div>
       </section>
