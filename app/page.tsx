@@ -65,20 +65,20 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2">50k+</div>
-              <div className="text-sm text-natural-600">Annual Footfall</div>
+              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">50k+</div>
+              <div className="text-sm text-natural-600 dark:text-natural-300">Annual Footfall</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2">🍷</div>
-              <div className="text-sm text-natural-600">Winery Restaurant</div>
+              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🍷</div>
+              <div className="text-sm text-natural-600 dark:text-natural-300">Winery Restaurant</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2">🎵</div>
-              <div className="text-sm text-natural-600">Live Music Weekends</div>
+              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🎵</div>
+              <div className="text-sm text-natural-600 dark:text-natural-300">Live Music Weekends</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2">🌏</div>
-              <div className="text-sm text-natural-600">International Destination</div>
+              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🌏</div>
+              <div className="text-sm text-natural-600 dark:text-natural-300">International Destination</div>
             </div>
           </div>
         </div>
