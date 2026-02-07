@@ -117,7 +117,6 @@ export async function POST(request: Request) {
         source_page,
         user_agent,
         status: 'active',
-        updated_at: new Date().toISOString(),
       }
       console.log('[Newsletter API] Attempting upsert:', insertData)
 
