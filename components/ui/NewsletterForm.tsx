@@ -87,6 +87,7 @@ export function NewsletterForm() {
       </div>
 
       <Button
+        type="submit"
         variant="primary"
         size="lg"
         className="w-full"

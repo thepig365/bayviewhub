@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: Request) {
   try {
@@ -13,46 +14,52 @@ export async function POST(request: Request) {
       )
     }
 
-    // TODO: Integrate with your email service provider
-    // Options:
-    // 1. Mailchimp API
-    // 2. SendGrid Marketing Campaigns
-    // 3. ConvertKit
-    // 4. Klaviyo
-    // 5. Your own database + email automation
+    // Save to Supabase
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+        )
 
-    // Example Mailchimp integration (uncomment and configure):
-    /*
-    const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY
-    const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID
-    const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX // e.g., 'us1'
+        const headers = request.headers
+        const source_page = headers.get('referer') || 'unknown'
+        const user_agent = headers.get('user-agent') || ''
 
-    const response = await fetch(
-      `https://${MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${MAILCHIMP_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email_address: email,
-          status: 'subscribed',
-          merge_fields: {
-            INTERESTS: interests.join(', '),
-          },
-          tags: interests,
-        }),
+        const { error } = await supabase
+          .from('newsletter_subscriptions')
+          .upsert({
+            email: email.toLowerCase().trim(),
+            interests: Array.isArray(interests) ? interests : [],
+            source_page,
+            user_agent,
+            status: 'active',
+            updated_at: new Date().toISOString(),
+          }, {
+            onConflict: 'email'
+          })
+
+        if (error) {
+          console.error('[Newsletter] Supabase upsert error:', error)
+          return NextResponse.json(
+            { error: 'Failed to subscribe. Please try again.' },
+            { status: 500 }
+          )
+        }
+      } catch (e) {
+        console.error('[Newsletter] Supabase error:', e)
+        return NextResponse.json(
+          { error: 'Failed to subscribe. Please try again.' },
+          { status: 500 }
+        )
       }
-    )
-
-    if (!response.ok) {
-      throw new Error('Failed to subscribe')
+    } else {
+      console.warn('[Newsletter] Supabase not configured')
+      return NextResponse.json(
+        { error: 'Service not available' },
+        { status: 503 }
+      )
     }
-    */
-
-    // For now, just log and return success
-    console.log('Newsletter signup:', { email, interests })
 
     return NextResponse.json(
       { message: 'Successfully subscribed!' },
