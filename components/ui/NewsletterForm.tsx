@@ -29,21 +29,28 @@ export function NewsletterForm() {
     setStatus('loading')
 
     try {
-      // Replace with your actual API endpoint or form service
+      const payload = { email, interests, website: honeypot }
+      console.log('[Newsletter Client] Submitting:', payload)
+      
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, interests, website: honeypot }),
+        body: JSON.stringify(payload),
       })
+
+      const data = await response.json()
+      console.log('[Newsletter Client] Response:', { status: response.status, data })
 
       if (response.ok) {
         setStatus('success')
         setEmail('')
         setInterests([])
       } else {
+        console.error('[Newsletter Client] Error:', data)
         setStatus('error')
       }
     } catch (error) {
+      console.error('[Newsletter Client] Fetch error:', error)
       setStatus('error')
     }
   }

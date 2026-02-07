@@ -55,6 +55,7 @@ export async function POST(request: Request) {
   try {
     // Rate limiting
     if (isRateLimited(request)) {
+      console.log('[Newsletter API] Rate limited')
       return NextResponse.json(
         { error: 'Too many requests. Please try again in a minute.' },
         { status: 429 }
@@ -62,16 +63,18 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
+    console.log('[Newsletter API] Request body:', body)
     const { email, interests, website } = body
 
     // Honeypot check
     if (website) {
-      console.log('[Newsletter] Honeypot triggered')
+      console.log('[Newsletter API] Honeypot triggered')
       return NextResponse.json({ message: 'Successfully subscribed!' }, { status: 200 })
     }
 
     // Validate email
     if (!email || !email.includes('@')) {
+      console.log('[Newsletter API] Invalid email:', email)
       return NextResponse.json(
         { error: 'Valid email is required' },
         { status: 400 }
@@ -79,32 +82,43 @@ export async function POST(request: Request) {
     }
 
     // Save to Supabase
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    console.log('[Newsletter API] Supabase config:', { 
+      hasUrl: !!supabaseUrl, 
+      hasKey: !!supabaseKey,
+      urlPrefix: supabaseUrl?.substring(0, 30)
+    })
+    
+    if (supabaseUrl && supabaseKey) {
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL,
-          process.env.SUPABASE_SERVICE_ROLE_KEY
-        )
+        const supabase = createClient(supabaseUrl, supabaseKey)
 
         const headers = request.headers
         const source_page = headers.get('referer') || 'unknown'
         const user_agent = headers.get('user-agent') || ''
 
-        const { error } = await supabase
+        const insertData = {
+          email: email.toLowerCase().trim(),
+          interests: Array.isArray(interests) ? interests : [],
+          source_page,
+          user_agent,
+          status: 'active',
+          updated_at: new Date().toISOString(),
+        }
+        console.log('[Newsletter API] Attempting upsert:', insertData)
+
+        const { data, error } = await supabase
           .from('newsletter_subscriptions')
-          .upsert({
-            email: email.toLowerCase().trim(),
-            interests: Array.isArray(interests) ? interests : [],
-            source_page,
-            user_agent,
-            status: 'active',
-            updated_at: new Date().toISOString(),
-          }, {
+          .upsert(insertData, {
             onConflict: 'email'
           })
+          .select()
+
+        console.log('[Newsletter API] Supabase response:', { data, error })
 
         if (error) {
-          console.error('[Newsletter] Supabase upsert error:', error)
+          console.error('[Newsletter API] Supabase upsert error:', error)
           return NextResponse.json(
             { error: 'Failed to subscribe. Please try again.' },
             { status: 500 }
@@ -137,31 +151,33 @@ export async function POST(request: Request) {
               </div>
             `,
           })
+          console.log('[Newsletter API] Admin email sent successfully')
         } catch (e) {
-          console.warn('[Newsletter] Admin email failed', e)
+          console.warn('[Newsletter API] Admin email failed:', e)
         }
 
       } catch (e) {
-        console.error('[Newsletter] Supabase error:', e)
+        console.error('[Newsletter API] Supabase error:', e)
         return NextResponse.json(
           { error: 'Failed to subscribe. Please try again.' },
           { status: 500 }
         )
       }
     } else {
-      console.warn('[Newsletter] Supabase not configured')
+      console.warn('[Newsletter API] Supabase not configured')
       return NextResponse.json(
         { error: 'Service not available' },
         { status: 503 }
       )
     }
 
+    console.log('[Newsletter API] Success')
     return NextResponse.json(
       { message: 'Successfully subscribed!' },
       { status: 200 }
     )
   } catch (error) {
-    console.error('Newsletter signup error:', error)
+    console.error('[Newsletter API] Top-level error:', error)
     return NextResponse.json(
       { error: 'Failed to subscribe. Please try again.' },
       { status: 500 }
