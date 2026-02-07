@@ -30,6 +30,29 @@ function isRateLimited(req: NextRequest): boolean {
   return false;
 }
 
+async function sendResendEmail(opts: { to: string; subject: string; html: string; replyTo?: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM;
+  if (!apiKey || !from) return false;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [opts.to],
+      subject: opts.subject,
+      html: opts.html,
+      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
+    }),
+  });
+
+  return res.ok;
+}
+
 function sanitizeString(value: unknown, maxLength: number = 500): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
@@ -54,6 +77,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     if (body.website) {
+      console.log("[Feasibility] Honeypot triggered");
       return NextResponse.json({ ok: true });
     }
 
@@ -126,6 +150,40 @@ export async function POST(req: NextRequest) {
         { ok: false, error: "Failed to save your request. Please try again." },
         { status: 500 }
       );
+    }
+
+    // Send notification email to admin after successful DB insert
+    const notifyEmail = "leonzh@bayviewestate.com.au";
+    const timestamp = new Date().toISOString();
+    
+    try {
+      await sendResendEmail({
+        to: notifyEmail,
+        subject: `[SSD] ${sanitizedSuburb} — ${leadData.intention || "Not specified"}`,
+        replyTo: sanitizedEmail || undefined,
+        html: `
+          <div style="font-family: system-ui, -apple-system, sans-serif; line-height:1.6; max-width:600px;">
+            <h2 style="color:#1a365d;">New SSD Feasibility Request</h2>
+            
+            <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold; width:140px;">Timestamp</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${timestamp}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Location</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${sanitizedSuburb}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Lot Size</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.lot_size || "Not provided"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Slope</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.slope || "Not provided"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Access</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.access || "Not provided"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Intention</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.intention || "Not specified"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Budget Range</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.budget_range || "Not provided"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Ready in 6 months</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${leadData.ready_in_6_months || "Not specified"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Email</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${sanitizedEmail || "Not provided"}</td></tr>
+              <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Phone</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${sanitizedPhone || "Not provided"}</td></tr>
+            </table>
+
+            <p style="color:#718096; font-size:12px; margin-top:24px;">Summary: ${leadData.intention || "SSD"} inquiry for ${sanitizedSuburb}, ${leadData.ready_in_6_months === "yes" ? "ready within 6 months" : "timeline flexible"}</p>
+          </div>
+        `,
+      });
+    } catch (e) {
+      console.warn("[Feasibility] Admin email failed", e);
     }
 
     return NextResponse.json({ ok: true });

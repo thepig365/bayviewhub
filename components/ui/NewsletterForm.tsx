@@ -7,6 +7,7 @@ export function NewsletterForm() {
   const [email, setEmail] = useState('')
   const [interests, setInterests] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [honeypot, setHoneypot] = useState('')
 
   const interestOptions = [
     { id: 'music', label: 'The Shed Music (Live Music)' },
@@ -32,7 +33,7 @@ export function NewsletterForm() {
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, interests }),
+        body: JSON.stringify({ email, interests, website: honeypot }),
       })
 
       if (response.ok) {
@@ -85,6 +86,17 @@ export function NewsletterForm() {
           ))}
         </div>
       </div>
+
+      {/* Honeypot field - hidden from humans */}
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
 
       <Button
         type="submit"

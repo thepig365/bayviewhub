@@ -340,6 +340,17 @@ function FeasibilityForm() {
           <p className="text-sm text-destructive font-medium">{formError}</p>
         )}
 
+        {/* Honeypot field - hidden from humans */}
+        <input
+          type="text"
+          name="website"
+          value={formData.website}
+          onChange={(e) => handleInputChange("website", e.target.value)}
+          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
         <button
           type="submit"
           disabled={isSubmitting}

@@ -15,6 +15,7 @@ export default function PartnersPage() {
     availability: '',
     hasQualification: false,
     hasInsurance: false,
+    website: '', // honeypot
   })
 
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -43,6 +44,7 @@ export default function PartnersPage() {
           availability: '',
           hasQualification: false,
           hasInsurance: false,
+          website: '',
         })
       } else {
         setStatus('error')
@@ -277,6 +279,17 @@ export default function PartnersPage() {
                   </label>
                 </div>
               )}
+
+              {/* Honeypot field - hidden from humans */}
+              <input
+                type="text"
+                name="website"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+                tabIndex={-1}
+                autoComplete="off"
+              />
 
               <Button variant="primary" size="lg" className="w-full" disabled={status === 'loading'} type="submit">
                 {status === 'loading' ? 'Submitting...' : 'Submit Application'}

@@ -28,6 +28,12 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
     
+    // Honeypot check
+    if (body.website) {
+      console.log('[Partners] Honeypot triggered')
+      return NextResponse.json({ ok: true })
+    }
+    
     // Validation
     if (!body?.name || !body?.email || !body?.role || !body?.plan) {
       return NextResponse.json({ ok: false, error: 'Missing required fields' }, { status: 400 })
@@ -81,13 +87,13 @@ export async function POST(req: Request) {
 
     // Send notification email to owner
     let emailedOwner = false
-    const notifyEmail = process.env.PARTNERS_NOTIFY_EMAIL || process.env.EOI_GALLERY_NOTIFY_EMAIL || process.env.EOI_EDIBLE_GARDENS_NOTIFY_EMAIL
+    const notifyEmail = 'leonzh@bayviewestate.com.au'
     
     if (notifyEmail) {
       try {
         emailedOwner = await sendResendEmail({
           to: notifyEmail,
-          subject: `New Founding Partner Application: ${body.role}`,
+          subject: `[PARTNER] ${body.role} — ${body.name}`,
           replyTo: payload.form.email,
           html: `
             <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height:1.6; max-width:600px;">
