@@ -81,99 +81,105 @@ export async function POST(request: Request) {
       )
     }
 
-    // Save to Supabase
+    // Check required environment variables
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    console.log('[Newsletter API] Supabase config:', { 
-      hasUrl: !!supabaseUrl, 
-      hasKey: !!supabaseKey,
-      urlPrefix: supabaseUrl?.substring(0, 30)
-    })
+    const missing: string[] = []
     
-    if (supabaseUrl && supabaseKey) {
-      try {
-        const supabase = createClient(supabaseUrl, supabaseKey)
+    if (!supabaseUrl) missing.push('NEXT_PUBLIC_SUPABASE_URL')
+    if (!supabaseKey) missing.push('SUPABASE_SERVICE_ROLE_KEY')
+    
+    if (missing.length > 0) {
+      console.error('[Newsletter API] Missing environment variables:', missing)
+      return NextResponse.json(
+        { ok: false, step: 'env', missing },
+        { status: 500 }
+      )
+    }
 
-        const headers = request.headers
-        const source_page = headers.get('referer') || 'unknown'
-        const user_agent = headers.get('user-agent') || ''
+    console.log('[Newsletter API] Supabase config:', { 
+      hasUrl: true, 
+      hasKey: true,
+      urlPrefix: supabaseUrl!.substring(0, 30)
+    })
 
-        const insertData = {
-          email: email.toLowerCase().trim(),
-          interests: Array.isArray(interests) ? interests : [],
-          source_page,
-          user_agent,
-          status: 'active',
-          updated_at: new Date().toISOString(),
-        }
-        console.log('[Newsletter API] Attempting upsert:', insertData)
+    // Save to Supabase
+    try {
+      const supabase = createClient(supabaseUrl!, supabaseKey!)
 
-        const { data, error } = await supabase
-          .from('newsletter_subscriptions')
-          .upsert(insertData, {
-            onConflict: 'email'
-          })
-          .select()
+      const headers = request.headers
+      const source_page = headers.get('referer') || 'unknown'
+      const user_agent = headers.get('user-agent') || ''
 
-        console.log('[Newsletter API] Supabase response:', { data, error })
+      const insertData = {
+        email: email.toLowerCase().trim(),
+        interests: Array.isArray(interests) ? interests : [],
+        source_page,
+        user_agent,
+        status: 'active',
+        updated_at: new Date().toISOString(),
+      }
+      console.log('[Newsletter API] Attempting upsert:', insertData)
 
-        if (error) {
-          console.error('[Newsletter API] Supabase upsert error:', error)
-          return NextResponse.json(
-            { error: 'Failed to subscribe. Please try again.' },
-            { status: 500 }
-          )
-        }
+      const { data, error } = await supabase
+        .from('newsletter_subscriptions')
+        .upsert(insertData, {
+          onConflict: 'email'
+        })
+        .select()
 
-        // Send notification email to admin after successful DB insert
-        const notifyEmail = 'leonzh@bayviewestate.com.au'
-        const timestamp = new Date().toISOString()
-        const interestsStr = Array.isArray(interests) && interests.length > 0 
-          ? interests.join(', ') 
-          : 'None selected'
+      console.log('[Newsletter API] Supabase response:', { data, error })
 
-        try {
-          await sendResendEmail({
-            to: notifyEmail,
-            subject: `[SUBSCRIBE] ${email} — ${interestsStr}`,
-            html: `
-              <div style="font-family: system-ui, -apple-system, sans-serif; line-height:1.6; max-width:600px;">
-                <h2 style="color:#1a365d;">New Newsletter Subscription</h2>
-                
-                <table style="width:100%; border-collapse:collapse; margin:20px 0;">
-                  <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold; width:140px;">Timestamp</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${timestamp}</td></tr>
-                  <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Email</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${email}</td></tr>
-                  <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Interests</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${interestsStr}</td></tr>
-                  <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Source Page</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${source_page}</td></tr>
-                </table>
-
-                <p style="color:#718096; font-size:12px; margin-top:24px;">Summary: New subscriber interested in ${interestsStr || 'general updates'}</p>
-              </div>
-            `,
-          })
-          console.log('[Newsletter API] Admin email sent successfully')
-        } catch (e) {
-          console.warn('[Newsletter API] Admin email failed:', e)
-        }
-
-      } catch (e) {
-        console.error('[Newsletter API] Supabase error:', e)
+      if (error) {
+        console.error('[Newsletter API] Supabase upsert error:', error)
         return NextResponse.json(
-          { error: 'Failed to subscribe. Please try again.' },
+          { ok: false, step: 'supabase_upsert', error: error.message },
           { status: 500 }
         )
       }
-    } else {
-      console.warn('[Newsletter API] Supabase not configured')
+
+      // Send notification email to admin after successful DB insert
+      const notifyEmail = 'leonzh@bayviewestate.com.au'
+      const timestamp = new Date().toISOString()
+      const interestsStr = Array.isArray(interests) && interests.length > 0 
+        ? interests.join(', ') 
+        : 'None selected'
+
+      try {
+        await sendResendEmail({
+          to: notifyEmail,
+          subject: `[SUBSCRIBE] ${email} — ${interestsStr}`,
+          html: `
+            <div style="font-family: system-ui, -apple-system, sans-serif; line-height:1.6; max-width:600px;">
+              <h2 style="color:#1a365d;">New Newsletter Subscription</h2>
+              
+              <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+                <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold; width:140px;">Timestamp</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${timestamp}</td></tr>
+                <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Email</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${email}</td></tr>
+                <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Interests</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${interestsStr}</td></tr>
+                <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold;">Source Page</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${source_page}</td></tr>
+              </table>
+
+              <p style="color:#718096; font-size:12px; margin-top:24px;">Summary: New subscriber interested in ${interestsStr || 'general updates'}</p>
+            </div>
+          `,
+        })
+        console.log('[Newsletter API] Admin email sent successfully')
+      } catch (e) {
+        console.warn('[Newsletter API] Admin email failed:', e)
+      }
+
+    } catch (e: any) {
+      console.error('[Newsletter API] Supabase error:', e)
       return NextResponse.json(
-        { error: 'Service not available' },
-        { status: 503 }
+        { ok: false, step: 'supabase_client', error: e.message || 'Unknown error' },
+        { status: 500 }
       )
     }
 
     console.log('[Newsletter API] Success')
     return NextResponse.json(
-      { message: 'Successfully subscribed!' },
+      { ok: true, message: 'Successfully subscribed!' },
       { status: 200 }
     )
   } catch (error) {
