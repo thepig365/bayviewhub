@@ -1,14 +1,41 @@
-import type { Metadata } from 'next'
+import React from 'react'
+import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { Button } from '@/components/ui/Button'
 
-export const metadata: Metadata = {
-  title: 'Founding Partnerships | Bayview Hub',
-  description: 'Bayview Hub offers physical space for individuals who want to build their own independent practice — as partners within a shared destination.',
-}
+export const metadata = genMeta({
+  title: `Art Gallery Founding Partners | ${SITE_CONFIG.name}`,
+  description:
+    'Bayview Hub offers physical space for founding partners — Art Gallery, Workshops, Edible Gardens. Not employment, not franchising. Build your practice within a shared destination.',
+  path: '/art-gallery/founding-partners',
+})
 
-export default function FoundingPartnersPage() {
+export default function ArtGalleryFoundingPartnersPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-primary-900">
+      {/* Answer Capsule */}
+      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <AnswerCapsule
+              definition="Bayview Hub offers physical space for individuals to build their own independent practice — as partners within a shared destination. Not employment, not franchising."
+              facts={[
+                'You operate your own program or practice.',
+                'Bayview Hub provides land, infrastructure, and an existing visitor context.',
+                'Areas: Art Gallery, Therapeutic Arts Workshops, Edible Gardens, Live Music.',
+                'Each partnership develops at its own pace and shape.',
+              ]}
+              sources={[
+                { label: 'Art Gallery', href: `${SITE_CONFIG.url}/art-gallery` },
+                { label: 'Partners', href: `${SITE_CONFIG.url}/partners` },
+              ]}
+              lastUpdated="2025-02-10"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Hero */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">

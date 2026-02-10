@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SecondHomeClient } from './SecondHomeClient'
 
 export const metadata = genMeta({
@@ -117,6 +118,29 @@ export default function SecondHomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      {/* Answer Capsule - above the fold */}
+      <div className="bg-neutral-900 border-b border-neutral-800">
+        <div className="container mx-auto px-4 py-6">
+          <div className="max-w-4xl mx-auto">
+            <AnswerCapsule
+              definition="Victorian Small Second Dwelling (SSD) feasibility and Path to Approval. 60 sqm max. Compliant projects bypass planning permit under VC253/VC282 via Deemed-to-Comply."
+              facts={[
+                'Max 60 sqm GFA. Siting behind front wall. All-electric. No subdivision.',
+                'Green Lane: full compliance → no planning permit. Building permit required.',
+                'VicSmart: minor overlays → 10-day council decision.',
+                'Multi-generational housing or rental yield. Same title.',
+              ]}
+              sources={[
+                { label: 'DTP SSD Guidelines', href: 'https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings' },
+                { label: 'Victoria Rules', href: `${SITE_CONFIG.url}/second-home/victoria-rules` },
+                { label: 'Feasibility Check', href: `${SITE_CONFIG.url}/second-home/feasibility-check` },
+              ]}
+              lastUpdated="2025-02-10"
+              className="border-neutral-700 bg-neutral-800/50"
+            />
+          </div>
+        </div>
+      </div>
       <Suspense fallback={<div className="min-h-screen bg-neutral-900" />}>
         <SecondHomeClient />
       </Suspense>

@@ -66,7 +66,7 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-4 text-white">Experiences</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/experiences/gallery" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/art-gallery" className="text-natural-300 hover:text-primary-400 transition-colors">
                   Arts Gallery
                 </Link>
               </li>
@@ -86,7 +86,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/gardens" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/edible-gardens" className="text-natural-300 hover:text-primary-400 transition-colors">
                   Edible Gardens
                 </Link>
               </li>

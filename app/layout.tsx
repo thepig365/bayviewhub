@@ -75,31 +75,61 @@ export default function RootLayout({
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
   const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
-    url: SITE_CONFIG.url,
-    telephone: SITE_CONFIG.phone,
-    email: SITE_CONFIG.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE_CONFIG.address,
-      addressLocality: 'Main Ridge',
-      addressRegion: 'VIC',
-      addressCountry: 'AU',
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: SITE_CONFIG.name,
+      description: SITE_CONFIG.description,
+      url: SITE_CONFIG.url,
+      telephone: SITE_CONFIG.phone,
+      email: SITE_CONFIG.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: SITE_CONFIG.address,
+        addressLocality: 'Main Ridge',
+        addressRegion: 'VIC',
+        addressCountry: 'AU',
+      },
+      sameAs: Object.values(SOCIAL_LINKS),
     },
-    sameAs: Object.values(SOCIAL_LINKS),
-  }
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+      description: SITE_CONFIG.description,
+      publisher: { '@type': 'Organization', name: SITE_CONFIG.name, url: SITE_CONFIG.url },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: SITE_CONFIG.name,
+      description: SITE_CONFIG.description,
+      url: SITE_CONFIG.url,
+      telephone: SITE_CONFIG.phone,
+      email: SITE_CONFIG.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: SITE_CONFIG.address,
+        addressLocality: 'Main Ridge',
+        addressRegion: 'VIC',
+        addressCountry: 'AU',
+      },
+      sameAs: Object.values(SOCIAL_LINKS),
+    },
+  ]
 
   return (
     <html lang="en" className="font-sans" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        {jsonLd.map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
 
         {googleSiteVerification ? (
           <meta name="google-site-verification" content={googleSiteVerification} />

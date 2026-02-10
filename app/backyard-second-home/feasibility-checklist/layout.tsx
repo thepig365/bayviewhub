@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AnswerCapsule } from "@/components/seo/AnswerCapsule";
 
 export const metadata: Metadata = {
   title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
@@ -136,6 +137,25 @@ export default function FeasibilityChecklistLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {/* Answer Capsule - above the fold */}
+      <div className="bg-muted/30 border-b border-border">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <AnswerCapsule
+            definition="Automated Deemed-to-Comply validation and Path to Approval engine. Determines Green Lane (no planning permit), VicSmart (10-day), or Red Zone (standard planning)."
+            facts={[
+              "Green Lane: full compliance → no planning permit. Proceed to building permit.",
+              "VicSmart: minor overlays or variations → 10-day council decision.",
+              "Red Zone: GFA >60sqm or front-yard siting → standard planning process.",
+              "VC253/VC282 hard constraints: 60sqm max, behind front wall, all-electric, no subdivision.",
+            ]}
+            sources={[
+              { label: "DTP SSD Guidelines", href: "https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings" },
+              { label: "SSD Hub", href: "https://www.bayviewhub.me/second-home" },
+            ]}
+            lastUpdated="2025-02-10"
+          />
+        </div>
+      </div>
       {children}
     </>
   );

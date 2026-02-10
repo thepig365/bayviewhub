@@ -43,7 +43,7 @@ export const EXPERIENCES = {
       id: 'gallery',
       title: 'Bayview Arts Gallery',
       blurb: 'Curated exhibitions, openings, and collectible works.',
-      cta: { label: 'Explore Gallery', href: '/experiences/gallery' },
+      cta: { label: 'Explore Gallery', href: '/art-gallery' },
       prelaunch: true,
       image: '/images/gallery.jpg',
       category: 'create',

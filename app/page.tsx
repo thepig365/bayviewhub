@@ -43,7 +43,7 @@ export default function HomePage() {
               <Button href="/partners" variant="primary" size="lg">
                 Become a Partner
               </Button>
-              <Button href="/gardens#subscribe" variant="secondary" size="lg">
+              <Button href="/edible-gardens#subscribe" variant="secondary" size="lg">
                 Subscribe Gardens
               </Button>
               <Button href="/second-home#register" variant="accent" size="lg">
