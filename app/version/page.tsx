@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,7 +11,19 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default function VersionPage() {
+export default function VersionPage({
+  searchParams,
+}: {
+  searchParams: { key?: string | string[] }
+}) {
+  const key = searchParams?.key
+  const keyStr = typeof key === 'string' ? key : Array.isArray(key) ? key[0] : undefined
+  const expectedKey = process.env.VERSION_PAGE_KEY
+
+  if (!expectedKey || keyStr !== expectedKey) {
+    redirect('/')
+  }
+
   const commitSha = process.env.VERCEL_GIT_COMMIT_SHA ?? 'unknown'
   const deploymentId = process.env.VERCEL_DEPLOYMENT_ID ?? 'unknown'
   const nodeEnv = process.env.NODE_ENV ?? 'unknown'
