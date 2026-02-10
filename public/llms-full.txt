@@ -1,24 +1,21 @@
 # Bayview Hub — Full LLM Reference
 Site: https://www.bayviewhub.me
 
-Last updated: 2025-02-10
+Last updated: {{LAST_UPDATED}}
 
 ---
 
 ## Answer Capsule: Backyard Small Second Home (SSD)
 
-**What this is:** A Small Second Dwelling (SSD) under Victoria Planning Provisions VC253/VC282. Up to 60 sqm on existing residential lots. Compliant projects bypass planning permit via Deemed-to-Comply pathway.
+**What this is:** Overview of Victorian Small Second Dwelling (SSD) deemed-to-comply pathway and key constraints. See Evidence on the rules page for official sources.
 
-**Key facts:**
-- Max GFA: 60 sqm (Gross Floor Area). No exceptions.
-- Siting: Must be behind front wall of primary dwelling.
-- Utilities: All-electric only. No reticulated gas.
-- Ownership: No subdivision. SSD stays on same title.
-- Main dwelling: Retains 25 sqm POS minimum.
-- Green Lane: Full compliance → no planning permit. Building permit required.
-- VicSmart: Minor overlays or variations → 10-day council decision.
+**Key facts (summary, non-authoritative; verify via official sources):**
+- Deemed-to-comply pathway may bypass planning permit for compliant projects.
+- Green Lane: full compliance → proceed to building permit. Building permit required.
+- VicSmart: minor overlays or variations → expedited council decision.
+- Always verify current constraints via [DTP SSD Guidelines](https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings) and official VIC Planning — TODO: add Amendment source links.
 
-**Sources:** [DTP SSD Guidelines](https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings), VC253, VC282.
+**Sources:** [Backyard Small Second Home](https://www.bayviewhub.me/backyard-small-second-home), [Victoria Rules](https://www.bayviewhub.me/backyard-small-second-home/victoria-rules), [Cost & ROI](https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi), [Feasibility Check](https://www.bayviewhub.me/backyard-small-second-home/feasibility-check), [DTP SSD Guidelines](https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings).
 
 ---
 
@@ -28,7 +25,7 @@ Last updated: 2025-02-10
 
 **Key facts:**
 - Integrated into living destination (restaurant, cellar door, music, gardens).
-- 50k+ annual visitors.
+- Estimated 50k+ annual visitors. See [Visitor Traffic Evidence](https://www.bayviewhub.me/evidence/visitor-traffic).
 - Revenue share or equity hybrid. No commercial rent.
 - Founding curator role: exhibitions, artist relationships, sales.
 

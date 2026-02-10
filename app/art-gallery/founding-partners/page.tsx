@@ -1,5 +1,6 @@
 import React from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { Button } from '@/components/ui/Button'
@@ -22,15 +23,16 @@ export default function ArtGalleryFoundingPartnersPage() {
               definition="Bayview Hub offers physical space for individuals to build their own independent practice — as partners within a shared destination. Not employment, not franchising."
               facts={[
                 'You operate your own program or practice.',
-                'Bayview Hub provides land, infrastructure, and an existing visitor context.',
+                'Bayview Hub provides land, infrastructure, and an existing visitor context (estimated 50k+ annual visitors — see Evidence).',
                 'Areas: Art Gallery, Therapeutic Arts Workshops, Edible Gardens, Live Music.',
                 'Each partnership develops at its own pace and shape.',
               ]}
               sources={[
                 { label: 'Art Gallery', href: `${SITE_CONFIG.url}/art-gallery` },
                 { label: 'Partners', href: `${SITE_CONFIG.url}/partners` },
+                { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },
               ]}
-              lastUpdated="2025-02-10"
+              lastUpdated={LAST_UPDATED}
             />
           </div>
         </div>
@@ -67,7 +69,7 @@ export default function ArtGalleryFoundingPartnersPage() {
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                 <p className="text-natural-700 dark:text-natural-300">
-                  Bayview Hub provides land, infrastructure, and an existing visitor context.
+                  Bayview Hub provides land, infrastructure, and an existing visitor context (<a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">estimated 50k+ annual visitors — see Evidence</a>).
                 </p>
               </li>
               <li className="flex items-start gap-4">

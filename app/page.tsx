@@ -46,7 +46,7 @@ export default function HomePage() {
               <Button href="/edible-gardens#subscribe" variant="secondary" size="lg">
                 Subscribe Gardens
               </Button>
-              <Button href="/second-home#register" variant="accent" size="lg">
+              <Button href="/backyard-small-second-home#register" variant="accent" size="lg">
                 Build Second Home
               </Button>
               <PrelaunchButton href="/workshops" variant="primary" size="lg">
@@ -66,7 +66,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">50k+</div>
-              <div className="text-sm text-natural-600 dark:text-natural-300">Annual Footfall</div>
+              <div className="text-sm text-natural-600 dark:text-natural-300">Annual visitors</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🍷</div>

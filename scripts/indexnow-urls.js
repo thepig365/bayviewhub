@@ -10,11 +10,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me'
 
 const routes = [
   '',
-  '/second-home',
-  '/second-home/victoria-rules',
-  '/second-home/cost-rent-roi',
-  '/second-home/feasibility-check',
-  '/backyard-second-home/feasibility-checklist',
+  '/backyard-small-second-home',
+  '/backyard-small-second-home/victoria-rules',
+  '/backyard-small-second-home/cost-rent-roi',
+  '/backyard-small-second-home/feasibility-check',
   '/art-gallery',
   '/art-gallery/founding-partners',
   '/edible-gardens',
@@ -23,6 +22,9 @@ const routes = [
   '/partners',
   '/partners/founding',
   '/partners/edible-gardens',
+  '/partners/curator',
+  '/partners/art-therapy',
+  '/partners/garden-ops',
   '/cellar-door',
   '/events',
   '/tools/utm',
@@ -31,6 +33,7 @@ const routes = [
   '/workshops',
   '/privacy',
   '/terms',
+  '/evidence/visitor-traffic',
 ]
 
 const urls = routes.map((path) => `${baseUrl}${path}`)

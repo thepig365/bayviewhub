@@ -83,7 +83,7 @@ export default function GalleryPage() {
             </p>
             
             <p className="text-[#F5F5F0]/80 mb-10 text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8', maxWidth: '650px' }}>
-              Build a contemporary gallery within Bayview Hub's 30-acre estate — with dining, wine, music, gardens, and 50,000+ annual visitors already in motion.
+              Build a contemporary gallery within Bayview Hub&apos;s 30-acre estate — with dining, wine, music, gardens, and 50k+ annual visitors already in motion.
             </p>
 
             <div className="flex flex-wrap gap-4">

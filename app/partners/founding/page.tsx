@@ -40,7 +40,7 @@ export default function FoundingPartnersPage() {
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                 <p className="text-natural-700 dark:text-natural-300">
-                  Bayview Hub provides land, infrastructure, and an existing visitor context.
+                  Bayview Hub provides land, infrastructure, and an existing visitor context (<a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">estimated 50k+ annual visitors — see Evidence</a>).
                 </p>
               </li>
               <li className="flex items-start gap-4">

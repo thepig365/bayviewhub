@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { ArtGalleryClient } from './ArtGalleryClient'
@@ -7,7 +8,7 @@ import { ArtGalleryClient } from './ArtGalleryClient'
 export const metadata = genMeta({
   title: `Art Gallery | Founding Partnership | ${SITE_CONFIG.name}`,
   description:
-    'Contemporary gallery within Bayview Hub\'s 30-acre estate. 50k+ annual visitors. Founding partnership opportunity for curator — no commercial rent, revenue share.',
+    'Contemporary gallery within Bayview Hub\'s 30-acre estate. Estimated 50k+ annual visitors annually. Evidence available on-site. Founding partnership opportunity for curator — no commercial rent, revenue share.',
   path: '/art-gallery',
 })
 
@@ -41,14 +42,15 @@ export default function ArtGalleryPage() {
                 definition="A contemporary gallery within Bayview Hub's 30-acre estate on Mornington Peninsula. Founding partnership opportunity for curator/gallery director."
                 facts={[
                   'Integrated into living destination (restaurant, cellar door, music, gardens).',
-                  '50k+ annual visitors.',
+                  'Estimated 50k+ annual visitors (see Evidence).',
                   'Revenue share or equity hybrid. No commercial rent.',
                   'Founding curator role: exhibitions, artist relationships, sales.',
                 ]}
                 sources={[
                   { label: 'Founding Partners', href: `${SITE_CONFIG.url}/art-gallery/founding-partners` },
+                  { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },
                 ]}
-                lastUpdated="2025-02-10"
+                lastUpdated={LAST_UPDATED}
                 className="border-neutral-700 bg-neutral-800/50"
               />
             </div>

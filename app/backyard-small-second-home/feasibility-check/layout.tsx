@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { AnswerCapsule } from "@/components/seo/AnswerCapsule";
+import { LAST_UPDATED } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
   description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process. Victorian VC253/VC282 compliance tool.",
   alternates: {
-    canonical: "https://www.bayviewhub.me/backyard-second-home/feasibility-checklist",
+    canonical: "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
   },
   openGraph: {
     title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
     description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process.",
-    url: "https://www.bayviewhub.me/backyard-second-home/feasibility-checklist",
+    url: "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
     siteName: "Bayview Hub",
     type: "website",
   },
@@ -150,9 +151,11 @@ export default function FeasibilityChecklistLayout({
             ]}
             sources={[
               { label: "DTP SSD Guidelines", href: "https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings" },
-              { label: "SSD Hub", href: "https://www.bayviewhub.me/second-home" },
+              { label: "Backyard Small Second Home Hub", href: "https://www.bayviewhub.me/backyard-small-second-home" },
+              { label: "Victoria Rules", href: "https://www.bayviewhub.me/backyard-small-second-home/victoria-rules" },
+              { label: "Cost & ROI", href: "https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi" },
             ]}
-            lastUpdated="2025-02-10"
+            lastUpdated={LAST_UPDATED}
           />
         </div>
       </div>

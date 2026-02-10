@@ -91,7 +91,7 @@ export default function PartnersPage() {
                   Existing Footfall + Destination Context
                 </h3>
                 <p className="text-natural-600 dark:text-natural-200">
-                  50k+ annual visitors already coming for dining and music experiences
+                  <a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">Estimated 50k+ annual visitors</a> (see Evidence) already coming for dining and music experiences
                 </p>
               </div>
               <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-primary-700">

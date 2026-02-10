@@ -40,7 +40,7 @@ export default function InvestPage() {
                 <li>Enhanced event spaces and accommodation</li>
               </ul>
               <p>
-                With 50k+ annual visitors and proven hospitality operations, we're positioned to scale into high-margin experiential offerings while maintaining our destination appeal.
+                With 50k+ annual visitors (details available on request) and proven hospitality operations, we&apos;re positioned to scale into high-margin experiential offerings while maintaining our destination appeal.
               </p>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default function InvestPage() {
             <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <TrendingUp className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-natural-900 mb-2 dark:text-natural-50">50k+</div>
-              <div className="text-natural-600 dark:text-natural-200">Annual Visitors</div>
+              <div className="text-natural-600 dark:text-natural-200">Annual visitors (details available on request)</div>
             </div>
             <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-primary-700">
               <Users className="w-12 h-12 text-primary-600 mx-auto mb-4" />

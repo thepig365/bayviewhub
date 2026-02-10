@@ -40,8 +40,8 @@ const siteMapData = [
   {
     heading: 'Programs',
     links: [
-      { label: 'Second Home', href: '/second-home' },
-      { label: 'Feasibility Checklist', href: '/backyard-second-home/feasibility-checklist' },
+      { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
+      { label: 'Feasibility Check', href: '/backyard-small-second-home/feasibility-check' },
       { label: 'Invest', href: '/invest' },
     ],
   },
@@ -49,6 +49,7 @@ const siteMapData = [
     heading: 'About / Legal',
     links: [
       { label: 'Home', href: '/' },
+      { label: 'Visitor Traffic Evidence', href: '/evidence/visitor-traffic' },
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
     ],

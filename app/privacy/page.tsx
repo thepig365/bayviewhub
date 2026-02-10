@@ -1,4 +1,5 @@
 import React from 'react'
+import { LAST_UPDATED } from '@/lib/seo'
 
 export default function PrivacyPage() {
   return (
@@ -10,7 +11,7 @@ export default function PrivacyPage() {
           </h1>
           
           <p className="text-natural-600 mb-8">
-            Last updated: {new Date().toLocaleDateString()}
+            Last updated: {LAST_UPDATED}
           </p>
 
           <section className="mb-8">

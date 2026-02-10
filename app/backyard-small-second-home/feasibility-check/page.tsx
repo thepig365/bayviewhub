@@ -161,7 +161,7 @@ function FeasibilityForm() {
       ready_in_6_months: formData.readyToProceed || null,
       email: formData.email.trim() || null,
       phone: formData.phone.trim() || null,
-      page: "/backyard-second-home/feasibility-checklist",
+      page: "/backyard-small-second-home/feasibility-check",
       user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       website: formData.website,
     };
@@ -176,7 +176,7 @@ function FeasibilityForm() {
       const result = await response.json();
 
       if (response.ok && result.ok) {
-        router.push("/backyard-second-home/feasibility-checklist/thank-you");
+        router.push("/backyard-small-second-home/feasibility-check/thank-you");
       } else {
         setFormError(result.error || "Submission failed. Retry or email directly.");
         setIsSubmitting(false);

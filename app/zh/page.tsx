@@ -38,19 +38,19 @@ export default function ChineseHomePage() {
               一个目的地Hub：酒庄餐饮、住宿、艺术空间、健康项目和可食花园。
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button href="/zh/partners" variant="primary" size="lg">
+              <Button href="/partners" variant="primary" size="lg">
                 成为合作伙伴
               </Button>
-              <Button href="/zh/gardens#subscribe" variant="secondary" size="lg">
+              <Button href="/edible-gardens#subscribe" variant="secondary" size="lg">
                 订阅花园
               </Button>
-              <Button href="/zh/second-home#register" variant="accent" size="lg">
+              <Button href="/backyard-small-second-home#register" variant="accent" size="lg">
                 建造第二居所
               </Button>
-              <Button href="/zh/workshops" variant="primary" size="lg">
+              <Button href="/workshops" variant="primary" size="lg">
                 预订工作坊
               </Button>
-              <Button href="/zh/events" variant="outline" size="lg">
+              <Button href="/events" variant="outline" size="lg">
                 活动日历
               </Button>
             </div>
@@ -104,7 +104,7 @@ export default function ChineseHomePage() {
                 title="Bayview 艺术画廊"
                 description="策展展览、开幕式和收藏作品。"
                 image="/images/gallery.jpg"
-                cta={{ label: '探索画廊', href: '/zh/experiences/gallery' }}
+                cta={{ label: '探索画廊', href: '/art-gallery' }}
                 prelaunch
                 variant="highlight"
               />
@@ -112,7 +112,7 @@ export default function ChineseHomePage() {
                 title="艺术工作坊与艺术疗愈"
                 description="由专业人士指导的表达性艺术健康项目。"
                 image="/images/workshops.jpg"
-                cta={{ label: '预订工作坊', href: '/zh/workshops' }}
+                cta={{ label: '预订工作坊', href: '/workshops' }}
                 prelaunch
                 variant="highlight"
               />
@@ -120,7 +120,7 @@ export default function ChineseHomePage() {
                 title="可食花园订阅"
                 description="季节性收获、家庭花园日和会员体验。"
                 image="/images/gardens.jpg"
-                cta={{ label: '订阅', href: '/zh/gardens' }}
+                cta={{ label: '订阅', href: '/edible-gardens' }}
                 prelaunch
                 variant="highlight"
               />
@@ -128,7 +128,7 @@ export default function ChineseHomePage() {
                 title="小型第二居所建设"
                 description="将您的后院改造成美丽的小房子或附属住宅，供家人、客人使用或出租收入。"
                 image="/images/stay.jpg"
-                cta={{ label: '探索选项', href: '/zh/second-home' }}
+                cta={{ label: '探索选项', href: '/backyard-small-second-home' }}
                 variant="highlight"
               />
             </div>
@@ -150,7 +150,7 @@ export default function ChineseHomePage() {
                 title="酒窖品酒室"
                 description="品酒和酒窖体验。"
                 image="/images/cellar.jpg"
-                cta={{ label: '品酒与参观', href: '/zh/visit#cellar' }}
+                cta={{ label: '品酒与参观', href: '/visit#cellar' }}
                 prelaunch
               />
               <Card
@@ -163,13 +163,13 @@ export default function ChineseHomePage() {
                 title="活动与团体"
                 description="私人活动、婚礼和企业聚会。"
                 image="/images/functions.jpg"
-                cta={{ label: '咨询', href: '/zh/contact?type=function' }}
+                cta={{ label: '咨询', href: `${SITE_CONFIG.pigAndWhistleUrl}/function-bookings`, external: true }}
               />
               <Card
                 title="住宿"
                 description="Bayview的住宿和延长体验。"
                 image="/images/stay.jpg"
-                cta={{ label: '查看住宿', href: '/zh/stay' }}
+                cta={{ label: '查看住宿', href: `${SITE_CONFIG.pigAndWhistleUrl}/accommodation`, external: true }}
               />
             </div>
           </div>
@@ -196,7 +196,7 @@ export default function ChineseHomePage() {
               <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 建立展览、艺术家关系和销售运营。
               </p>
-              <Button href="/zh/partners/curator" variant="accent" size="sm" className="w-full mt-6">
+              <Button href="/partners/curator" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>
@@ -208,7 +208,7 @@ export default function ChineseHomePage() {
               <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 设计安全、符合道德的项目和可扩展的工作坊系统。
               </p>
-              <Button href="/zh/partners/art-therapy" variant="accent" size="sm" className="w-full mt-6">
+              <Button href="/partners/art-therapy" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>
@@ -220,14 +220,14 @@ export default function ChineseHomePage() {
               <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200 flex-1">
                 将花园转变为具有可靠交付的订阅模式。
               </p>
-              <Button href="/zh/partners/garden-ops" variant="accent" size="sm" className="w-full mt-6">
+              <Button href="/partners/garden-ops" variant="accent" size="sm" className="w-full mt-6">
                 查看职位
               </Button>
             </div>
           </div>
 
           <div className="text-center">
-            <Button href="/zh/partners" variant="primary" size="lg">
+            <Button href="/partners" variant="primary" size="lg">
               立即申请
             </Button>
           </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { EdibleGardensClient } from './EdibleGardensClient'
@@ -59,7 +60,7 @@ export default function EdibleGardensPage() {
                   { label: 'How It Works', href: `${SITE_CONFIG.url}/edible-gardens/how-it-works` },
                   { label: 'Founding Partner', href: `${SITE_CONFIG.url}/partners/edible-gardens` },
                 ]}
-                lastUpdated="2025-02-10"
+                lastUpdated={LAST_UPDATED}
                 className="mb-12"
               />
               <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">

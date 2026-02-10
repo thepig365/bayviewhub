@@ -83,7 +83,7 @@ export function ArtGalleryClient() {
             </p>
 
             <p className="text-[#F5F5F0]/80 mb-10 text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8', maxWidth: '650px' }}>
-              Build a contemporary gallery within Bayview Hub&apos;s 30-acre estate — with dining, wine, music, gardens, and 50,000+ annual visitors already in motion.
+              Build a contemporary gallery within Bayview Hub&apos;s 30-acre estate — with dining, wine, music, gardens, and <a href="/evidence/visitor-traffic" className="text-[#FDFE9A] hover:underline">estimated 50k+ annual visitors</a> (see Evidence) already in motion.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -112,7 +112,7 @@ export function ArtGalleryClient() {
             <div className="bg-[#121212] p-10">
               <p className="text-[#FDFE9A] text-sm tracking-[0.2em] uppercase mb-4">The Ecosystem</p>
               <h3 className="text-[#F5F5F0] text-3xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-                50k+ Annual Visitors
+                <a href="/evidence/visitor-traffic" className="text-[#FDFE9A] hover:underline">Estimated 50k+ Annual Visitors</a> (see Evidence)
               </h3>
               <p className="text-[#F5F5F0]/70 text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
                 Restaurant, cellar door, gardens, live music. The audience arrives for hospitality — you curate what they discover.

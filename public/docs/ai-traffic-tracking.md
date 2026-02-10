@@ -82,4 +82,4 @@ AI referrals can be inconsistent because:
 
 ---
 
-*Last updated: 2025-02-10*
+*Last updated: {{LAST_UPDATED}}*

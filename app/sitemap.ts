@@ -5,10 +5,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes: { path: string; priority: number; changeFreq: 'weekly' | 'monthly' | 'yearly' }[] = [
     { path: '', priority: 1, changeFreq: 'weekly' },
-    { path: '/second-home', priority: 0.95, changeFreq: 'weekly' },
-    { path: '/second-home/victoria-rules', priority: 0.9, changeFreq: 'monthly' },
-    { path: '/second-home/cost-rent-roi', priority: 0.9, changeFreq: 'monthly' },
-    { path: '/backyard-second-home/feasibility-checklist', priority: 0.9, changeFreq: 'monthly' },
+    { path: '/backyard-small-second-home', priority: 0.95, changeFreq: 'weekly' },
+    { path: '/backyard-small-second-home/victoria-rules', priority: 0.9, changeFreq: 'monthly' },
+    { path: '/backyard-small-second-home/cost-rent-roi', priority: 0.9, changeFreq: 'monthly' },
+    { path: '/backyard-small-second-home/feasibility-check', priority: 0.9, changeFreq: 'monthly' },
     { path: '/art-gallery', priority: 0.9, changeFreq: 'monthly' },
     { path: '/art-gallery/founding-partners', priority: 0.85, changeFreq: 'monthly' },
     { path: '/edible-gardens', priority: 0.9, changeFreq: 'monthly' },
@@ -19,12 +19,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/partners', priority: 0.85, changeFreq: 'monthly' },
     { path: '/partners/founding', priority: 0.85, changeFreq: 'monthly' },
     { path: '/partners/edible-gardens', priority: 0.85, changeFreq: 'monthly' },
+    { path: '/partners/curator', priority: 0.85, changeFreq: 'monthly' },
+    { path: '/partners/art-therapy', priority: 0.85, changeFreq: 'monthly' },
+    { path: '/partners/garden-ops', priority: 0.85, changeFreq: 'monthly' },
     { path: '/tools/utm', priority: 0.6, changeFreq: 'yearly' },
     { path: '/invest', priority: 0.8, changeFreq: 'monthly' },
     { path: '/visit', priority: 0.8, changeFreq: 'monthly' },
     { path: '/workshops', priority: 0.8, changeFreq: 'monthly' },
     { path: '/privacy', priority: 0.5, changeFreq: 'yearly' },
     { path: '/terms', priority: 0.5, changeFreq: 'yearly' },
+    { path: '/evidence/visitor-traffic', priority: 0.6, changeFreq: 'monthly' },
   ]
 
   return routes.map(({ path, priority, changeFreq }) => ({

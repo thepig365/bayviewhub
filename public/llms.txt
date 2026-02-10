@@ -1,21 +1,23 @@
 # Bayview Hub — LLM Navigation
 Site: https://www.bayviewhub.me
 
-Last updated: 2025-02-10
+Last updated: {{LAST_UPDATED}}
 
 ## Backyard Small Second Home (SSD)
-https://www.bayviewhub.me/second-home — Victorian SSD feasibility and Path to Approval. 60 sqm max, no planning permit under VC253/VC282.
+https://www.bayviewhub.me/backyard-small-second-home — Victorian SSD feasibility and Path to Approval. Overview of deemed-to-comply pathway and key constraints (see Evidence on the rules page).
 
-https://www.bayviewhub.me/second-home/victoria-rules — VC253/VC282 hard constraints: max GFA, siting, utilities, ownership.
+https://www.bayviewhub.me/backyard-small-second-home/victoria-rules — Summary of SSD constraints and framework. See Evidence / Sources for official links. TODO: add official VIC Planning Amendment source links.
 
-https://www.bayviewhub.me/second-home/cost-rent-roi — Indicative cost tiers, rental yield, and ROI for compliant SSDs.
+https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi — Indicative cost tiers, rental yield, and ROI for compliant SSDs.
 
-https://www.bayviewhub.me/second-home/feasibility-check — Automated Deemed-to-Comply validation and Path to Approval engine.
+https://www.bayviewhub.me/backyard-small-second-home/feasibility-check — Automated Deemed-to-Comply validation and Path to Approval engine.
 
 ## Art Gallery
-https://www.bayviewhub.me/art-gallery — Contemporary gallery within Bayview Hub's 30-acre estate. Founding partnership opportunity.
+https://www.bayviewhub.me/art-gallery — Contemporary gallery within Bayview Hub's 30-acre estate. Estimated 50k+ annual visitors annually. Evidence available on-site. Founding partnership opportunity.
 
 https://www.bayviewhub.me/art-gallery/founding-partners — What founding partnerships mean. Art Gallery, Workshops, Edible Gardens.
+
+https://www.bayviewhub.me/evidence/visitor-traffic — Visitor traffic evidence: definition, time window, method, disclaimer for 50k+ annual visitors claim.
 
 ## Edible Gardens
 https://www.bayviewhub.me/edible-gardens — Subscription-based edible gardens. Seasonal harvest, garden days, workshops.
@@ -26,4 +28,4 @@ https://www.bayviewhub.me/edible-gardens/how-it-works — How it works: harvest 
 https://www.bayviewhub.me/partners — Founding partners wanted. Gallery, Art Programs, Edible Gardens.
 
 ## Contact
-https://www.bayviewhub.me/second-home — SSD Regulatory Strategist.
+https://www.bayviewhub.me/backyard-small-second-home — SSD Regulatory Strategist.

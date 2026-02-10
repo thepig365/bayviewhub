@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SecondHomeClient } from './SecondHomeClient'
 
 export const metadata = genMeta({
-  title: `SSD Builder Victoria | 60 sqm. No Planning Permit. | ${SITE_CONFIG.name}`,
+  title: `Backyard Small Second Home | SSD Builder Victoria | 60 sqm. No Planning Permit. | ${SITE_CONFIG.name}`,
   description:
-    'Victorian Small Second Dwelling (SSD) feasibility and build. 60 sqm max under VC253/VC282. Deemed-to-Comply pathway under Clause 54.03 bypasses planning permit. We navigate the constraints.',
-  path: '/second-home',
+    'Victorian Small Second Dwelling (SSD) feasibility and build. Backyard Small Second Home — 60 sqm max under VC253/VC282. Deemed-to-Comply pathway under Clause 54.03 bypasses planning permit. We navigate the constraints.',
+  path: '/backyard-small-second-home',
   image: `${SITE_CONFIG.url}/og-second-home.png`,
 })
 
@@ -17,7 +18,7 @@ const ssdExpertJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: 'Victorian SSD Regulatory Compliance Service',
-  alternateName: 'Bayview Hub SSD',
+  alternateName: 'Bayview Hub Backyard Small Second Home',
   description:
     'Small Second Dwelling feasibility assessment and project management under Victorian Planning Provisions VC253/VC282. Clause 54.03 Deemed-to-Comply specialist. Green Lane, VicSmart, and standard pathway analysis.',
   provider: {
@@ -33,10 +34,7 @@ const ssdExpertJsonLd = {
   areaServed: {
     '@type': 'State',
     name: 'Victoria',
-    containedInPlace: {
-      '@type': 'Country',
-      name: 'Australia',
-    },
+    containedInPlace: { '@type': 'Country', name: 'Australia' },
   },
   serviceType: [
     'SSD Feasibility Assessment',
@@ -45,10 +43,7 @@ const ssdExpertJsonLd = {
     'VicSmart Pathway Provider',
     'Small Second Dwelling Project Management',
   ],
-  offers: {
-    '@type': 'Offer',
-    description: '48-hour feasibility assessment with Path to Approval determination',
-  },
+  offers: { '@type': 'Offer', description: '48-hour feasibility assessment with Path to Approval determination' },
   knowsAbout: [
     'Victorian Planning Provisions',
     'Clause 54.03 Deemed-to-Comply',
@@ -59,7 +54,6 @@ const ssdExpertJsonLd = {
   ],
 }
 
-// FAQ Schema with regulatory focus
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -107,23 +101,17 @@ const faqJsonLd = {
   ],
 }
 
-export default function SecondHomePage() {
+export default function BackyardSmallSecondHomePage() {
+  const baseUrl = SITE_CONFIG.url
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ssdExpertJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      {/* Answer Capsule - above the fold */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ssdExpertJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <div className="bg-neutral-900 border-b border-neutral-800">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
-              definition="Victorian Small Second Dwelling (SSD) feasibility and Path to Approval. 60 sqm max. Compliant projects bypass planning permit under VC253/VC282 via Deemed-to-Comply."
+              definition="Backyard Small Second Home: Victorian Small Second Dwelling (SSD) feasibility and Path to Approval. Overview of deemed-to-comply pathway and key constraints. See Evidence on the rules page."
               facts={[
                 'Max 60 sqm GFA. Siting behind front wall. All-electric. No subdivision.',
                 'Green Lane: full compliance → no planning permit. Building permit required.',
@@ -132,10 +120,11 @@ export default function SecondHomePage() {
               ]}
               sources={[
                 { label: 'DTP SSD Guidelines', href: 'https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings' },
-                { label: 'Victoria Rules', href: `${SITE_CONFIG.url}/second-home/victoria-rules` },
-                { label: 'Feasibility Check', href: `${SITE_CONFIG.url}/second-home/feasibility-check` },
+                { label: 'Victoria Rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
+                { label: 'Cost & ROI', href: `${baseUrl}/backyard-small-second-home/cost-rent-roi` },
+                { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
               ]}
-              lastUpdated="2025-02-10"
+              lastUpdated={LAST_UPDATED}
               className="border-neutral-700 bg-neutral-800/50"
             />
           </div>

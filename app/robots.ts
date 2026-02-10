@@ -8,33 +8,11 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
-      },
-      // Explicit allow for OpenAI search crawler
-      {
-        userAgent: 'GPTBot',
-        allow: '/',
-        disallow: [],
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        allow: '/',
-        disallow: [],
+        disallow: ['/api/', '/admin/', '/__version', '/version'],
       },
       {
         userAgent: 'OAI-SearchBot',
         allow: '/',
-        disallow: [],
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: ['/api/', '/admin/'],
-      },
-      {
-        userAgent: 'Gemini',
-        allow: '/',
-        disallow: ['/api/', '/admin/'],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

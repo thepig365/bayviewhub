@@ -98,7 +98,9 @@ export default function EdibleGardensFoundingPartnerPage() {
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
               <p className="text-3xl font-bold text-primary-700 dark:text-primary-300">50k+</p>
-              <p className="mt-1 text-sm text-natural-600 dark:text-natural-200">annual visitors (existing destination)</p>
+              <p className="mt-1 text-sm text-natural-600 dark:text-natural-200">
+                <a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">Estimated 50k+ annual visitors</a> (see Evidence) — existing destination
+              </p>
             </div>
             <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-primary-700">
               <p className="font-semibold text-natural-900 dark:text-natural-50">Established destination context</p>
@@ -139,8 +141,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               <ul className="mt-4 space-y-2 text-natural-700 dark:text-natural-200 list-disc ml-5">
                 <li>
                   <span className="font-semibold text-natural-900 dark:text-natural-50">Proof:</span> Bayview Hub welcomes{' '}
-                  <span className="font-semibold text-natural-900 dark:text-natural-50">50k+</span> visitors per year
-                  through restaurant, cellar door and events.
+                  <a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400 font-semibold">estimated 50k+ annual visitors</a> (see Evidence) through restaurant, cellar door and events.
                 </li>
                 <li>Our next chapter is to activate the land with long-term, mission-aligned partners.</li>
               </ul>

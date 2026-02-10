@@ -1,5 +1,6 @@
 import React from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { Button } from '@/components/ui/Button'
@@ -31,7 +32,7 @@ export default function EdibleGardensHowItWorksPage() {
                 { label: 'Edible Gardens', href: `${SITE_CONFIG.url}/edible-gardens` },
                 { label: 'Founding Partner', href: `${SITE_CONFIG.url}/partners/edible-gardens` },
               ]}
-              lastUpdated="2025-02-10"
+              lastUpdated={LAST_UPDATED}
             />
           </div>
         </div>
@@ -90,7 +91,7 @@ export default function EdibleGardensHowItWorksPage() {
               Founding Partner
             </h2>
             <p className="text-natural-700 dark:text-natural-300 mb-6">
-              The program is operated by a founding partner — an entrepreneurial operator who designs the membership offer, pricing, and delivery. Bayview Hub provides land, infrastructure, and an existing visitor context.
+              The program is operated by a founding partner — an entrepreneurial operator who designs the membership offer, pricing, and delivery. Bayview Hub provides land, infrastructure, and an existing visitor context (50k+ annual visitors).
             </p>
             <div className="flex flex-wrap gap-4">
               <Button href="/partners/edible-gardens" variant="primary" size="lg">
