@@ -1,5 +1,15 @@
 import React from 'react'
 import { LAST_UPDATED } from '@/lib/seo'
+import type { Metadata } from 'next'
+import { generateMetadata as genMeta } from '@/lib/utils'
+import { SITE_CONFIG } from '@/lib/constants'
+
+export const metadata: Metadata = genMeta({
+  title: 'Privacy Policy',
+  description:
+    'Read Bayview Hub’s privacy policy, including how personal data is collected, used, stored, and protected.',
+  path: '/privacy',
+})
 
 export default function PrivacyPage() {
   return (
@@ -112,8 +122,8 @@ export default function PrivacyPage() {
               If you have questions about this Privacy Policy, please contact us at:
             </p>
             <p className="text-natural-700 mt-4">
-              Email: hello@bayviewhub.com.au<br />
-              Phone: +61 (0)X XXXX XXXX
+              Email: {SITE_CONFIG.email}<br />
+              Phone: {SITE_CONFIG.phone}
             </p>
           </section>
         </div>

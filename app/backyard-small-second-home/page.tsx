@@ -122,7 +122,7 @@ export default function BackyardSmallSecondHomePage() {
                 'Multi-generational housing or rental yield. Same title.',
               ]}
               sources={[
-                { label: 'DTP SSD Guidelines', href: 'https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings' },
+                { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
                 { label: 'Victoria Rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
                 { label: 'Cost & ROI', href: `${baseUrl}/backyard-small-second-home/cost-rent-roi` },
                 { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },

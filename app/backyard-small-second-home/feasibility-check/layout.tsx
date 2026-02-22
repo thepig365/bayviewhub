@@ -150,7 +150,7 @@ export default function FeasibilityChecklistLayout({
               "VC253/VC282 hard constraints: 60sqm max, behind front wall, all-electric, no subdivision.",
             ]}
             sources={[
-              { label: "DTP SSD Guidelines", href: "https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings" },
+              { label: "DTP Planning Portal", href: "https://www.planning.vic.gov.au/" },
               { label: "Backyard Small Second Home Hub", href: "https://www.bayviewhub.me/backyard-small-second-home" },
               { label: "Victoria Rules", href: "https://www.bayviewhub.me/backyard-small-second-home/victoria-rules" },
               { label: "Cost & ROI", href: "https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi" },

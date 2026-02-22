@@ -1,5 +1,14 @@
 import React from 'react'
 import { LAST_UPDATED } from '@/lib/seo'
+import type { Metadata } from 'next'
+import { generateMetadata as genMeta } from '@/lib/utils'
+
+export const metadata: Metadata = genMeta({
+  title: 'Terms of Service',
+  description:
+    'Read Bayview Hub’s terms of service for bookings, participation, subscriptions, liabilities, and acceptable use.',
+  path: '/terms',
+})
 
 export default function TermsPage() {
   return (
@@ -127,7 +136,7 @@ export default function TermsPage() {
               Governing Law
             </h2>
             <p className="text-natural-700">
-              These Terms are governed by the laws of New South Wales, Australia. Any disputes shall be subject to the exclusive jurisdiction of the courts of New South Wales.
+              These Terms are governed by the laws of Victoria, Australia. Any disputes shall be subject to the exclusive jurisdiction of the courts of Victoria.
             </p>
           </section>
 

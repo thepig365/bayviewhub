@@ -28,7 +28,7 @@ export default function VictoriaRulesPage() {
                 'TODO: Cite official VIC Planning Amendment source links before treating as authoritative.',
               ]}
               sources={[
-                { label: 'DTP SSD Guidelines', href: 'https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings' },
+                { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
                 { label: 'Backyard Small Second Home Hub', href: `${baseUrl}/backyard-small-second-home` },
                 { label: 'Cost & ROI', href: `${baseUrl}/backyard-small-second-home/cost-rent-roi` },
                 { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },

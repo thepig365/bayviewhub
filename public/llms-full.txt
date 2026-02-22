@@ -13,9 +13,9 @@ Last updated: 2026-02-10
 - Deemed-to-comply pathway may bypass planning permit for compliant projects.
 - Green Lane: full compliance → proceed to building permit. Building permit required.
 - VicSmart: minor overlays or variations → expedited council decision.
-- Always verify current constraints via [DTP SSD Guidelines](https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings) and official VIC Planning — TODO: add Amendment source links.
+- Always verify current constraints via [DTP Planning Portal](https://www.planning.vic.gov.au/) and official VIC Planning — TODO: add Amendment source links.
 
-**Sources:** [Backyard Small Second Home](https://www.bayviewhub.me/backyard-small-second-home), [Victoria Rules](https://www.bayviewhub.me/backyard-small-second-home/victoria-rules), [Cost & ROI](https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi), [Feasibility Check](https://www.bayviewhub.me/backyard-small-second-home/feasibility-check), [DTP SSD Guidelines](https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings).
+**Sources:** [Backyard Small Second Home](https://www.bayviewhub.me/backyard-small-second-home), [Victoria Rules](https://www.bayviewhub.me/backyard-small-second-home/victoria-rules), [Cost & ROI](https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi), [Feasibility Check](https://www.bayviewhub.me/backyard-small-second-home/feasibility-check), [DTP Planning Portal](https://www.planning.vic.gov.au/).
 
 ---
 

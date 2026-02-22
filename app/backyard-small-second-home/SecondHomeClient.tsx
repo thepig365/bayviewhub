@@ -341,7 +341,7 @@ export function SecondHomeClient() {
               <p className="text-xs text-neutral-500 dark:text-neutral-400">Registered VicSmart Pathway Provider · Clause 54.03 Deemed-to-Comply Specialist</p>
             </div>
             <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-6">
-              <a href="https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings" target="_blank" rel="noopener noreferrer" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">DTP SSD Guidelines</a>
+              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">DTP Planning Portal</a>
               <span>·</span>
               <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">Victoria Rules</a>
               <span>·</span>

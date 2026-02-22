@@ -1070,7 +1070,7 @@ export default function FeasibilityChecklistPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-4">
             <a
-              href="https://www.planning.vic.gov.au/guides-and-resources/guides/small-second-dwellings"
+              href="https://www.planning.vic.gov.au/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 underline hover:text-neutral-700 dark:hover:text-neutral-300"

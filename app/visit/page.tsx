@@ -1,7 +1,16 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { MapPin, Clock, Phone, Mail, Car, Train } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
+
+export const metadata: Metadata = genMeta({
+  title: 'Visit',
+  description:
+    'Plan your visit to Bayview Hub with directions, opening hours, nearby attractions, and practical travel information.',
+  path: '/visit',
+})
 
 export default function VisitPage() {
   return (
@@ -281,7 +290,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Thermal mineral bathing and day spa in a natural bushland setting</p>
                 <a 
-                  href="https://www.albahotsprings.com.au" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
@@ -346,7 +355,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Historic gardens, nursery, and cafe with seasonal displays</p>
                 <a 
-                  href="https://www.diggers.com.au/heronswood" 
+                  href="https://www.diggers.com.au/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
@@ -379,7 +388,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4">Surf beach with powerful waves, popular with surfers and beach lovers</p>
                 <a 
-                  href="https://www.visitmorningtonpeninsula.org/gunnamatta-beach" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium"
@@ -395,7 +404,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Calm bay beach perfect for families, swimming, and rock pools</p>
                 <a 
-                  href="https://www.visitmorningtonpeninsula.org/flinders" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
@@ -411,7 +420,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Protected bay beach with historic pier, cafes, and safe swimming</p>
                 <a 
-                  href="https://www.visitmorningtonpeninsula.org/sorrento" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
@@ -427,7 +436,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Bay and ocean beaches, rock pools, and the famous London Bridge rock formation</p>
                 <a 
-                  href="https://www.visitmorningtonpeninsula.org/portsea" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
@@ -443,7 +452,7 @@ export default function VisitPage() {
                 </div>
                 <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">100+ wineries and breweries throughout the Mornington Peninsula</p>
                 <a 
-                  href="https://www.visitmorningtonpeninsula.org/wineries" 
+                  href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"

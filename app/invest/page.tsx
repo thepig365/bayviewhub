@@ -1,6 +1,15 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { TrendingUp, Users, Target, Award } from 'lucide-react'
+import { generateMetadata as genMeta } from '@/lib/utils'
+
+export const metadata: Metadata = genMeta({
+  title: 'Invest',
+  description:
+    'Explore Bayview Hub investment opportunities across hospitality, arts, events, and edible gardens with scalable destination-led growth.',
+  path: '/invest',
+})
 
 export default function InvestPage() {
   return (

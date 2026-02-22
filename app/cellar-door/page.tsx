@@ -135,6 +135,14 @@ export default function CellarDoorPage() {
     <main className="bg-white dark:bg-primary-900">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('/images/cellar.jpg')" }}>
+        <div className="absolute inset-0 bg-black/35" />
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto px-4 pb-10">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white">
+              Bayview Estate Cellar Door
+            </h1>
+          </div>
+        </div>
       </section>
 
       {/* Opening Hours & Contact Bar */}

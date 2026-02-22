@@ -17,6 +17,7 @@ const events = [
     location: 'The Shed',
     price: '$35',
     icon: Music,
+    startsAtISO: '2026-01-17T19:00:00+11:00',
   },
   {
     id: 2,
@@ -27,6 +28,7 @@ const events = [
     location: 'Pig & Whistle',
     price: '$95',
     icon: UtensilsCrossed,
+    isRecurring: true,
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ const events = [
     location: 'Arts Gallery',
     price: 'Free',
     icon: Palette,
+    startsAtISO: '2026-01-30T18:00:00+11:00',
   },
   {
     id: 4,
@@ -47,6 +50,7 @@ const events = [
     location: 'Workshop Studio',
     price: '$65',
     icon: Palette,
+    startsAtISO: '2026-01-18T10:00:00+11:00',
   },
   {
     id: 5,
@@ -57,6 +61,7 @@ const events = [
     location: 'Edible Gardens',
     price: 'Members only',
     icon: Sprout,
+    startsAtISO: '2026-02-07T09:00:00+11:00',
   },
   {
     id: 6,
@@ -67,6 +72,7 @@ const events = [
     location: 'The Shed',
     price: '$25',
     icon: Music,
+    isRecurring: true,
   },
 ]
 
@@ -81,11 +87,23 @@ const categories = [
 
 export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState<EventCategory>('all')
+  const now = new Date()
+
+  const upcomingEvents = events
+    .filter((event) => event.isRecurring || (event.startsAtISO && new Date(event.startsAtISO) >= now))
+    .sort((a, b) => {
+      if (a.isRecurring && !b.isRecurring) return -1
+      if (!a.isRecurring && b.isRecurring) return 1
+      if (a.startsAtISO && b.startsAtISO) {
+        return new Date(a.startsAtISO).getTime() - new Date(b.startsAtISO).getTime()
+      }
+      return 0
+    })
 
   const filteredEvents =
     activeCategory === 'all'
-      ? events
-      : events.filter((event) => event.category === activeCategory)
+      ? upcomingEvents
+      : upcomingEvents.filter((event) => event.category === activeCategory)
 
   return (
     <div className="min-h-screen py-20 dark:bg-primary-900">
