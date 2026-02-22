@@ -318,6 +318,26 @@ npm run start
 npm run lint
 ```
 
+## SEO verification (curl, reproducible)
+
+Run:
+
+```bash
+./scripts/seo_verify.sh
+```
+
+Expected:
+
+- `robots.txt` contains:
+  - `Sitemap: https://www.bayviewhub.me/sitemap.xml`
+- `sitemap.xml` `<loc>` entries use `https://www.bayviewhub.me/...`
+- `https://www.bayviewhub.me/backyard-small-second-home/feasibility-checklist` returns permanent redirect to:
+  - `/backyard-small-second-home/feasibility-check`
+- `https://bayviewhub.me/...` returns permanent redirect to `https://www.bayviewhub.me/...`
+  - path and query string preserved
+
+If robots output is not what app code returns, check for edge/CDN overrides (for example Cloudflare managed robots rules).
+
 ## 📝 To-Do After Deployment
 
 - [ ] Add actual images to `/public/images/`
