@@ -40,7 +40,7 @@ export function Header() {
           <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-natural-700 dark:text-natural-50"
+              className="p-3 text-natural-700 dark:text-natural-50"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

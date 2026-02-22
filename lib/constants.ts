@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   name: 'Bayview Hub',
   tagline: 'Eat, Stay, Connect, Create, Mend',
   description: 'A destination hub with winery dining, accommodation, art spaces, wellbeing programs, and edible gardens.',
-  url: process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me',
+  url: process.env.NEXT_PUBLIC_BASE_URL || 'https://bayviewhub.me',
   pigAndWhistleUrl: 'https://thepigandwhistle.com.au',
   email: 'leonzh@bayviewestate.com.au',
   phone: '0499 6666 88',

@@ -1,7 +1,7 @@
 # Bayview Hub — LLM Navigation
 Site: https://www.bayviewhub.me
 
-Last updated: {{LAST_UPDATED}}
+Last updated: 2026-02-10
 
 ## Backyard Small Second Home (SSD)
 https://www.bayviewhub.me/backyard-small-second-home — Victorian SSD feasibility and Path to Approval. Overview of deemed-to-comply pathway and key constraints (see Evidence on the rules page).

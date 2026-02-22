@@ -7,8 +7,9 @@ import { EXPERIENCES, FOUNDING_ROLES, SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata = genMeta({
-  title: `${SITE_CONFIG.name} - ${SITE_CONFIG.tagline}`,
-  description: SITE_CONFIG.description,
+  title: 'Bayview Hub | Winery, Arts, Events & Edible Gardens',
+  description:
+    'Discover Bayview Hub on the Mornington Peninsula: winery dining, cellar door tastings, arts experiences, events, edible gardens, and founding partner opportunities.',
   path: '/',
 })
 

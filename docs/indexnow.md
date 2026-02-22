@@ -51,4 +51,4 @@ For a post-build hook to auto-submit after deploy:
 
 ---
 
-*Last updated: {{LAST_UPDATED}}*
+*Last updated: 2026-02-10*

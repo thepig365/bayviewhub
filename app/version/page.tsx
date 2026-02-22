@@ -1,12 +1,10 @@
 import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
+import { robotsByEnv } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Version',
-  robots: {
-    index: false,
-    follow: false,
-  },
+  robots: robotsByEnv(),
 }
 
 export const dynamic = 'force-dynamic'

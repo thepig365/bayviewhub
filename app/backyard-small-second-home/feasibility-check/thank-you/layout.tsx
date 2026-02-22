@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
+import { robotsByEnv } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Thank You | Bayview Hub",
   description: "Thank you for submitting your feasibility checklist.",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  robots: robotsByEnv(),
 };
 
 export default function ThankYouLayout({

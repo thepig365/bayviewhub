@@ -1,7 +1,7 @@
 # Bayview Hub — Full LLM Reference
 Site: https://www.bayviewhub.me
 
-Last updated: {{LAST_UPDATED}}
+Last updated: 2026-02-10
 
 ---
 
