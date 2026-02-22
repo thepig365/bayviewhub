@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'Founding Partner Pack — Gallery | Bayview Hub',
-  description: 'Private overview for founding gallery partnership conversations.',
+  ...genMeta({
+    title: `Founding Partner Pack — Gallery | ${SITE_CONFIG.name}`,
+    description: 'Private overview for founding gallery partnership conversations.',
+    path: '/private/founding-gallery',
+  }),
   robots: { index: true, follow: true },
 }
 

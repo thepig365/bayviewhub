@@ -1,11 +1,15 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
+import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
-export const metadata: Metadata = {
-  title: 'Therapeutic Arts Workshops | Bayview Hub',
-  description: 'Restorative creative workshops (non-clinical) at Bayview Hub. Explore expressive arts in a calm, supportive environment.',
-}
+export const metadata: Metadata = genMeta({
+  title: `Therapeutic Arts Workshops | ${SITE_CONFIG.name}`,
+  description:
+    'Restorative creative workshops (non-clinical) at Bayview Hub. Explore expressive arts in a calm, supportive environment.',
+  path: '/workshops',
+})
 
 const workshops = [
   {

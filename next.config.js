@@ -23,6 +23,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/favicon.ico',
+        destination: '/icon',
+        permanent: true,
+      },
+      {
         source: '/second-home',
         destination: '/backyard-small-second-home',
         permanent: true,

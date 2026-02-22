@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
-export const metadata: Metadata = {
-  title: 'Site Map | Bayview Hub',
+export const metadata: Metadata = genMeta({
+  title: `Site Map | ${SITE_CONFIG.name}`,
   description: 'An overview of all public pages on Bayview Hub.',
-}
+  path: '/site-map',
+})
 
 const siteMapData = [
   {

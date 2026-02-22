@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
+import { SITE_CONFIG } from '@/lib/constants'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
-export const metadata: Metadata = {
-  title: 'Founding Partnerships | Bayview Hub',
-  description: 'Bayview Hub offers physical space for individuals who want to build their own independent practice — as partners within a shared destination.',
-}
+export const metadata: Metadata = genMeta({
+  title: `Founding Partnerships | ${SITE_CONFIG.name}`,
+  description:
+    'Bayview Hub offers physical space for individuals who want to build their own independent practice — as partners within a shared destination.',
+  path: '/partners/founding',
+})
 
 export default function FoundingPartnersPage() {
   return (
