@@ -110,6 +110,9 @@ export default function BackyardSmallSecondHomePage() {
       <div className="bg-neutral-900 border-b border-neutral-800">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Backyard Small Second Home
+            </h1>
             <AnswerCapsule
               definition="Backyard Small Second Home: Victorian Small Second Dwelling (SSD) feasibility and Path to Approval. Overview of deemed-to-comply pathway and key constraints. See Evidence on the rules page."
               facts={[

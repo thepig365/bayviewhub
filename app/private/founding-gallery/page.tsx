@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 export const metadata: Metadata = {
   title: 'Founding Partner Pack — Gallery | Bayview Hub',
   description: 'Private overview for founding gallery partnership conversations.',
-  robots: 'noindex, nofollow',
+  robots: { index: true, follow: true },
 }
 
 export default function FoundingGalleryPackPage() {

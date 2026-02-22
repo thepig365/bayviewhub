@@ -12,6 +12,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'bayviewhub.me' }],
+        destination: 'https://www.bayviewhub.me/:path*',
+        permanent: true,
+      },
+      {
         source: '/pigandwhistle',
         destination: 'https://thepigandwhistle.com.au',
         permanent: false,

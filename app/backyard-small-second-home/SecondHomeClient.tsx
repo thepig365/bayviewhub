@@ -82,10 +82,10 @@ export function SecondHomeClient() {
             <div className="text-xs font-mono text-neutral-500 mb-6 uppercase tracking-widest">
               Backyard Small Second Home · Victorian SSD Framework · VC253/VC282 · 2026
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
               Backyard Small Second Home
               <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
-            </h1>
+            </h2>
             <p className="text-xl text-neutral-300 mb-6 leading-relaxed max-w-3xl">
               We navigate the Victorian SSD framework. Compliant Small Second Dwellings on existing residential lots. Multi-generational housing or rental yield. Same title. No subdivision. No gas.
             </p>

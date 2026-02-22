@@ -9,7 +9,7 @@ export const metadata = {
     description: 'Generate trackable campaign links (UTM) for Bayview Hub pages.',
     path: '/tools/utm',
   }),
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 }
 
 export default function UtmToolsPage() {
