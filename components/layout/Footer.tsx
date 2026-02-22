@@ -20,7 +20,9 @@ export function Footer() {
           {/* About */}
           <div>
             <h3 className="text-2xl font-serif font-bold mb-4 text-white">
-              {SITE_CONFIG.name}
+              <Link href="/" className="hover:text-primary-400 transition-colors">
+                {SITE_CONFIG.name}
+              </Link>
             </h3>
             <p className="text-natural-300 mb-4 leading-relaxed">
               {SITE_CONFIG.description}
@@ -58,6 +60,22 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/partners/founding"
+                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                >
+                  Founding Partner Brief
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/utm"
+                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                >
+                  UTM Link Builder
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -140,6 +158,20 @@ export function Footer() {
           </div>
         </div>
 
+        <section className="mb-8 rounded-xl border border-primary-800 bg-primary-900/40 p-5">
+          <h4 className="text-base font-semibold text-white mb-2">About Bayview Hub</h4>
+          <p className="text-sm leading-relaxed text-natural-300">
+            Bayview Hub is a destination on the Mornington Peninsula that brings together winery dining, cellar door tastings,
+            arts and workshops, live music, events, and edible garden programs in one place. Visitors can explore experiences
+            year-round, from casual weekends and family activities to partnership opportunities in gallery, wellbeing, and
+            food systems.
+          </p>
+          <p className="text-sm leading-relaxed text-natural-300 mt-3">
+            This website provides practical details for planning a visit, understanding current offerings, and contacting the
+            team. Key pages include events, partner pathways, and small second home resources for Victorian homeowners.
+          </p>
+        </section>
+
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
@@ -152,6 +184,9 @@ export function Footer() {
               </Link>
               <Link href="/terms" className="text-natural-400 hover:text-primary-400 transition-colors">
                 Terms of Service
+              </Link>
+              <Link href="/" className="text-natural-400 hover:text-primary-400 transition-colors">
+                Homepage
               </Link>
               <a href="/llms.txt" className="text-natural-400 hover:text-primary-400 transition-colors">
                 LLM Access: /llms.txt

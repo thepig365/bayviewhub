@@ -393,7 +393,7 @@ export default function VisitPage() {
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium"
                 >
-                  Learn More →
+                  Gunnamatta Beach Visitor Guide →
                 </a>
               </div>
 
@@ -409,7 +409,7 @@ export default function VisitPage() {
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
-                  Learn More →
+                  Flinders Beach Visitor Guide →
                 </a>
               </div>
 
@@ -425,7 +425,7 @@ export default function VisitPage() {
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
-                  Learn More →
+                  Sorrento Beach Visitor Guide →
                 </a>
               </div>
 
@@ -441,7 +441,7 @@ export default function VisitPage() {
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
-                  Learn More →
+                  Portsea Beach Visitor Guide →
                 </a>
               </div>
 

@@ -73,36 +73,31 @@ const jsonLd = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": ["ProfessionalService", "LocalBusiness"],
     "name": "Victorian SSD Regulatory Compliance Service",
+    "url": "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
+    "image": "https://www.bayviewhub.me/og-second-home.png",
     "description": "Small Second Dwelling feasibility assessment and Path to Approval determination under Victorian Planning Provisions VC253/VC282. Green Lane, VicSmart, and standard pathway analysis. Clause 54.03 Deemed-to-Comply specialist.",
-    "serviceType": [
-      "SSD Feasibility Assessment",
-      "Path to Approval Analysis",
-      "Clause 54.03 Compliance",
-      "VicSmart Pathway Provider"
-    ],
+    "telephone": "0499 6666 88",
+    "email": "leonzh@bayviewestate.com.au",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "365 Purves Road",
+      "addressLocality": "Main Ridge",
+      "addressRegion": "VIC",
+      "postalCode": "3928",
+      "addressCountry": "AU"
+    },
     "areaServed": {
-      "@type": "State",
-      "name": "Victoria",
-      "containedInPlace": {
-        "@type": "Country",
-        "name": "Australia"
-      }
+      "@type": "AdministrativeArea",
+      "name": "Victoria, Australia"
     },
-    "provider": {
-      "@type": "Organization",
-      "name": "Bayview Hub",
-      "url": "https://www.bayviewhub.me",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "Victoria",
-        "addressCountry": "AU"
-      }
-    },
-    "offers": {
+    "makesOffer": {
       "@type": "Offer",
-      "description": "48-hour feasibility assessment with Path to Approval determination"
+      "description": "48-hour feasibility assessment with Path to Approval determination",
+      "price": "0",
+      "priceCurrency": "AUD"
     },
     "knowsAbout": [
       "Victorian Planning Provisions",
@@ -114,11 +109,12 @@ const jsonLd = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "SoftwareApplication",
     "name": "SSD Path to Approval Engine",
     "description": "Interactive tool to determine Victorian SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day approval), or Red Zone (standard planning process).",
-    "applicationCategory": "Planning Tool",
-    "operatingSystem": "Web Browser",
+    "url": "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
     "offers": {
       "@type": "Offer",
       "price": "0",

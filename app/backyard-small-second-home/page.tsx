@@ -16,34 +16,34 @@ export const metadata = genMeta({
 // Victorian SSD Regulatory Expert Schema
 const ssdExpertJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': ['ProfessionalService', 'LocalBusiness'],
   name: 'Victorian SSD Regulatory Compliance Service',
   alternateName: 'Bayview Hub Backyard Small Second Home',
+  url: `${SITE_CONFIG.url}/backyard-small-second-home`,
   description:
     'Small Second Dwelling feasibility assessment and project management under Victorian Planning Provisions VC253/VC282. Clause 54.03 Deemed-to-Comply specialist. Green Lane, VicSmart, and standard pathway analysis.',
-  provider: {
-    '@type': 'Organization',
-    name: 'Bayview Hub',
-    url: SITE_CONFIG.url,
-    address: {
-      '@type': 'PostalAddress',
-      addressRegion: 'Victoria',
-      addressCountry: 'AU',
-    },
+  image: `${SITE_CONFIG.url}/og-second-home.png`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '365 Purves Road',
+    addressLocality: 'Main Ridge',
+    addressRegion: 'VIC',
+    postalCode: '3928',
+    addressCountry: 'AU',
   },
+  telephone: SITE_CONFIG.phone,
+  email: SITE_CONFIG.email,
+  priceRange: '$$',
   areaServed: {
-    '@type': 'State',
-    name: 'Victoria',
-    containedInPlace: { '@type': 'Country', name: 'Australia' },
+    '@type': 'AdministrativeArea',
+    name: 'Victoria, Australia',
   },
-  serviceType: [
-    'SSD Feasibility Assessment',
-    'Path to Approval Analysis',
-    'Clause 54.03 Compliance',
-    'VicSmart Pathway Provider',
-    'Small Second Dwelling Project Management',
-  ],
-  offers: { '@type': 'Offer', description: '48-hour feasibility assessment with Path to Approval determination' },
+  makesOffer: {
+    '@type': 'Offer',
+    description: '48-hour feasibility assessment with Path to Approval determination',
+    priceCurrency: 'AUD',
+    price: '0',
+  },
   knowsAbout: [
     'Victorian Planning Provisions',
     'Clause 54.03 Deemed-to-Comply',
