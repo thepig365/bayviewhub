@@ -30,8 +30,8 @@ export function Button({
   const variants = {
     primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
     secondary: 'bg-primary-800 text-white hover:bg-primary-900 focus:ring-primary-600',
-    accent: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-400',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-primary-500 dark:border-primary-300 dark:text-primary-300 dark:hover:bg-primary-300 dark:hover:text-primary-900',
+    accent: 'bg-accent text-bg hover:bg-accent-hover focus:ring-accent',
+    outline: 'border border-border text-fg hover:bg-fg hover:text-bg focus:ring-accent',
   }
   
   const sizes = {

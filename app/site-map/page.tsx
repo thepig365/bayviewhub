@@ -64,17 +64,17 @@ export default function SiteMapPage() {
     <main className="min-h-screen bg-white dark:bg-primary-900 py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+          <h1 className="text-4xl font-serif font-bold text-fg mb-4">
             Site Map
           </h1>
-          <p className="text-natural-600 mb-12 dark:text-natural-300">
+          <p className="text-muted mb-12">
             This page provides an overview of Bayview Hub's public pages.
           </p>
 
           <div className="grid gap-10 md:grid-cols-2">
             {siteMapData.map((section) => (
               <div key={section.heading}>
-                <h2 className="text-lg font-bold text-natural-900 mb-4 dark:text-natural-50">
+                <h2 className="text-lg font-bold text-fg mb-4">
                   {section.heading}
                 </h2>
                 <ul className="space-y-2">

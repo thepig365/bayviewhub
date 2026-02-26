@@ -38,10 +38,10 @@ export default function ExperiencesPage() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+          <h1 className="text-5xl font-serif font-bold text-fg mb-4">
             Experiences
           </h1>
-          <p className="text-xl text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
+          <p className="text-xl text-muted max-w-2xl mx-auto">
             Explore all the ways to experience Bayview Hub
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function ExperiencesPage() {
                 'px-6 py-3 rounded-full font-medium transition-all',
                 activeCategory === cat.id
                   ? 'bg-primary-700 text-white shadow-md'
-                  : 'bg-white text-natural-700 hover:bg-natural-100 dark:bg-primary-900/60 dark:text-natural-100 dark:border dark:border-primary-700 dark:hover:bg-primary-800'
+                  : 'bg-white text-muted hover:bg-natural-100 dark:bg-primary-900/60 dark:text-muted dark:border dark:border-border dark:hover:bg-primary-800'
               )}
             >
               {cat.label}
@@ -82,7 +82,7 @@ export default function ExperiencesPage() {
 
         {filteredExperiences.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-natural-500 text-lg dark:text-natural-300">
+            <p className="text-muted text-lg">
               No experiences found in this category
             </p>
           </div>

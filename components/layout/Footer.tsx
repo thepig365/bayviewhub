@@ -24,7 +24,7 @@ export function Footer() {
                 {SITE_CONFIG.name}
               </Link>
             </h3>
-            <p className="text-natural-300 mb-4 leading-relaxed">
+            <p className="text-white/90 mb-4 leading-relaxed">
               {SITE_CONFIG.description}
             </p>
             <div className="flex space-x-3">
@@ -54,7 +54,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-natural-300 hover:text-primary-400 transition-colors"
+                    className="text-white/80 hover:text-white transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -63,7 +63,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/partners/founding"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   Founding Partner Brief
                 </Link>
@@ -71,7 +71,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/utm"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   UTM Link Builder
                 </Link>
@@ -88,13 +88,13 @@ export function Footer() {
                   href="https://gallery.bayviewhub.me"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   Arts Gallery
                 </a>
               </li>
               <li>
-                <Link href="/art-gallery/founding-partners" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/art-gallery/founding-partners" className="text-white/80 hover:text-white transition-colors">
                   Gallery Founding Partners
                 </Link>
               </li>
@@ -103,7 +103,7 @@ export function Footer() {
                   href="https://gallery.bayviewhub.me"
                   target="_blank"
                   rel="nofollow noopener noreferrer"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   Gallery Library
                 </a>
@@ -113,23 +113,23 @@ export function Footer() {
                   href="https://www.thepigandwhistle.com.au/what-s-on"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   The Shed Music
                 </a>
               </li>
               <li>
-                <Link href="/workshops" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/workshops" className="text-white/80 hover:text-white transition-colors">
                   Workshops
                 </Link>
               </li>
               <li>
-                <Link href="/edible-gardens" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/edible-gardens" className="text-white/80 hover:text-white transition-colors">
                   Edible Gardens
                 </Link>
               </li>
               <li>
-                <Link href="/cellar-door" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <Link href="/cellar-door" className="text-white/80 hover:text-white transition-colors">
                   Wine Tasting
                 </Link>
               </li>
@@ -138,7 +138,7 @@ export function Footer() {
                   href={SITE_CONFIG.pigAndWhistleUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                 >
                   Pig & Whistle Restaurant
                 </a>
@@ -152,7 +152,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-primary-400 flex-shrink-0 mt-0.5" />
-                <span className="text-natural-300 text-sm">
+                <span className="text-white/90 text-sm">
                   {SITE_CONFIG.address}
                 </span>
               </li>
@@ -160,7 +160,7 @@ export function Footer() {
                 <Phone className="w-5 h-5 text-primary-400 flex-shrink-0" />
                 <a
                   href={`tel:${SITE_CONFIG.phone}`}
-                  className="text-natural-300 hover:text-primary-400 transition-colors text-sm"
+                  className="text-white/80 hover:text-white transition-colors text-sm"
                 >
                   {SITE_CONFIG.phone}
                 </a>
@@ -169,7 +169,7 @@ export function Footer() {
                 <Mail className="w-5 h-5 text-primary-400 flex-shrink-0" />
                 <a
                   href={`mailto:${SITE_CONFIG.email}`}
-                  className="text-natural-300 hover:text-primary-400 transition-colors text-sm"
+                  className="text-white/80 hover:text-white transition-colors text-sm"
                 >
                   {SITE_CONFIG.email}
                 </a>
@@ -180,13 +180,13 @@ export function Footer() {
 
         <section className="mb-8 rounded-xl border border-primary-800 bg-primary-900/40 p-5">
           <h4 className="text-base font-semibold text-white mb-2">About Bayview Hub</h4>
-          <p className="text-sm leading-relaxed text-natural-300">
+          <p className="text-sm leading-relaxed text-white/90">
             Bayview Hub is a destination on the Mornington Peninsula that brings together winery dining, cellar door tastings,
             arts and workshops, live music, events, and edible garden programs in one place. Visitors can explore experiences
             year-round, from casual weekends and family activities to partnership opportunities in gallery, wellbeing, and
             food systems.
           </p>
-          <p className="text-sm leading-relaxed text-natural-300 mt-3">
+          <p className="text-sm leading-relaxed text-white/90 mt-3">
             This website provides practical details for planning a visit, understanding current offerings, and contacting the
             team. Key pages include events, partner pathways, and small second home resources for Victorian homeowners.
           </p>
@@ -195,20 +195,20 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-natural-400 text-sm">
+            <p className="text-white/80 text-sm">
               © {currentYear} {SITE_CONFIG.name}. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-natural-400 hover:text-primary-400 transition-colors">
+              <Link href="/privacy" className="text-white/80 hover:text-white transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-natural-400 hover:text-primary-400 transition-colors">
+              <Link href="/terms" className="text-white/80 hover:text-white transition-colors">
                 Terms of Service
               </Link>
-              <Link href="/" className="text-natural-400 hover:text-primary-400 transition-colors">
+              <Link href="/" className="text-white/80 hover:text-white transition-colors">
                 Homepage
               </Link>
-              <a href="/llms.txt" className="text-natural-400 hover:text-primary-400 transition-colors">
+              <a href="/llms.txt" className="text-white/80 hover:text-white transition-colors">
                 LLM Access: /llms.txt
               </a>
             </div>

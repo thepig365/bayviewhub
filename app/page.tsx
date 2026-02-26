@@ -62,24 +62,24 @@ export default function HomePage() {
       </section>
 
       {/* Proof Bar */}
-      <section className="bg-white py-12 border-y border-natural-200 dark:bg-primary-900 dark:border-primary-700">
+      <section className="bg-white py-12 border-y border-border dark:bg-primary-900 dark:border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">50k+</div>
-              <div className="text-sm text-natural-600 dark:text-natural-300">Annual visitors</div>
+              <div className="text-sm text-muted">Annual visitors</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🍷</div>
-              <div className="text-sm text-natural-600 dark:text-natural-300">Winery Restaurant</div>
+              <div className="text-sm text-muted">Winery Restaurant</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🎵</div>
-              <div className="text-sm text-natural-600 dark:text-natural-300">Live Music Weekends</div>
+              <div className="text-sm text-muted">Live Music Weekends</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🌏</div>
-              <div className="text-sm text-natural-600 dark:text-natural-300">International Destination</div>
+              <div className="text-sm text-muted">International Destination</div>
             </div>
           </div>
         </div>
@@ -89,17 +89,17 @@ export default function HomePage() {
       <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-4">
               Experiences at Bayview Hub
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
+            <p className="text-lg text-muted max-w-2xl mx-auto">
               Discover our expanding collection of dining, arts, music, and nature experiences
             </p>
           </div>
 
           {/* Featured (Ordered) */}
           <div className="mb-12">
-            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
+            <h3 className="text-2xl font-serif font-bold text-fg mb-6">
               Featured
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -120,7 +120,7 @@ export default function HomePage() {
 
           {/* New Additions */}
           <div className="mb-12">
-            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
+            <h3 className="text-2xl font-serif font-bold text-fg mb-6">
               New Additions
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -140,7 +140,7 @@ export default function HomePage() {
 
           {/* Core Anchors */}
           <div>
-            <h3 className="text-2xl font-serif font-bold text-natural-800 mb-6">
+            <h3 className="text-2xl font-serif font-bold text-fg mb-6">
               Our Foundations
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -155,22 +155,22 @@ export default function HomePage() {
                 />
               ))}
               {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
-              <div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
-                <div className="inline-flex items-center rounded-full bg-neutral-100 text-neutral-700 px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-neutral-800 dark:text-neutral-200">
+              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border">
+                <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-primary-800 dark:text-muted">
                   Pre-Launch / Founding Partners
                 </div>
-                <h4 className="mt-4 text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
+                <h4 className="mt-4 text-2xl font-serif font-bold text-fg">
                   Pre-Launch Notice
                 </h4>
-                <p className="mt-3 text-sm leading-relaxed text-natural-700 dark:text-natural-200">
+                <p className="mt-3 text-sm leading-relaxed text-muted">
                   Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development.
                   Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest.
                   Dates, inclusions and pricing are indicative and subject to change.
                 </p>
-                <h5 className="mt-6 text-lg font-serif font-bold text-natural-900 dark:text-natural-50">
+                <h5 className="mt-6 text-lg font-serif font-bold text-fg">
                   Program Status &amp; Expressions of Interest (EOI)
                 </h5>
-                <div className="mt-3 space-y-3 text-sm leading-relaxed text-natural-700 dark:text-natural-200">
+                <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted">
                   <p>
                     The Bayview Arts Gallery, Art Workshops &amp; Art Therapy, Edible Gardens Subscriptions, and Cellar Door wine tastings (“Programs”) may be shown on this website before public launch.
                   </p>
@@ -197,7 +197,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
               We're building the next chapter of Bayview Hub
             </h2>
-            <p className="text-lg text-natural-600 max-w-2xl mx-auto dark:text-natural-200">
+            <p className="text-lg text-muted max-w-2xl mx-auto">
               We're seeking founding leaders to establish our Gallery, Art Programs, and Edible Gardens operations.
             </p>
           </div>
@@ -206,18 +206,18 @@ export default function HomePage() {
             {FOUNDING_ROLES.map((role) => (
               <div
                 key={role.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-primary-700"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-border"
               >
-                <h3 className="text-xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+                <h3 className="text-xl font-serif font-bold text-fg mb-4">
                   {role.title}
                 </h3>
                 <div className="flex-1">
-                  <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+                  <p className="text-muted mb-6 leading-relaxed">
                     {role.summary}
                   </p>
                   <ul className="space-y-2">
                     {role.responsibilities.slice(0, 3).map((resp, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-natural-600 dark:text-natural-200">
+                      <li key={idx} className="flex items-start text-sm text-muted">
                         <span className="text-primary-600 mr-2 dark:text-primary-300">•</span>
                         <span>{resp}</span>
                       </li>
@@ -244,14 +244,14 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-4">
                 Stay Connected with Bayview Hub
               </h2>
-              <p className="text-natural-600 dark:text-natural-200">
+              <p className="text-muted">
                 Get updates tailored to your interests
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-800/30 dark:border dark:border-primary-700">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-800/30 dark:border dark:border-border">
               <NewsletterForm />
             </div>
           </div>

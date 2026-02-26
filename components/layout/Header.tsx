@@ -40,7 +40,7 @@ export function Header() {
           <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 text-natural-700 dark:text-natural-50"
+              className="p-3 text-fg"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -57,13 +57,13 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-natural-700 hover:text-primary-700 font-medium py-2 dark:text-natural-100 dark:hover:text-primary-300"
+                  className="text-muted hover:text-fg font-medium py-2 dark:text-muted dark:hover:text-fg"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-col space-y-2 pt-4 border-t border-natural-200 dark:border-primary-700">
+            <div className="flex flex-col space-y-2 pt-4 border-t border-border dark:border-border">
               {PRIMARY_CTAS.map((cta) => (
                 (cta as any).prelaunch ? (
                   <PrelaunchButton
@@ -92,10 +92,10 @@ export function Header() {
             </div>
             
             {/* Language Switcher */}
-            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
+            <div className="pt-4 border-t border-border dark:border-border">
               <Link 
                 href="/zh" 
-                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-primary-800 dark:hover:bg-primary-700 dark:text-natural-50"
+                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-primary-800 dark:hover:bg-primary-700 dark:text-fg"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Globe size={20} />
@@ -104,7 +104,7 @@ export function Header() {
             </div>
 
             {/* Theme */}
-            <div className="pt-4 border-t border-natural-200 dark:border-primary-700">
+            <div className="pt-4 border-t border-border dark:border-border">
               <ThemeMenu />
             </div>
             

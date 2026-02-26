@@ -38,7 +38,7 @@ export function Card({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-primary-900/60 dark:border dark:border-primary-700',
+        'group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-primary-900/60 dark:border dark:border-border',
         isHighlight && 'ring-2 ring-accent-500',
         className
       )}
@@ -59,10 +59,10 @@ export function Card({
         </div>
       )}
       <div className="p-6">
-        <h3 className="text-2xl font-serif font-bold mb-3 text-natural-900 dark:text-natural-50">
+        <h3 className="text-2xl font-serif font-bold mb-3 text-fg">
           {title}
         </h3>
-        <p className="text-natural-600 mb-6 leading-relaxed dark:text-natural-200">
+        <p className="text-muted mb-6 leading-relaxed">
           {description}
         </p>
         {cta && (
@@ -91,7 +91,7 @@ export function Card({
             href={ctaSecondary.href}
             target="_blank"
             rel="nofollow noopener noreferrer"
-            className="mt-2 block text-xs text-natural-500 hover:text-primary-600 dark:text-natural-400 dark:hover:text-primary-400 transition-colors"
+            className="mt-2 block text-xs text-subtle hover:text-fg transition-colors"
           >
             {ctaSecondary.label}
           </a>
