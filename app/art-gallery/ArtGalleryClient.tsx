@@ -132,6 +132,37 @@ export function ArtGalleryClient() {
         </div>
       </section>
 
+      {/* For Artists & Galleries */}
+      <section className="py-16 border-t border-neutral-800">
+        <div className="container mx-auto px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-[#FDFE9A] text-sm tracking-[0.2em] uppercase mb-4">Physical Gallery</p>
+            <h2 className="text-[#F5F5F0] text-4xl mb-6" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
+              For Artists & Galleries
+            </h2>
+            <p className="text-[#F5F5F0]/70 text-lg mb-8" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
+              Submit your work for curatorial review. Selected artists are invited to exhibit at BayviewHub&apos;s physical gallery. Sales are handled in-person during exhibitions and private viewings.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="https://gallery.bayviewhub.me/portal/submit"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                className="px-6 py-3 bg-[#FDFE9A] text-[#121212] text-sm tracking-wide uppercase hover:bg-[#FDFE9A]/90 transition-all"
+              >
+                Submit for Curation
+              </a>
+              <a
+                href="#inquiry"
+                className="px-6 py-3 border border-[#F5F5F0]/40 text-[#F5F5F0] text-sm tracking-wide uppercase hover:bg-[#FDFE9A] hover:text-[#121212] hover:border-[#FDFE9A] transition-all"
+              >
+                Exhibition Enquiry
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Inquiry Form */}
       <section id="inquiry" className="py-16 border-t border-neutral-800">
         <div className="container mx-auto px-6">

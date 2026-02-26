@@ -110,6 +110,7 @@ export default function HomePage() {
                   description={exp.blurb}
                   image={exp.image}
                   cta={exp.cta}
+                  ctaSecondary={exp.ctaSecondary}
                   prelaunch={exp.prelaunch}
                   variant="highlight"
                 />

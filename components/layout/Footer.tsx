@@ -90,6 +90,16 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="https://gallery.bayviewhub.me"
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                >
+                  Gallery Library
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.thepigandwhistle.com.au/what-s-on"
                   target="_blank"
                   rel="noopener noreferrer"

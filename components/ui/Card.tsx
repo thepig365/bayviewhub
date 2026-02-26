@@ -13,6 +13,11 @@ interface CardProps {
     href: string
     external?: boolean
   }
+  ctaSecondary?: {
+    label: string
+    href: string
+    external?: boolean
+  }
   prelaunch?: boolean
   className?: string
   variant?: 'default' | 'highlight'
@@ -23,6 +28,7 @@ export function Card({
   description,
   image,
   cta,
+  ctaSecondary,
   prelaunch = false,
   className,
   variant = 'default',
@@ -79,6 +85,16 @@ export function Card({
               {cta.label}
             </Button>
           )
+        )}
+        {ctaSecondary && (
+          <a
+            href={ctaSecondary.href}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            className="mt-2 block text-xs text-natural-500 hover:text-primary-600 dark:text-natural-400 dark:hover:text-primary-400 transition-colors"
+          >
+            {ctaSecondary.label}
+          </a>
         )}
       </div>
     </div>

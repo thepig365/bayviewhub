@@ -44,6 +44,7 @@ export const EXPERIENCES = {
       title: 'Bayview Arts Gallery',
       blurb: 'Curated exhibitions, openings, and collectible works.',
       cta: { label: 'Explore Gallery', href: '/art-gallery' },
+      ctaSecondary: { label: 'Submit for Curation', href: 'https://gallery.bayviewhub.me/portal/submit', external: true },
       prelaunch: true,
       image: '/images/gallery.jpg',
       category: 'create',
