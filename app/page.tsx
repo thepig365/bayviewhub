@@ -31,16 +31,16 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-50 py-20 md:py-32 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
+      <section className="relative bg-bg py-20 md:py-32 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
+            <h1 className="text-5xl md:text-7xl font-serif font-extrabold text-fg mb-6 drop-shadow-sm">
               Eat, Stay, Connect, Create, Mend
             </h1>
-            <p className="text-xl md:text-2xl text-natural-700 mb-10 leading-relaxed dark:text-natural-200">
+            <p className="text-lg md:text-xl text-fg mb-10 leading-loose max-w-3xl mx-auto">
               Bayview Hub is the visitor gateway to Bayview Estate—home to the Arts Gallery, Edible Gardens, Workshops, Cellar Door wine tastings, events, and the Pig &amp; Whistle. Seeking for highly motivated founding partners to join us to create next chapters for Bayview Hub.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 [&_a]:font-semibold [&_a]:shadow-sm [&_button]:font-semibold [&_button]:shadow-sm">
               <Button href="/partners" variant="primary" size="lg">
                 Become a Partner
               </Button>
@@ -53,8 +53,8 @@ export default function HomePage() {
               <PrelaunchButton href="/workshops" variant="primary" size="lg">
                 Book Workshops
               </PrelaunchButton>
-              <Button href="/events" variant="outline" size="lg">
-                What's On
+              <Button href="/events" variant="outline" size="lg" className="border-2 border-fg text-fg hover:bg-fg hover:text-bg dark:border-white/90 dark:text-white dark:hover:bg-white dark:hover:text-bg">
+                What&apos;s On
               </Button>
             </div>
           </div>
