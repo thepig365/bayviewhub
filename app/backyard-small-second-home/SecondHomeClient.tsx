@@ -86,7 +86,7 @@ export function SecondHomeClient() {
               Backyard Small Second Home
               <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
             </h2>
-            <p className="text-xl text-neutral-300 mb-6 leading-relaxed max-w-3xl">
+            <p className="text-xl text-muted mb-6 leading-relaxed max-w-3xl">
               We navigate the Victorian SSD framework. Compliant Small Second Dwellings on existing residential lots. Multi-generational housing or rental yield. Same title. No subdivision. No gas.
             </p>
             <p className="text-lg text-neutral-500 mb-10">
@@ -109,7 +109,7 @@ export function SecondHomeClient() {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">The Framework: VC253/VC282</h2>
-              <p className="text-lg text-neutral-600 dark:text-neutral-300">These are not guidelines. These are hard constraints. Non-negotiable.</p>
+              <p className="text-lg text-neutral-600 dark:text-muted">These are not guidelines. These are hard constraints. Non-negotiable.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {ssdFramework.map((item, idx) => {
@@ -125,14 +125,14 @@ export function SecondHomeClient() {
                         <div className="font-bold text-neutral-900 dark:text-white">{item.value}</div>
                       </div>
                     </div>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-300">{item.note}</p>
+                    <p className="text-sm text-neutral-600 dark:text-muted">{item.note}</p>
                   </div>
                 )
               })}
             </div>
             <div className="mt-12 p-8 bg-neutral-900 dark:bg-neutral-900 rounded-2xl text-white">
               <h3 className="text-xl font-bold mb-4">The Trade-Off</h3>
-              <p className="text-neutral-300 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 Comply with these constraints → access the <strong>Deemed-to-Comply pathway</strong> under Clause 54.03 → <strong> bypass planning permit entirely</strong>. Proceed direct to building permit. Council cannot refuse if you meet the criteria. That is the value proposition: constraints in exchange for certainty.
               </p>
             </div>
@@ -159,7 +159,7 @@ export function SecondHomeClient() {
               ))}
             </div>
             <div className="p-6 bg-neutral-900 dark:bg-neutral-700 rounded-xl text-white">
-              <p className="text-neutral-300">
+              <p className="text-muted">
                 <strong className="text-white">Mansion-seekers and subdividers:</strong> Look elsewhere. This framework delivers 60 sqm compliant assets. If that constraint does not fit your project, engage a traditional developer and expect 12-18 months in Planning.
               </p>
             </div>
@@ -171,7 +171,7 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">Why This Works</h2>
-            <p className="text-lg text-neutral-600 dark:text-neutral-300">Constraints create opportunity. Here is the logic.</p>
+            <p className="text-lg text-neutral-600 dark:text-muted">Constraints create opportunity. Here is the logic.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
@@ -179,28 +179,28 @@ export function SecondHomeClient() {
                 <DollarSign className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Rental Yield</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">Victoria vacancy &lt;1%. Compliant SSD = bankable, recurring income.</p>
+              <p className="text-sm text-neutral-600 dark:text-muted">Victoria vacancy &lt;1%. Compliant SSD = bankable, recurring income.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Asset Growth</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">Quality SSD increases property value. Documented. Compliant. Attractive to buyers.</p>
+              <p className="text-sm text-neutral-600 dark:text-muted">Quality SSD increases property value. Documented. Compliant. Attractive to buyers.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">No Planning Permit</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">Deemed-to-Comply = bypass planning. Straight to building permit. Certainty.</p>
+              <p className="text-sm text-neutral-600 dark:text-muted">Deemed-to-Comply = bypass planning. Straight to building permit. Certainty.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Speed</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">No planning = faster timeline. 6-9 months feasibility to handover. Not 18+.</p>
+              <p className="text-sm text-neutral-600 dark:text-muted">No planning = faster timeline. 6-9 months feasibility to handover. Not 18+.</p>
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@ export function SecondHomeClient() {
                   </div>
                   <div>
                     <h3 className="font-bold text-neutral-900 mb-1 dark:text-white">{useCase.title}</h3>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-300">{useCase.description}</p>
+                    <p className="text-sm text-neutral-600 dark:text-muted">{useCase.description}</p>
                   </div>
                 </div>
               )
@@ -234,7 +234,7 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">SSD Configurations</h2>
-            <p className="text-lg text-neutral-600 dark:text-neutral-300">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
+            <p className="text-lg text-neutral-600 dark:text-muted">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {houseTypes.map((house, idx) => (
@@ -244,7 +244,7 @@ export function SecondHomeClient() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-neutral-900 mb-2 dark:text-white">{house.title}</h3>
-                  <p className="text-sm text-neutral-600 mb-4 dark:text-neutral-300">{house.description}</p>
+                  <p className="text-sm text-neutral-600 mb-4 dark:text-muted">{house.description}</p>
                   <div className="flex justify-between text-xs text-neutral-500 dark:text-neutral-400 mb-4">
                     <span>{house.priceRange}</span>
                     <span className="font-mono">{house.size}</span>
@@ -337,17 +337,17 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6">
-              <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Victorian SSD Regulatory Compliance Service</p>
+              <p className="text-sm font-medium text-neutral-700 dark:text-muted mb-2">Victorian SSD Regulatory Compliance Service</p>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">Registered VicSmart Pathway Provider · Clause 54.03 Deemed-to-Comply Specialist</p>
             </div>
             <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-6">
-              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">DTP Planning Portal</a>
+              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-neutral-700 dark:hover:text-muted">DTP Planning Portal</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">Victoria Rules</a>
+              <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-neutral-700 dark:hover:text-muted">Victoria Rules</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/cost-rent-roi" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">Cost & ROI</a>
+              <a href="/backyard-small-second-home/cost-rent-roi" className="underline hover:text-neutral-700 dark:hover:text-muted">Cost & ROI</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/feasibility-check" className="underline hover:text-neutral-700 dark:hover:text-neutral-300">Feasibility Check</a>
+              <a href="/backyard-small-second-home/feasibility-check" className="underline hover:text-neutral-700 dark:hover:text-muted">Feasibility Check</a>
             </div>
             <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center">
               This page provides regulatory guidance and does not constitute legal or planning advice. Engage qualified professionals for site-specific determinations.

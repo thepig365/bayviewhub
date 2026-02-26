@@ -40,7 +40,7 @@ export default function HomePage() {
             <p className="text-lg md:text-xl text-fg mb-10 leading-loose max-w-3xl mx-auto">
               Bayview Hub is the visitor gateway to Bayview Estate—home to the Arts Gallery, Edible Gardens, Workshops, Cellar Door wine tastings, events, and the Pig &amp; Whistle. Seeking for highly motivated founding partners to join us to create next chapters for Bayview Hub.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 [&_a]:font-semibold [&_a]:shadow-sm [&_button]:font-semibold [&_button]:shadow-sm">
+            <div className="flex flex-wrap justify-center gap-4 [&_a]:font-semibold [&_button]:font-semibold">
               <Button href="/partners" variant="primary" size="lg">
                 Become a Partner
               </Button>

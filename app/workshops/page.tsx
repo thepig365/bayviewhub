@@ -103,7 +103,7 @@ export default function WorkshopsPage() {
               {programs.map((program) => (
                 <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-primary-900/60 dark:border dark:border-border">
                   <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">{program.title}</h3>
-                  <p className="text-natural-700 mb-4 dark:text-natural-300">{program.description}</p>
+                  <p className="text-muted mb-4">{program.description}</p>
                   <ul className="space-y-2">
                     {program.details.map((detail, idx) => (
                       <li key={idx} className="flex items-center text-muted">

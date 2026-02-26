@@ -296,7 +296,7 @@ export default function PartnersPage() {
               </Button>
 
               {status === 'error' && (
-                <p className="text-natural-600 text-center text-sm dark:text-natural-300">
+                <p className="text-muted text-center text-sm">
                   Error submitting. Please try again or contact us directly.
                 </p>
               )}

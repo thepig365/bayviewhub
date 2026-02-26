@@ -182,10 +182,10 @@ export default function CellarDoorPage() {
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-6 dark:text-natural-50">
                 Welcome to Bayview Estate Cellar Door
               </h2>
-              <p className="text-lg text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
+              <p className="text-lg text-muted mb-4 leading-relaxed">
                 Nestled in the heart of Main Ridge, our cellar door offers an intimate and authentic wine tasting experience on the Mornington Peninsula.
               </p>
-              <p className="text-lg text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
+              <p className="text-lg text-muted mb-4 leading-relaxed">
                 Our vineyard spans 30 acres of rolling hills, where cool climate and coastal breezes create the perfect conditions for growing exceptional Pinot Noir, Chardonnay, and other premium varietals.
               </p>
               <p className="text-lg text-natural-700 mb-6 leading-relaxed dark:text-natural-200">
@@ -230,7 +230,7 @@ export default function CellarDoorPage() {
                   <Clock className="w-4 h-4 mr-2" />
                   {experience.duration}
                 </p>
-                <p className="text-natural-700 mb-4 leading-relaxed dark:text-natural-200">
+                <p className="text-muted mb-4 leading-relaxed">
                   {experience.description}
                 </p>
                 <div className="bg-primary-400/20 rounded-lg p-3 mb-6 dark:bg-primary-800/30 dark:border dark:border-primary-700">
@@ -253,7 +253,7 @@ export default function CellarDoorPage() {
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4 dark:text-natural-50">
                 Our Wine Collection
               </h2>
-              <p className="text-lg md:text-xl text-natural-700 mb-8 dark:text-natural-200">
+              <p className="text-lg md:text-xl text-muted mb-8">
                 Handcrafted wines that capture the essence of the Mornington Peninsula
               </p>
               
@@ -431,9 +431,9 @@ export default function CellarDoorPage() {
 
             {/* Membership Tiers */}
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white rounded-2xl p-8 text-primary-800 dark:bg-primary-900/60 dark:text-natural-50 dark:border dark:border-primary-700">
-                <h3 className="text-2xl font-serif font-bold mb-2 text-primary-800 dark:text-natural-50">Classic Membership</h3>
-                <p className="text-4xl font-bold text-primary-800 mb-4 dark:text-natural-50">$150 <span className="text-lg font-normal text-natural-600 dark:text-natural-200">/year</span></p>
+              <div className="bg-white rounded-2xl p-8 text-primary-800 dark:bg-primary-900/60 dark:text-fg dark:border dark:border-border">
+                <h3 className="text-2xl font-serif font-bold mb-2 text-primary-800 dark:text-fg">Classic Membership</h3>
+                <p className="text-4xl font-bold text-primary-800 mb-4 dark:text-natural-50">$150 <span className="text-lg font-normal text-muted">/year</span></p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <span className="text-accent-600 mr-2 font-bold">✓</span>

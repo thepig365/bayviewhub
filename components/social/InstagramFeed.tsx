@@ -47,7 +47,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-natural-600 dark:bg-primary-800/30 dark:text-natural-200 dark:border dark:border-primary-700">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-muted dark:bg-primary-800/30 dark:border dark:border-border">
         <p>
           <strong>Implementation Note:</strong> Replace this component with actual Instagram feed using:
         </p>

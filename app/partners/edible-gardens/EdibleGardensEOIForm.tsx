@@ -83,7 +83,7 @@ export function EdibleGardensEOIForm() {
         <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">
           Expression of Interest received
         </h3>
-        <p className="text-natural-700 dark:text-natural-200">
+        <p className="text-muted">
           Thank you. We’ll review your submission and reach out to arrange a short alignment conversation.
         </p>
       </div>

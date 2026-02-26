@@ -38,8 +38,8 @@ export function Card({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-primary-900/60 dark:border dark:border-border',
-        isHighlight && 'ring-2 ring-accent-500',
+        'group relative overflow-hidden rounded-2xl bg-white border border-border transition-all duration-300 hover:border-accent dark:bg-primary-900/60 dark:border-border dark:hover:border-accent',
+        isHighlight && 'ring-1 ring-accent',
         className
       )}
     >

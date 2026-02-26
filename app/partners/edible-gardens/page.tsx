@@ -49,7 +49,7 @@ export default function EdibleGardensFoundingPartnerPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
-              <p className="text-xs font-bold tracking-wide uppercase text-neutral-800 dark:text-neutral-200">
+              <p className="text-xs font-bold tracking-wide uppercase text-fg">
                 Founding Partner Opportunity
               </p>
               <h1 className="mt-4 text-5xl md:text-6xl font-serif font-bold text-fg ">

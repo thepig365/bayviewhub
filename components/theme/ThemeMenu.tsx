@@ -90,7 +90,7 @@ export function ThemeMenu({ className }: { className?: string }) {
               <Icon className="h-4 w-4" />
               <span className="leading-tight">
                 <span className="block text-sm font-medium">{label}</span>
-                <span className="block text-xs opacity-80">{sub}</span>
+                <span className="block text-xs text-subtle">{sub}</span>
               </span>
             </button>
           )

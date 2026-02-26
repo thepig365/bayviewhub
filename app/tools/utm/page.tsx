@@ -21,7 +21,7 @@ export default function UtmToolsPage() {
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 dark:text-natural-50">
               UTM Link Builder
             </h1>
-            <p className="mt-4 text-natural-700 leading-relaxed dark:text-natural-200">
+            <p className="mt-4 text-muted leading-relaxed">
               Create trackable links for posts and ads. UTMs are captured on the site and included in Edible Gardens EOI
               submissions.
             </p>

@@ -30,7 +30,7 @@ export function Button({
   const variants = {
     primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
     secondary: 'bg-primary-800 text-white hover:bg-primary-900 focus:ring-primary-600',
-    accent: 'bg-accent text-bg hover:bg-accent-hover focus:ring-accent',
+    accent: 'bg-accent text-white hover:bg-accent-hover focus:ring-accent',
     outline: 'border border-border text-fg hover:bg-fg hover:text-bg focus:ring-accent',
   }
   

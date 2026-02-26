@@ -752,7 +752,7 @@ export default function FeasibilityChecklistPage() {
             SSD Feasibility Checklist
             <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
           </h1>
-          <p className="text-lg text-neutral-300 mb-4 leading-relaxed max-w-3xl">
+          <p className="text-lg text-muted mb-4 leading-relaxed max-w-3xl">
             This tool determines your approval pathway. Green Lane bypasses planning entirely. 
             VicSmart delivers 10-day council decision. Red Zone means standard permit process.
           </p>
@@ -1061,7 +1061,7 @@ export default function FeasibilityChecklistPage() {
       <section className="py-10 bg-neutral-100 dark:bg-neutral-800 border-t border-border">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-6">
-            <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+            <p className="text-sm font-medium text-muted mb-1">
               Victorian SSD Regulatory Compliance Service
             </p>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -1073,7 +1073,7 @@ export default function FeasibilityChecklistPage() {
               href="https://www.planning.vic.gov.au/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 underline hover:text-neutral-700 dark:hover:text-neutral-300"
+              className="inline-flex items-center gap-1 underline hover:text-fg"
             >
               DTP SSD Guidelines
               <ExternalLink className="w-3 h-3" />

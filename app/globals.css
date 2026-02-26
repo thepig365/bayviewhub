@@ -6,16 +6,16 @@
 
 @layer base {
   :root {
-    /* B palette - light (readable) */
+    /* Contrast-hardened LIGHT */
     --bg: #FAFAF8;
-    --fg: #1A1A1A;
-    --muted: #4B5563;
-    --subtle: #6B7280;
-    --border: #E7E6E1;
+    --surface: #FFFFFF;
+    --fg: #111827;
+    --muted: #374151;
+    --subtle: #4B5563;
+    --border: #E5E7EB;
     --accent: #5EB1BF;
     --accent-hover: #3D8A96;
     --accent-soft: #A8D5DD;
-    --surface: #FFFFFF;
     /* Legacy (for compatibility) */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
@@ -30,16 +30,16 @@
   }
 
   .dark {
-    /* B palette - dark */
+    /* Contrast-hardened DARK */
     --bg: #0E1111;
-    --fg: #F7F7F5;
-    --muted: #B0B8B8;
-    --subtle: #9AA3A3;
+    --surface: #121616;
+    --fg: #F9FAFB;
+    --muted: #D1D5DB;
+    --subtle: #9CA3AF;
     --border: #1F2A2A;
     --accent: #7FBFC8;
     --accent-hover: #5DA8B3;
     --accent-soft: #284446;
-    --surface: #121616;
     /* Legacy */
     --background: 0 0% 7%;
     --foreground: 0 0% 98%;

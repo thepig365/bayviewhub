@@ -79,7 +79,7 @@ export default function VictoriaRulesPage() {
       <section className="py-8 border-t border-border bg-amber-50/50 dark:bg-amber-900/10">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h3 className="font-semibold text-natural-800 dark:text-natural-200 mb-2">TODO — Evidence</h3>
+            <h3 className="font-semibold text-fg mb-2">TODO — Evidence</h3>
             <p className="text-sm text-muted">Add official VIC Planning / Amendment source links here before treating this summary as authoritative. DTP SSD Guidelines linked above is a starting point.</p>
           </div>
         </div>
