@@ -194,7 +194,7 @@ export default function HomePage() {
       <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-6">
               We're building the next chapter of Bayview Hub
             </h2>
             <p className="text-lg text-muted max-w-2xl mx-auto">

@@ -16,7 +16,7 @@ export default function VisitorTrafficEvidencePage() {
   const baseUrl = SITE_CONFIG.url
   return (
     <main className="min-h-screen bg-white dark:bg-primary-900">
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
@@ -42,61 +42,61 @@ export default function VisitorTrafficEvidencePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-16">
             <div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-8">
                 Evidence: Visitor Traffic (50k+ Annual Visitors)
               </h1>
-              <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+              <p className="text-xl text-muted leading-relaxed">
                 This page documents the basis for the claim &quot;Estimated 50k+ annual visitors&quot; used across Bayview Hub.
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-4">
                 Definition
               </h2>
-              <p className="text-natural-700 dark:text-natural-300 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 &quot;50k+ annual visitors&quot; means the estimated number of individual visit occasions (foot traffic / visitor flow) to Bayview Hub&apos;s destination over a 12-month period. This includes visitors to the restaurant, cellar door, events, gardens, and related experiences. It is a count of visitor occasions, not unique individuals.
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-4">
                 Time Window
               </h2>
-              <p className="text-natural-700 dark:text-natural-300 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 Last 12 months (rolling) or specific financial/calendar year where data is available. TODO: Specify exact reporting period once internal data is confirmed.
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-4">
                 Method &amp; Data Sources
               </h2>
-              <p className="text-natural-700 dark:text-natural-300 leading-relaxed mb-4">
+              <p className="text-muted leading-relaxed mb-4">
                 Possible internal sources (best-effort; not all may be in use):
               </p>
-              <ul className="list-disc list-inside text-natural-700 dark:text-natural-300 space-y-2">
+              <ul className="list-disc list-inside text-muted space-y-2">
                 <li>TODO: POS / till transaction counts (restaurant, cellar door)</li>
                 <li>TODO: Booking system summaries (events, wine tastings)</li>
                 <li>TODO: Ticketing reports where applicable</li>
                 <li>TODO: Cellar door visitor logs</li>
                 <li>TODO: Manual counts or sampling for foot traffic (if used)</li>
               </ul>
-              <p className="text-natural-600 dark:text-natural-400 text-sm mt-4">
+              <p className="text-muted text-sm mt-4">
                 No invented systems or exact numbers. Add confirmed sources here when available.
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-4 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-4">
                 Disclaimer
               </h2>
-              <p className="text-natural-700 dark:text-natural-300 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 This is an estimate. It is not an audited metric. Seasonal and event-driven variation applies. Visitor numbers may fluctuate. Do not treat as a guaranteed or exact figure. For partnership or investment due diligence, request current data directly from Bayview Hub.
               </p>
             </div>
 
-            <div className="pt-8 border-t border-natural-200 dark:border-primary-700">
+            <div className="pt-8 border-t border-border">
               <Link
                 href="/"
                 className="text-primary-600 hover:underline dark:text-primary-400"

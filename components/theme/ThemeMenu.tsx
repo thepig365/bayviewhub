@@ -66,7 +66,7 @@ export function ThemeMenu({ className }: { className?: string }) {
       <div className="flex items-center justify-between mb-3">
         <div>
           <p className="text-sm font-semibold text-natural-900 dark:text-natural-50">Theme</p>
-          <p className="text-xs text-natural-600 dark:text-natural-200">
+          <p className="text-xs text-muted">
             Active: <span className="font-medium">{effective}</span>
           </p>
         </div>

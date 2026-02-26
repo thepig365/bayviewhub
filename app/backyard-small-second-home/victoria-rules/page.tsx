@@ -16,7 +16,7 @@ export default function VictoriaRulesPage() {
   const baseUrl = SITE_CONFIG.url
   return (
     <main className="min-h-screen bg-white dark:bg-primary-900">
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
@@ -45,7 +45,7 @@ export default function VictoriaRulesPage() {
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
               Victorian SSD Rules
             </h1>
-            <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+            <p className="text-xl text-muted leading-relaxed">
               VC253/VC282 define the Small Second Dwelling framework. These are hard constraints — non-negotiable.
             </p>
           </div>
@@ -55,32 +55,32 @@ export default function VictoriaRulesPage() {
       <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-8">
-            <p className="text-sm text-natural-600 dark:text-natural-400 mb-6">Summary (non-authoritative). Verify via official sources in Evidence below.</p>
-            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <p className="text-sm text-muted mb-6">Summary (non-authoritative). Verify via official sources in Evidence below.</p>
+            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Maximum GFA: 60 sqm</h3>
-              <p className="text-natural-700 dark:text-natural-300">Gross Floor Area cannot exceed 60 square meters per DTP guidelines. No exceptions.</p>
+              <p className="text-muted">Gross Floor Area cannot exceed 60 square meters per DTP guidelines. No exceptions.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Siting: Behind Front Wall</h3>
-              <p className="text-natural-700 dark:text-natural-300">SSD must be located behind the front wall line of the main dwelling. Front-yard siting disqualifies.</p>
+              <p className="text-muted">SSD must be located behind the front wall line of the main dwelling. Front-yard siting disqualifies.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">All-Electric Only</h3>
-              <p className="text-natural-700 dark:text-natural-300">No reticulated gas connection. All-electric mandated.</p>
+              <p className="text-muted">No reticulated gas connection. All-electric mandated.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+            <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">No Subdivision</h3>
-              <p className="text-natural-700 dark:text-natural-300">SSD must remain on the same title as the main dwelling. Subdivision intent disqualifies from the framework.</p>
+              <p className="text-muted">SSD must remain on the same title as the main dwelling. Subdivision intent disqualifies from the framework.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-8 border-t border-natural-200 dark:border-primary-700 bg-amber-50/50 dark:bg-amber-900/10">
+      <section className="py-8 border-t border-border bg-amber-50/50 dark:bg-amber-900/10">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h3 className="font-semibold text-natural-800 dark:text-natural-200 mb-2">TODO — Evidence</h3>
-            <p className="text-sm text-natural-600 dark:text-natural-400">Add official VIC Planning / Amendment source links here before treating this summary as authoritative. DTP SSD Guidelines linked above is a starting point.</p>
+            <p className="text-sm text-muted">Add official VIC Planning / Amendment source links here before treating this summary as authoritative. DTP SSD Guidelines linked above is a starting point.</p>
           </div>
         </div>
       </section>

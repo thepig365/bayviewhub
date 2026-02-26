@@ -47,7 +47,7 @@ export default function GardenOpsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <main className="min-h-screen bg-white dark:bg-primary-900">
         {/* Answer Capsule */}
-        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <AnswerCapsule
@@ -79,7 +79,7 @@ export default function GardenOpsPage() {
               <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
                 Founding Edible Garden Ops Lead
               </h1>
-              <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+              <p className="text-xl text-muted leading-relaxed">
                 Turn gardens into a subscription model with reliable delivery. Design seasonal harvest and delivery systems, manage subscriber experiences and events.
               </p>
             </div>
@@ -102,7 +102,7 @@ export default function GardenOpsPage() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                    <p className="text-natural-700 dark:text-natural-300">{item}</p>
+                    <p className="text-muted">{item}</p>
                   </li>
                 ))}
               </ul>
@@ -117,7 +117,7 @@ export default function GardenOpsPage() {
               <h2 className="text-2xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
                 Register Interest
               </h2>
-              <p className="text-natural-600 mb-8 dark:text-natural-300">
+              <p className="text-muted mb-8">
                 Apply via the Edible Gardens expression of interest.
               </p>
               <Button href="/partners/edible-gardens" variant="primary" size="lg">
@@ -140,9 +140,9 @@ export default function GardenOpsPage() {
               </h2>
               <dl className="space-y-6">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-primary-700">
+                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
                     <dt className="font-bold text-natural-900 mb-2 dark:text-natural-50">{faq.q}</dt>
-                    <dd className="text-natural-700 dark:text-natural-300">{faq.a}</dd>
+                    <dd className="text-muted">{faq.a}</dd>
                   </div>
                 ))}
               </dl>

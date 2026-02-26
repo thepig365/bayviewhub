@@ -36,7 +36,7 @@ export function ReviewsWidget() {
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-2xl font-serif font-bold text-natural-900 dark:text-natural-50">
+          <h3 className="text-2xl font-serif font-bold text-fg">
             What Our Visitors Say
           </h3>
           <div className="flex items-center mt-2">
@@ -45,7 +45,7 @@ export function ReviewsWidget() {
                 <Star key={i} className="w-5 h-5 fill-accent-500 text-accent-500" />
               ))}
             </div>
-            <span className="ml-2 text-sm text-natural-600 dark:text-natural-200">4.9 average rating</span>
+            <span className="ml-2 text-sm text-muted">4.9 average rating</span>
           </div>
         </div>
         <a
@@ -61,7 +61,7 @@ export function ReviewsWidget() {
           <div key={review.id} className="bg-white rounded-xl p-6 shadow-md dark:bg-primary-900/60 dark:border dark:border-primary-700">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h4 className="font-bold text-natural-900 dark:text-natural-50">{review.author}</h4>
+                <h4 className="font-bold text-fg">{review.author}</h4>
                 <div className="flex items-center space-x-2 mt-1">
                   <div className="flex">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -70,17 +70,17 @@ export function ReviewsWidget() {
                         className={`w-4 h-4 ${
                           i < review.rating
                             ? 'fill-accent-500 text-accent-500'
-                            : 'text-natural-300 dark:text-primary-700'
+                            : 'text-muted dark:text-muted'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-natural-500 dark:text-natural-300">{review.date}</span>
+                  <span className="text-xs text-subtle">{review.date}</span>
                 </div>
               </div>
-              <span className="text-xs text-natural-500 capitalize dark:text-natural-300">{review.platform}</span>
+              <span className="text-xs text-subtle capitalize">{review.platform}</span>
             </div>
-            <p className="text-natural-700 leading-relaxed dark:text-natural-200">{review.text}</p>
+            <p className="text-muted leading-relaxed">{review.text}</p>
           </div>
         ))}
       </div>
@@ -90,10 +90,10 @@ export function ReviewsWidget() {
           <MessageCircle className="w-4 h-4 mr-2" />
           Integration Options
         </h4>
-        <p className="text-sm text-natural-600 dark:text-natural-200">
+        <p className="text-sm text-muted">
           Connect with review platforms:
         </p>
-        <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-natural-600 dark:text-natural-200">
+        <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-muted">
           <li>Google Business Profile API for Google reviews</li>
           <li>Facebook Graph API for Facebook reviews</li>
           <li>TripAdvisor Content API</li>

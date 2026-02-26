@@ -66,7 +66,7 @@ export default function EdibleGardensPage() {
               <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
                 Edible Gardens
               </h1>
-              <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+              <p className="text-xl text-muted leading-relaxed">
                 Connect with seasonal food through harvest boxes, garden days, and hands-on growing experiences within the estate.
               </p>
             </div>

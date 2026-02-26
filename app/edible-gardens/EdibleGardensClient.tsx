@@ -50,7 +50,7 @@ export function EdibleGardensClient() {
             <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
               Why this exists
             </h2>
-            <p className="text-natural-700 leading-relaxed dark:text-natural-300">
+            <p className="text-muted leading-relaxed">
               The gardens are a working part of the estate — not a display, but a place where food is grown, harvested, and shared. Subscribers become part of that cycle, receiving seasonal produce and spending time in the gardens throughout the year.
             </p>
           </div>
@@ -70,7 +70,7 @@ export function EdibleGardensClient() {
                   <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                   <div>
                     <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">{item.title}</h3>
-                    <p className="text-natural-700 dark:text-natural-300">{item.description}</p>
+                    <p className="text-muted">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -89,19 +89,19 @@ export function EdibleGardensClient() {
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   People who want to eat seasonally and know where their food comes from.
                 </p>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Families looking for time outdoors and hands-on learning for children.
                 </p>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Anyone wanting a closer relationship with growing food.
                 </p>
               </li>
@@ -133,7 +133,7 @@ export function EdibleGardensClient() {
                   </button>
                   {openFaq === idx && (
                     <div className="px-6 pb-6">
-                      <p className="text-natural-700 dark:text-natural-300">{faq.a}</p>
+                      <p className="text-muted">{faq.a}</p>
                     </div>
                   )}
                 </div>
@@ -147,7 +147,7 @@ export function EdibleGardensClient() {
       <section id="subscribe" className="py-20 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xl text-natural-600 mb-8 dark:text-natural-300">
+            <p className="text-xl text-muted mb-8">
               Subscriptions open seasonally. Explore the estate to learn more.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

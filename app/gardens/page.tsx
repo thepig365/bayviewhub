@@ -48,10 +48,10 @@ export default function GardensPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-8 ">
               Edible Gardens
             </h1>
-            <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+            <p className="text-xl text-muted leading-relaxed">
               Connect with seasonal food through harvest boxes, garden days, and hands-on growing experiences within the estate.
             </p>
           </div>
@@ -62,10 +62,10 @@ export default function GardensPage() {
       <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
               Why this exists
             </h2>
-            <p className="text-natural-700 leading-relaxed dark:text-natural-300">
+            <p className="text-muted leading-relaxed">
               The gardens are a working part of the estate — not a display, but a place where food is grown, harvested, and shared. Subscribers become part of that cycle, receiving seasonal produce and spending time in the gardens throughout the year.
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function GardensPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
               What happens
             </h2>
             <div className="space-y-6">
@@ -84,8 +84,8 @@ export default function GardensPage() {
                 <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
                   <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                   <div>
-                    <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">{item.title}</h3>
-                    <p className="text-natural-700 dark:text-natural-300">{item.description}</p>
+                    <h3 className="font-bold text-fg mb-2 ">{item.title}</h3>
+                    <p className="text-muted">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -98,25 +98,25 @@ export default function GardensPage() {
       <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
               Who this is for
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   People who want to eat seasonally and know where their food comes from.
                 </p>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Families looking for time outdoors and hands-on learning for children.
                 </p>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Anyone wanting a closer relationship with growing food.
                 </p>
               </li>
@@ -129,7 +129,7 @@ export default function GardensPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
               Questions
             </h2>
             <div className="space-y-4">
@@ -139,16 +139,16 @@ export default function GardensPage() {
                     onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                     className="w-full flex items-center justify-between p-6 text-left"
                   >
-                    <span className="font-medium text-natural-900 dark:text-natural-50">{faq.q}</span>
+                    <span className="font-medium text-fg ">{faq.q}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-natural-500 transition-transform ${
+                      className={`w-5 h-5 text-subtle transition-transform ${
                         openFaq === idx ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
                   {openFaq === idx && (
                     <div className="px-6 pb-6">
-                      <p className="text-natural-700 dark:text-natural-300">{faq.a}</p>
+                      <p className="text-muted">{faq.a}</p>
                     </div>
                   )}
                 </div>
@@ -162,7 +162,7 @@ export default function GardensPage() {
       <section className="py-20 bg-natural-50 dark:bg-primary-800/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xl text-natural-600 mb-8 dark:text-natural-300">
+            <p className="text-xl text-muted mb-8">
               Subscriptions open seasonally. Explore the estate to learn more.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

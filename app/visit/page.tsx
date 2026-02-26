@@ -113,7 +113,7 @@ export default function VisitPage() {
       <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold text-natural-900 mb-12 text-center dark:text-natural-50">
+            <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
               Getting Here
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -155,7 +155,7 @@ export default function VisitPage() {
       <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-natural-50">
+            <h2 className="text-3xl font-serif font-bold text-fg mb-8 text-center ">
               Location & Nearby Attractions Map
             </h2>
             <div className="bg-natural-100 rounded-3xl overflow-hidden dark:bg-primary-900/60 dark:border dark:border-border">
@@ -173,7 +173,7 @@ export default function VisitPage() {
               
               {/* Map Legend */}
               <div className="p-6 bg-white border-t border-natural-200 dark:bg-primary-900 dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-4 text-center dark:text-natural-50">Map Legend</h3>
+                <h3 className="font-bold text-fg mb-4 text-center ">Map Legend</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-accent-500 rounded-full"></div>
@@ -203,7 +203,7 @@ export default function VisitPage() {
                 
                 {/* Quick Distance Reference */}
                 <div className="mt-6 pt-6 border-t border-border">
-                  <h4 className="font-semibold text-natural-900 mb-3 text-center dark:text-natural-50">Quick Distance Reference</h4>
+                  <h4 className="font-semibold text-fg mb-3 text-center ">Quick Distance Reference</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted">
                     <div className="text-center">
                       <div className="font-bold text-primary-600">5 min</div>
@@ -258,10 +258,10 @@ export default function VisitPage() {
       <section className="py-20 bg-natural-50 dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold text-natural-900 mb-4 text-center dark:text-natural-50">
+            <h2 className="text-4xl font-serif font-bold text-fg mb-4 text-center ">
               Nearby Attractions
             </h2>
-            <p className="text-lg text-natural-600 mb-12 text-center max-w-2xl mx-auto dark:text-natural-200">
+            <p className="text-lg text-muted mb-12 text-center max-w-2xl mx-auto ">
               Explore the beautiful Mornington Peninsula with these popular destinations
             </p>
 
@@ -272,7 +272,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Peninsula Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Natural thermal mineral springs with hilltop pools and spa experiences</p>
+                <p className="text-muted text-sm mb-4 ">Natural thermal mineral springs with hilltop pools and spa experiences</p>
                 <a 
                   href="https://www.peninsulahotsprings.com" 
                   target="_blank" 
@@ -288,7 +288,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Alba Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Thermal mineral bathing and day spa in a natural bushland setting</p>
+                <p className="text-muted text-sm mb-4 ">Thermal mineral bathing and day spa in a natural bushland setting</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -305,7 +305,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Eagle Chairlift & Maze</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Scenic chairlift rides with panoramic bay views and adventure maze</p>
+                <p className="text-muted text-sm mb-4 ">Scenic chairlift rides with panoramic bay views and adventure maze</p>
                 <a 
                   href="https://www.enchantedmaze.com.au" 
                   target="_blank" 
@@ -321,7 +321,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Enchanted Adventure Garden</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Tree surfing, canopy walks, mazes, and tube slides for all ages</p>
+                <p className="text-muted text-sm mb-4 ">Tree surfing, canopy walks, mazes, and tube slides for all ages</p>
                 <a 
                   href="https://www.enchantedmaze.com.au" 
                   target="_blank" 
@@ -337,7 +337,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Greens Bush</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Coastal heathland walks with stunning views and native wildlife</p>
+                <p className="text-muted text-sm mb-4 ">Coastal heathland walks with stunning views and native wildlife</p>
                 <a 
                   href="https://www.parks.vic.gov.au/places-to-see/parks/greens-bush" 
                   target="_blank" 
@@ -353,7 +353,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Heronswood Gardens</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">10 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Historic gardens, nursery, and cafe with seasonal displays</p>
+                <p className="text-muted text-sm mb-4 ">Historic gardens, nursery, and cafe with seasonal displays</p>
                 <a 
                   href="https://www.diggers.com.au/" 
                   target="_blank" 
@@ -367,10 +367,10 @@ export default function VisitPage() {
               {/* Beaches */}
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-lg font-bold text-natural-900">Cape Schanck</h3>
+                  <h3 className="text-lg font-bold text-fg">Cape Schanck</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">20 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4">Historic lighthouse, boardwalks, and dramatic coastal scenery</p>
+                <p className="text-muted text-sm mb-4">Historic lighthouse, boardwalks, and dramatic coastal scenery</p>
                 <a 
                   href="https://www.parks.vic.gov.au/places-to-see/sites/cape-schanck-lighthouse" 
                   target="_blank" 
@@ -383,10 +383,10 @@ export default function VisitPage() {
 
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-lg font-bold text-natural-900">Gunnamatta Beach</h3>
+                  <h3 className="text-lg font-bold text-fg">Gunnamatta Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4">Surf beach with powerful waves, popular with surfers and beach lovers</p>
+                <p className="text-muted text-sm mb-4">Surf beach with powerful waves, popular with surfers and beach lovers</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -402,7 +402,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Flinders Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Calm bay beach perfect for families, swimming, and rock pools</p>
+                <p className="text-muted text-sm mb-4 ">Calm bay beach perfect for families, swimming, and rock pools</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -418,7 +418,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Sorrento Front Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">20 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Protected bay beach with historic pier, cafes, and safe swimming</p>
+                <p className="text-muted text-sm mb-4 ">Protected bay beach with historic pier, cafes, and safe swimming</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -434,7 +434,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Portsea Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">Bay and ocean beaches, rock pools, and the famous London Bridge rock formation</p>
+                <p className="text-muted text-sm mb-4 ">Bay and ocean beaches, rock pools, and the famous London Bridge rock formation</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -450,7 +450,7 @@ export default function VisitPage() {
                   <h3 className="text-lg font-bold text-fg">Wineries & Breweries</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5-30 min</span>
                 </div>
-                <p className="text-natural-600 text-sm mb-4 dark:text-natural-200">100+ wineries and breweries throughout the Mornington Peninsula</p>
+                <p className="text-muted text-sm mb-4 ">100+ wineries and breweries throughout the Mornington Peninsula</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
@@ -472,7 +472,7 @@ export default function VisitPage() {
             <h2 className="text-4xl font-serif font-bold text-fg mb-6">
               Cellar Door Tastings
             </h2>
-            <p className="text-xl text-natural-700 mb-8 leading-relaxed dark:text-natural-200">
+            <p className="text-xl text-muted mb-8 leading-relaxed ">
               Experience our estate wines with guided tastings at The Pig & Whistle. Walk-ins welcome, or book ahead for private tastings and groups.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -500,24 +500,24 @@ export default function VisitPage() {
       <section className="py-20 bg-white dark:bg-primary-900">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold text-natural-900 mb-12 text-center dark:text-natural-50">
+            <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
               Visitor Information
             </h2>
             <div className="space-y-6">
               <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Accessibility</h3>
+                <h3 className="font-bold text-fg mb-2 ">Accessibility</h3>
                 <p className="text-muted">
                   Wheelchair accessible facilities, accessible parking, and assistance available. Please contact us in advance for specific needs.
                 </p>
               </div>
               <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Family Friendly</h3>
+                <h3 className="font-bold text-fg mb-2 ">Family Friendly</h3>
                 <p className="text-muted">
                   Children welcome at most venues. High chairs, change facilities, and kids menu available at the restaurant.
                 </p>
               </div>
               <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Pets</h3>
+                <h3 className="font-bold text-fg mb-2 ">Pets</h3>
                 <p className="text-muted">
                   Well-behaved dogs welcome in outdoor areas. Please keep on leash and bring water bowls.
                 </p>

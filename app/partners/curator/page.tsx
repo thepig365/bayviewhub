@@ -56,7 +56,7 @@ export default function CuratorPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <main className="min-h-screen bg-white dark:bg-primary-900">
         {/* Answer Capsule */}
-        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <AnswerCapsule
@@ -84,10 +84,10 @@ export default function CuratorPage() {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-8 ">
                 Founding Curator / Gallery Director
               </h1>
-              <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+              <p className="text-xl text-muted leading-relaxed">
                 Build exhibitions, artist relationships, and sales operations. Lead the establishment of Bayview Arts Gallery from the ground up.
               </p>
             </div>
@@ -98,7 +98,7 @@ export default function CuratorPage() {
         <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
                 Responsibilities
               </h2>
               <ul className="space-y-4">
@@ -110,7 +110,7 @@ export default function CuratorPage() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                    <p className="text-natural-700 dark:text-natural-300">{item}</p>
+                    <p className="text-muted">{item}</p>
                   </li>
                 ))}
               </ul>
@@ -122,10 +122,10 @@ export default function CuratorPage() {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-6 ">
                 Become a Founding Partner
               </h2>
-              <p className="text-natural-600 mb-8 dark:text-natural-300">
+              <p className="text-muted mb-8">
                 Register your interest and apply for this role.
               </p>
               <Button href="/partners#apply" variant="primary" size="lg">
@@ -139,14 +139,14 @@ export default function CuratorPage() {
         <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
                 FAQ
               </h2>
               <dl className="space-y-6">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-primary-700">
-                    <dt className="font-bold text-natural-900 mb-2 dark:text-natural-50">{faq.q}</dt>
-                    <dd className="text-natural-700 dark:text-natural-300">{(faq as { aNode?: React.ReactNode }).aNode ?? faq.a}</dd>
+                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
+                    <dt className="font-bold text-fg mb-2 ">{faq.q}</dt>
+                    <dd className="text-muted">{(faq as { aNode?: React.ReactNode }).aNode ?? faq.a}</dd>
                   </div>
                 ))}
               </dl>

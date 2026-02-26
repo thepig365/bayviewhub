@@ -16,7 +16,7 @@ export default function EdibleGardensHowItWorksPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-primary-900">
       {/* Answer Capsule */}
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
+      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
@@ -45,7 +45,7 @@ export default function EdibleGardensHowItWorksPage() {
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
               How It Works
             </h1>
-            <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
+            <p className="text-xl text-muted leading-relaxed">
               The edible gardens program is built around three core experiences: harvest boxes, garden days, and workshops.
             </p>
           </div>
@@ -60,21 +60,21 @@ export default function EdibleGardensHowItWorksPage() {
               The Model
             </h2>
             <div className="space-y-6">
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Seasonal Harvest Boxes</h3>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Fresh produce from the gardens, delivered to you on a regular cycle. Rain or shine.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Garden Days</h3>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Time spent in the gardens — planting, harvesting, or simply being present. Family-friendly.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-primary-700">
+              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Cooking Workshops</h3>
-                <p className="text-natural-700 dark:text-natural-300">
+                <p className="text-muted">
                   Learn to prepare seasonal produce with guidance from visiting chefs.
                 </p>
               </div>
@@ -90,7 +90,7 @@ export default function EdibleGardensHowItWorksPage() {
             <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
               Founding Partner
             </h2>
-            <p className="text-natural-700 dark:text-natural-300 mb-6">
+            <p className="text-muted mb-6">
               The program is operated by a founding partner — an entrepreneurial operator who designs the membership offer, pricing, and delivery. Bayview Hub provides land, infrastructure, and an existing visitor context (50k+ annual visitors).
             </p>
             <div className="flex flex-wrap gap-4">

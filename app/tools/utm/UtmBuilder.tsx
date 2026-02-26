@@ -67,13 +67,13 @@ export function UtmBuilder() {
         <Field label="utm_term" value={state.utm_term} onChange={(v) => setState({ ...state, utm_term: v })} />
       </div>
 
-      <div className="rounded-2xl p-6 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700">
-        <p className="text-sm font-medium text-natural-700 dark:text-natural-200">Trackable link</p>
+      <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border">
+        <p className="text-sm font-medium text-muted">Trackable link</p>
         <div className="mt-2 flex flex-col md:flex-row gap-3 md:items-center">
           <input
             readOnly
             value={url}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg dark:border-border dark:bg-primary-900/40 dark:text-fg"
           />
           <button
             type="button"
@@ -83,7 +83,7 @@ export function UtmBuilder() {
             {copied ? 'Copied' : 'Copy'}
           </button>
         </div>
-        <p className="mt-3 text-xs text-natural-600 dark:text-natural-300">
+        <p className="mt-3 text-xs text-muted">
           Tip: keep `utm_campaign` consistent across a campaign, and change `utm_content` per post/ad creative.
         </p>
       </div>
@@ -94,13 +94,13 @@ export function UtmBuilder() {
 function Field(props: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">{props.label}</label>
+      <label className="block text-sm font-medium text-muted mb-2">{props.label}</label>
       <input
         type="text"
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
-        className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
       />
     </div>
   )

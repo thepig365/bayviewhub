@@ -79,7 +79,7 @@ export function EdibleGardensEOIForm() {
 
   if (status === 'submitted') {
     return (
-      <div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 text-center dark:bg-primary-900/60 dark:border-primary-700">
+      <div className="rounded-2xl p-8 bg-white shadow-lg border border-border text-center dark:bg-primary-900/60 dark:border-border">
         <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">
           Expression of Interest received
         </h3>
@@ -93,7 +93,7 @@ export function EdibleGardensEOIForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-primary-700"
+      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border"
     >
       {error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">
@@ -102,7 +102,7 @@ export function EdibleGardensEOIForm() {
       ) : null}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Name *
           </label>
           <input
@@ -110,12 +110,12 @@ export function EdibleGardensEOIForm() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Email *
           </label>
           <input
@@ -123,47 +123,47 @@ export function EdibleGardensEOIForm() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Phone
           </label>
           <input
             type="tel"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Website / LinkedIn
           </label>
           <input
             type="url"
             value={form.website}
             onChange={(e) => setForm({ ...form, website: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             I’m applying as *
           </label>
           <select
             required
             value={form.applicantType}
             onChange={(e) => setForm({ ...form, applicantType: e.target.value as FormState['applicantType'] })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select one</option>
             <option value="Individual">Individual</option>
@@ -173,14 +173,14 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             I can start a pilot *
           </label>
           <select
             required
             value={form.pilotStart}
             onChange={(e) => setForm({ ...form, pilotStart: e.target.value as FormState['pilotStart'] })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select a timeframe</option>
             <option value="0–30 days">0–30 days</option>
@@ -193,14 +193,14 @@ export function EdibleGardensEOIForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Have you run subscriptions/workshops before? *
           </label>
           <select
             required
             value={form.hasRunProgramsBefore}
             onChange={(e) => setForm({ ...form, hasRunProgramsBefore: e.target.value as FormState['hasRunProgramsBefore'] })}
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select one</option>
             <option value="Yes">Yes</option>
@@ -209,7 +209,7 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+          <label className="block text-sm font-medium text-muted mb-2">
             Availability / time commitment
           </label>
           <input
@@ -217,13 +217,13 @@ export function EdibleGardensEOIForm() {
             value={form.availability}
             onChange={(e) => setForm({ ...form, availability: e.target.value })}
             placeholder="e.g., weekends only / 3 days per week / full-time"
-            className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+        <label className="block text-sm font-medium text-muted mb-2">
           Briefly describe your subscription/workshop experience
           {form.hasRunProgramsBefore === 'Yes' ? ' *' : ''}
         </label>
@@ -233,12 +233,12 @@ export function EdibleGardensEOIForm() {
           value={form.programExperience}
           onChange={(e) => setForm({ ...form, programExperience: e.target.value })}
           placeholder="What did you run? How many subscribers/attendees? What worked?"
-          className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-natural-700 mb-2 dark:text-natural-200">
+        <label className="block text-sm font-medium text-muted mb-2">
           Tell us who you are and what you want to build *
         </label>
         <textarea
@@ -247,7 +247,7 @@ export function EdibleGardensEOIForm() {
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           placeholder="Who you are • what you want to build • how you see an edible garden serving people and community"
-          className="w-full px-4 py-3 rounded-lg border border-natural-300 bg-white text-natural-900 placeholder:text-natural-500 focus:ring-2 focus:ring-primary-500 dark:border-primary-700 dark:bg-primary-900/40 dark:text-natural-50 dark:placeholder:text-natural-300 dark:focus:ring-primary-300"
+          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
         />
       </div>
 

@@ -37,7 +37,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
   return (
     <div className={className}>
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-natural-600 dark:text-natural-200">Share:</span>
+        <span className="text-sm font-medium text-muted">Share:</span>
         <div className="flex gap-2">
           {platforms.map((platform) => {
             const Icon = platform.icon
@@ -48,7 +48,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
                 className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
                 aria-label={platform.label}
               >
-                <Icon className="w-4 h-4 text-natural-700 dark:text-natural-100" />
+                <Icon className="w-4 h-4 text-muted" />
               </button>
             )
           })}
@@ -58,7 +58,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
               className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
               aria-label="Share via device"
             >
-              <Share2 className="w-4 h-4 text-natural-700 dark:text-natural-100" />
+              <Share2 className="w-4 h-4 text-muted" />
             </button>
           )}
         </div>
