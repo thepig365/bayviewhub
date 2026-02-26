@@ -14,7 +14,6 @@ const routes = [
   '/backyard-small-second-home/victoria-rules',
   '/backyard-small-second-home/cost-rent-roi',
   '/backyard-small-second-home/feasibility-check',
-  '/art-gallery',
   '/art-gallery/founding-partners',
   '/edible-gardens',
   '/edible-gardens/how-it-works',

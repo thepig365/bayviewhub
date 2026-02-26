@@ -69,7 +69,7 @@ export default function CuratorPage() {
                   'Estimated 50k+ annual visitors (see Evidence). No commercial rent. Revenue share negotiable.',
                 ]}
                 sources={[
-                  { label: 'Art Gallery', href: `${SITE_CONFIG.url}/art-gallery` },
+                  { label: 'Art Gallery', href: 'https://gallery.bayviewhub.me' },
                   { label: 'Founding Partners', href: `${SITE_CONFIG.url}/art-gallery/founding-partners` },
                   { label: 'Partners', href: `${SITE_CONFIG.url}/partners` },
                   { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },

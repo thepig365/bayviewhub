@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Inter, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -72,6 +73,19 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-serif',
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
 }: {
@@ -127,7 +141,7 @@ export default function RootLayout({
   ]
 
   return (
-    <html lang="en" className="font-sans" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} font-sans`} suppressHydrationWarning>
       <head>
         {jsonLd.map((schema, i) => (
           <script
@@ -174,7 +188,7 @@ export default function RootLayout({
           </>
         ) : null}
       </head>
-      <body className="min-h-screen flex flex-col bg-natural-50 text-natural-900 dark:bg-primary-900 dark:text-natural-50 transition-colors">
+      <body className="min-h-screen flex flex-col bg-bg text-fg dark:bg-bg dark:text-fg transition-colors">
         <ThemeProvider>
           <Header />
           <main className="flex-grow">{children}</main>

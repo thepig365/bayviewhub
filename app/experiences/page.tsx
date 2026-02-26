@@ -73,8 +73,9 @@ export default function ExperiencesPage() {
               description={exp.blurb}
               image={exp.image}
               cta={exp.cta}
+              ctaSecondary={(exp as { ctaSecondary?: { label: string; href: string } }).ctaSecondary}
               prelaunch={(exp as any).prelaunch}
-              variant={EXPERIENCES.new.includes(exp) ? 'highlight' : 'default'}
+              variant={EXPERIENCES.new.some((e) => e.id === exp.id) ? 'highlight' : 'default'}
             />
           ))}
         </div>

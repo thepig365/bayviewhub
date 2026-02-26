@@ -104,7 +104,7 @@ export default function ChineseHomePage() {
                 title="Bayview 艺术画廊"
                 description="策展展览、开幕式和收藏作品。"
                 image="/images/gallery.jpg"
-                cta={{ label: '探索画廊', href: '/art-gallery' }}
+                cta={{ label: '探索画廊', href: 'https://gallery.bayviewhub.me', external: true }}
                 prelaunch
                 variant="highlight"
               />

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,11 +6,19 @@
 
 @layer base {
   :root {
+    /* B palette - light */
+    --bg: #FAFAF8;
+    --fg: #1A1A1A;
+    --muted: #6B7280;
+    --border: #E7E6E1;
+    --accent: #5EB1BF;
+    --accent-hover: #3D8A96;
+    --accent-soft: #A8D5DD;
+    --surface: #FFFFFF;
+    /* Legacy (for compatibility) */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 35%;
-    --border: 0 0% 85%;
+    --muted-fg: 0 0% 35%;
     --input: 0 0% 85%;
     --ring: 0 0% 0%;
     --primary: 0 0% 0%;
@@ -21,11 +29,19 @@
   }
 
   .dark {
+    /* B palette - dark */
+    --bg: #0E1111;
+    --fg: #F7F7F5;
+    --muted: #9AA3A3;
+    --border: #1F2A2A;
+    --accent: #7FBFC8;
+    --accent-hover: #5DA8B3;
+    --accent-soft: #284446;
+    --surface: #121616;
+    /* Legacy */
     --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --border: 0 0% 20%;
+    --muted-fg: 0 0% 65%;
     --input: 0 0% 20%;
     --ring: 0 0% 100%;
     --primary: 0 0% 100%;
@@ -36,9 +52,12 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 16px;
     line-height: 1.6;
+    @apply antialiased;
+    color: var(--fg);
+    background-color: var(--bg);
   }
 
   .dark body,
@@ -46,14 +65,34 @@
   .dark span,
   .dark li,
   .dark a {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--fg);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif), Georgia, serif;
     font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: capitalize;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  }
+
+  small,
+  nav {
+    font-size: 12px;
+  }
+
+  @media (min-width: 768px) {
+    small,
+    nav {
+      font-size: 13px;
+    }
   }
 
   code, pre, .font-mono {
@@ -67,4 +106,3 @@
     text-wrap: balance;
   }
 }
-

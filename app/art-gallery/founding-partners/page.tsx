@@ -1,177 +1,93 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
-import { Button } from '@/components/ui/Button'
+import { ArtGalleryClient } from '../ArtGalleryClient'
 
 export const metadata = genMeta({
-  title: `Art Gallery Founding Partners | ${SITE_CONFIG.name}`,
+  title: `Art Gallery Founding Partnership | ${SITE_CONFIG.name}`,
   description:
-    'Bayview Hub offers physical space for founding partners — Art Gallery, Workshops, Edible Gardens. Not employment, not franchising. Build your practice within a shared destination.',
+    'Contemporary gallery within Bayview Hub\'s 30-acre estate. Estimated 50k+ annual visitors annually. Evidence available on-site. Founding partnership opportunity for curator — no commercial rent, revenue share.',
   path: '/art-gallery/founding-partners',
 })
 
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Bayview Arts Gallery',
+  description: 'Contemporary gallery within a living destination. Founding partnership opportunity.',
+  provider: {
+    '@type': 'Organization',
+    name: SITE_CONFIG.name,
+    url: SITE_CONFIG.url,
+  },
+  areaServed: { '@type': 'State', name: 'Victoria', containedInPlace: { '@type': 'Country', name: 'Australia' } },
+  offers: {
+    '@type': 'Offer',
+    description: 'Founding curator partnership — revenue share, no commercial rent',
+  },
+}
+
 export default function ArtGalleryFoundingPartnersPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
-      {/* Answer Capsule */}
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-primary-700">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <AnswerCapsule
-              definition="Bayview Hub offers physical space for individuals to build their own independent practice — as partners within a shared destination. Not employment, not franchising."
-              facts={[
-                'You operate your own program or practice.',
-                'Bayview Hub provides land, infrastructure, and an existing visitor context (estimated 50k+ annual visitors — see Evidence).',
-                'Areas: Art Gallery, Therapeutic Arts Workshops, Edible Gardens, Live Music.',
-                'Each partnership develops at its own pace and shape.',
-              ]}
-              sources={[
-                { label: 'Art Gallery', href: `${SITE_CONFIG.url}/art-gallery` },
-                { label: 'Partners', href: `${SITE_CONFIG.url}/partners` },
-                { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },
-              ]}
-              lastUpdated={LAST_UPDATED}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Hero */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
-              Founding Partnerships at Bayview Hub
-            </h1>
-            <p className="text-xl text-natural-600 leading-relaxed dark:text-natural-300">
-              Bayview Hub offers physical space for individuals who want to build their own independent practice — not as employees, and not as tenants, but as partners within a shared destination.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What this means */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
-              What this means
-            </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  You operate your own program or practice.
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Bayview Hub provides land, infrastructure, and an existing visitor context (<a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">estimated 50k+ annual visitors — see Evidence</a>).
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Each partnership develops at its own pace and shape.
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* What this is not */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
-              What this is not
-            </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-4">
-                <span className="text-natural-500 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Not employment
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-natural-500 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Not franchising
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-natural-500 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Not short-term activation
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Areas currently forming */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
-              Areas currently forming
-            </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Art Gallery
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Therapeutic Arts Workshops (non-clinical)
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Edible Gardens
-                </p>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-natural-700 dark:text-natural-300">
-                  Live Music & Cultural Programming
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Closing */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xl text-natural-600 mb-4 dark:text-natural-300">
-              Conversations begin with shared understanding, not applications.
-            </p>
-            <p className="text-xl text-natural-600 mb-12 dark:text-natural-300">
-              If something here resonates, exploration can begin.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button href="/experiences" variant="primary" size="lg">
-                Explore Experiences
-              </Button>
-              <Button href="/art-gallery" variant="outline" size="lg">
-                Visit the Gallery
-              </Button>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+      <div className="min-h-screen bg-[#121212]">
+        {/* Top bar: Logo + Back to home */}
+        <section className="sticky top-0 z-40 border-b border-neutral-800 bg-[#121212]/95 backdrop-blur-sm">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="flex items-center gap-3 group">
+                <Image
+                  src="/images/bayview-estate-logo.jpg"
+                  alt="Bayview Estate"
+                  width={120}
+                  height={36}
+                  className="h-10 w-auto md:h-12"
+                />
+                <span className="text-[#F5F5F0] font-serif font-bold text-lg md:text-xl group-hover:text-[#FDFE9A] transition-colors">
+                  Bayview Hub
+                </span>
+              </Link>
+              <Link
+                href="/"
+                className="text-sm text-[#F5F5F0]/80 hover:text-[#FDFE9A] transition-colors uppercase tracking-wider"
+              >
+                ← Back to home
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+        {/* Answer Capsule - above the fold */}
+        <section className="border-b border-neutral-800 bg-neutral-900/50">
+          <div className="container mx-auto px-6 py-6">
+            <div className="max-w-4xl mx-auto">
+              <AnswerCapsule
+                definition="A contemporary gallery within Bayview Hub's 30-acre estate on Mornington Peninsula. Founding partnership opportunity for curator/gallery director."
+                facts={[
+                  'Integrated into living destination (restaurant, cellar door, music, gardens).',
+                  'Estimated 50k+ annual visitors (see Evidence).',
+                  'Revenue share or equity hybrid. No commercial rent.',
+                  'Founding curator role: exhibitions, artist relationships, sales.',
+                ]}
+                sources={[
+                  { label: 'Gallery', href: 'https://gallery.bayviewhub.me' },
+                  { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },
+                ]}
+                lastUpdated={LAST_UPDATED}
+                className="border-neutral-700 bg-neutral-800/50"
+              />
+            </div>
+          </div>
+        </section>
+        <Suspense fallback={<div className="min-h-[80vh]" />}>
+          <ArtGalleryClient />
+        </Suspense>
+      </div>
+    </>
   )
 }

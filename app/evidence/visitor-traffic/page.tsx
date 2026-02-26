@@ -30,7 +30,7 @@ export default function VisitorTrafficEvidencePage() {
               sources={[
                 { label: 'Bayview Hub', href: `${baseUrl}` },
                 { label: 'Partners', href: `${baseUrl}/partners` },
-                { label: 'Art Gallery', href: `${baseUrl}/art-gallery` },
+                { label: 'Art Gallery', href: 'https://gallery.bayviewhub.me' },
               ]}
               lastUpdated={LAST_UPDATED}
             />

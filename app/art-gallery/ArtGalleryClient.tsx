@@ -87,6 +87,14 @@ export function ArtGalleryClient() {
             </p>
 
             <div className="flex flex-wrap gap-4">
+              <a
+                href="https://gallery.bayviewhub.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#FDFE9A] text-[#121212] text-sm tracking-wide uppercase hover:bg-[#FDFE9A]/90 transition-all"
+              >
+                Visit Gallery
+              </a>
               <a href="#inquiry" className="px-6 py-3 border border-[#F5F5F0]/40 text-[#F5F5F0] text-sm tracking-wide uppercase hover:bg-[#FDFE9A] hover:text-[#121212] hover:border-[#FDFE9A] transition-all">
                 Inquire Now
               </a>

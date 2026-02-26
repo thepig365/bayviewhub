@@ -84,8 +84,18 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-4 text-white">Experiences</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/art-gallery" className="text-natural-300 hover:text-primary-400 transition-colors">
+                <a
+                  href="https://gallery.bayviewhub.me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-natural-300 hover:text-primary-400 transition-colors"
+                >
                   Arts Gallery
+                </a>
+              </li>
+              <li>
+                <Link href="/art-gallery/founding-partners" className="text-natural-300 hover:text-primary-400 transition-colors">
+                  Gallery Founding Partners
                 </Link>
               </li>
               <li>

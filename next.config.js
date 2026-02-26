@@ -64,8 +64,13 @@ const nextConfig = {
       },
       {
         source: '/experiences/gallery',
-        destination: '/art-gallery',
-        permanent: true,
+        destination: 'https://gallery.bayviewhub.me',
+        permanent: false,
+      },
+      {
+        source: '/art-gallery',
+        destination: 'https://gallery.bayviewhub.me',
+        permanent: false,
       },
     ]
   },

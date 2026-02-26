@@ -140,7 +140,7 @@ export default function FoundingPartnersPage() {
               <Button href="/experiences" variant="primary" size="lg">
                 Explore Experiences
               </Button>
-              <Button href="/art-gallery" variant="outline" size="lg">
+              <Button href="https://gallery.bayviewhub.me" variant="outline" size="lg" external>
                 Visit the Gallery
               </Button>
             </div>
