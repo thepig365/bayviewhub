@@ -52,7 +52,7 @@ export function Card({
             className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
           {isHighlight && (
-            <div className="absolute top-4 right-4 bg-accent-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            <div className="absolute top-4 right-4 bg-accent text-white px-3 py-1 rounded-full text-sm font-medium">
               New
             </div>
           )}

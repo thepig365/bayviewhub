@@ -6,11 +6,11 @@
 
 @layer base {
   :root {
-    /* Contrast-hardened LIGHT */
+    /* Tiffany-style LIGHT (non-trademarked teal) */
     --bg: #FAFAF8;
     --surface: #FFFFFF;
-    --fg: #111827;
-    --muted: #374151;
+    --fg: #1A1A1A;
+    --muted: #6B7280;
     --subtle: #4B5563;
     --border: #E5E7EB;
     --accent: #5EB1BF;
@@ -30,15 +30,15 @@
   }
 
   .dark {
-    /* Contrast-hardened DARK */
-    --bg: #0E1111;
-    --surface: #121616;
-    --fg: #F9FAFB;
-    --muted: #D1D5DB;
-    --subtle: #9CA3AF;
-    --border: #1F2A2A;
-    --accent: #7FBFC8;
-    --accent-hover: #5DA8B3;
+    /* Tiffany-style DARK (dark-teal variant) */
+    --bg: #0F172A;
+    --surface: #1E293B;
+    --fg: #F8FAFC;
+    --muted: #CBD5E1;
+    --subtle: #94A3B8;
+    --border: #334155;
+    --accent: #7DD3C4;
+    --accent-hover: #5EB1BF;
     --accent-soft: #284446;
     /* Legacy */
     --background: 0 0% 7%;
@@ -73,7 +73,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 500;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: capitalize;
   }
 

@@ -35,9 +35,9 @@ export default function ArtGalleryFoundingPartnersPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <div className="min-h-screen bg-[#121212]">
+      <div className="min-h-screen bg-bg dark">
         {/* Top bar: Logo + Back to home */}
-        <section className="sticky top-0 z-40 border-b border-neutral-800 bg-[#121212]/95 backdrop-blur-sm">
+        <section className="sticky top-0 z-40 border-b border-border bg-bg/95 backdrop-blur-sm">
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center gap-3 group">
@@ -48,13 +48,13 @@ export default function ArtGalleryFoundingPartnersPage() {
                   height={36}
                   className="h-10 w-auto md:h-12"
                 />
-                <span className="text-[#F5F5F0] font-serif font-bold text-lg md:text-xl group-hover:text-[#FDFE9A] transition-colors">
+                <span className="text-fg font-serif font-bold text-lg md:text-xl group-hover:text-accent transition-colors">
                   Bayview Hub
                 </span>
               </Link>
               <Link
                 href="/"
-                className="text-sm text-[#F5F5F0]/80 hover:text-[#FDFE9A] transition-colors uppercase tracking-wider"
+                className="text-sm text-muted hover:text-accent transition-colors uppercase tracking-wider"
               >
                 ← Back to home
               </Link>
@@ -63,7 +63,7 @@ export default function ArtGalleryFoundingPartnersPage() {
         </section>
 
         {/* Answer Capsule - above the fold */}
-        <section className="border-b border-neutral-800 bg-neutral-900/50">
+        <section className="border-b border-border bg-surface/50">
           <div className="container mx-auto px-6 py-6">
             <div className="max-w-4xl mx-auto">
               <AnswerCapsule
@@ -79,7 +79,7 @@ export default function ArtGalleryFoundingPartnersPage() {
                   { label: 'Visitor Traffic Evidence', href: `${SITE_CONFIG.url}/evidence/visitor-traffic` },
                 ]}
                 lastUpdated={LAST_UPDATED}
-                className="border-neutral-700 bg-neutral-800/50"
+                className="border-border bg-surface/50"
               />
             </div>
           </div>

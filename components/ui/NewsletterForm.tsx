@@ -116,7 +116,7 @@ export function NewsletterForm() {
       </Button>
 
       {status === 'success' && (
-        <p className="text-sm text-primary-700 text-center dark:text-primary-300">
+        <p className="text-sm text-accent text-center">
           ✓ Successfully subscribed! Check your email.
         </p>
       )}
