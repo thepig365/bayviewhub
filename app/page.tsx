@@ -154,39 +154,25 @@ export default function HomePage() {
                   prelaunch={(exp as any).prelaunch}
                 />
               ))}
-              {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
-              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface dark:border-border">
-                <div className="inline-flex items-center rounded-full bg-natural-200 text-fg px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-fg">
-                  Pre-Launch / Founding Partners
-                </div>
-                <h4 className="mt-4 text-2xl font-serif font-bold text-fg">
-                  Pre-Launch Notice
-                </h4>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development.
-                  Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest.
-                  Dates, inclusions and pricing are indicative and subject to change.
-                </p>
-                <h5 className="mt-6 text-lg font-serif font-bold text-fg">
-                  Program Status &amp; Expressions of Interest (EOI)
-                </h5>
-                <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted">
+              {/* Pre-Launch / Founding Partners — flat below cards */}
+            </div>
+            <div className="mt-6 rounded-xl border border-border bg-white px-6 py-4 dark:bg-surface dark:border-border">
+              <h4 className="text-sm font-bold tracking-wide uppercase text-fg mb-3">
+                Pre-Launch / Founding Partners
+              </h4>
+              <div className="space-y-2 text-sm leading-relaxed text-muted">
                   <p>
-                    The Bayview Arts Gallery, Art Workshops &amp; Art Therapy, Edible Gardens Subscriptions, and Cellar Door wine tastings (“Programs”) may be shown on this website before public launch.
+                    <strong className="text-fg">Pre-Launch Notice</strong> — Some Bayview Hub experiences are still in development and may not be publicly available yet. Any dates, inclusions, and pricing shown are indicative and may change.
                   </p>
                   <p>
-                    <strong>Expressions of interest are not bookings.</strong> Submitting an EOI does not create a binding agreement, does not guarantee availability, and does not confirm dates or inclusions.
+                    <strong className="text-fg">EOI (Expressions of Interest)</strong> — An EOI is not a booking and does not guarantee availability or confirm details.
                   </p>
                   <p>
-                    <strong>Information may change.</strong> Program details (including pricing, inclusions, schedules, capacity, facilitators, and venue access) may be updated, delayed, or withdrawn at any time due to operational requirements, safety, weather, supplier availability, licensing, or other factors.
-                  </p>
-                  <p>
-                    <strong>No reliance for critical decisions.</strong> Please contact us for confirmation before making travel plans or other commitments based on information on this website.
+                    <strong className="text-fg">Please confirm</strong> current status with us before making travel plans or other commitments.
                   </p>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 

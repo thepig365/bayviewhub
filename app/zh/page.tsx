@@ -34,7 +34,7 @@ export default function ChineseHomePage() {
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-fg mb-6 ">
               吃、住、连接、创造、修复
             </h1>
-            <p className="text-xl md:text-2xl text-muted mb-10 leading-relaxed ">
+            <p className="text-xl md:text-2xl text-fg mb-10 leading-relaxed">
               一个目的地Hub：酒庄餐饮、住宿、艺术空间、健康项目和可食花园。
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -64,19 +64,19 @@ export default function ChineseHomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">50k+</div>
-              <div className="text-sm text-muted ">年度访客</div>
+              <div className="text-sm text-fg">年度访客</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🍷</div>
-              <div className="text-sm text-muted ">酒庄餐厅</div>
+              <div className="text-sm text-fg">酒庄餐厅</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🎵</div>
-              <div className="text-sm text-muted ">周末现场音乐</div>
+              <div className="text-sm text-fg">周末现场音乐</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🌏</div>
-              <div className="text-sm text-muted ">国际目的地</div>
+              <div className="text-sm text-fg">国际目的地</div>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function ChineseHomePage() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-4 ">
               Bayview Hub 体验项目
             </h2>
-            <p className="text-lg text-muted max-w-2xl mx-auto ">
+            <p className="text-lg text-fg max-w-2xl mx-auto">
               探索我们的餐饮、艺术、音乐和自然体验
             </p>
           </div>
@@ -183,7 +183,7 @@ export default function ChineseHomePage() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-6 ">
               我们正在建造 Bayview Hub 的下一章
             </h2>
-            <p className="text-lg text-muted max-w-2xl mx-auto ">
+            <p className="text-lg text-fg max-w-2xl mx-auto">
               我们正在寻找创始领导者来建立我们的画廊、艺术项目和可食花园运营。
             </p>
           </div>
@@ -193,7 +193,7 @@ export default function ChineseHomePage() {
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始策展人 / 画廊总监
               </h3>
-              <p className="text-muted mb-6 leading-relaxed  flex-1">
+              <p className="text-fg mb-6 leading-relaxed flex-1">
                 建立展览、艺术家关系和销售运营。
               </p>
               <Button href="/partners/curator" variant="accent" size="sm" className="w-full mt-6">
@@ -205,7 +205,7 @@ export default function ChineseHomePage() {
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始艺术疗愈项目负责人
               </h3>
-              <p className="text-muted mb-6 leading-relaxed  flex-1">
+              <p className="text-fg mb-6 leading-relaxed flex-1">
                 设计安全、符合道德的项目和可扩展的工作坊系统。
               </p>
               <Button href="/partners/art-therapy" variant="accent" size="sm" className="w-full mt-6">
@@ -217,7 +217,7 @@ export default function ChineseHomePage() {
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始可食花园运营负责人
               </h3>
-              <p className="text-muted mb-6 leading-relaxed  flex-1">
+              <p className="text-fg mb-6 leading-relaxed flex-1">
                 将花园转变为具有可靠交付的订阅模式。
               </p>
               <Button href="/partners/garden-ops" variant="accent" size="sm" className="w-full mt-6">

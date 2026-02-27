@@ -28,7 +28,7 @@ export function Header() {
         'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-md dark:bg-surface/90'
-          : 'bg-white/80 backdrop-blur-sm dark:bg-surface/75'
+          : 'bg-white/95 backdrop-blur-sm dark:bg-surface/90'
       )}
     >
       <div className="container mx-auto px-4">
@@ -40,7 +40,7 @@ export function Header() {
           <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 text-fg"
+              className="p-3 text-gray-900 dark:text-fg"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
