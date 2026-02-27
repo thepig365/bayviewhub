@@ -167,6 +167,14 @@ Sizes: `sm` (px-4 py-2 text-sm), `md` (px-6 py-3 text-base), `lg` (px-8 py-4 tex
 - Body text: `text-muted`
 - No opacity-based text colors
 
+### Header / Logo (contrast-critical)
+
+The header logo text ("Bayview Hub", "Est. Victoria") and hamburger menu icon must remain readable on both light and dark backgrounds. Use **`useTheme()` from `next-themes` + inline styles** to bypass CSS cascade overrides (e.g. `.dark span` in globals.css):
+
+- **Logo** (`components/ui/Logo.tsx`): Client component using `useTheme()`. Light mode: `#111827` (title), `#374151` (subtitle). Dark mode: `#F9FAFB`, `#D1D5DB`. Apply via `style={{ color: ... }}`.
+- **Hamburger button** (`components/layout/Header.tsx`): Same pattern. Button uses `style={{ color: iconColor }}`; Lucide icons inherit `currentColor`.
+- **Why inline styles:** Global rules like `.dark span { color: var(--fg) }` can override Tailwind classes. Inline styles have highest specificity and cannot be overridden by external CSS.
+
 ---
 
 ## 5. Pages touched (changelog summary)
@@ -179,8 +187,8 @@ Key files adjusted to reach current style:
 - `components/ui/Card.tsx` — border, hover, ring-accent
 - `components/ui/Button.tsx` — variants (primary/accent/outline)
 - `components/layout/Footer.tsx` — text-fg headings, text-muted links
-- `components/layout/Header.tsx` — sticky header, logo contrast
-- `components/ui/Logo.tsx` — text-black / dark:text-fg for readability
+- `components/layout/Header.tsx` — sticky header, useTheme + inline styles for hamburger
+- `components/ui/Logo.tsx` — useTheme + inline styles for logo text (bypass CSS override)
 - `app/page.tsx` — pre-launch notice, experiences grid
 - `app/zh/page.tsx` — Chinese homepage contrast fixes
 - `components/seo/AnswerCapsule.tsx` — text tokens
@@ -203,7 +211,10 @@ Key files adjusted to reach current style:
 - **Max height in header:** `h-16` (mobile), `md:h-20` (desktop)
 - **Aspect:** `width={200} height={60}`, `w-auto` to preserve ratio
 - **Background:** Header uses `bg-white/95` (light) / `dark:bg-surface/90` (dark)
-- **Text beside logo:** "Bayview Hub" + "Est. Victoria" — use `text-black dark:text-fg` and `text-black/80 dark:text-muted` for light-background readability
+- **Text beside logo:** "Bayview Hub" + "Est. Victoria" — use `useTheme()` from `next-themes` and inline `style={{ color: ... }}`:
+  - Light mode: `#111827` (title), `#374151` (subtitle)
+  - Dark mode: `#F9FAFB` (title), `#D1D5DB` (subtitle)
+- **Hamburger icon:** Same pattern — `style={{ color: iconColor }}` on the button; icons inherit `currentColor`
 
 ---
 
@@ -220,4 +231,5 @@ Key files adjusted to reach current style:
   - No low-contrast `text-muted` on dark backgrounds (use `text-fg` where needed)
 - [ ] Cards: `border-border`, `hover:border-accent`, `dark:bg-surface` (not `dark:bg-surface/60`)
 - [ ] Buttons: primary = accent; outline = border-border, hover:bg-fg hover:text-bg
+- [ ] Header/Logo: Use `useTheme()` + inline styles for logo text and hamburger icon (see §4 Header/Logo)
 - [ ] Run `npm run build` and fix any missing token references
