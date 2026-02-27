@@ -98,7 +98,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <a href="https://gallery.bayviewhub.me/archive" className="text-muted hover:text-fg transition-colors">
+            <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-fg transition-colors">
               Art Gallery
             </a>
           </nav>
@@ -175,16 +175,16 @@ export function Header() {
                     <ChevronDown className="h-4 w-4" />
                   </summary>
                   <div className="px-4 pb-4 space-y-1">
-                    <a href="https://gallery.bayviewhub.me/archive" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                    <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
                       Collection
                     </a>
-                    <a href="https://gallery.bayviewhub.me/submit" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                    <a href="https://gallery.bayviewhub.me/submit" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
                       Submit Artwork for Curation
                     </a>
-                    <a href="https://gallery.bayviewhub.me/protocol" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                    <a href="https://gallery.bayviewhub.me/protocol" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
                       Assessment Protocol
                     </a>
-                    <a href="https://gallery.bayviewhub.me/rights" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                    <a href="https://gallery.bayviewhub.me/rights" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
                       Rights & Licensing
                     </a>
                   </div>
