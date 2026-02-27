@@ -50,20 +50,20 @@ export function Header() {
 
         {/* Hamburger Menu (All Screens) */}
         {isMenuOpen && (
-          <div className="pb-6 space-y-4">
+          <div className="pb-6 space-y-4 -mx-4 px-4 pt-4 bg-white dark:bg-surface border-t border-border">
             <nav className="flex flex-col space-y-3">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-muted hover:text-fg font-medium py-2 dark:text-muted dark:hover:text-fg"
+                  className="text-fg hover:text-accent font-medium py-2 transition-colors"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-col space-y-2 pt-4 border-t border-border dark:border-border">
+            <div className="flex flex-col space-y-2 pt-4 border-t border-border">
               {PRIMARY_CTAS.map((cta) => (
                 (cta as any).prelaunch ? (
                   <PrelaunchButton
@@ -92,10 +92,10 @@ export function Header() {
             </div>
             
             {/* Language Switcher */}
-            <div className="pt-4 border-t border-border dark:border-border">
+            <div className="pt-4 border-t border-border">
               <Link 
                 href="/zh" 
-                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-surface dark:hover:bg-primary-700 dark:text-fg"
+                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 dark:bg-surface rounded-lg hover:bg-natural-200 dark:hover:bg-surface/80 transition-colors text-fg"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Globe size={20} />
@@ -104,7 +104,7 @@ export function Header() {
             </div>
 
             {/* Theme */}
-            <div className="pt-4 border-t border-border dark:border-border">
+            <div className="pt-4 border-t border-border">
               <ThemeMenu />
             </div>
             
