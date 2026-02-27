@@ -67,7 +67,7 @@ export function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
           placeholder="your@email.com"
         />
       </div>
@@ -86,7 +86,7 @@ export function NewsletterForm() {
                 type="checkbox"
                 checked={interests.includes(option.id)}
                 onChange={() => handleInterestToggle(option.id)}
-                className="w-4 h-4 text-primary-600 border-border rounded focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:focus:ring-primary-300"
+                className="w-4 h-4 text-primary-600 border-border rounded focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:focus:ring-primary-300"
               />
               <span className="text-sm text-muted">{option.label}</span>
             </label>

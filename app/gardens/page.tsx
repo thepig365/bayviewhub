@@ -43,7 +43,7 @@ export default function GardensPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
+    <main className="min-h-screen bg-white dark:bg-bg">
       {/* Hero */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
@@ -59,7 +59,7 @@ export default function GardensPage() {
       </section>
 
       {/* Why */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
@@ -81,7 +81,7 @@ export default function GardensPage() {
             </h2>
             <div className="space-y-6">
               {experiences.map((item) => (
-                <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+                <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                   <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                   <div>
                     <h3 className="font-bold text-fg mb-2 ">{item.title}</h3>
@@ -95,7 +95,7 @@ export default function GardensPage() {
       </section>
 
       {/* Who it's for */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
@@ -134,7 +134,7 @@ export default function GardensPage() {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-natural-50 rounded-xl overflow-hidden dark:bg-primary-800/30">
+                <div key={idx} className="bg-natural-50 rounded-xl overflow-hidden dark:bg-surface/50">
                   <button
                     onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                     className="w-full flex items-center justify-between p-6 text-left"
@@ -159,7 +159,7 @@ export default function GardensPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-20 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xl text-muted mb-8">

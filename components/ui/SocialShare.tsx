@@ -45,7 +45,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
               <button
                 key={platform.name}
                 onClick={() => handleShare(platform.name)}
-                className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
+                className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-surface/60 dark:hover:bg-primary-700"
                 aria-label={platform.label}
               >
                 <Icon className="w-4 h-4 text-muted" />
@@ -55,7 +55,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
           {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
             <button
               onClick={() => handleShare('native')}
-              className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-primary-800/60 dark:hover:bg-primary-700"
+              className="p-2 rounded-full bg-natural-100 hover:bg-natural-200 transition-colors dark:bg-surface/60 dark:hover:bg-primary-700"
               aria-label="Share via device"
             >
               <Share2 className="w-4 h-4 text-muted" />

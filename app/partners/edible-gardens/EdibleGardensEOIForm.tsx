@@ -79,8 +79,8 @@ export function EdibleGardensEOIForm() {
 
   if (status === 'submitted') {
     return (
-      <div className="rounded-2xl p-8 bg-white shadow-lg border border-border text-center dark:bg-primary-900/60 dark:border-border">
-        <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">
+      <div className="rounded-2xl p-8 bg-white shadow-lg border border-border text-center dark:bg-surface/60 dark:border-border">
+        <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">
           Expression of Interest received
         </h3>
         <p className="text-muted">
@@ -93,7 +93,7 @@ export function EdibleGardensEOIForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border"
+      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface/60 dark:border-border"
     >
       {error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">
@@ -110,7 +110,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
 
@@ -123,7 +123,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
       </div>
@@ -137,7 +137,7 @@ export function EdibleGardensEOIForm() {
             type="tel"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
 
@@ -149,7 +149,7 @@ export function EdibleGardensEOIForm() {
             type="url"
             value={form.website}
             onChange={(e) => setForm({ ...form, website: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           />
         </div>
       </div>
@@ -163,7 +163,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.applicantType}
             onChange={(e) => setForm({ ...form, applicantType: e.target.value as FormState['applicantType'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select one</option>
             <option value="Individual">Individual</option>
@@ -180,7 +180,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.pilotStart}
             onChange={(e) => setForm({ ...form, pilotStart: e.target.value as FormState['pilotStart'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select a timeframe</option>
             <option value="0–30 days">0–30 days</option>
@@ -200,7 +200,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.hasRunProgramsBefore}
             onChange={(e) => setForm({ ...form, hasRunProgramsBefore: e.target.value as FormState['hasRunProgramsBefore'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
           >
             <option value="">Select one</option>
             <option value="Yes">Yes</option>
@@ -217,7 +217,7 @@ export function EdibleGardensEOIForm() {
             value={form.availability}
             onChange={(e) => setForm({ ...form, availability: e.target.value })}
             placeholder="e.g., weekends only / 3 days per week / full-time"
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
           />
         </div>
       </div>
@@ -233,7 +233,7 @@ export function EdibleGardensEOIForm() {
           value={form.programExperience}
           onChange={(e) => setForm({ ...form, programExperience: e.target.value })}
           placeholder="What did you run? How many subscribers/attendees? What worked?"
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
         />
       </div>
 
@@ -247,7 +247,7 @@ export function EdibleGardensEOIForm() {
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           placeholder="Who you are • what you want to build • how you see an edible garden serving people and community"
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
         />
       </div>
 

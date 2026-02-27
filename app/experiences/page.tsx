@@ -34,7 +34,7 @@ export default function ExperiencesPage() {
       })
 
   return (
-    <div className="min-h-screen py-20 dark:bg-primary-900">
+    <div className="min-h-screen py-20 dark:bg-bg">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -56,7 +56,7 @@ export default function ExperiencesPage() {
                 'px-6 py-3 rounded-full font-medium transition-all',
                 activeCategory === cat.id
                   ? 'bg-primary-700 text-white shadow-md'
-                  : 'bg-white text-muted hover:bg-natural-100 dark:bg-primary-900/60 dark:text-muted dark:border dark:border-border dark:hover:bg-primary-800'
+                  : 'bg-white text-muted hover:bg-natural-100 dark:bg-surface/60 dark:text-muted dark:border dark:border-border dark:hover:bg-surface'
               )}
             >
               {cat.label}

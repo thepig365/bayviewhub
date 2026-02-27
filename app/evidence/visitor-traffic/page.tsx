@@ -15,8 +15,8 @@ export const metadata = genMeta({
 export default function VisitorTrafficEvidencePage() {
   const baseUrl = SITE_CONFIG.url
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
+    <main className="min-h-screen bg-white dark:bg-bg">
+      <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule

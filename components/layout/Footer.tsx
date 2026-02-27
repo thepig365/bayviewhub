@@ -14,7 +14,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="bg-primary-900 dark">
+    <footer className="bg-bg dark">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About */}
@@ -36,7 +36,7 @@ export function Footer() {
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-primary-800 hover:bg-primary-700 rounded-full text-muted hover:text-fg transition-colors"
+                    className="p-2 bg-surface hover:bg-surface/80 rounded-full text-muted hover:text-fg transition-colors"
                     aria-label={platform.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -178,7 +178,7 @@ export function Footer() {
           </div>
         </div>
 
-        <section className="mb-8 rounded-xl border border-primary-800 bg-primary-900/40 p-5">
+        <section className="mb-8 rounded-xl border border-border bg-surface/50 p-5">
           <h4 className="text-base font-semibold text-fg mb-2">About Bayview Hub</h4>
           <p className="text-sm leading-relaxed text-muted">
             Bayview Hub is a destination on the Mornington Peninsula that brings together winery dining, cellar door tastings,
@@ -193,7 +193,7 @@ export function Footer() {
         </section>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-primary-800">
+        <div className="pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-muted text-sm">
               © {currentYear} {SITE_CONFIG.name}. All rights reserved.

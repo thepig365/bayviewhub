@@ -43,7 +43,7 @@ export default function EdibleGardensPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <main className="min-h-screen bg-white dark:bg-primary-900">
+      <main className="min-h-screen bg-white dark:bg-bg">
         {/* Hero */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4">
@@ -63,7 +63,7 @@ export default function EdibleGardensPage() {
                 lastUpdated={LAST_UPDATED}
                 className="mb-12"
               />
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
                 Edible Gardens
               </h1>
               <p className="text-xl text-muted leading-relaxed">

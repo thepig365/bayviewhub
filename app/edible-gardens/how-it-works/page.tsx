@@ -14,9 +14,9 @@ export const metadata = genMeta({
 
 export default function EdibleGardensHowItWorksPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
+    <main className="min-h-screen bg-white dark:bg-bg">
       {/* Answer Capsule */}
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
+      <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-natural-200 dark:border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
@@ -42,7 +42,7 @@ export default function EdibleGardensHowItWorksPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
               How It Works
             </h1>
             <p className="text-xl text-muted leading-relaxed">
@@ -53,27 +53,27 @@ export default function EdibleGardensHowItWorksPage() {
       </section>
 
       {/* Model */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
               The Model
             </h2>
             <div className="space-y-6">
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Seasonal Harvest Boxes</h3>
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+                <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Seasonal Harvest Boxes</h3>
                 <p className="text-muted">
                   Fresh produce from the gardens, delivered to you on a regular cycle. Rain or shine.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Garden Days</h3>
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+                <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Garden Days</h3>
                 <p className="text-muted">
                   Time spent in the gardens — planting, harvesting, or simply being present. Family-friendly.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
-                <h3 className="font-bold text-natural-900 mb-2 dark:text-natural-50">Cooking Workshops</h3>
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+                <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Cooking Workshops</h3>
                 <p className="text-muted">
                   Learn to prepare seasonal produce with guidance from visiting chefs.
                 </p>
@@ -87,7 +87,7 @@ export default function EdibleGardensHowItWorksPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
               Founding Partner
             </h2>
             <p className="text-muted mb-6">

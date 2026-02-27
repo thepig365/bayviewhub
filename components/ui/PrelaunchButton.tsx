@@ -81,8 +81,8 @@ export function PrelaunchButton({
             aria-label="Close"
             onClick={() => setOpen(false)}
           />
-          <div className="relative w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-border dark:bg-primary-900 dark:border-border">
-            <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-primary-800 dark:text-muted">
+          <div className="relative w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-border dark:bg-bg dark:border-border">
+            <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-muted">
               Pre-Launch Notice
             </div>
             <h3

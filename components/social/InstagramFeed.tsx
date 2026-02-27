@@ -17,7 +17,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-serif font-bold text-natural-900 flex items-center dark:text-natural-50">
+        <h3 className="text-2xl font-serif font-bold text-natural-900 flex items-center dark:text-fg">
           <Instagram className="w-6 h-6 mr-2 text-primary-600" />
           @{username}
         </h3>
@@ -36,7 +36,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         {Array.from({ length: limit }).map((_, i) => (
           <div
             key={i}
-            className="aspect-square bg-natural-200 rounded-lg overflow-hidden group cursor-pointer relative dark:bg-primary-800"
+            className="aspect-square bg-natural-200 rounded-lg overflow-hidden group cursor-pointer relative dark:bg-surface"
           >
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Instagram className="w-8 h-8 text-white" />
@@ -47,7 +47,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-muted dark:bg-primary-800/30 dark:border dark:border-border">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-muted dark:bg-surface/50 dark:border dark:border-border">
         <p>
           <strong>Implementation Note:</strong> Replace this component with actual Instagram feed using:
         </p>

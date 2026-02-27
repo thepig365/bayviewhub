@@ -41,7 +41,7 @@ const programs = [
 
 export default function WorkshopsPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
+    <main className="min-h-screen bg-white dark:bg-bg">
       {/* Hero */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
@@ -57,7 +57,7 @@ export default function WorkshopsPage() {
       </section>
 
       {/* Why */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8">
@@ -79,7 +79,7 @@ export default function WorkshopsPage() {
             </h2>
             <div className="space-y-6">
               {workshops.map((workshop) => (
-                <div key={workshop.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+                <div key={workshop.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                   <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                   <div>
                     <h3 className="font-bold text-fg mb-2">{workshop.title}</h3>
@@ -93,7 +93,7 @@ export default function WorkshopsPage() {
       </section>
 
       {/* Programs */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8">
@@ -101,8 +101,8 @@ export default function WorkshopsPage() {
             </h2>
             <div className="space-y-8">
               {programs.map((program) => (
-                <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-primary-900/60 dark:border dark:border-border">
-                  <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-natural-50">{program.title}</h3>
+                <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-surface/60 dark:border dark:border-border">
+                  <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">{program.title}</h3>
                   <p className="text-muted mb-4">{program.description}</p>
                   <ul className="space-y-2">
                     {program.details.map((detail, idx) => (
@@ -151,7 +151,7 @@ export default function WorkshopsPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-8 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <p className="text-sm text-subtle">

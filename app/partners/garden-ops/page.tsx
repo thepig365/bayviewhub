@@ -45,9 +45,9 @@ export default function GardenOpsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <main className="min-h-screen bg-white dark:bg-primary-900">
+      <main className="min-h-screen bg-white dark:bg-bg">
         {/* Answer Capsule */}
-        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
+        <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-natural-200 dark:border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <AnswerCapsule
@@ -76,7 +76,7 @@ export default function GardenOpsPage() {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
                 Founding Edible Garden Ops Lead
               </h1>
               <p className="text-xl text-muted leading-relaxed">
@@ -87,10 +87,10 @@ export default function GardenOpsPage() {
         </section>
 
         {/* Responsibilities */}
-        <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+        <section className="py-16 bg-natural-50 dark:bg-surface/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
                 Responsibilities
               </h2>
               <ul className="space-y-4">
@@ -114,7 +114,7 @@ export default function GardenOpsPage() {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-6 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-6 dark:text-fg">
                 Register Interest
               </h2>
               <p className="text-muted mb-8">
@@ -132,16 +132,16 @@ export default function GardenOpsPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+        <section className="py-16 bg-natural-50 dark:bg-surface/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-natural-50">
+              <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
                 FAQ
               </h2>
               <dl className="space-y-6">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
-                    <dt className="font-bold text-natural-900 mb-2 dark:text-natural-50">{faq.q}</dt>
+                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
+                    <dt className="font-bold text-natural-900 mb-2 dark:text-fg">{faq.q}</dt>
                     <dd className="text-muted">{faq.a}</dd>
                   </div>
                 ))}

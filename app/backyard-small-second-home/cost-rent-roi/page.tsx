@@ -15,8 +15,8 @@ export const metadata = genMeta({
 export default function CostRentRoiPage() {
   const baseUrl = SITE_CONFIG.url
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
-      <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
+    <main className="min-h-screen bg-white dark:bg-bg">
+      <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <AnswerCapsule
@@ -48,22 +48,22 @@ export default function CostRentRoiPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">Cost Tiers (Indicative)</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 1</h3>
                 <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Compliant & Compact</p>
                 <p className="text-muted text-sm">Practical finishes. Minimal complexity. Budget-optimized. $70k–$135k indicative.</p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 2</h3>
                 <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Rental-Ready</p>
                 <p className="text-muted text-sm">Better fit-out, durability, thermal comfort. $90k–$169k indicative.</p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 3</h3>
                 <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Architectural</p>
                 <p className="text-muted text-sm">Higher spec. Complex siteworks. Custom detailing. $122k–$168k indicative.</p>

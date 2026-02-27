@@ -38,13 +38,13 @@ export function Card({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl bg-white border border-border transition-all duration-300 hover:border-accent dark:bg-primary-900/60 dark:border-border dark:hover:border-accent',
+        'group relative overflow-hidden rounded-2xl bg-white border border-border transition-all duration-300 hover:border-accent dark:bg-surface dark:border-border dark:hover:border-accent',
         isHighlight && 'ring-1 ring-accent',
         className
       )}
     >
       {image && (
-        <div className="relative h-64 w-full overflow-hidden bg-natural-200 dark:bg-primary-800">
+        <div className="relative h-64 w-full overflow-hidden bg-natural-200 dark:bg-surface">
           <Image
             src={image}
             alt={title}

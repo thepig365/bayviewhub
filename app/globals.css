@@ -6,11 +6,11 @@
 
 @layer base {
   :root {
-    /* Tiffany-style LIGHT (non-trademarked teal) */
+    /* Light theme - high-contrast readable */
     --bg: #FAFAF8;
     --surface: #FFFFFF;
-    --fg: #1A1A1A;
-    --muted: #6B7280;
+    --fg: #111827;
+    --muted: #374151;
     --subtle: #4B5563;
     --border: #E5E7EB;
     --accent: #5EB1BF;
@@ -30,12 +30,12 @@
   }
 
   .dark {
-    /* Tiffany-style DARK (dark-teal variant) */
+    /* Dark theme - high-contrast readable */
     --bg: #0F172A;
     --surface: #1E293B;
-    --fg: #F8FAFC;
-    --muted: #CBD5E1;
-    --subtle: #94A3B8;
+    --fg: #F9FAFB;
+    --muted: #D1D5DB;
+    --subtle: #9CA3AF;
     --border: #334155;
     --accent: #7DD3C4;
     --accent-hover: #5EB1BF;

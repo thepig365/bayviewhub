@@ -13,7 +13,7 @@ export const metadata: Metadata = genMeta({
 
 export default function InvestPage() {
   return (
-    <div className="min-h-screen dark:bg-primary-900">
+    <div className="min-h-screen dark:bg-bg">
       {/* Hero */}
       <section className="bg-gradient-to-br from-accent-50 via-primary-50 to-natural-50 py-20 dark:from-primary-900 dark:via-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
@@ -32,7 +32,7 @@ export default function InvestPage() {
       </section>
 
       {/* The Opportunity */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-8 text-center ">
@@ -57,28 +57,28 @@ export default function InvestPage() {
       </section>
 
       {/* Key Metrics */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
             By The Numbers
           </h2>
           <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
               <TrendingUp className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">50k+</div>
               <div className="text-muted">Annual visitors (details available on request)</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
               <Users className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">7</div>
               <div className="text-muted">Revenue Streams</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
               <Target className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">45min</div>
               <div className="text-muted">From Sydney CBD</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
               <Award className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">Est.</div>
               <div className="text-muted">Established Brand</div>
@@ -88,14 +88,14 @@ export default function InvestPage() {
       </section>
 
       {/* Use of Funds */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
               Use of Funds
             </h2>
             <div className="space-y-6">
-              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-primary-800/30 dark:border-primary-300">
+              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-surface/50 dark:border-primary-300">
                 <h3 className="text-xl font-bold text-fg mb-2 ">
                   Arts Gallery & Studio
                 </h3>
@@ -103,7 +103,7 @@ export default function InvestPage() {
                   Gallery fit-out, exhibition systems, and founding curator recruitment
                 </p>
               </div>
-              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-primary-800/30 dark:border-primary-300">
+              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-surface/50 dark:border-primary-300">
                 <h3 className="text-xl font-bold text-fg mb-2 ">
                   Wellbeing Programs
                 </h3>
@@ -111,7 +111,7 @@ export default function InvestPage() {
                   Workshop space, materials inventory, and program lead recruitment
                 </p>
               </div>
-              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-primary-800/30 dark:border-primary-300">
+              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-surface/50 dark:border-primary-300">
                 <h3 className="text-xl font-bold text-fg mb-2 ">
                   Edible Gardens Infrastructure
                 </h3>
@@ -119,7 +119,7 @@ export default function InvestPage() {
                   Growing systems, irrigation, packing facility, and operations lead
                 </p>
               </div>
-              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-primary-800/30 dark:border-primary-300">
+              <div className="bg-primary-50 rounded-xl p-6 border-l-4 border-primary-600 dark:bg-surface/50 dark:border-primary-300">
                 <h3 className="text-xl font-bold text-fg mb-2 ">
                   Marketing & Launch
                 </h3>
@@ -133,13 +133,13 @@ export default function InvestPage() {
       </section>
 
       {/* Investment Structure */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-serif font-bold text-fg mb-8 ">
               Investment Structure
             </h2>
-            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8 dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8 dark:bg-surface/60 dark:border dark:border-border">
               <p className="text-lg text-muted leading-relaxed mb-6 ">
                 We're offering equity and revenue-sharing structures for strategic investors who align with our vision of creating sustainable, community-focused destination experiences.
               </p>
@@ -161,27 +161,27 @@ export default function InvestPage() {
             <p className="text-xl text-muted mb-8 ">
               Request our investor deck and schedule a site visit
             </p>
-            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-surface/60 dark:border dark:border-border">
               <form className="space-y-4">
                 <input
                   type="text"
                   placeholder="Name"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
                 />
                 <input
                   type="email"
                   placeholder="Email"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
                 />
                 <input
                   type="text"
                   placeholder="Organization (Optional)"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
                 />
                 <textarea
                   placeholder="Tell us about your investment interests"
                   rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
                 />
                 <Button variant="primary" size="lg" className="w-full">
                   Request Information

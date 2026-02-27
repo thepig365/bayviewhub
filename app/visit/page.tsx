@@ -14,7 +14,7 @@ export const metadata: Metadata = genMeta({
 
 export default function VisitPage() {
   return (
-    <div className="min-h-screen dark:bg-primary-900">
+    <div className="min-h-screen dark:bg-bg">
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-50 to-natural-50 py-20 dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
@@ -30,7 +30,7 @@ export default function VisitPage() {
       </section>
 
       {/* Contact & Hours */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -78,7 +78,7 @@ export default function VisitPage() {
               <h2 className="text-3xl font-serif font-bold text-fg mb-6">
                 Opening Hours
               </h2>
-              <div className="bg-natural-50 rounded-2xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="bg-natural-50 rounded-2xl p-6 dark:bg-surface/50 dark:border dark:border-border">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-border">
                     <span className="font-medium text-fg">Monday - Thursday</span>
@@ -110,16 +110,16 @@ export default function VisitPage() {
       </section>
 
       {/* Getting Here */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
               Getting Here
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="bg-primary-100 rounded-full p-3 dark:bg-primary-800">
+                  <div className="bg-primary-100 rounded-full p-3 dark:bg-surface">
                     <Car className="w-6 h-6 text-primary-700" />
                   </div>
                   <h3 className="text-xl font-bold text-fg">By Car</h3>
@@ -132,9 +132,9 @@ export default function VisitPage() {
                 </ul>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="bg-primary-100 rounded-full p-3 dark:bg-primary-800">
+                  <div className="bg-primary-100 rounded-full p-3 dark:bg-surface">
                     <Train className="w-6 h-6 text-primary-700" />
                   </div>
                   <h3 className="text-xl font-bold text-fg">Public Transport</h3>
@@ -152,13 +152,13 @@ export default function VisitPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-serif font-bold text-fg mb-8 text-center ">
               Location & Nearby Attractions Map
             </h2>
-            <div className="bg-natural-100 rounded-3xl overflow-hidden dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-natural-100 rounded-3xl overflow-hidden dark:bg-surface/60 dark:border dark:border-border">
               {/* Google Maps Embed - Simple and Reliable */}
               <iframe
                 src="https://maps.google.com/maps?q=365+Purves+Road,+Main+Ridge,+Victoria+3928,+Australia&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -172,7 +172,7 @@ export default function VisitPage() {
               ></iframe>
               
               {/* Map Legend */}
-              <div className="p-6 bg-white border-t border-natural-200 dark:bg-primary-900 dark:border-border">
+              <div className="p-6 bg-white border-t border-natural-200 dark:bg-bg dark:border-border">
                 <h3 className="font-bold text-fg mb-4 text-center ">Map Legend</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
                   <div className="flex items-center space-x-2">
@@ -232,7 +232,7 @@ export default function VisitPage() {
               </div>
               
               {/* Directions Button */}
-              <div className="p-6 bg-white border-t border-natural-200 text-center dark:bg-primary-900 dark:border-border">
+              <div className="p-6 bg-white border-t border-natural-200 text-center dark:bg-bg dark:border-border">
                 <Button 
                   href="https://www.google.com/maps/dir/?api=1&destination=365+Purves+Road,+Main+Ridge,+Victoria+3928,+Australia"
                   variant="primary" 
@@ -255,7 +255,7 @@ export default function VisitPage() {
       </section>
 
       {/* Nearby Attractions */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-4 text-center ">
@@ -267,7 +267,7 @@ export default function VisitPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Hot Springs */}
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Peninsula Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
@@ -283,7 +283,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Alba Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
@@ -300,7 +300,7 @@ export default function VisitPage() {
               </div>
 
               {/* Adventure Activities */}
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Eagle Chairlift & Maze</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -316,7 +316,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Enchanted Adventure Garden</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -332,7 +332,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Greens Bush</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -348,7 +348,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Heronswood Gardens</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">10 min</span>
@@ -397,7 +397,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Flinders Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
@@ -413,7 +413,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Sorrento Front Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">20 min</span>
@@ -429,7 +429,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Portsea Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
@@ -445,7 +445,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Wineries & Breweries</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5-30 min</span>
@@ -466,7 +466,7 @@ export default function VisitPage() {
       </section>
 
       {/* Cellar Door Section */}
-      <section id="cellar" className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section id="cellar" className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-serif font-bold text-fg mb-6">
@@ -497,26 +497,26 @@ export default function VisitPage() {
       </section>
 
       {/* FAQ/Visitor Info */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">
               Visitor Information
             </h2>
             <div className="space-y-6">
-              <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="bg-natural-50 rounded-xl p-6 dark:bg-surface/50 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-2 ">Accessibility</h3>
                 <p className="text-muted">
                   Wheelchair accessible facilities, accessible parking, and assistance available. Please contact us in advance for specific needs.
                 </p>
               </div>
-              <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="bg-natural-50 rounded-xl p-6 dark:bg-surface/50 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-2 ">Family Friendly</h3>
                 <p className="text-muted">
                   Children welcome at most venues. High chairs, change facilities, and kids menu available at the restaurant.
                 </p>
               </div>
-              <div className="bg-natural-50 rounded-xl p-6 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="bg-natural-50 rounded-xl p-6 dark:bg-surface/50 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-2 ">Pets</h3>
                 <p className="text-muted">
                   Well-behaved dogs welcome in outdoor areas. Please keep on leash and bring water bowls.

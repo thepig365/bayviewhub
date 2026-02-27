@@ -54,9 +54,9 @@ export default function CuratorPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <main className="min-h-screen bg-white dark:bg-primary-900">
+      <main className="min-h-screen bg-white dark:bg-bg">
         {/* Answer Capsule */}
-        <section className="py-8 bg-natural-50 dark:bg-primary-800/30 border-b border-natural-200 dark:border-border">
+        <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-natural-200 dark:border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <AnswerCapsule
@@ -95,7 +95,7 @@ export default function CuratorPage() {
         </section>
 
         {/* Responsibilities */}
-        <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+        <section className="py-16 bg-natural-50 dark:bg-surface/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
@@ -136,7 +136,7 @@ export default function CuratorPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+        <section className="py-16 bg-natural-50 dark:bg-surface/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
@@ -144,7 +144,7 @@ export default function CuratorPage() {
               </h2>
               <dl className="space-y-6">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
+                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
                     <dt className="font-bold text-fg mb-2 ">{faq.q}</dt>
                     <dd className="text-muted">{(faq as { aNode?: React.ReactNode }).aNode ?? faq.a}</dd>
                   </div>

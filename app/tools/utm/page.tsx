@@ -14,11 +14,11 @@ export const metadata = {
 
 export default function UtmToolsPage() {
   return (
-    <div className="min-h-screen dark:bg-primary-900">
-      <section className="py-16 bg-white dark:bg-primary-900">
+    <div className="min-h-screen dark:bg-bg">
+      <section className="py-16 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 dark:text-natural-50">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 dark:text-fg">
               UTM Link Builder
             </h1>
             <p className="mt-4 text-muted leading-relaxed">

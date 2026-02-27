@@ -12,7 +12,7 @@ export const metadata: Metadata = genMeta({
 
 export default function FoundingPartnersPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
+    <main className="min-h-screen bg-white dark:bg-bg">
       {/* Hero */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
@@ -28,7 +28,7 @@ export default function FoundingPartnersPage() {
       </section>
 
       {/* What this means */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">
@@ -90,7 +90,7 @@ export default function FoundingPartnersPage() {
       </section>
 
       {/* Areas currently forming */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">

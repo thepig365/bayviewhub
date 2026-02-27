@@ -67,13 +67,13 @@ export function UtmBuilder() {
         <Field label="utm_term" value={state.utm_term} onChange={(v) => setState({ ...state, utm_term: v })} />
       </div>
 
-      <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border">
+      <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-surface/60 dark:border-border">
         <p className="text-sm font-medium text-muted">Trackable link</p>
         <div className="mt-2 flex flex-col md:flex-row gap-3 md:items-center">
           <input
             readOnly
             value={url}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg dark:border-border dark:bg-primary-900/40 dark:text-fg"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg dark:border-border dark:bg-surface/40 dark:text-fg"
           />
           <button
             type="button"
@@ -100,7 +100,7 @@ function Field(props: { label: string; value: string; onChange: (v: string) => v
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
-        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-primary-900/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
       />
     </div>
   )

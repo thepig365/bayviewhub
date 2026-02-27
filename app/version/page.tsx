@@ -34,7 +34,7 @@ Request time (UTC): ${requestTime}
 `
 
   return (
-    <pre className="m-8 font-mono text-sm whitespace-pre-wrap break-all bg-natural-50 dark:bg-primary-900 p-6 rounded-lg">
+    <pre className="m-8 font-mono text-sm whitespace-pre-wrap break-all bg-natural-50 dark:bg-bg p-6 rounded-lg">
       {body}
     </pre>
   )

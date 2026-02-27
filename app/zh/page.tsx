@@ -14,9 +14,9 @@ export const metadata = genMeta({
 
 export default function ChineseHomePage() {
   return (
-    <div className="min-h-screen dark:bg-primary-900">
+    <div className="min-h-screen dark:bg-bg">
       {/* Language Switcher */}
-      <div className="bg-natural-100 border-b border-border dark:bg-primary-900 dark:border-border">
+      <div className="bg-natural-100 border-b border-border dark:bg-bg dark:border-border">
         <div className="container mx-auto px-4 py-2">
           <div className="flex justify-end space-x-4 text-sm">
             <Link href="/" className="text-muted hover:text-fg">
@@ -59,7 +59,7 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Proof Bar */}
-      <section className="bg-white py-12 border-y border-border dark:bg-primary-900 dark:border-border">
+      <section className="bg-white py-12 border-y border-border dark:bg-bg dark:border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -83,7 +83,7 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Experiences Grid */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-4 ">
@@ -189,7 +189,7 @@ export default function ChineseHomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始策展人 / 画廊总监
               </h3>
@@ -201,7 +201,7 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始艺术疗愈项目负责人
               </h3>
@@ -213,7 +213,7 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始可食花园运营负责人
               </h3>
@@ -235,7 +235,7 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
@@ -246,7 +246,7 @@ export default function ChineseHomePage() {
                 获取根据您的兴趣定制的更新
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-900/60 dark:border dark:border-border">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface/60 dark:border dark:border-border">
               <NewsletterForm />
             </div>
           </div>
@@ -254,7 +254,7 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Back to English */}
-      <section className="py-8 bg-natural-100 dark:bg-primary-900">
+      <section className="py-8 bg-natural-100 dark:bg-bg">
         <div className="container mx-auto px-4 text-center">
           <Link href="/" className="text-primary-700 hover:text-primary-800 font-medium dark:text-primary-200 dark:hover:text-primary-100">
             ← Switch to English

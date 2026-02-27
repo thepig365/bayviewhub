@@ -42,7 +42,7 @@ export default function EdibleGardensFoundingPartnerPage() {
   }
 
   return (
-    <div className="min-h-screen dark:bg-primary-900">
+    <div className="min-h-screen dark:bg-bg">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }} />
       {/* Hero */}
       <section className="bg-gradient-to-br from-neutral-100 to-neutral-50 py-20 dark:from-neutral-900 dark:to-neutral-800">
@@ -67,7 +67,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </Suspense>
             </div>
 
-            <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-border">
+            <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface/60 dark:border-border">
               <p className="text-muted leading-relaxed ">
                 Bayview Hub is inviting expressions of interest from one founding partner to establish and operate a
                 subscription-based Edible Gardens program within our estate.
@@ -77,7 +77,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 business — supported by land, space, and an existing destination audience.
               </p>
 
-              <div className="mt-6 rounded-xl p-4 bg-natural-50 text-center dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="mt-6 rounded-xl p-4 bg-natural-50 text-center dark:bg-surface/50 dark:border dark:border-border">
                 <p className="font-semibold text-fg ">
                   Not employment. Not a franchise. Not pay-to-rent.
                 </p>
@@ -93,22 +93,22 @@ export default function EdibleGardensFoundingPartnerPage() {
       </section>
 
       {/* Proof / Context */}
-      <section className="bg-white border-y border-natural-200 dark:bg-primary-900 dark:border-border">
+      <section className="bg-white border-y border-natural-200 dark:bg-bg dark:border-border">
         <div className="container mx-auto px-4 py-10">
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="text-3xl font-bold text-primary-700 dark:text-primary-300">50k+</p>
               <p className="mt-1 text-sm text-muted ">
                 <a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">Estimated 50k+ annual visitors</a> (see Evidence) — existing destination
               </p>
             </div>
-            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="font-semibold text-fg ">Established destination context</p>
               <p className="mt-2 text-sm text-muted ">
                 Restaurant, cellar door, and events provide year-round visitor flow.
               </p>
             </div>
-            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+            <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="font-semibold text-fg ">Hospitality ecosystem</p>
               <p className="mt-2 text-sm text-muted ">
                 On-site offerings + cross-promo to support subscription and workshop demand.
@@ -119,7 +119,7 @@ export default function EdibleGardensFoundingPartnerPage() {
       </section>
 
       {/* Content */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto space-y-14">
             <div>
@@ -176,7 +176,7 @@ export default function EdibleGardensFoundingPartnerPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="rounded-2xl p-8 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                 <h3 className="text-2xl font-serif font-bold text-fg ">
                   🏡 Bayview provides
                 </h3>
@@ -189,7 +189,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 </ul>
               </div>
 
-              <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+              <div className="rounded-2xl p-8 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                 <h3 className="text-2xl font-serif font-bold text-fg ">
                   🌾 Partner provides
                 </h3>
@@ -215,19 +215,19 @@ export default function EdibleGardensFoundingPartnerPage() {
                 adapt:
               </p>
               <div className="mt-6 grid md:grid-cols-3 gap-6">
-                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg ">Family Plot Memberships</p>
                   <p className="mt-2 text-sm text-muted ">
                     Weekly access + seasonal planting days + family routines.
                   </p>
                 </div>
-                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg ">Market Garden Subscription</p>
                   <p className="mt-2 text-sm text-muted ">
                     Monthly produce + garden meetups + harvest moments.
                   </p>
                 </div>
-                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+                <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg ">Workshops &amp; Education</p>
                   <p className="mt-2 text-sm text-muted ">
                     Kids programs, permaculture intro, seasonal classes.
@@ -299,7 +299,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl p-8 bg-natural-50 dark:bg-primary-800/30 dark:border dark:border-border">
+            <div className="rounded-2xl p-8 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg ">
                 ✅ 90-Day Pilot Focus
               </h2>
@@ -333,7 +333,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
 
               <div className="mt-8">
-                <Suspense fallback={<div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-primary-900/60 dark:border-border" />}>
+                <Suspense fallback={<div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface/60 dark:border-border" />}>
                   <EdibleGardensEOIForm />
                 </Suspense>
               </div>

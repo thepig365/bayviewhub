@@ -62,23 +62,23 @@ export default function HomePage() {
       </section>
 
       {/* Proof Bar */}
-      <section className="bg-white py-12 border-y border-border dark:bg-primary-900 dark:border-border">
+      <section className="bg-white py-12 border-y border-border dark:bg-bg dark:border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">50k+</div>
+              <div className="text-4xl font-bold text-fg mb-2">50k+</div>
               <div className="text-sm text-muted">Annual visitors</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🍷</div>
+              <div className="text-4xl font-bold text-fg mb-2">🍷</div>
               <div className="text-sm text-muted">Winery Restaurant</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🎵</div>
+              <div className="text-4xl font-bold text-fg mb-2">🎵</div>
               <div className="text-sm text-muted">Live Music Weekends</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary-700 mb-2 dark:text-white">🌏</div>
+              <div className="text-4xl font-bold text-fg mb-2">🌏</div>
               <div className="text-sm text-muted">International Destination</div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function HomePage() {
       </section>
 
       {/* Experiences Grid */}
-      <section className="py-20 bg-natural-50 dark:bg-primary-900">
+      <section className="py-20 bg-natural-50 dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-4">
@@ -155,8 +155,8 @@ export default function HomePage() {
                 />
               ))}
               {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
-              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-primary-900/60 dark:border-border">
-                <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-primary-800 dark:text-muted">
+              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-bg/60 dark:border-border">
+                <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-muted">
                   Pre-Launch / Founding Partners
                 </div>
                 <h4 className="mt-4 text-2xl font-serif font-bold text-fg">
@@ -191,7 +191,7 @@ export default function HomePage() {
       </section>
 
       {/* Now Building - Recruitment */}
-      <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900">
+      <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-bg dark:to-surface">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-6">
@@ -206,7 +206,7 @@ export default function HomePage() {
             {FOUNDING_ROLES.map((role) => (
               <div
                 key={role.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-primary-900/60 dark:border dark:border-border"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-bg/60 dark:border dark:border-border"
               >
                 <h3 className="text-xl font-serif font-bold text-fg mb-4">
                   {role.title}
@@ -240,7 +240,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white dark:bg-primary-900">
+      <section className="py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
@@ -251,7 +251,7 @@ export default function HomePage() {
                 Get updates tailored to your interests
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-primary-800/30 dark:border dark:border-border">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface/50 dark:border dark:border-border">
               <NewsletterForm />
             </div>
           </div>

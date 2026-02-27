@@ -27,8 +27,8 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md dark:bg-primary-900/90'
-          : 'bg-white/80 backdrop-blur-sm dark:bg-primary-900/75'
+          ? 'bg-white/95 backdrop-blur-md shadow-md dark:bg-surface/90'
+          : 'bg-white/80 backdrop-blur-sm dark:bg-surface/75'
       )}
     >
       <div className="container mx-auto px-4">
@@ -95,7 +95,7 @@ export function Header() {
             <div className="pt-4 border-t border-border dark:border-border">
               <Link 
                 href="/zh" 
-                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-primary-800 dark:hover:bg-primary-700 dark:text-fg"
+                className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 rounded-lg hover:bg-natural-200 transition-colors dark:bg-surface dark:hover:bg-primary-700 dark:text-fg"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Globe size={20} />

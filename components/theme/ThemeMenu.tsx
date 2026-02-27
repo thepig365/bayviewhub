@@ -62,10 +62,10 @@ export function ThemeMenu({ className }: { className?: string }) {
   ]
 
   return (
-    <div className={cn('rounded-xl border border-natural-200 bg-white p-3 dark:bg-primary-900 dark:border-primary-700', className)}>
+    <div className={cn('rounded-xl border border-natural-200 bg-white p-3 dark:bg-bg dark:border-border', className)}>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <p className="text-sm font-semibold text-natural-900 dark:text-natural-50">Theme</p>
+          <p className="text-sm font-semibold text-natural-900 dark:text-fg">Theme</p>
           <p className="text-xs text-muted">
             Active: <span className="font-medium">{effective}</span>
           </p>
@@ -83,8 +83,8 @@ export function ThemeMenu({ className }: { className?: string }) {
               className={cn(
                 'flex items-center gap-2 rounded-lg border px-3 py-2 text-left transition-colors',
                 selected
-                  ? 'border-primary-600 bg-primary-50 text-primary-800 dark:bg-primary-800 dark:text-white dark:border-primary-500'
-                  : 'border-natural-200 bg-white text-natural-800 hover:bg-natural-100 dark:bg-primary-900 dark:text-natural-50 dark:border-primary-700 dark:hover:bg-primary-800'
+                  ? 'border-primary-600 bg-primary-50 text-primary-800 dark:bg-surface dark:text-white dark:border-primary-500'
+                  : 'border-natural-200 bg-white text-natural-800 hover:bg-natural-100 dark:bg-bg dark:text-fg dark:border-border dark:hover:bg-surface'
               )}
             >
               <Icon className="h-4 w-4" />

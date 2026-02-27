@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function FoundingGalleryPackPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-primary-900">
+    <main className="min-h-screen bg-white dark:bg-bg">
       {/* Section 1: One-page statement */}
       <section className="py-20 md:py-28 border-b border-border">
         <div className="container mx-auto px-4">
@@ -55,7 +55,7 @@ export default function FoundingGalleryPackPage() {
       </section>
 
       {/* Section 3: The asset base */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-6 ">
@@ -102,17 +102,17 @@ export default function FoundingGalleryPackPage() {
               This is not employment, not franchising, and not tenancy. It's a founding partnership — you build your own program with access to the estate's infrastructure and audience.
             </p>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <p className="text-muted text-sm mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Employment</p>
                 <p className="text-sm text-muted mt-2 ">You're not staff. You lead your own practice.</p>
               </div>
-              <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <p className="text-muted text-sm mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Franchising</p>
                 <p className="text-sm text-muted mt-2 ">No playbook to follow. You shape the program.</p>
               </div>
-              <div className="p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <p className="text-muted text-sm mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Rent / Tenancy</p>
                 <p className="text-sm text-muted mt-2 ">No lease. Partnership structure discussed after alignment.</p>
@@ -123,20 +123,20 @@ export default function FoundingGalleryPackPage() {
       </section>
 
       {/* Section 5: Roles and boundaries */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-6 ">
               Roles and boundaries
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-4 ">Bayview's role</h3>
                 <p className="text-muted">
                   Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, artist development.
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-6 dark:bg-primary-900/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-4 ">Founding Partner role</h3>
                 <p className="text-muted">
                   Leads curation, exhibition programming, collector development, and workshop facilitation day-to-day. Full creative autonomy within the partnership.
@@ -158,7 +158,7 @@ export default function FoundingGalleryPackPage() {
               These are starting points, not prescriptions. The Founding Partner shapes the program.
             </p>
             <div className="space-y-6">
-              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Exhibitions</h3>
@@ -167,7 +167,7 @@ export default function FoundingGalleryPackPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Therapeutic Arts Workshops</h3>
@@ -176,7 +176,7 @@ export default function FoundingGalleryPackPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-primary-800/30">
+              <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                 <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Collector development</h3>
@@ -191,7 +191,7 @@ export default function FoundingGalleryPackPage() {
       </section>
 
       {/* Section 7: Who this is for */}
-      <section className="py-16 bg-natural-50 dark:bg-primary-800/30 border-b border-border">
+      <section className="py-16 bg-natural-50 dark:bg-surface/50 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-6 ">
@@ -239,21 +239,21 @@ export default function FoundingGalleryPackPage() {
             </p>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-primary-800 dark:text-primary-300">1</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">1</span>
                 <div>
                   <h3 className="font-bold text-fg ">Initial call</h3>
                   <p className="text-muted">A short conversation to see if there's mutual interest.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-primary-800 dark:text-primary-300">2</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">2</span>
                 <div>
                   <h3 className="font-bold text-fg ">Site walk</h3>
                   <p className="text-muted">Visit the estate. See the space. Feel the context.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-primary-800 dark:text-primary-300">3</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">3</span>
                 <div>
                   <h3 className="font-bold text-fg ">Deeper session</h3>
                   <p className="text-muted">If alignment exists, a longer conversation about program vision and partnership shape.</p>
