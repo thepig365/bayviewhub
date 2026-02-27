@@ -40,7 +40,8 @@ export function Header() {
           <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 text-[#111827] dark:text-[#F9FAFB]"
+              data-header-text
+              className="p-3 [&>svg]:stroke-[#111827] dark:[&>svg]:stroke-[#F9FAFB]"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

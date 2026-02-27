@@ -103,6 +103,20 @@
   }
 }
 
+/* Header logo/menu: force contrast (override .dark span) */
+header [data-header-text] {
+  color: #111827 !important;
+}
+.dark header [data-header-text] {
+  color: #F9FAFB !important;
+}
+header [data-header-muted] {
+  color: #374151 !important;
+}
+.dark header [data-header-muted] {
+  color: #D1D5DB !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
