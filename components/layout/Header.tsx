@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useTheme } from 'next-themes'
 import { Menu, X, Globe } from 'lucide-react'
 import { NAV_ITEMS, PRIMARY_CTAS } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
@@ -13,6 +14,8 @@ import { ThemeMenu } from '@/components/theme/ThemeMenu'
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const iconColor = resolvedTheme === 'dark' ? '#F9FAFB' : '#111827' // undefined = light
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,8 +43,8 @@ export function Header() {
           <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              data-header-text
-              className="p-3 [&>svg]:stroke-[#111827] dark:[&>svg]:stroke-[#F9FAFB]"
+              className="p-3"
+              style={{ color: iconColor }}
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
