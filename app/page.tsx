@@ -57,6 +57,17 @@ export default function HomePage() {
                 What&apos;s On
               </Button>
             </div>
+            <div className="mt-5 inline-flex flex-col items-center gap-3 rounded-xl border border-border bg-white/80 dark:bg-surface/70 px-4 py-3">
+              <span className="text-xs font-semibold tracking-wide uppercase text-fg">Art Gallery</span>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Button href="https://gallery.bayviewhub.me/archive" external variant="outline" size="sm">
+                  Collection of Arts
+                </Button>
+                <Button href="https://gallery.bayviewhub.me/submit" external variant="accent" size="sm">
+                  Submit Artwork for Curation
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
