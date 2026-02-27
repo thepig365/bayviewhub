@@ -745,18 +745,18 @@ export default function FeasibilityChecklistPage() {
       {/* Hero */}
       <section className="bg-neutral-900 text-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-xs font-mono text-neutral-500 mb-6 uppercase tracking-widest">
+          <div className="text-xs font-mono text-white/90 mb-6 uppercase tracking-widest">
             Victorian SSD Logic Engine · VC253/VC282 · 2026
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
             SSD Feasibility Checklist
-            <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
+            <span className="block text-white/95 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
           </h1>
-          <p className="text-lg text-muted mb-4 leading-relaxed max-w-3xl">
+          <p className="text-lg text-white/90 mb-4 leading-relaxed max-w-3xl">
             This tool determines your approval pathway. Green Lane bypasses planning entirely. 
             VicSmart delivers 10-day council decision. Red Zone means standard permit process.
           </p>
-          <p className="text-neutral-500 mb-8">
+          <p className="text-white/90 mb-8">
             We navigate the constraints. You get certainty.
           </p>
           <div className="flex flex-wrap gap-4">
@@ -1064,11 +1064,11 @@ export default function FeasibilityChecklistPage() {
             <p className="text-sm font-medium text-muted mb-1">
               Victorian SSD Regulatory Compliance Service
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            <p className="text-xs text-muted">
               Registered VicSmart Pathway Provider · Clause 54.03 Specialist
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-4">
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted mb-4">
             <a
               href="https://www.planning.vic.gov.au/"
               target="_blank"
@@ -1083,7 +1083,7 @@ export default function FeasibilityChecklistPage() {
             <span>·</span>
             <span>Victoria Planning Provisions</span>
           </div>
-          <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center">
+          <p className="text-xs text-muted text-center">
             This tool provides regulatory guidance and does not constitute legal or planning advice.
             Engage qualified professionals for site-specific determinations.
           </p>

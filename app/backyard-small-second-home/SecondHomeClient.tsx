@@ -79,17 +79,17 @@ export function SecondHomeClient() {
       <section className="bg-neutral-900 text-white py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-xs font-mono text-neutral-500 mb-6 uppercase tracking-widest">
+            <div className="text-xs font-mono text-white/90 mb-6 uppercase tracking-widest">
               Backyard Small Second Home · Victorian SSD Framework · VC253/VC282 · 2026
             </div>
             <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
               Backyard Small Second Home
-              <span className="block text-neutral-400 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
+              <span className="block text-white/95 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
             </h2>
             <p className="text-xl text-muted mb-6 leading-relaxed max-w-3xl">
               We navigate the Victorian SSD framework. Compliant Small Second Dwellings on existing residential lots. Multi-generational housing or rental yield. Same title. No subdivision. No gas.
             </p>
-            <p className="text-lg text-neutral-500 mb-10">
+            <p className="text-lg text-white/90 mb-10">
               This is not about selling houses. This is about delivering planning certainty within hard constraints.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -109,7 +109,7 @@ export function SecondHomeClient() {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">The Framework: VC253/VC282</h2>
-              <p className="text-lg text-neutral-600 dark:text-muted">These are not guidelines. These are hard constraints. Non-negotiable.</p>
+              <p className="text-lg text-muted">These are not guidelines. These are hard constraints. Non-negotiable.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {ssdFramework.map((item, idx) => {
@@ -121,11 +121,11 @@ export function SecondHomeClient() {
                         <Icon className="w-5 h-5 text-white dark:text-neutral-900" />
                       </div>
                       <div>
-                        <div className="text-sm text-neutral-700 dark:text-neutral-400">{item.constraint}</div>
+                        <div className="text-sm text-muted">{item.constraint}</div>
                         <div className="font-bold text-neutral-900 dark:text-white">{item.value}</div>
                       </div>
                     </div>
-                    <p className="text-sm text-neutral-600 dark:text-muted">{item.note}</p>
+                    <p className="text-sm text-muted">{item.note}</p>
                   </div>
                 )
               })}
@@ -144,16 +144,16 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-4 mb-8">
-              <AlertTriangle className="w-10 h-10 text-neutral-700 dark:text-neutral-400" />
+              <AlertTriangle className="w-10 h-10 text-muted" />
               <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">This Is Not For You If...</h2>
             </div>
             <div className="space-y-4 mb-8">
               {notForYou.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-4 p-5 bg-white dark:bg-neutral-800 rounded-xl border-l-4 border-neutral-900 dark:border-neutral-600">
-                  <XCircle className="w-6 h-6 text-neutral-700 dark:text-neutral-400 flex-shrink-0 mt-0.5" />
+                  <XCircle className="w-6 h-6 text-muted flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-bold text-neutral-900 dark:text-white mb-1">{item.text}</div>
-                    <div className="text-sm text-neutral-600 dark:text-neutral-400">{item.reason}</div>
+                    <div className="text-sm text-muted">{item.reason}</div>
                   </div>
                 </div>
               ))}
@@ -171,7 +171,7 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">Why This Works</h2>
-            <p className="text-lg text-neutral-600 dark:text-muted">Constraints create opportunity. Here is the logic.</p>
+            <p className="text-lg text-muted">Constraints create opportunity. Here is the logic.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
@@ -179,28 +179,28 @@ export function SecondHomeClient() {
                 <DollarSign className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Rental Yield</h3>
-              <p className="text-sm text-neutral-600 dark:text-muted">Victoria vacancy &lt;1%. Compliant SSD = bankable, recurring income.</p>
+              <p className="text-sm text-muted">Victoria vacancy &lt;1%. Compliant SSD = bankable, recurring income.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Asset Growth</h3>
-              <p className="text-sm text-neutral-600 dark:text-muted">Quality SSD increases property value. Documented. Compliant. Attractive to buyers.</p>
+              <p className="text-sm text-muted">Quality SSD increases property value. Documented. Compliant. Attractive to buyers.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">No Planning Permit</h3>
-              <p className="text-sm text-neutral-600 dark:text-muted">Deemed-to-Comply = bypass planning. Straight to building permit. Certainty.</p>
+              <p className="text-sm text-muted">Deemed-to-Comply = bypass planning. Straight to building permit. Certainty.</p>
             </div>
             <div className="text-center">
               <div className="bg-neutral-900 dark:bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-7 h-7 text-white dark:text-neutral-900" />
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2 dark:text-white">Speed</h3>
-              <p className="text-sm text-neutral-600 dark:text-muted">No planning = faster timeline. 6-9 months feasibility to handover. Not 18+.</p>
+              <p className="text-sm text-muted">No planning = faster timeline. 6-9 months feasibility to handover. Not 18+.</p>
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@ export function SecondHomeClient() {
                   </div>
                   <div>
                     <h3 className="font-bold text-neutral-900 mb-1 dark:text-white">{useCase.title}</h3>
-                    <p className="text-sm text-neutral-600 dark:text-muted">{useCase.description}</p>
+                    <p className="text-sm text-muted">{useCase.description}</p>
                   </div>
                 </div>
               )
@@ -234,7 +234,7 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">SSD Configurations</h2>
-            <p className="text-lg text-neutral-600 dark:text-muted">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
+            <p className="text-lg text-muted">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {houseTypes.map((house, idx) => (
@@ -244,8 +244,8 @@ export function SecondHomeClient() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-neutral-900 mb-2 dark:text-white">{house.title}</h3>
-                  <p className="text-sm text-neutral-600 mb-4 dark:text-muted">{house.description}</p>
-                  <div className="flex justify-between text-xs text-neutral-500 dark:text-neutral-400 mb-4">
+                  <p className="text-sm text-muted mb-4">{house.description}</p>
+                  <div className="flex justify-between text-xs text-muted mb-4">
                     <span>{house.priceRange}</span>
                     <span className="font-mono">{house.size}</span>
                   </div>
@@ -263,39 +263,39 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <div className="text-xs font-mono text-neutral-500 mb-4 uppercase tracking-widest">Entry Gate</div>
+              <div className="text-xs font-mono text-white/90 mb-4 uppercase tracking-widest">Entry Gate</div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">SSD Feasibility Submission</h2>
-              <p className="text-neutral-400">Submit site details. We assess against VC253/VC282 criteria. 48-hour response with feasibility determination.</p>
+              <p className="text-white/90">Submit site details. We assess against VC253/VC282 criteria. 48-hour response with feasibility determination.</p>
             </div>
             <div className="bg-white rounded-xl p-8 text-neutral-900">
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Name *</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Name *</label>
                     <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Email *</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Email *</label>
                     <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Phone</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Phone</label>
                     <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Suburb (VIC) *</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Suburb (VIC) *</label>
                     <input type="text" required value={formData.suburb} onChange={(e) => setFormData({ ...formData, suburb: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Lot Size (sqm) *</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Lot Size (sqm) *</label>
                     <input type="text" required placeholder="e.g., 600" value={formData.backyardSize} onChange={(e) => setFormData({ ...formData, backyardSize: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1.5">Primary Use *</label>
+                    <label className="block text-sm font-medium text-fg mb-1.5">Primary Use *</label>
                     <select required value={formData.propertyType} onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
                       <option value="">Select use</option>
                       <option value="family">Multi-generational</option>
@@ -306,7 +306,7 @@ export function SecondHomeClient() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-1.5">Timeline</label>
+                  <label className="block text-sm font-medium text-fg mb-1.5">Timeline</label>
                   <select value={formData.timeframe} onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
                     <option value="">Select timeline</option>
                     <option value="0-6months">Within 6 months</option>
@@ -319,7 +319,7 @@ export function SecondHomeClient() {
                 </Button>
                 {submitStatus === 'success' && (
                   <div className="p-4 bg-neutral-100 border border-neutral-200 rounded-lg text-center">
-                    <p className="text-neutral-800 font-medium">Received. Feasibility assessment delivered within 48 hours.</p>
+                    <p className="text-fg font-medium">Received. Feasibility assessment delivered within 48 hours.</p>
                   </div>
                 )}
                 {submitStatus === 'error' && (
@@ -337,19 +337,19 @@ export function SecondHomeClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6">
-              <p className="text-sm font-medium text-neutral-700 dark:text-muted mb-2">Victorian SSD Regulatory Compliance Service</p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">Registered VicSmart Pathway Provider · Clause 54.03 Deemed-to-Comply Specialist</p>
+              <p className="text-sm font-medium text-muted mb-2">Victorian SSD Regulatory Compliance Service</p>
+              <p className="text-xs text-muted">Registered VicSmart Pathway Provider · Clause 54.03 Deemed-to-Comply Specialist</p>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 mb-6">
-              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-neutral-700 dark:hover:text-muted">DTP Planning Portal</a>
+            <div className="flex flex-wrap justify-center gap-4 text-xs text-muted mb-6">
+              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-fg">DTP Planning Portal</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-neutral-700 dark:hover:text-muted">Victoria Rules</a>
+              <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-fg">Victoria Rules</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/cost-rent-roi" className="underline hover:text-neutral-700 dark:hover:text-muted">Cost & ROI</a>
+              <a href="/backyard-small-second-home/cost-rent-roi" className="underline hover:text-fg">Cost & ROI</a>
               <span>·</span>
-              <a href="/backyard-small-second-home/feasibility-check" className="underline hover:text-neutral-700 dark:hover:text-muted">Feasibility Check</a>
+              <a href="/backyard-small-second-home/feasibility-check" className="underline hover:text-fg">Feasibility Check</a>
             </div>
-            <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center">
+            <p className="text-xs text-muted text-center">
               This page provides regulatory guidance and does not constitute legal or planning advice. Engage qualified professionals for site-specific determinations.
             </p>
           </div>

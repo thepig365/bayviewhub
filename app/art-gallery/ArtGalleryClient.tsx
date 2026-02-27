@@ -247,7 +247,7 @@ export function ArtGalleryClient() {
                 </button>
 
                 {status === 'error' && (
-                  <p className="text-neutral-500 text-center text-sm">
+                  <p className="text-muted text-center text-sm">
                     Error. Email: {SITE_CONFIG.email}
                   </p>
                 )}
@@ -259,7 +259,7 @@ export function ArtGalleryClient() {
 
       {/* Footer Contact */}
       <section className="py-12 border-t border-border text-center">
-        <p className="text-neutral-500 mb-2">Prefer direct conversation?</p>
+        <p className="text-muted mb-2">Prefer direct conversation?</p>
         <p className="text-fg">
           <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-accent transition-colors">{SITE_CONFIG.email}</a>
           {' · '}

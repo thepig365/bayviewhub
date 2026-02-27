@@ -211,7 +211,7 @@ export default function CellarDoorPage() {
       <section className="py-20 bg-primary-400/30 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4 dark:text-fg">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-4 dark:text-fg">
               Tasting Experiences
             </h2>
             <p className="text-lg md:text-xl text-muted">
@@ -234,7 +234,7 @@ export default function CellarDoorPage() {
                   {experience.description}
                 </p>
                 <div className="bg-primary-400/20 rounded-lg p-3 mb-6 dark:bg-surface/50 dark:border dark:border-border">
-                  <p className="text-sm font-semibold text-primary-800 dark:text-primary-200">Includes: {experience.wines}</p>
+                  <p className="text-sm font-semibold text-fg dark:text-accent">Includes: {experience.wines}</p>
                 </div>
                 <Button href="#book" variant="primary" className="w-full">
                   Book This Experience
@@ -250,7 +250,7 @@ export default function CellarDoorPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-4 dark:text-fg">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-4 dark:text-fg">
                 Our Wine Collection
               </h2>
               <p className="text-lg md:text-xl text-muted mb-8">
@@ -264,7 +264,7 @@ export default function CellarDoorPage() {
                   className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     selectedCategory === 'all'
                       ? 'bg-primary text-white'
-                      : 'bg-natural-100 text-natural-700 hover:bg-natural-200'
+                      : 'bg-natural-100 text-fg hover:bg-natural-200'
                   }`}
                 >
                   All Wines
@@ -274,7 +274,7 @@ export default function CellarDoorPage() {
                   className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     selectedCategory === 'sparklingAndRose'
                       ? 'bg-primary text-white'
-                      : 'bg-natural-100 text-natural-700 hover:bg-natural-200'
+                      : 'bg-natural-100 text-fg hover:bg-natural-200'
                   }`}
                 >
                   Sparkling & Rosé
@@ -284,7 +284,7 @@ export default function CellarDoorPage() {
                   className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     selectedCategory === 'whites'
                       ? 'bg-primary text-white'
-                      : 'bg-natural-100 text-natural-700 hover:bg-natural-200'
+                      : 'bg-natural-100 text-fg hover:bg-natural-200'
                   }`}
                 >
                   White Wines
@@ -294,7 +294,7 @@ export default function CellarDoorPage() {
                   className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     selectedCategory === 'reds'
                       ? 'bg-primary text-white'
-                      : 'bg-natural-100 text-natural-700 hover:bg-natural-200'
+                      : 'bg-natural-100 text-fg hover:bg-natural-200'
                   }`}
                 >
                   Red Wines
@@ -304,7 +304,7 @@ export default function CellarDoorPage() {
                   className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     selectedCategory === 'dessert'
                       ? 'bg-primary text-white'
-                      : 'bg-natural-100 text-natural-700 hover:bg-natural-200'
+                      : 'bg-natural-100 text-fg hover:bg-natural-200'
                   }`}
                 >
                   Dessert Wines
@@ -318,10 +318,10 @@ export default function CellarDoorPage() {
                 <div key={index} className="bg-primary-400/10 rounded-xl p-6 border border-primary-400 hover:shadow-lg transition-shadow duration-300">
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <h3 className="text-xl font-serif font-bold text-primary-800 mb-1">
+                      <h3 className="text-xl font-serif font-bold text-fg mb-1">
                         {wine.name}
                       </h3>
-                      <p className="text-sm text-natural-600 mb-2">
+                      <p className="text-sm text-muted mb-2">
                         {wine.variety} • {wine.vintage}
                       </p>
                     </div>
@@ -329,7 +329,7 @@ export default function CellarDoorPage() {
                       <p className="text-2xl font-bold text-accent">{wine.price}</p>
                     </div>
                   </div>
-                  <p className="text-natural-700 italic leading-relaxed">
+                  <p className="text-muted italic leading-relaxed">
                     "{wine.notes}"
                   </p>
                 </div>
@@ -359,7 +359,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Wine className="w-6 h-6 text-primary-800" />
+                    <Wine className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">20% Off All Wines</h3>
                 </div>
@@ -371,7 +371,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Award className="w-6 h-6 text-primary-800" />
+                    <Award className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">Exclusive Releases</h3>
                 </div>
@@ -383,7 +383,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Users className="w-6 h-6 text-primary-800" />
+                    <Users className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">Member Events</h3>
                 </div>
@@ -395,7 +395,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Grape className="w-6 h-6 text-primary-800" />
+                    <Grape className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">Vineyard Tours</h3>
                 </div>
@@ -407,7 +407,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Mail className="w-6 h-6 text-primary-800" />
+                    <Mail className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">Quarterly Shipments</h3>
                 </div>
@@ -419,7 +419,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Calendar className="w-6 h-6 text-primary-800" />
+                    <Calendar className="w-6 h-6 text-fg" />
                   </div>
                   <h3 className="text-xl font-bold">Priority Bookings</h3>
                 </div>
@@ -431,9 +431,9 @@ export default function CellarDoorPage() {
 
             {/* Membership Tiers */}
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white rounded-2xl p-8 text-primary-800 dark:bg-surface/60 dark:text-fg dark:border dark:border-border">
-                <h3 className="text-2xl font-serif font-bold mb-2 text-primary-800 dark:text-fg">Classic Membership</h3>
-                <p className="text-4xl font-bold text-primary-800 mb-4 dark:text-fg">$150 <span className="text-lg font-normal text-muted">/year</span></p>
+              <div className="bg-white rounded-2xl p-8 text-fg dark:bg-surface/60 dark:text-fg dark:border dark:border-border">
+                <h3 className="text-2xl font-serif font-bold mb-2 text-fg dark:text-fg">Classic Membership</h3>
+                <p className="text-4xl font-bold text-fg mb-4 dark:text-fg">$150 <span className="text-lg font-normal text-muted">/year</span></p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <span className="text-accent-600 mr-2 font-bold">✓</span>
@@ -466,35 +466,35 @@ export default function CellarDoorPage() {
                 </Button>
               </div>
 
-              <div className="bg-accent-500 rounded-2xl p-8 text-natural-900 border-4 border-accent-600 shadow-2xl relative">
+              <div className="bg-accent-500 rounded-2xl p-8 text-fg border-4 border-accent-600 shadow-2xl relative">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-800 text-white px-6 py-2 rounded-full text-sm font-bold">
                   MOST POPULAR
                 </div>
-                <h3 className="text-2xl font-serif font-bold mb-2 text-natural-900">Premium Membership</h3>
-                <p className="text-4xl font-bold text-natural-900 mb-4">$350 <span className="text-lg font-normal text-natural-700">/year</span></p>
-                <ul className="space-y-3 mb-6 text-natural-900">
+                <h3 className="text-2xl font-serif font-bold mb-2 text-fg">Premium Membership</h3>
+                <p className="text-4xl font-bold text-fg mb-4">$350 <span className="text-lg font-normal text-muted">/year</span></p>
+                <ul className="space-y-3 mb-6 text-fg">
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span><strong>All Classic benefits</strong></span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span><strong>Exclusive & limited releases</strong></span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span>Private winemaker sessions</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span>Complimentary vineyard experiences</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span>+1 guest privileges for all events</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-800 mr-2 font-bold">✓</span>
+                    <span className="text-accent mr-2 font-bold">✓</span>
                     <span>Free shipping on all orders</span>
                   </li>
                 </ul>
@@ -527,7 +527,7 @@ export default function CellarDoorPage() {
                   href={`tel:${SITE_CONFIG.phone}`}
                   variant="outline"
                   size="lg"
-                  className="text-white border-white hover:bg-white hover:text-primary-800"
+                  className="text-white border-white hover:bg-white hover:text-fg"
                   external
                 >
                   <Phone className="w-5 h-5 mr-2" />
@@ -580,7 +580,7 @@ export default function CellarDoorPage() {
                 href={`tel:${SITE_CONFIG.phone}`}
                 variant="outline"
                 size="lg"
-                className="text-white border-white hover:bg-white hover:text-primary-800"
+                className="text-white border-white hover:bg-white hover:text-fg"
                 external
               >
                 <Phone className="w-5 h-5 mr-2" />
@@ -595,18 +595,18 @@ export default function CellarDoorPage() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-800 mb-6">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-6">
               Getting Here
             </h2>
-            <p className="text-lg md:text-xl text-natural-700 mb-8">
+            <p className="text-lg md:text-xl text-muted mb-8">
               Just 90 minutes from Melbourne CBD, 15 minutes from Peninsula Hot Springs
             </p>
             <div className="bg-primary-400/20 rounded-2xl p-8 mb-8">
               <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-              <p className="text-lg text-primary-800 font-semibold mb-2">
+              <p className="text-lg text-fg font-semibold mb-2">
                 {SITE_CONFIG.address}
               </p>
-              <p className="text-natural-700 mb-6">
+              <p className="text-muted mb-6">
                 Ample free parking on-site, accessible parking available
               </p>
             </div>

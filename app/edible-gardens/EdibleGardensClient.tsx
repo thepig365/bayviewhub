@@ -47,7 +47,7 @@ export function EdibleGardensClient() {
       <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 dark:text-fg">
               Why this exists
             </h2>
             <p className="text-muted leading-relaxed">
@@ -61,7 +61,7 @@ export function EdibleGardensClient() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 dark:text-fg">
               What happens
             </h2>
             <div className="space-y-6">
@@ -69,7 +69,7 @@ export function EdibleGardensClient() {
                 <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                   <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
                   <div>
-                    <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">{item.title}</h3>
+                    <h3 className="font-bold text-fg mb-2 dark:text-fg">{item.title}</h3>
                     <p className="text-muted">{item.description}</p>
                   </div>
                 </div>
@@ -83,7 +83,7 @@ export function EdibleGardensClient() {
       <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 dark:text-fg">
               Who this is for
             </h2>
             <ul className="space-y-4">
@@ -114,7 +114,7 @@ export function EdibleGardensClient() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
+            <h2 className="text-2xl font-serif font-bold text-fg mb-8 dark:text-fg">
               Questions
             </h2>
             <div className="space-y-4">
@@ -124,9 +124,9 @@ export function EdibleGardensClient() {
                     onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                     className="w-full flex items-center justify-between p-6 text-left"
                   >
-                    <span className="font-medium text-natural-900 dark:text-fg">{faq.q}</span>
+                    <span className="font-medium text-fg dark:text-fg">{faq.q}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-natural-500 transition-transform ${
+                      className={`w-5 h-5 text-muted transition-transform ${
                         openFaq === idx ? 'rotate-180' : ''
                       }`}
                     />
