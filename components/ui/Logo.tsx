@@ -18,10 +18,10 @@ export function Logo({ className = '' }: LogoProps) {
         priority
       />
       <div className="flex flex-col">
-        <span className="text-2xl md:text-3xl font-serif font-bold text-black dark:text-fg leading-tight">
+        <span className="text-2xl md:text-3xl font-serif font-bold leading-tight text-[#111827] dark:text-[#F9FAFB]">
           Bayview Hub
         </span>
-        <span className="text-xs text-black/80 dark:text-muted tracking-widest uppercase">
+        <span className="text-xs tracking-widest uppercase text-[#374151] dark:text-[#D1D5DB]">
           Est. Victoria
         </span>
       </div>
