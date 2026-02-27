@@ -1,30 +1,89 @@
 # Bug Sweep Report — 2026-02-27
 
-## PART A — "Pinky" Header Fix
+## PART A — "Pinky" Hero CTA Box Fix
 
-### Source Classification: (A) Bitmap pixels
+### Source Classification: (B) CSS class — `bg-white/80` on CTA container
+
+**Evidence:** The "Art Gallery" CTA box in the homepage hero (line 60 of
+`app/page.tsx`) used `bg-white/80` = `rgba(255,255,255,0.8)`. This semi-transparent
+white sits over the hero section's `bg-bg` (`#FAFAF8` — warm off-white). The 20%
+transparency allows the warm background to bleed through, creating a visible
+"dirty glass" / pinkish tint compared to solid-white surfaces elsewhere on the page.
+
+The left button ("Collection of Arts") used `variant="outline"` which has no explicit
+background (transparent), compounding the warm tint bleed-through inside the button.
+
+### Fix Applied
+
+**CTA container (line 60):**
+```diff
+- bg-white/80 dark:bg-surface/70
++ bg-surface dark:bg-surface
+```
+`bg-surface` = `var(--surface)` = `#FFFFFF` (solid white, no transparency).
+Border already uses `border-border` (`#E5E7EB`) — clean neutral, unchanged.
+
+**Left button "Collection of Arts" (line 63):**
+```diff
+- <Button href="..." external variant="outline" size="sm">
++ <Button href="..." external variant="outline" size="sm" className="bg-surface dark:bg-surface">
+```
+Added explicit solid `bg-surface` background. Combined with existing `text-fg`
+(`#111827`) and `border-border` (`#E5E7EB`), this ensures:
+- WCAG AA contrast: `#111827` on `#FFFFFF` = ~17.5:1 (PASS)
+- No transparency bleed-through
+- Clean neutral border, not tinted
+
+**Right button "Submit Artwork for Curation":** Unchanged (`bg-accent text-white`).
+
+**No logo assets changed. No copy changed. No hrefs changed.**
+
+### Token Match Verification
+
+| Element | Token | Light Value | Result |
+|---------|-------|-------------|--------|
+| CTA box bg | `bg-surface` | `#FFFFFF` | Solid white, clean |
+| Left button bg | `bg-surface` | `#FFFFFF` | Solid white |
+| Left button text | `text-fg` | `#111827` | Dark, readable |
+| Left button border | `border-border` | `#E5E7EB` | Neutral gray |
+| Right button bg | `bg-accent` | `#5EB1BF` | Teal (unchanged) |
+| Right button text | `text-white` | `#FFFFFF` | White (unchanged) |
+
+### Rendered HTML Verification (from dev server)
+
+Container:
+```html
+<div class="mt-5 inline-flex flex-col items-center gap-3 rounded-xl border border-border bg-surface dark:bg-surface px-4 py-3">
+```
+
+Left button:
+```html
+<a ... class="... border border-border text-fg hover:bg-fg hover:text-bg ... bg-surface dark:bg-surface" ...>Collection of Arts</a>
+```
+
+Right button (unchanged):
+```html
+<a ... class="... bg-accent text-white hover:bg-accent-hover ..." ...>Submit Artwork for Curation</a>
+```
+
+---
+
+## PART A (prior) — Logo JPG Fix
+
+### Source Classification: (A) Bitmap pixels in logo JPG
 
 **Evidence:** Visual inspection of `/public/images/bayview-estate-logo.jpg` confirms
 purple/violet grape cluster pixels baked into the JPG bitmap. The teal script text
-and green vine leaves are fine, but the purple grapes produce the "pinky" tone
-when rendered at header scale. Cannot be reliably removed via CSS without degrading
-the image.
+and green vine leaves are fine, but the purple grapes contribute a secondary "pinky"
+tone when rendered at header scale.
 
-### Fix Applied: Option 1 — Text-only header mark
+### Fix Applied: Text-only header mark
 
-Removed the JPG `<Image>` element from the header `Logo` component. The header now
-shows "Bayview Hub" in `text-accent` (the same teal/green used by accent buttons:
-`--accent: #5EB1BF` light / `--accent: #7DD3C4` dark) plus "Est. Victoria" subtitle
-in `text-muted`. Removed unused `Image`, `useTheme` imports and inline style
-objects.
+Removed the JPG `<Image>` element from `components/ui/Logo.tsx`. The header now
+shows "Bayview Hub" in `text-accent` (matching accent buttons: `--accent: #5EB1BF`)
+plus "Est. Victoria" in `text-muted`. Removed unused `Image`, `useTheme` imports.
 
-The JPG logo asset remains in `/public/images/` for use elsewhere (footer, about
-page, print) — no asset was deleted.
-
-**Accent match confirmed:**
-- Logo "Bayview Hub" text → `text-accent` → `var(--accent)` → `#5EB1BF`
-- Button `variant="accent"` → `bg-accent` → `var(--accent)` → `#5EB1BF`
-- Same token, same color.
+The JPG asset remains in `/public/images/` — no asset was deleted.
 
 ---
 
@@ -41,7 +100,7 @@ page, print) — no asset was deleted.
 
 ### B2) Broken Routes
 
-All key routes tested via `curl -I localhost:3099`:
+All key routes tested via `curl -I localhost:3098`:
 
 | Route | Status | Note |
 |-------|--------|------|
@@ -60,37 +119,26 @@ No 404s or 500s found.
 
 ### B3) Contrast / Readability Regressions
 
-No problematic low-contrast text patterns found (`text-natural-100/200/300`,
-`text-white/` opacity, `#81D8D0` on body text). The codebase uses `text-fg`,
+No problematic low-contrast text patterns found. The codebase uses `text-fg`,
 `text-muted`, `text-subtle` consistently.
 
 ### B4) Header / Nav Usability
 
-- Logo text: `text-accent` on `bg-white/95` → readable (WCAG AA passes for large text).
+- Logo text: `text-accent` on `bg-white/95` → WCAG AA passes for large text.
 - Nav links: `text-muted` (`#374151`) on white → contrast ratio ~8.6:1 → PASS.
-- Focus ring: `focus-visible:ring-2 focus-visible:ring-accent` on Logo link → PASS.
-- Button focus: `focus:ring-2 focus:ring-accent` → PASS.
+- Focus rings: `focus-visible:ring-accent` → PASS.
 
 ### B5) Footer Readability
 
-- Footer uses `dark` class wrapper → forces dark theme tokens.
-- Headings: `text-fg` (`#F9FAFB` in dark) on `bg-bg` (`#0F172A`) → high contrast → PASS.
-- Links: `text-muted` (`#D1D5DB` in dark) → good contrast → PASS.
+- Footer uses `dark` class wrapper → forces dark theme tokens → PASS.
 - No washed-out text found.
 
 ### B6) External Links Hygiene — BUGS FOUND & FIXED
 
 **P1 — Fixed:** 5 external `<a>` links in `Header.tsx` to `gallery.bayviewhub.me`
-were missing `target="_blank"` and `rel="noopener noreferrer"`:
-- Line 101: desktop nav "Art Gallery" link
-- Lines 178, 181, 184, 187: mobile menu gallery sub-links
+were missing `target="_blank"` and `rel="noopener noreferrer"`. All 5 now fixed.
 
-All 5 now have `target="_blank" rel="noopener noreferrer"`.
-
-**P2 — Not fixed (email templates):** 2 links in API route email HTML
-(`api/eoi-gallery/route.ts:105`, `api/partners/route.ts:141`) lack `rel`/`target`
-attributes. These render in email clients which handle link security differently;
-fixing is low-risk P2 and cosmetic in email context.
+**P2 — Not fixed:** 2 email template links (cosmetic in email client context).
 
 ---
 
@@ -98,7 +146,8 @@ fixing is low-risk P2 and cosmetic in email context.
 
 | File | Change |
 |------|--------|
-| `components/ui/Logo.tsx` | Removed JPG image, removed `Image`/`useTheme` imports, switched to `text-accent` + `text-muted` classes |
+| `app/page.tsx` | CTA box: `bg-white/80` → `bg-surface`; left button: added `bg-surface` className |
+| `components/ui/Logo.tsx` | Removed JPG image, switched to `text-accent` + `text-muted` classes |
 | `components/layout/Header.tsx` | Added `target="_blank" rel="noopener noreferrer"` to 5 external gallery links |
 
 ## What Was NOT Fixed (P2) and Why
@@ -120,5 +169,5 @@ Linting and checking validity of types → PASS
 
 ## Latest Commit (pre-push)
 
-Changes are staged locally. Latest existing commit: `c36fd79`.
+Changes are local only. Latest existing commit: `c36fd79`.
 **NOT pushed.** No auto-deploy triggered.
