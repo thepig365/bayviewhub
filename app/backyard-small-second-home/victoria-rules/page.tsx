@@ -56,19 +56,19 @@ export default function VictoriaRulesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-8">
             <p className="text-sm text-muted mb-6">Summary (non-authoritative). Verify via official sources in Evidence below.</p>
-            <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+            <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Maximum GFA: 60 sqm</h3>
               <p className="text-muted">Gross Floor Area cannot exceed 60 square meters per DTP guidelines. No exceptions.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+            <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Siting: Behind Front Wall</h3>
               <p className="text-muted">SSD must be located behind the front wall line of the main dwelling. Front-yard siting disqualifies.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+            <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">All-Electric Only</h3>
               <p className="text-muted">No reticulated gas connection. All-electric mandated.</p>
             </div>
-            <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+            <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">No Subdivision</h3>
               <p className="text-muted">SSD must remain on the same title as the main dwelling. Subdivision intent disqualifies from the framework.</p>
             </div>

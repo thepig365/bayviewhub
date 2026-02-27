@@ -63,22 +63,22 @@ export default function InvestPage() {
             By The Numbers
           </h2>
           <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface dark:border dark:border-border">
               <TrendingUp className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">50k+</div>
               <div className="text-muted">Annual visitors (details available on request)</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface dark:border dark:border-border">
               <Users className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">7</div>
               <div className="text-muted">Revenue Streams</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface dark:border dark:border-border">
               <Target className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">45min</div>
               <div className="text-muted">From Sydney CBD</div>
             </div>
-            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 text-center shadow-lg dark:bg-surface dark:border dark:border-border">
               <Award className="w-12 h-12 text-primary-600 mx-auto mb-4" />
               <div className="text-4xl font-bold text-fg mb-2 ">Est.</div>
               <div className="text-muted">Established Brand</div>
@@ -139,7 +139,7 @@ export default function InvestPage() {
             <h2 className="text-4xl font-serif font-bold text-fg mb-8 ">
               Investment Structure
             </h2>
-            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8 dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8 dark:bg-surface dark:border dark:border-border">
               <p className="text-lg text-muted leading-relaxed mb-6 ">
                 We're offering equity and revenue-sharing structures for strategic investors who align with our vision of creating sustainable, community-focused destination experiences.
               </p>
@@ -161,7 +161,7 @@ export default function InvestPage() {
             <p className="text-xl text-muted mb-8 ">
               Request our investor deck and schedule a site visit
             </p>
-            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-xl dark:bg-surface dark:border dark:border-border">
               <form className="space-y-4">
                 <input
                   type="text"

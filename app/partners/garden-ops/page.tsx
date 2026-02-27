@@ -140,7 +140,7 @@ export default function GardenOpsPage() {
               </h2>
               <dl className="space-y-6">
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
+                  <div key={i} className="bg-white rounded-xl p-6 dark:bg-surface dark:border dark:border-border">
                     <dt className="font-bold text-natural-900 mb-2 dark:text-fg">{faq.q}</dt>
                     <dd className="text-muted">{faq.a}</dd>
                   </div>

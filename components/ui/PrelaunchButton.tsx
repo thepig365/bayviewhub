@@ -82,7 +82,7 @@ export function PrelaunchButton({
             onClick={() => setOpen(false)}
           />
           <div className="relative w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-border dark:bg-bg dark:border-border">
-            <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-muted">
+            <div className="inline-flex items-center rounded-full bg-natural-200 text-fg px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-fg">
               Pre-Launch Notice
             </div>
             <h3
@@ -93,7 +93,7 @@ export function PrelaunchButton({
             </h3>
             <p
               id={descId}
-              className="mt-3 text-sm leading-relaxed whitespace-pre-line text-muted"
+              className="mt-3 text-sm leading-relaxed whitespace-pre-line text-fg"
             >
               {message}
             </p>

@@ -67,7 +67,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </Suspense>
             </div>
 
-            <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface/60 dark:border-border">
+            <div className="mt-10 rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface dark:border-border">
               <p className="text-muted leading-relaxed ">
                 Bayview Hub is inviting expressions of interest from one founding partner to establish and operate a
                 subscription-based Edible Gardens program within our estate.
@@ -333,7 +333,7 @@ export default function EdibleGardensFoundingPartnerPage() {
               </p>
 
               <div className="mt-8">
-                <Suspense fallback={<div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface/60 dark:border-border" />}>
+                <Suspense fallback={<div className="rounded-2xl p-8 bg-white shadow-lg border border-natural-200 dark:bg-surface dark:border-border" />}>
                   <EdibleGardensEOIForm />
                 </Suspense>
               </div>

@@ -25,13 +25,13 @@ export function AnswerCapsule({
       className={`rounded-xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface/50 ${className}`}
       aria-label="Answer capsule"
     >
-      <h3 className="text-sm font-bold uppercase tracking-wider text-muted mb-3">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-fg mb-3">
         Quick Answer
       </h3>
       <p className="text-fg font-medium mb-4">{definition}</p>
       <ul className="space-y-2 mb-4">
         {facts.map((fact, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-muted">
+          <li key={i} className="flex items-start gap-2 text-sm text-fg">
             <span className="text-accent mt-0.5">•</span>
             <span>{fact}</span>
           </li>
@@ -39,7 +39,7 @@ export function AnswerCapsule({
       </ul>
       {sources.length > 0 && (
         <div className="pt-3 border-t border-border">
-          <p className="text-xs font-medium text-muted mb-2">Evidence / Sources</p>
+          <p className="text-xs font-medium text-fg mb-2">Evidence / Sources</p>
           <ul className="space-y-1">
             {sources.map((s, i) => (
               <li key={i}>
@@ -56,7 +56,7 @@ export function AnswerCapsule({
           </ul>
         </div>
       )}
-      <p className="text-xs text-subtle mt-4">
+      <p className="text-xs text-muted mt-4">
         Last updated: {lastUpdated}
       </p>
     </aside>

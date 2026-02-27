@@ -58,7 +58,7 @@ export function NewsletterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-muted mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-fg mb-2">
           Email Address
         </label>
         <input
@@ -73,7 +73,7 @@ export function NewsletterForm() {
       </div>
 
       <div>
-        <p className="block text-sm font-medium text-muted mb-3">
+        <p className="block text-sm font-medium text-fg mb-3">
           I'm interested in: (select all that apply)
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -88,7 +88,7 @@ export function NewsletterForm() {
                 onChange={() => handleInterestToggle(option.id)}
                 className="w-4 h-4 text-primary-600 border-border rounded focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:focus:ring-primary-300"
               />
-              <span className="text-sm text-muted">{option.label}</span>
+              <span className="text-sm text-fg">{option.label}</span>
             </label>
           ))}
         </div>

@@ -60,19 +60,19 @@ export default function EdibleGardensHowItWorksPage() {
               The Model
             </h2>
             <div className="space-y-6">
-              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Seasonal Harvest Boxes</h3>
                 <p className="text-muted">
                   Fresh produce from the gardens, delivered to you on a regular cycle. Rain or shine.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Garden Days</h3>
                 <p className="text-muted">
                   Time spent in the gardens — planting, harvesting, or simply being present. Family-friendly.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-xl dark:bg-surface/60 dark:border dark:border-border">
+              <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Cooking Workshops</h3>
                 <p className="text-muted">
                   Learn to prepare seasonal produce with guidance from visiting chefs.

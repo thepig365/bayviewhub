@@ -155,8 +155,8 @@ export default function HomePage() {
                 />
               ))}
               {/* Pre-Launch / Founding Partners Notice (shown beside Stay on md+ breakpoints) */}
-              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-bg/60 dark:border-border">
-                <div className="inline-flex items-center rounded-full bg-natural-200 text-muted px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-muted">
+              <div className="rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface dark:border-border">
+                <div className="inline-flex items-center rounded-full bg-natural-200 text-fg px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-fg">
                   Pre-Launch / Founding Partners
                 </div>
                 <h4 className="mt-4 text-2xl font-serif font-bold text-fg">
@@ -206,7 +206,7 @@ export default function HomePage() {
             {FOUNDING_ROLES.map((role) => (
               <div
                 key={role.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-bg/60 dark:border dark:border-border"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface dark:border dark:border-border"
               >
                 <h3 className="text-xl font-serif font-bold text-fg mb-4">
                   {role.title}

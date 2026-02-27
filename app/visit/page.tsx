@@ -117,7 +117,7 @@ export default function VisitPage() {
               Getting Here
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="bg-primary-100 rounded-full p-3 dark:bg-surface">
                     <Car className="w-6 h-6 text-primary-700" />
@@ -132,7 +132,7 @@ export default function VisitPage() {
                 </ul>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-2xl p-8 shadow-lg dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="bg-primary-100 rounded-full p-3 dark:bg-surface">
                     <Train className="w-6 h-6 text-primary-700" />
@@ -158,7 +158,7 @@ export default function VisitPage() {
             <h2 className="text-3xl font-serif font-bold text-fg mb-8 text-center ">
               Location & Nearby Attractions Map
             </h2>
-            <div className="bg-natural-100 rounded-3xl overflow-hidden dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-natural-100 rounded-3xl overflow-hidden dark:bg-surface dark:border dark:border-border">
               {/* Google Maps Embed - Simple and Reliable */}
               <iframe
                 src="https://maps.google.com/maps?q=365+Purves+Road,+Main+Ridge,+Victoria+3928,+Australia&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -267,7 +267,7 @@ export default function VisitPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Hot Springs */}
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Peninsula Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
@@ -283,7 +283,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Alba Hot Springs</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
@@ -300,7 +300,7 @@ export default function VisitPage() {
               </div>
 
               {/* Adventure Activities */}
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Eagle Chairlift & Maze</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -316,7 +316,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Enchanted Adventure Garden</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -332,7 +332,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Greens Bush</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5 min</span>
@@ -348,7 +348,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Heronswood Gardens</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">10 min</span>
@@ -397,7 +397,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Flinders Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
@@ -413,7 +413,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Sorrento Front Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">20 min</span>
@@ -429,7 +429,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Portsea Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">25 min</span>
@@ -445,7 +445,7 @@ export default function VisitPage() {
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Wineries & Breweries</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">5-30 min</span>

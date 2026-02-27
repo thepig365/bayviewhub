@@ -130,13 +130,13 @@ export default function FoundingGalleryPackPage() {
               Roles and boundaries
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-4 ">Bayview's role</h3>
                 <p className="text-muted">
                   Leon is the owner-operator of Bayview Hub and the gallery's founding dealer ("old bones"). He is responsible for site integration, brand governance, artist development.
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-6 dark:bg-surface/60 dark:border dark:border-border">
+              <div className="bg-white rounded-xl p-6 dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-4 ">Founding Partner role</h3>
                 <p className="text-muted">
                   Leads curation, exhibition programming, collector development, and workshop facilitation day-to-day. Full creative autonomy within the partnership.

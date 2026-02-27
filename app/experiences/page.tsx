@@ -56,7 +56,7 @@ export default function ExperiencesPage() {
                 'px-6 py-3 rounded-full font-medium transition-all',
                 activeCategory === cat.id
                   ? 'bg-primary-700 text-white shadow-md'
-                  : 'bg-white text-muted hover:bg-natural-100 dark:bg-surface/60 dark:text-muted dark:border dark:border-border dark:hover:bg-surface'
+                  : 'bg-white text-fg hover:bg-natural-100 dark:bg-surface dark:text-fg dark:border dark:border-border dark:hover:bg-surface/80'
               )}
             >
               {cat.label}

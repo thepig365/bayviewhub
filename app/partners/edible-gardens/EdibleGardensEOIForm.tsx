@@ -79,7 +79,7 @@ export function EdibleGardensEOIForm() {
 
   if (status === 'submitted') {
     return (
-      <div className="rounded-2xl p-8 bg-white shadow-lg border border-border text-center dark:bg-surface/60 dark:border-border">
+      <div className="rounded-2xl p-8 bg-white shadow-lg border border-border text-center dark:bg-surface dark:border-border">
         <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">
           Expression of Interest received
         </h3>
@@ -93,7 +93,7 @@ export function EdibleGardensEOIForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface/60 dark:border-border"
+      className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface dark:border-border"
     >
       {error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">

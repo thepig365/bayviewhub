@@ -189,7 +189,7 @@ export default function ChineseHomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始策展人 / 画廊总监
               </h3>
@@ -201,7 +201,7 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始艺术疗愈项目负责人
               </h3>
@@ -213,7 +213,7 @@ export default function ChineseHomePage() {
               </Button>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full dark:bg-surface dark:border dark:border-border">
               <h3 className="text-xl font-serif font-bold text-fg mb-4 ">
                 创始可食花园运营负责人
               </h3>
@@ -246,7 +246,7 @@ export default function ChineseHomePage() {
                 获取根据您的兴趣定制的更新
               </p>
             </div>
-            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface/60 dark:border dark:border-border">
+            <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
               <NewsletterForm />
             </div>
           </div>

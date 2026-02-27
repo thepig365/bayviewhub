@@ -101,7 +101,7 @@ export default function WorkshopsPage() {
             </h2>
             <div className="space-y-8">
               {programs.map((program) => (
-                <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-surface/60 dark:border dark:border-border">
+                <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-surface dark:border dark:border-border">
                   <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">{program.title}</h3>
                   <p className="text-muted mb-4">{program.description}</p>
                   <ul className="space-y-2">

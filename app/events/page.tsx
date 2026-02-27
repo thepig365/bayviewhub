@@ -130,7 +130,7 @@ export default function EventsPage() {
                   'flex items-center space-x-2 px-5 py-3 rounded-full font-medium transition-all',
                   activeCategory === cat.id
                     ? 'bg-primary-700 text-white shadow-md'
-                    : 'bg-white text-muted hover:bg-natural-100 dark:bg-surface/60 dark:text-muted dark:border dark:border-border dark:hover:bg-surface'
+                    : 'bg-white text-fg hover:bg-natural-100 dark:bg-surface dark:text-fg dark:border dark:border-border dark:hover:bg-surface/80'
                 )}
               >
                 <Icon className="w-4 h-4" />
@@ -147,7 +147,7 @@ export default function EventsPage() {
             return (
               <div
                 key={event.id}
-                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-6 dark:bg-surface/60 dark:border dark:border-border"
+                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-6 dark:bg-surface dark:border dark:border-border"
               >
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary-100 rounded-xl p-3 flex-shrink-0 dark:bg-surface">

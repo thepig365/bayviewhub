@@ -67,7 +67,7 @@ export function UtmBuilder() {
         <Field label="utm_term" value={state.utm_term} onChange={(v) => setState({ ...state, utm_term: v })} />
       </div>
 
-      <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-surface/60 dark:border-border">
+      <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-surface dark:border-border">
         <p className="text-sm font-medium text-muted">Trackable link</p>
         <div className="mt-2 flex flex-col md:flex-row gap-3 md:items-center">
           <input

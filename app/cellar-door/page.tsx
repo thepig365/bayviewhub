@@ -220,7 +220,7 @@ export default function CellarDoorPage() {
           </div>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             {tastingExperiences.map((experience, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 dark:bg-surface/60 dark:border dark:border-border">
+              <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 dark:bg-surface dark:border dark:border-border">
                 <experience.icon className="w-12 h-12 text-primary mb-4" />
                 <h3 className="text-2xl font-serif font-bold text-fg mb-2">
                   {experience.title}
@@ -431,7 +431,7 @@ export default function CellarDoorPage() {
 
             {/* Membership Tiers */}
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white rounded-2xl p-8 text-fg dark:bg-surface/60 dark:text-fg dark:border dark:border-border">
+              <div className="bg-white rounded-2xl p-8 text-fg dark:bg-surface dark:text-fg dark:border dark:border-border">
                 <h3 className="text-2xl font-serif font-bold mb-2 text-fg dark:text-fg">Classic Membership</h3>
                 <p className="text-4xl font-bold text-fg mb-4 dark:text-fg">$150 <span className="text-lg font-normal text-muted">/year</span></p>
                 <ul className="space-y-3 mb-6">

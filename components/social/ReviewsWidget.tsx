@@ -58,7 +58,7 @@ export function ReviewsWidget() {
 
       <div className="space-y-4">
         {sampleReviews.map((review) => (
-          <div key={review.id} className="bg-white rounded-xl p-6 shadow-md dark:bg-surface/60 dark:border dark:border-border">
+          <div key={review.id} className="bg-white rounded-xl p-6 shadow-md dark:bg-surface dark:border dark:border-border">
             <div className="flex items-start justify-between mb-3">
               <div>
                 <h4 className="font-bold text-fg">{review.author}</h4>
@@ -85,7 +85,7 @@ export function ReviewsWidget() {
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg dark:bg-surface/50 dark:border dark:border-border">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg dark:bg-surface dark:border dark:border-border">
         <h4 className="font-bold text-natural-900 mb-2 flex items-center dark:text-fg">
           <MessageCircle className="w-4 h-4 mr-2" />
           Integration Options
