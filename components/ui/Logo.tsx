@@ -12,11 +12,14 @@ interface LogoProps {
 export function Logo({ className = '' }: LogoProps) {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark' // undefined = not yet hydrated, treat as light
-  const textColor = isDark ? '#F9FAFB' : '#111827'
+  const textColor = isDark ? '#F9FAFB' : '#000000'
   const mutedColor = isDark ? '#D1D5DB' : '#374151'
 
   return (
-    <Link href="/" className={`flex items-center space-x-3 ${className}`}>
+    <Link
+      href="/"
+      className={`flex items-center space-x-3 no-underline text-inherit visited:text-inherit focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded ${className}`}
+    >
       <Image
         src="/images/bayview-estate-logo.jpg"
         alt="Bayview Estate"
