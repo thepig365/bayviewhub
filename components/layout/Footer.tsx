@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 import { SITE_CONFIG, SOCIAL_LINKS, NAV_ITEMS } from '@/lib/constants'
+import { ThemeMenu } from '@/components/theme/ThemeMenu'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -177,6 +178,27 @@ export function Footer() {
             </ul>
           </div>
         </div>
+
+        <section className="mb-8 rounded-xl border border-border bg-surface/50 p-5">
+          <h4 className="text-base font-semibold text-fg mb-3">Preferences</h4>
+          <div className="flex flex-col md:flex-row md:items-start gap-5">
+            <div>
+              <p className="text-sm font-medium text-fg mb-2">Language</p>
+              <div className="flex items-center gap-3 text-sm">
+                <Link href="/" className="text-muted hover:text-fg transition-colors">
+                  EN
+                </Link>
+                <span className="text-subtle">/</span>
+                <Link href="/zh" className="text-muted hover:text-fg transition-colors">
+                  中文
+                </Link>
+              </div>
+            </div>
+            <div className="w-full md:max-w-md">
+              <ThemeMenu />
+            </div>
+          </div>
+        </section>
 
         <section className="mb-8 rounded-xl border border-border bg-surface/50 p-5">
           <h4 className="text-base font-semibold text-fg mb-2">About Bayview Hub</h4>

@@ -3,12 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
-import { ChevronDown, Globe, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { NAV_ITEMS } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
-import { ThemeMenu } from '@/components/theme/ThemeMenu'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -92,8 +91,20 @@ export function Header() {
           {/* Logo */}
           <Logo />
 
-          {/* Menu Toggle */}
-          <div className="flex items-center">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-5 text-sm" aria-label="Primary">
+            {NAV_ITEMS.map((item) => (
+              <Link key={item.href} href={item.href} className="text-muted hover:text-fg transition-colors">
+                {item.label}
+              </Link>
+            ))}
+            <a href="https://gallery.bayviewhub.me/archive" className="text-muted hover:text-fg transition-colors">
+              Art Gallery
+            </a>
+          </nav>
+
+          {/* Mobile Menu Toggle */}
+          <div className="flex items-center md:hidden">
             <button
               ref={triggerBtnRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -112,7 +123,7 @@ export function Header() {
 
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-[80] bg-black/45 backdrop-blur-sm p-4 sm:p-6 flex items-start sm:items-center justify-center"
+          className="fixed inset-0 z-[80] bg-black/45 backdrop-blur-sm md:hidden"
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) closeMenu()
           }}
@@ -123,7 +134,8 @@ export function Header() {
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation menu"
-            className="w-[min(92vw,980px)] max-w-[980px] max-h-[min(88vh,900px)] overflow-y-auto rounded-2xl border border-border bg-white dark:bg-surface shadow-2xl"
+            className="fixed top-0 right-0 h-[100dvh] w-[88vw] max-w-[420px] overflow-y-auto overscroll-contain border-l border-border bg-white dark:bg-surface shadow-2xl"
+            style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
           >
             <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 border-b border-border bg-white/95 dark:bg-surface/95 backdrop-blur">
               <h2 className="text-lg font-semibold text-fg">Navigation</h2>
@@ -195,20 +207,6 @@ export function Header() {
                     Collection of Arts
                   </Button>
                 </div>
-              </section>
-
-              <section className="space-y-3 border-t border-border pt-5">
-                <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Preferences</h3>
-                <Link
-                  href="/zh"
-                  className="flex items-center justify-center space-x-2 py-3 px-4 bg-natural-100 dark:bg-surface rounded-lg hover:bg-natural-200 dark:hover:bg-surface/80 transition-colors text-fg"
-                  onClick={closeMenu}
-                  aria-label="Switch language to Chinese"
-                >
-                  <Globe size={20} />
-                  <span className="font-medium">切换到中文</span>
-                </Link>
-                <ThemeMenu />
               </section>
             </div>
           </div>
