@@ -79,74 +79,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-bg">
-      {/* Hero Section - Split Layout: Text Left, Image Right */}
-      <section className="relative min-h-[70vh] md:min-h-[80vh] flex">
-        {/* Left Side - Colored Background with Text */}
-        <div className="w-full md:w-[40%] bg-accent flex items-center relative z-10">
-          <div className="px-8 md:px-12 lg:px-16 py-16 md:py-0">
-            {/* Category Label */}
-            <p className="text-white/80 text-sm font-semibold tracking-widest uppercase mb-4">
-              {slide.category}
-            </p>
-
-            {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-              {slide.title}
-            </h1>
-
-            {/* Description */}
-            <p className="text-lg text-white/90 mb-8 leading-relaxed max-w-md">
-              {slide.description}
-            </p>
-
-            {/* CTA Button */}
-            {slide.cta.external ? (
-              <a
-                href={slide.cta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-accent font-semibold text-base tracking-wide uppercase rounded hover:bg-gray-100 transition-colors"
-              >
-                {slide.cta.label}
-              </a>
-            ) : (
-              <Link
-                href={slide.cta.href}
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-accent font-semibold text-base tracking-wide uppercase rounded hover:bg-gray-100 transition-colors"
-              >
-                {slide.cta.label}
-              </Link>
-            )}
-
-            {/* Slide Indicators - Mobile */}
-            <div className="flex gap-2 mt-10 md:hidden">
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    index === currentSlide
-                      ? 'bg-white w-6'
-                      : 'bg-white/40 hover:bg-white/60'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation Arrow - Left */}
-          <button
-            onClick={() => { prevSlide(); setIsAutoPlaying(false); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 text-white/70 hover:text-white transition-colors"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-        </div>
-
-        {/* Right Side - Image */}
-        <div className="hidden md:block md:w-[60%] relative">
+      {/* Hero Section - Mobile: Image Top, Text Bottom | Desktop: Text Left, Image Right */}
+      <section className="relative flex flex-col md:flex-row md:min-h-[80vh]">
+        {/* Image - Top on Mobile, Right on Desktop */}
+        <div className="relative h-[45vh] md:h-auto md:absolute md:right-0 md:top-0 md:bottom-0 md:w-[60%] order-1 md:order-2">
           {heroSlides.map((s, index) => (
             <div
               key={s.id}
@@ -164,17 +100,17 @@ export default function HomePage() {
             </div>
           ))}
 
-          {/* Navigation Arrow - Right */}
+          {/* Navigation Arrow - Right (Desktop only) */}
           <button
             onClick={() => { nextSlide(); setIsAutoPlaying(false); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 text-white/70 hover:text-white transition-colors drop-shadow-lg"
+            className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 text-white/70 hover:text-white transition-colors drop-shadow-lg"
             aria-label="Next slide"
           >
             <ChevronRight className="w-8 h-8" />
           </button>
 
           {/* Slide Indicators - Desktop */}
-          <div className="absolute bottom-8 left-8 z-20 flex gap-2">
+          <div className="hidden md:flex absolute bottom-8 left-8 z-20 gap-2">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
@@ -190,15 +126,52 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile: Background Image */}
-        <div className="absolute inset-0 md:hidden -z-10">
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
+        {/* Text Panel - Bottom on Mobile, Left on Desktop */}
+        <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
+          <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
+            {/* Category Label */}
+            <p className="text-white/80 text-xs md:text-sm font-semibold tracking-widest uppercase mb-3 md:mb-4">
+              {slide.category}
+            </p>
+
+            {/* Title */}
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4 md:mb-6 leading-tight">
+              {slide.title}
+            </h1>
+
+            {/* Description */}
+            <p className="text-base md:text-lg text-white/90 mb-6 md:mb-8 leading-relaxed max-w-md">
+              {slide.description}
+            </p>
+
+            {/* CTA Button - Outlined style like The Broad */}
+            {slide.cta.external ? (
+              <a
+                href={slide.cta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-sm md:text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+              >
+                {slide.cta.label}
+              </a>
+            ) : (
+              <Link
+                href={slide.cta.href}
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-sm md:text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+              >
+                {slide.cta.label}
+              </Link>
+            )}
+          </div>
+
+          {/* Navigation Arrow - Left (Desktop only) */}
+          <button
+            onClick={() => { prevSlide(); setIsAutoPlaying(false); }}
+            className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 text-white/70 hover:text-white transition-colors"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
         </div>
       </section>
 
