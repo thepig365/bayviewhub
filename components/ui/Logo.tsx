@@ -12,7 +12,7 @@ export function Logo({ className = '' }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`flex items-center space-x-3 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded ${className}`}
+      className={`flex items-center space-x-3 no-underline outline-none ${className}`}
     >
       <Image
         src="/images/bayview-estate-logo.jpg"
