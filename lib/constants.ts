@@ -38,6 +38,7 @@ export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = 
   { label: 'Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Gardens', href: '/edible-gardens' },
+  { label: 'Tiny House', href: '/backyard-small-second-home' },
 ]
 
 // Primary CTAs
