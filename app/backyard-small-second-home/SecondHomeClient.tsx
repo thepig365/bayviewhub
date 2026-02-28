@@ -104,70 +104,36 @@ export function SecondHomeClient() {
         </div>
       </section>
 
-      <section className="py-20 bg-white dark:bg-neutral-800">
+      <section id="house-types" className="py-20 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">The Framework: VC253/VC282</h2>
-              <p className="text-lg text-muted">These are not guidelines. These are hard constraints. Non-negotiable.</p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ssdFramework.map((item, idx) => {
-                const Icon = item.icon
-                return (
-                  <div key={idx} className="bg-neutral-50 dark:bg-neutral-700 rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-white dark:text-neutral-900" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted">{item.constraint}</div>
-                        <div className="font-bold text-neutral-900 dark:text-white">{item.value}</div>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted">{item.note}</p>
-                  </div>
-                )
-              })}
-            </div>
-            <div className="mt-12 p-8 bg-neutral-900 dark:bg-neutral-900 rounded-2xl text-white">
-              <h3 className="text-xl font-bold mb-4">The Trade-Off</h3>
-              <p className="text-white/70 leading-relaxed">
-                Comply with these constraints → access the <strong className="text-white">Deemed-to-Comply pathway</strong> under Clause 54.03 → <strong className="text-white"> bypass planning permit entirely</strong>. Proceed direct to building permit. Council cannot refuse if you meet the criteria. That is the value proposition: constraints in exchange for certainty.
-              </p>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">SSD Configurations</h2>
+            <p className="text-lg text-muted">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-neutral-100 dark:bg-neutral-900">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <AlertTriangle className="w-10 h-10 text-muted" />
-              <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">This Is Not For You If...</h2>
-            </div>
-            <div className="space-y-4 mb-8">
-              {notForYou.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-5 bg-white dark:bg-neutral-800 rounded-xl border-l-4 border-neutral-900 dark:border-neutral-600">
-                  <XCircle className="w-6 h-6 text-muted flex-shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-bold text-neutral-900 dark:text-white mb-1">{item.text}</div>
-                    <div className="text-sm text-muted">{item.reason}</div>
-                  </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {houseTypes.map((house, idx) => (
+              <div key={idx} className="group bg-neutral-50 dark:bg-neutral-700 rounded-xl overflow-hidden">
+                <div className="h-48 bg-neutral-200 dark:bg-neutral-600 relative overflow-hidden">
+                  <Image src={house.image} alt={house.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
-              ))}
-            </div>
-            <div className="p-6 bg-neutral-900 dark:bg-neutral-700 rounded-xl text-white">
-              <p className="text-white/70">
-                <strong className="text-white">Mansion-seekers and subdividers:</strong> Look elsewhere. This framework delivers 60 sqm compliant assets. If that constraint does not fit your project, engage a traditional developer and expect 12-18 months in Planning.
-              </p>
-            </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-neutral-900 mb-2 dark:text-white">{house.title}</h3>
+                  <p className="text-sm text-muted mb-4">{house.description}</p>
+                  <div className="flex justify-between text-xs text-muted mb-4">
+                    <span>{house.priceRange}</span>
+                    <span className="font-mono">{house.size}</span>
+                  </div>
+                  <Button href="#register" variant="primary" size="sm" className="w-full bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100" onClick={() => track('sh_house_register_click', { ...attribution, house: house.title })}>
+                    Request Feasibility
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-white dark:bg-neutral-800">
+      <section className="py-20 bg-neutral-50 dark:bg-neutral-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">Why This Works</h2>
@@ -206,7 +172,7 @@ export function SecondHomeClient() {
         </div>
       </section>
 
-      <section className="py-20 bg-neutral-50 dark:bg-neutral-900">
+      <section className="py-20 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">Use Cases</h2>
@@ -215,7 +181,7 @@ export function SecondHomeClient() {
             {useCases.map((useCase, idx) => {
               const Icon = useCase.icon
               return (
-                <div key={idx} className="bg-white dark:bg-neutral-800 rounded-xl p-6 flex items-start gap-4">
+                <div key={idx} className="bg-neutral-50 dark:bg-neutral-700 rounded-xl p-6 flex items-start gap-4">
                   <div className="bg-neutral-900 dark:bg-white rounded-lg p-2 flex-shrink-0">
                     <Icon className="w-5 h-5 text-white dark:text-neutral-900" />
                   </div>
@@ -230,31 +196,65 @@ export function SecondHomeClient() {
         </div>
       </section>
 
-      <section id="house-types" className="py-20 bg-white dark:bg-neutral-800">
+      <section className="py-20 bg-neutral-100 dark:bg-neutral-900">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">SSD Configurations</h2>
-            <p className="text-lg text-muted">All designs comply with VC253/VC282. 60 sqm max. All-electric. Behind front wall.</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {houseTypes.map((house, idx) => (
-              <div key={idx} className="group bg-neutral-50 dark:bg-neutral-700 rounded-xl overflow-hidden">
-                <div className="h-48 bg-neutral-200 dark:bg-neutral-600 relative overflow-hidden">
-                  <Image src={house.image} alt={house.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-neutral-900 mb-2 dark:text-white">{house.title}</h3>
-                  <p className="text-sm text-muted mb-4">{house.description}</p>
-                  <div className="flex justify-between text-xs text-muted mb-4">
-                    <span>{house.priceRange}</span>
-                    <span className="font-mono">{house.size}</span>
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4 dark:text-white">The Framework: VC253/VC282</h2>
+              <p className="text-lg text-muted">These are not guidelines. These are hard constraints. Non-negotiable.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {ssdFramework.map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div key={idx} className="bg-white dark:bg-neutral-800 rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-white dark:text-neutral-900" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted">{item.constraint}</div>
+                        <div className="font-bold text-neutral-900 dark:text-white">{item.value}</div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted">{item.note}</p>
                   </div>
-                  <Button href="#register" variant="primary" size="sm" className="w-full bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100" onClick={() => track('sh_house_register_click', { ...attribution, house: house.title })}>
-                    Request Feasibility
-                  </Button>
+                )
+              })}
+            </div>
+            <div className="mt-12 p-8 bg-neutral-900 dark:bg-neutral-900 rounded-2xl text-white">
+              <h3 className="text-xl font-bold mb-4">The Trade-Off</h3>
+              <p className="text-white/70 leading-relaxed">
+                Comply with these constraints → access the <strong className="text-white">Deemed-to-Comply pathway</strong> under Clause 54.03 → <strong className="text-white"> bypass planning permit entirely</strong>. Proceed direct to building permit. Council cannot refuse if you meet the criteria. That is the value proposition: constraints in exchange for certainty.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-4 mb-8">
+              <AlertTriangle className="w-10 h-10 text-muted" />
+              <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">This Is Not For You If...</h2>
+            </div>
+            <div className="space-y-4 mb-8">
+              {notForYou.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-4 p-5 bg-neutral-50 dark:bg-neutral-700 rounded-xl border-l-4 border-neutral-900 dark:border-neutral-500">
+                  <XCircle className="w-6 h-6 text-muted flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-bold text-neutral-900 dark:text-white mb-1">{item.text}</div>
+                    <div className="text-sm text-muted">{item.reason}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="p-6 bg-neutral-900 dark:bg-neutral-700 rounded-xl text-white">
+              <p className="text-white/70">
+                <strong className="text-white">Mansion-seekers and subdividers:</strong> Look elsewhere. This framework delivers 60 sqm compliant assets. If that constraint does not fit your project, engage a traditional developer and expect 12-18 months in Planning.
+              </p>
+            </div>
           </div>
         </div>
       </section>
