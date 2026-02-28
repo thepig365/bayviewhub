@@ -358,7 +358,7 @@ export default function VisitPage() {
               </div>
 
               {/* Beaches */}
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Cape Schanck</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">20 min</span>
@@ -368,13 +368,13 @@ export default function VisitPage() {
                   href="https://www.parks.vic.gov.au/places-to-see/sites/cape-schanck-lighthouse" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Gunnamatta Beach</h3>
                   <span className="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">15 min</span>
@@ -384,7 +384,7 @@ export default function VisitPage() {
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Gunnamatta Beach Visitor Guide →
                 </a>
