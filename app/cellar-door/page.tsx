@@ -152,8 +152,8 @@ export default function CellarDoorPage() {
             <div className="flex items-center space-x-2 md:space-x-3">
               <Clock className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm md:text-base">Open Daily</p>
-                <p className="text-xs md:text-sm text-white">11:00 AM - 5:00 PM</p>
+                <p className="font-semibold text-sm md:text-base">Wed–Sun</p>
+                <p className="text-xs md:text-sm text-white">11:00 AM - Late</p>
               </div>
             </div>
             <div className="flex items-center space-x-2 md:space-x-3">

@@ -13,12 +13,11 @@ export const SITE_CONFIG = {
 // Canonical opening hours (source of truth for entire site)
 export const SITE_HOURS = {
   schedule: [
-    { days: 'Monday – Thursday', hours: '11:00 AM – 9:00 PM' },
-    { days: 'Friday', hours: '11:00 AM – 11:00 PM' },
-    { days: 'Saturday', hours: '9:00 AM – 11:00 PM' },
-    { days: 'Sunday', hours: '9:00 AM – 8:00 PM' },
+    { days: 'Monday & Tuesday', hours: 'Closed' },
+    { days: 'Wednesday', hours: '11:00 AM – 4:00 PM' },
+    { days: 'Thursday – Sunday', hours: '11:00 AM – Late' },
   ],
-  summary: 'Daily | 9 AM – 11 PM',
+  summary: 'Wed–Sun | 11 AM – Late',
   note: 'Individual venue hours may vary. Check specific experiences for details.',
 }
 
