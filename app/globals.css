@@ -65,8 +65,7 @@
   .dark body,
   .dark p,
   .dark span,
-  .dark li,
-  .dark a {
+  .dark li {
     color: var(--fg);
   }
 

@@ -94,11 +94,11 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-5 text-sm" aria-label="Primary">
             {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} className="text-black hover:text-accent dark:text-fg dark:hover:text-accent transition-colors">
+              <Link key={item.href} href={item.href} className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors">
                 {item.label}
               </Link>
             ))}
-            <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" className="text-black hover:text-accent dark:text-fg dark:hover:text-accent transition-colors">
+            <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors">
               Art Gallery
             </a>
           </nav>
