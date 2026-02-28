@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
+import { HomeModule } from '@/components/ui/HomeModule'
 import { SITE_CONFIG, EXPERIENCES } from '@/lib/constants'
 import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 
@@ -184,34 +185,22 @@ export default function HomePage() {
       {/* Plan Your Visit Section */}
       <section className="py-16 md:py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
-          {/* Section Header */}
-          <div className="mb-10">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg leading-tight">
-              Plan<br />
-              Your Visit
-            </h2>
-            <Link 
-              href="/visit" 
-              className="inline-block mt-3 text-accent font-semibold text-sm tracking-widest uppercase hover:underline"
-            >
-              More Info
-            </Link>
-          </div>
+          <HomeModule
+            eyebrow="Visitor Information"
+            title="Plan Your Visit"
+            description="Everything you need for your day at the estate—directions, hours, tastings, and experiences."
+            primaryCta={{ label: 'Get Directions', href: '/visit' }}
+            secondaryCta={{ label: 'View FAQ', href: '/visit' }}
+          />
 
-          {/* Info Box */}
-          <div className="border border-border rounded-lg p-8 md:p-10">
+          {/* Info Grid */}
+          <div className="mt-12 border border-border rounded-lg p-8 md:p-10">
             <div className="grid md:grid-cols-3 gap-8 md:gap-12">
               {/* Column 1: Location & Contact */}
               <div>
-                <h3 className="text-sm font-bold tracking-widest uppercase text-fg mb-4">
-                  Bayview Hub
-                </h3>
-                <p className="text-muted leading-relaxed mb-1">
-                  365 Purves Road,
-                </p>
-                <p className="text-muted leading-relaxed mb-6">
-                  Main Ridge, Victoria 3928
-                </p>
+                <h3 className="eyebrow text-fg mb-4">Bayview Hub</h3>
+                <p className="text-muted leading-relaxed mb-1">365 Purves Road,</p>
+                <p className="text-muted leading-relaxed mb-6">Main Ridge, Victoria 3928</p>
                 
                 {/* Contact Icons */}
                 <div className="flex gap-4">
@@ -243,32 +232,22 @@ export default function HomePage() {
 
               {/* Column 2: Know Before You Go */}
               <div>
-                <h3 className="text-sm font-bold tracking-widest uppercase text-fg mb-4">
-                  Know Before You Go & FAQ
-                </h3>
-                <p className="text-muted leading-relaxed mb-4">
-                  Everything you need to know for your visit, including opening hours, booking wine tastings, and planning your day at the estate.
+                <h3 className="eyebrow text-fg mb-4">Know Before You Go</h3>
+                <p className="text-muted leading-relaxed reading mb-4">
+                  Opening hours, wine tasting bookings, and tips for planning your day.
                 </p>
-                <Link 
-                  href="/visit" 
-                  className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline"
-                >
+                <Link href="/visit" className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline">
                   Learn More
                 </Link>
               </div>
 
               {/* Column 3: Experiences */}
               <div>
-                <h3 className="text-sm font-bold tracking-widest uppercase text-fg mb-4">
-                  Experiences
-                </h3>
-                <p className="text-muted leading-relaxed mb-4">
-                  Bayview Hub offers wine tastings, dining at Pig & Whistle, art exhibitions, workshops, live music, and edible garden experiences all on one beautiful 30-acre estate.
+                <h3 className="eyebrow text-fg mb-4">Experiences</h3>
+                <p className="text-muted leading-relaxed reading mb-4">
+                  Wine, dining, art, workshops, live music, and gardens—all on 30 stunning acres.
                 </p>
-                <Link 
-                  href="/experiences" 
-                  className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline"
-                >
+                <Link href="/experiences" className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline">
                   Learn More
                 </Link>
               </div>
@@ -292,18 +271,13 @@ export default function HomePage() {
             </div>
             {/* Content */}
             <div className="md:pl-4">
-              <p className="text-accent text-sm font-semibold tracking-widest uppercase mb-4">
-                Founding Partners Wanted
-              </p>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-6 leading-tight">
-                Build the Next Chapter with Us
-              </h2>
-              <p className="text-lg text-muted mb-8 leading-relaxed">
-                We're seeking founding leaders to establish our Gallery, Art Programs, and Edible Gardens operations. Join a destination with 50k+ annual visitors and built-in hospitality infrastructure.
-              </p>
-              <Button href="/partners" variant="primary" size="lg">
-                Apply Now
-              </Button>
+              <HomeModule
+                eyebrow="Founding Partners Wanted"
+                title="Build the Next Chapter with Us"
+                description="Join a destination with 50k+ annual visitors. Lead our Gallery, Art Programs, or Edible Gardens."
+                primaryCta={{ label: 'Apply Now', href: '/partners' }}
+                secondaryCta={{ label: 'Learn More', href: '/partners/founding' }}
+              />
             </div>
           </div>
         </div>
@@ -312,22 +286,14 @@ export default function HomePage() {
       {/* Experiences Grid */}
       <section className="py-16 md:py-20 bg-white dark:bg-bg">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-end mb-10">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg leading-tight">
-                Now<br />
-                On View
-              </h2>
-              <Link 
-                href="/experiences" 
-                className="inline-block mt-3 text-accent font-semibold text-sm tracking-widest uppercase hover:underline"
-              >
-                View All
-              </Link>
-            </div>
-          </div>
+          <HomeModule
+            eyebrow="Current Experiences"
+            title="Now On View"
+            description="Explore what's happening at Bayview Hub—exhibitions, tastings, and events."
+            primaryCta={{ label: 'View All', href: '/experiences' }}
+          />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...EXPERIENCES.new].slice(0, 4).map((exp) => (
               <Link
                 key={exp.id}
@@ -342,9 +308,7 @@ export default function HomePage() {
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <p className="text-xs font-semibold text-accent uppercase tracking-wide mb-1">
-                  {exp.category}
-                </p>
+                <p className="eyebrow text-accent mb-1">{exp.category}</p>
                 <h3 className="text-lg font-serif font-bold text-fg group-hover:text-accent transition-colors">
                   {exp.title}
                 </h3>
@@ -354,7 +318,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stay In Touch Section - The Broad Style */}
+      {/* Stay In Touch Section */}
       <section className="py-16 md:py-20 bg-gray-100 dark:bg-surface">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -362,11 +326,12 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {/* Left - Text */}
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg leading-tight mb-4">
-                    Stay<br />In Touch
+                  <p className="eyebrow text-accent mb-3">Newsletter</p>
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg leading-tight mb-4">
+                    Stay In Touch
                   </h2>
-                  <p className="text-muted leading-relaxed">
-                    Sign up to get the latest news about Bayview Hub, upcoming exhibitions and events, wine releases, and special offers.
+                  <p className="text-muted leading-relaxed reading">
+                    Get the latest on exhibitions, events, wine releases, and special offers.
                   </p>
                 </div>
                 {/* Right - Form */}
