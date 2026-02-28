@@ -215,6 +215,26 @@ export function Header() {
                     </a>
                   </div>
                 </details>
+                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40">
+                  <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
+                    <span>Backyard Small Second Home</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </summary>
+                  <div className="px-4 pb-4 space-y-1">
+                    <Link href="/backyard-small-second-home" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Overview
+                    </Link>
+                    <Link href="/backyard-small-second-home/victoria-rules" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Victoria Rules
+                    </Link>
+                    <Link href="/backyard-small-second-home/cost-rent-roi" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Cost & ROI Calculator
+                    </Link>
+                    <Link href="/backyard-small-second-home/feasibility-check" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Feasibility Check
+                    </Link>
+                  </div>
+                </details>
               </section>
 
               <section className="space-y-3 border-t border-border pt-5">
