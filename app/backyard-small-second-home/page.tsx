@@ -128,6 +128,7 @@ export default function BackyardSmallSecondHomePage() {
                 { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
               ]}
               lastUpdated={LAST_UPDATED}
+              darkBg={true}
               className="border-neutral-700 bg-neutral-800/50"
             />
           </div>
