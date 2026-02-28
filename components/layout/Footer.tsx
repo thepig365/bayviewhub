@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react'
-import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
+import { SITE_CONFIG, SOCIAL_LINKS, SITE_HOURS } from '@/lib/constants'
 import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
 
 export function Footer() {
@@ -59,7 +59,7 @@ export function Footer() {
               Hours
             </h4>
             <div className="text-gray-400 text-sm space-y-1">
-              <p>Daily | 11 am – 5 pm</p>
+              <p>{SITE_HOURS.summary}</p>
               <p className="italic text-gray-500 mt-2">
                 Closed Christmas Day
               </p>

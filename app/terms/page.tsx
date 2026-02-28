@@ -2,6 +2,7 @@ import React from 'react'
 import { LAST_UPDATED } from '@/lib/seo'
 import type { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/utils'
+import { SITE_CONFIG } from '@/lib/constants'
 
 export const metadata: Metadata = genMeta({
   title: 'Terms of Service',
@@ -149,8 +150,8 @@ export default function TermsPage() {
             </p>
             <p className="text-muted mt-4">
               Bayview Hub<br />
-              Email: hello@bayviewhub.com.au<br />
-              Phone: +61 (0)X XXXX XXXX
+              Email: {SITE_CONFIG.email}<br />
+              Phone: {SITE_CONFIG.phone}
             </p>
           </section>
         </div>

@@ -10,6 +10,18 @@ export const SITE_CONFIG = {
   address: '365 Purves Road, Main Ridge, Victoria 3928, Australia',
 }
 
+// Canonical opening hours (source of truth for entire site)
+export const SITE_HOURS = {
+  schedule: [
+    { days: 'Monday – Thursday', hours: '11:00 AM – 9:00 PM' },
+    { days: 'Friday', hours: '11:00 AM – 11:00 PM' },
+    { days: 'Saturday', hours: '9:00 AM – 11:00 PM' },
+    { days: 'Sunday', hours: '9:00 AM – 8:00 PM' },
+  ],
+  summary: 'Daily | 9 AM – 11 PM',
+  note: 'Individual venue hours may vary. Check specific experiences for details.',
+}
+
 // Social media links
 export const SOCIAL_LINKS = {
   facebook: 'https://facebook.com/bayviewhub',

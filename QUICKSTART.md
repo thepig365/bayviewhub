@@ -75,9 +75,9 @@ export const SITE_CONFIG = {
   name: 'Bayview Hub',
   tagline: 'Eat. Listen. Create. Grow.',
   // Update these:
-  phone: '+61 (0)X XXXX XXXX',
-  address: 'Your address',
-  email: 'hello@bayviewhub.com.au',
+  phone: '0499 6666 88',
+  address: '365 Purves Road, Main Ridge, Victoria 3928, Australia',
+  email: 'leonzh@bayviewestate.com.au',
 }
 
 // Edit experiences, roles, etc.

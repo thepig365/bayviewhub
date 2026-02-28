@@ -355,7 +355,7 @@ If robots output is not what app code returns, check for edge/CDN overrides (for
 
 ## 🤝 Support
 
-For questions or issues, contact: hello@bayviewhub.com.au
+For questions or issues, contact: leonzh@bayviewestate.com.au
 
 ## 📄 License
 

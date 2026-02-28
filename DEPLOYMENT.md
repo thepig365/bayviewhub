@@ -165,7 +165,7 @@ Upload images to `/public/images/`:
 Edit `/lib/constants.ts`:
 ```typescript
 export const SITE_CONFIG = {
-  phone: '+61 (0)X XXXX XXXX',  // Update this
+  phone: '0499 6666 88',  // Real phone number
   address: 'Your actual address',  // Update this
   // ... other config
 }

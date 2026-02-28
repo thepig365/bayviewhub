@@ -92,7 +92,7 @@ When you deploy to Vercel:
 1. Go to Project Settings → Environment Variables
 2. Add:
    - `SENDGRID_API_KEY` = your_key_here
-   - `SENDGRID_TO_EMAIL` = hello@bayviewhub.com.au
+   - `SENDGRID_TO_EMAIL` = leonzh@bayviewestate.com.au
 3. Redeploy
 
 **Step 3: Activate Code**
@@ -173,7 +173,7 @@ Save and the page updates automatically!
 
 ### After You Connect Email:
 1. Same as above, PLUS
-2. Sends email to `hello@bayviewhub.com.au`
+2. Sends email to `leonzh@bayviewestate.com.au`
 3. Email contains all form details:
    - Name, Email, Phone
    - Location (suburb/postcode)

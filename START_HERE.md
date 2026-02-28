@@ -182,7 +182,7 @@ primary: {
 Edit `lib/constants.ts`:
 ```typescript
 export const SITE_CONFIG = {
-  phone: '+61 (0)X XXXX XXXX',
+  phone: '0499 6666 88',
 }
 ```
 

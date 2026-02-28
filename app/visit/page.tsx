@@ -2,7 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { MapPin, Clock, Phone, Mail, Car, Train } from 'lucide-react'
-import { SITE_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, SITE_HOURS } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
@@ -80,27 +80,20 @@ export default function VisitPage() {
               </h2>
               <div className="bg-natural-50 rounded-2xl p-6 dark:bg-surface/50 dark:border dark:border-border">
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-border">
-                    <span className="font-medium text-fg">Monday - Thursday</span>
-                    <span className="text-muted">11:00 AM - 9:00 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border">
-                    <span className="font-medium text-fg">Friday</span>
-                    <span className="text-muted">11:00 AM - 11:00 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border">
-                    <span className="font-medium text-fg">Saturday</span>
-                    <span className="text-muted">9:00 AM - 11:00 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="font-medium text-fg">Sunday</span>
-                    <span className="text-muted">9:00 AM - 8:00 PM</span>
-                  </div>
+                  {SITE_HOURS.schedule.map((item, index) => (
+                    <div
+                      key={item.days}
+                      className={`flex justify-between items-center py-2 ${index < SITE_HOURS.schedule.length - 1 ? 'border-b border-border' : ''}`}
+                    >
+                      <span className="font-medium text-fg">{item.days}</span>
+                      <span className="text-muted">{item.hours}</span>
+                    </div>
+                  ))}
                 </div>
                 <div className="mt-6 pt-6 border-t border-border">
                   <p className="text-sm text-muted flex items-start">
                     <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    Individual venue hours may vary. Check specific experiences for details.
+                    {SITE_HOURS.note}
                   </p>
                 </div>
               </div>
