@@ -6,6 +6,9 @@
 
 @layer base {
   :root {
+    /* Typography */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    
     /* Light theme - high-contrast readable */
     --bg: #FAFAF8;
     --surface: #FFFFFF;
@@ -54,9 +57,10 @@
   }
 
   body {
-    font-family: var(--font-sans), system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.6;
+    text-rendering: optimizeLegibility;
     @apply antialiased;
     color: var(--fg);
     background-color: var(--bg);
@@ -69,30 +73,60 @@
     color: var(--fg);
   }
 
+  /* Reading width */
+  .prose, .reading {
+    max-width: 65ch;
+  }
+
+  /* Headings */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif), Georgia, serif;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: capitalize;
+    font-weight: 650;
+    letter-spacing: -0.02em;
   }
 
-  h1 {
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
+  h1, .h1 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 650;
   }
 
-  h2 {
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  h2, .h2 {
+    font-size: clamp(1.5rem, 2vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 650;
+  }
+
+  /* Typography utility classes */
+  .eyebrow {
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .caption {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    opacity: 0.8;
   }
 
   small,
   nav {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   @media (min-width: 768px) {
     small,
     nav {
-      font-size: 13px;
+      font-size: 15px;
     }
   }
 
