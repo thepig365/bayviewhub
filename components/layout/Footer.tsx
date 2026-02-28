@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react'
 import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
-import { ThemeMenu } from '@/components/theme/ThemeMenu'
+import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -142,29 +142,25 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Preferences Section */}
+      {/* Preferences - Simple inline */}
       <div className="border-t border-gray-700">
-        <div className="container mx-auto px-4 py-8">
-          <div className="rounded-xl border border-gray-700 bg-[#141b26] p-6">
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-4">Preferences</h4>
-            <div className="flex flex-col md:flex-row md:items-start gap-6">
-              {/* Language */}
-              <div>
-                <p className="text-sm font-medium text-gray-300 mb-2">Language</p>
-                <div className="flex items-center gap-3 text-sm">
-                  <Link href="/" className="text-gray-400 hover:text-white transition-colors">
-                    EN
-                  </Link>
-                  <span className="text-gray-600">/</span>
-                  <Link href="/zh" className="text-gray-400 hover:text-white transition-colors">
-                    中文
-                  </Link>
-                </div>
-              </div>
-              {/* Theme */}
-              <div className="flex-1 md:max-w-md">
-                <ThemeMenu />
-              </div>
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-sm">
+            {/* Language */}
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">Language:</span>
+              <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+                EN
+              </Link>
+              <span className="text-gray-600">/</span>
+              <Link href="/zh" className="text-gray-400 hover:text-white transition-colors">
+                中文
+              </Link>
+            </div>
+            {/* Theme */}
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">Theme:</span>
+              <SimpleThemeToggle />
             </div>
           </div>
         </div>
