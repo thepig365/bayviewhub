@@ -743,33 +743,33 @@ export default function FeasibilityChecklistPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="bg-neutral-900 text-white py-16 md:py-24">
+      <section className="bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-xs font-mono text-white/90 mb-6 uppercase tracking-widest">
+          <div className="text-xs font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">
             Victorian SSD Logic Engine · VC253/VC282 · 2026
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-fg dark:text-white">
             SSD Feasibility Checklist
-            <span className="block text-white/95 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
+            <span className="block text-muted dark:text-white/95 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
           </h1>
-          <p className="text-lg text-white/90 mb-4 leading-relaxed max-w-3xl">
+          <p className="text-lg text-muted dark:text-white/90 mb-4 leading-relaxed max-w-3xl">
             This tool determines your approval pathway. Green Lane bypasses planning entirely. 
             VicSmart delivers 10-day council decision. Red Zone means standard permit process.
           </p>
-          <p className="text-white/90 mb-8">
+          <p className="text-fg dark:text-white/90 mb-8">
             We navigate the constraints. You get certainty.
           </p>
           <div className="flex flex-wrap gap-4">
             <button
               onClick={scrollToEngine}
-              className="inline-flex items-center gap-2 bg-white text-neutral-900 hover:bg-neutral-100 h-10 px-6 rounded-md text-sm font-medium"
+              className="inline-flex items-center gap-2 bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 h-10 px-6 rounded-md text-sm font-medium"
             >
               Run Path to Approval Engine
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center gap-2 border border-neutral-600 text-white hover:bg-neutral-800 h-10 px-6 rounded-md text-sm font-medium"
+              className="inline-flex items-center gap-2 border border-neutral-400 text-fg hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-800 h-10 px-6 rounded-md text-sm font-medium"
             >
               Submit for Assessment
             </button>

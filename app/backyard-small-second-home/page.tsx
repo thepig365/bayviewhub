@@ -107,10 +107,10 @@ export default function BackyardSmallSecondHomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ssdExpertJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <div className="bg-neutral-900 border-b border-neutral-800">
+      <div className="bg-natural-50 dark:bg-neutral-900 border-b border-border dark:border-neutral-800">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-fg dark:text-white mb-6">
               Backyard Small Second Home
             </h1>
             <AnswerCapsule
@@ -128,13 +128,11 @@ export default function BackyardSmallSecondHomePage() {
                 { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
               ]}
               lastUpdated={LAST_UPDATED}
-              darkBg={true}
-              className="border-neutral-700 bg-neutral-800/50"
             />
           </div>
         </div>
       </div>
-      <Suspense fallback={<div className="min-h-screen bg-neutral-900" />}>
+      <Suspense fallback={<div className="min-h-screen bg-white dark:bg-neutral-900" />}>
         <SecondHomeClient />
       </Suspense>
     </>

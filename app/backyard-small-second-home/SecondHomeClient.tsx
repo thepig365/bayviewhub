@@ -75,28 +75,28 @@ export function SecondHomeClient() {
   }
 
   return (
-    <div className="min-h-screen dark:bg-neutral-900">
-      <section className="bg-neutral-900 text-white py-20 md:py-32">
+    <div className="min-h-screen bg-white dark:bg-neutral-900">
+      <section className="bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800 py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-xs font-mono text-white/90 mb-6 uppercase tracking-widest">
+            <div className="text-xs font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">
               Backyard Small Second Home · Victorian SSD Framework · VC253/VC282 · 2026
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight text-fg dark:text-white">
               Backyard Small Second Home
-              <span className="block text-white/95 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
+              <span className="block text-muted dark:text-white/95 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
             </h2>
-            <p className="text-xl text-white/70 mb-6 leading-relaxed max-w-3xl">
+            <p className="text-xl text-muted dark:text-white/70 mb-6 leading-relaxed max-w-3xl">
               We navigate the Victorian SSD framework. Compliant Small Second Dwellings on existing residential lots. Multi-generational housing or rental yield. Same title. No subdivision. No gas.
             </p>
-            <p className="text-lg text-white/90 mb-10">
+            <p className="text-lg text-fg dark:text-white/90 mb-10">
               This is not about selling houses. This is about delivering planning certainty within hard constraints.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button href="#register" variant="primary" size="lg" className="bg-white text-neutral-900 hover:bg-neutral-100" onClick={() => track('sh_register_click', attribution)}>
+              <Button href="#register" variant="primary" size="lg" className="bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100" onClick={() => track('sh_register_click', attribution)}>
                 Enter Feasibility Gate
               </Button>
-              <Button href="/backyard-small-second-home/feasibility-check" variant="outline" size="lg" className="border-neutral-600 text-white hover:bg-neutral-800" onClick={() => track('sh_checklist_click', attribution)}>
+              <Button href="/backyard-small-second-home/feasibility-check" variant="outline" size="lg" className="border-neutral-400 text-fg hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-800" onClick={() => track('sh_checklist_click', attribution)}>
                 Run Compliance Check
               </Button>
             </div>
