@@ -271,32 +271,32 @@ export function SecondHomeClient() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Name *</label>
-                    <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
+                    <label htmlFor="ssd-name" className="block text-sm font-medium text-fg mb-1.5">Name *</label>
+                    <input id="ssd-name" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Email *</label>
-                    <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Phone</label>
-                    <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Suburb (VIC) *</label>
-                    <input type="text" required value={formData.suburb} onChange={(e) => setFormData({ ...formData, suburb: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
+                    <label htmlFor="ssd-email" className="block text-sm font-medium text-fg mb-1.5">Email *</label>
+                    <input id="ssd-email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Lot Size (sqm) *</label>
-                    <input type="text" required placeholder="e.g., 600" value={formData.backyardSize} onChange={(e) => setFormData({ ...formData, backyardSize: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
+                    <label htmlFor="ssd-phone" className="block text-sm font-medium text-fg mb-1.5">Phone</label>
+                    <input id="ssd-phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-fg mb-1.5">Primary Use *</label>
-                    <select required value={formData.propertyType} onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
+                    <label htmlFor="ssd-suburb" className="block text-sm font-medium text-fg mb-1.5">Suburb (VIC) *</label>
+                    <input id="ssd-suburb" type="text" required value={formData.suburb} onChange={(e) => setFormData({ ...formData, suburb: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="ssd-lotsize" className="block text-sm font-medium text-fg mb-1.5">Lot Size (sqm) *</label>
+                    <input id="ssd-lotsize" type="text" required placeholder="e.g., 600" value={formData.backyardSize} onChange={(e) => setFormData({ ...formData, backyardSize: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:ring-2 focus:ring-neutral-900 focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label htmlFor="ssd-use" className="block text-sm font-medium text-fg mb-1.5">Primary Use *</label>
+                    <select id="ssd-use" required value={formData.propertyType} onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
                       <option value="">Select use</option>
                       <option value="family">Multi-generational</option>
                       <option value="rental">Rental income</option>
@@ -306,8 +306,8 @@ export function SecondHomeClient() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-fg mb-1.5">Timeline</label>
-                  <select value={formData.timeframe} onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
+                  <label htmlFor="ssd-timeline" className="block text-sm font-medium text-fg mb-1.5">Timeline</label>
+                  <select id="ssd-timeline" value={formData.timeframe} onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:border-transparent">
                     <option value="">Select timeline</option>
                     <option value="0-6months">Within 6 months</option>
                     <option value="6-12months">6-12 months</option>
@@ -340,14 +340,14 @@ export function SecondHomeClient() {
               <p className="text-sm font-medium text-muted mb-2">Victorian SSD Regulatory Compliance Service</p>
               <p className="text-xs text-muted">Registered VicSmart Pathway Provider · Clause 54.03 Deemed-to-Comply Specialist</p>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 text-xs text-muted mb-6">
-              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-fg">DTP Planning Portal</a>
-              <span>·</span>
-              <a href="/backyard-small-second-home/victoria-rules" className="underline hover:text-fg">Victoria Rules</a>
-              <span>·</span>
-              <a href="/backyard-small-second-home/cost-rent-roi" className="underline hover:text-fg">Cost & ROI</a>
-              <span>·</span>
-              <a href="/backyard-small-second-home/feasibility-check" className="underline hover:text-fg">Feasibility Check</a>
+            <div className="flex flex-wrap justify-center gap-4 text-xs mb-6">
+              <a href="https://www.planning.vic.gov.au/" target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 underline hover:text-primary-800 dark:hover:text-primary-300">DTP Planning Portal</a>
+              <span className="text-muted">·</span>
+              <a href="/backyard-small-second-home/victoria-rules" className="text-primary-600 dark:text-primary-400 underline hover:text-primary-800 dark:hover:text-primary-300">Victoria Rules</a>
+              <span className="text-muted">·</span>
+              <a href="/backyard-small-second-home/cost-rent-roi" className="text-primary-600 dark:text-primary-400 underline hover:text-primary-800 dark:hover:text-primary-300">Cost & ROI</a>
+              <span className="text-muted">·</span>
+              <a href="/backyard-small-second-home/feasibility-check" className="text-primary-600 dark:text-primary-400 underline hover:text-primary-800 dark:hover:text-primary-300">Feasibility Check</a>
             </div>
             <p className="text-xs text-muted text-center">
               This page provides regulatory guidance and does not constitute legal or planning advice. Engage qualified professionals for site-specific determinations.

@@ -110,18 +110,24 @@ export default function HomePage() {
           </button>
 
           {/* Slide Indicators - Desktop */}
-          <div className="hidden md:flex absolute bottom-8 left-8 z-20 gap-2">
+          <div className="hidden md:flex absolute bottom-8 left-8 z-20 gap-3">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
+                className={`p-1.5 -m-1.5 rounded-full transition-all ${
                   index === currentSlide
-                    ? 'bg-white w-6'
-                    : 'bg-white/50 hover:bg-white/70'
+                    ? ''
+                    : ''
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
-              />
+              >
+                <span className={`block rounded-full transition-all ${
+                  index === currentSlide
+                    ? 'w-6 h-2.5 bg-white'
+                    : 'w-2.5 h-2.5 bg-white/50 hover:bg-white/70'
+                }`} />
+              </button>
             ))}
           </div>
         </div>
