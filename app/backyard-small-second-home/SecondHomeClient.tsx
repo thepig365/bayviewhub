@@ -86,7 +86,7 @@ export function SecondHomeClient() {
               Backyard Small Second Home
               <span className="block text-white/95 text-2xl md:text-3xl mt-2">60 sqm. No Planning Permit. Bureaucratic Immunity for High-Yield Assets.</span>
             </h2>
-            <p className="text-xl text-muted mb-6 leading-relaxed max-w-3xl">
+            <p className="text-xl text-white/70 mb-6 leading-relaxed max-w-3xl">
               We navigate the Victorian SSD framework. Compliant Small Second Dwellings on existing residential lots. Multi-generational housing or rental yield. Same title. No subdivision. No gas.
             </p>
             <p className="text-lg text-white/90 mb-10">
@@ -132,8 +132,8 @@ export function SecondHomeClient() {
             </div>
             <div className="mt-12 p-8 bg-neutral-900 dark:bg-neutral-900 rounded-2xl text-white">
               <h3 className="text-xl font-bold mb-4">The Trade-Off</h3>
-              <p className="text-muted leading-relaxed">
-                Comply with these constraints → access the <strong>Deemed-to-Comply pathway</strong> under Clause 54.03 → <strong> bypass planning permit entirely</strong>. Proceed direct to building permit. Council cannot refuse if you meet the criteria. That is the value proposition: constraints in exchange for certainty.
+              <p className="text-white/70 leading-relaxed">
+                Comply with these constraints → access the <strong className="text-white">Deemed-to-Comply pathway</strong> under Clause 54.03 → <strong className="text-white"> bypass planning permit entirely</strong>. Proceed direct to building permit. Council cannot refuse if you meet the criteria. That is the value proposition: constraints in exchange for certainty.
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@ export function SecondHomeClient() {
               ))}
             </div>
             <div className="p-6 bg-neutral-900 dark:bg-neutral-700 rounded-xl text-white">
-              <p className="text-muted">
+              <p className="text-white/70">
                 <strong className="text-white">Mansion-seekers and subdividers:</strong> Look elsewhere. This framework delivers 60 sqm compliant assets. If that constraint does not fit your project, engage a traditional developer and expect 12-18 months in Planning.
               </p>
             </div>
