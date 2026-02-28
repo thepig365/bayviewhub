@@ -18,16 +18,14 @@ export const SOCIAL_LINKS = {
   linkedin: 'https://www.linkedin.com/',
 }
 
-// Navigation items
-export const NAV_ITEMS = [
-  { label: 'Overview', href: '/' },
-  { label: 'Experiences', href: '/experiences' },
-  { label: 'Cellar Door', href: '/cellar-door' },
-  { label: 'Events', href: '/events' },
-  { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
-  { label: 'Partners', href: '/partners' },
-  { label: 'Invest', href: '/invest' },
+// Navigation items (visitor-focused, external links marked)
+export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = [
   { label: 'Visit', href: '/visit' },
+  { label: "What's On", href: '/events' },
+  { label: 'Food/Wine', href: 'https://www.thepigandwhistle.com.au/', external: true },
+  { label: 'Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
+  { label: 'Workshops', href: '/workshops' },
+  { label: 'Gardens', href: '/edible-gardens' },
 ]
 
 // Primary CTAs

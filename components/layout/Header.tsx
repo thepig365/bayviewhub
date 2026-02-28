@@ -94,13 +94,26 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-5 text-sm" aria-label="Primary">
             {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors">
-                {item.label}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
-            <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors">
-              Art Gallery
-            </a>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -155,14 +168,27 @@ export function Header() {
                 <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Primary Navigation</h3>
                 <nav className="grid grid-cols-1 md:grid-cols-2 gap-2" aria-label="Primary">
                   {NAV_ITEMS.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={closeMenu}
-                      className="rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors"
-                    >
-                      {item.label}
-                    </Link>
+                    item.external ? (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        onClick={closeMenu}
+                        className="rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={closeMenu}
+                        className="rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    )
                   ))}
                 </nav>
               </section>
