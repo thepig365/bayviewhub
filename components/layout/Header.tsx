@@ -82,8 +82,8 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md dark:bg-surface/90'
-          : 'bg-white/95 backdrop-blur-sm dark:bg-surface/90'
+          ? 'bg-white shadow-md dark:bg-[#0F172A]'
+          : 'bg-white dark:bg-[#0F172A]'
       )}
     >
       <div className="container mx-auto px-4">
