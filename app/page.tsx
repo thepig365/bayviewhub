@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { NewsletterForm } from '@/components/ui/NewsletterForm'
 import { SITE_CONFIG, EXPERIENCES } from '@/lib/constants'
 import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 
@@ -376,18 +375,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="py-16 md:py-20 bg-gray-900 text-white">
+      {/* Stay In Touch Section - The Broad Style */}
+      <section className="py-16 md:py-20 bg-gray-100 dark:bg-surface">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-              Stay Connected
-            </h2>
-            <p className="text-gray-400 mb-8">
-              Get updates on exhibitions, events, wine releases, and exclusive offers
-            </p>
-            <div className="bg-gray-800 rounded-lg p-8">
-              <NewsletterForm />
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-white dark:bg-bg border border-border rounded-lg p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* Left - Text */}
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-fg leading-tight mb-4">
+                    Stay<br />In Touch
+                  </h2>
+                  <p className="text-muted leading-relaxed">
+                    Sign up to get the latest news about Bayview Hub, upcoming exhibitions and events, wine releases, and special offers.
+                  </p>
+                </div>
+                {/* Right - Form */}
+                <div>
+                  <form className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="flex-1 px-5 py-4 border border-border rounded bg-white dark:bg-surface text-fg placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="px-8 py-4 bg-accent text-white font-semibold tracking-wide uppercase rounded hover:bg-accent-hover transition-colors whitespace-nowrap"
+                    >
+                      Sign Up
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
