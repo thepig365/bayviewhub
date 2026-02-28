@@ -26,7 +26,7 @@ export function Logo({ className = '' }: LogoProps) {
         <span className="text-2xl md:text-3xl font-serif font-bold leading-tight text-black dark:text-fg">
           Bayview Hub
         </span>
-        <span className="text-xs tracking-widest uppercase text-muted">
+        <span className="text-xs tracking-widest uppercase text-black dark:text-fg">
           Est. Victoria
         </span>
       </div>
