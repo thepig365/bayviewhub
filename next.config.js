@@ -72,6 +72,11 @@ const nextConfig = {
         destination: 'https://gallery.bayviewhub.me',
         permanent: false,
       },
+      {
+        source: '/events',
+        destination: 'https://www.thepigandwhistle.com.au/what-s-on',
+        permanent: false,
+      },
     ]
   },
 }
