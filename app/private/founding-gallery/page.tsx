@@ -63,25 +63,25 @@ export default function FoundingGalleryPackPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   <strong>30-acre estate</strong> with existing buildings, gardens, and hospitality infrastructure.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   <strong>Operating hospitality ecosystem</strong> — dining, wine, live music, events.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   <strong>50,000+ annual visitors</strong> (projected) — a built-in discovery audience.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   <strong>No commercial rent burden</strong> — resources can flow to programming, artists, and collectors.
                 </p>
@@ -159,7 +159,7 @@ export default function FoundingGalleryPackPage() {
             </p>
             <div className="space-y-6">
               <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Exhibitions</h3>
                   <p className="text-muted">
@@ -168,7 +168,7 @@ export default function FoundingGalleryPackPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Therapeutic Arts Workshops</h3>
                   <p className="text-muted">
@@ -177,7 +177,7 @@ export default function FoundingGalleryPackPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <div>
                   <h3 className="font-bold text-fg mb-2 ">Collector development</h3>
                   <p className="text-muted">
@@ -199,25 +199,25 @@ export default function FoundingGalleryPackPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   A curator, dealer, or arts operator who wants to build something long-term.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Someone comfortable working within a living destination, not an isolated white-cube model.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   A person who treats gallery work as cultural practice, not short-term activation.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Someone ready to co-build, not just occupy.
                 </p>

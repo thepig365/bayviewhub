@@ -170,10 +170,11 @@ export default function PartnersPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
-                  Name *
+                <label htmlFor="partner-name" className="block text-sm font-medium text-fg mb-2">
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="partner-name"
                   type="text"
                   required
                   value={formData.name}
@@ -183,10 +184,11 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
-                  Email *
+                <label htmlFor="partner-email" className="block text-sm font-medium text-fg mb-2">
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="partner-email"
                   type="email"
                   required
                   value={formData.email}
@@ -196,10 +198,11 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
+                <label htmlFor="partner-linkedin" className="block text-sm font-medium text-fg mb-2">
                   LinkedIn / Portfolio URL
                 </label>
                 <input
+                  id="partner-linkedin"
                   type="url"
                   value={formData.linkedin}
                   onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
@@ -208,10 +211,11 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
-                  Role Applying For *
+                <label htmlFor="partner-role" className="block text-sm font-medium text-fg mb-2">
+                  Role Applying For <span className="text-red-500">*</span>
                 </label>
                 <select
+                  id="partner-role"
                   required
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -227,10 +231,12 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
-                  Your 90-Day Plan * (describe or paste link)
+                <label htmlFor="partner-plan" className="block text-sm font-medium text-fg mb-2">
+                  Your 90-Day Plan <span className="text-red-500">*</span>
                 </label>
+                <p className="text-xs text-muted mb-2">Describe your vision or paste a link to a document.</p>
                 <textarea
+                  id="partner-plan"
                   required
                   rows={6}
                   value={formData.plan}
@@ -241,10 +247,11 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-muted mb-2">
+                <label htmlFor="partner-availability" className="block text-sm font-medium text-fg mb-2">
                   Availability
                 </label>
                 <input
+                  id="partner-availability"
                   type="text"
                   value={formData.availability}
                   onChange={(e) => setFormData({ ...formData, availability: e.target.value })}

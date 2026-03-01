@@ -36,19 +36,19 @@ export default function FoundingPartnersPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   You operate your own program or practice.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Bayview Hub provides land, infrastructure, and an existing visitor context (<a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">estimated 50k+ annual visitors — see Evidence</a>).
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Each partnership develops at its own pace and shape.
                 </p>
@@ -67,19 +67,19 @@ export default function FoundingPartnersPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-subtle mt-1">—</span>
+                <span className="text-subtle mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Not employment
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-subtle mt-1">—</span>
+                <span className="text-subtle mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Not franchising
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-subtle mt-1">—</span>
+                <span className="text-subtle mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Not short-term activation
                 </p>
@@ -98,25 +98,25 @@ export default function FoundingPartnersPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Art Gallery
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Therapeutic Arts Workshops (non-clinical)
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Edible Gardens
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Live Music & Cultural Programming
                 </p>

@@ -82,7 +82,7 @@ export default function GardensPage() {
             <div className="space-y-6">
               {experiences.map((item) => (
                 <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                  <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                  <span className="text-accent mt-1.5 text-xs">•</span>
                   <div>
                     <h3 className="font-bold text-fg mb-2 ">{item.title}</h3>
                     <p className="text-muted">{item.description}</p>
@@ -103,19 +103,19 @@ export default function GardensPage() {
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   People who want to eat seasonally and know where their food comes from.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Families looking for time outdoors and hands-on learning for children.
                 </p>
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
+                <span className="text-accent mt-1.5 text-xs">•</span>
                 <p className="text-muted">
                   Anyone wanting a closer relationship with growing food.
                 </p>

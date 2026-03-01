@@ -79,12 +79,9 @@ export default function WorkshopsPage() {
             </h2>
             <div className="space-y-6">
               {workshops.map((workshop) => (
-                <div key={workshop.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                  <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                  <div>
-                    <h3 className="font-bold text-fg mb-2">{workshop.title}</h3>
-                    <p className="text-muted">{workshop.description}</p>
-                  </div>
+                <div key={workshop.title} className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
+                  <h3 className="font-bold text-fg mb-2">{workshop.title}</h3>
+                  <p className="text-muted">{workshop.description}</p>
                 </div>
               ))}
             </div>
@@ -104,11 +101,11 @@ export default function WorkshopsPage() {
                 <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-surface dark:border dark:border-border">
                   <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">{program.title}</h3>
                   <p className="text-muted mb-4">{program.description}</p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 text-muted">
                     {program.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-center text-muted">
-                        <span className="text-primary-600 mr-2 dark:text-primary-400">—</span>
-                        {detail}
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-accent mt-1.5 text-xs">•</span>
+                        <span>{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -126,24 +123,18 @@ export default function WorkshopsPage() {
             <h2 className="text-2xl font-serif font-bold text-fg mb-8">
               Who this is for
             </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  People looking for a creative outlet without performance pressure.
-                </p>
+            <ul className="space-y-4 text-muted">
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>People looking for a creative outlet without performance pressure.</span>
               </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  Anyone wanting to slow down and work with their hands.
-                </p>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>Anyone wanting to slow down and work with their hands.</span>
               </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  Families seeking shared creative time together.
-                </p>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>Families seeking shared creative time together.</span>
               </li>
             </ul>
           </div>

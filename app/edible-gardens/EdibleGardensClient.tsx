@@ -66,12 +66,9 @@ export function EdibleGardensClient() {
             </h2>
             <div className="space-y-6">
               {experiences.map((item) => (
-                <div key={item.title} className="flex items-start gap-4 p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                  <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                  <div>
-                    <h3 className="font-bold text-fg mb-2 dark:text-fg">{item.title}</h3>
-                    <p className="text-muted">{item.description}</p>
-                  </div>
+                <div key={item.title} className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
+                  <h3 className="font-bold text-fg mb-2 dark:text-fg">{item.title}</h3>
+                  <p className="text-muted">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -86,24 +83,18 @@ export function EdibleGardensClient() {
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 dark:text-fg">
               Who this is for
             </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  People who want to eat seasonally and know where their food comes from.
-                </p>
+            <ul className="space-y-4 text-muted">
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>People who want to eat seasonally and know where their food comes from.</span>
               </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  Families looking for time outdoors and hands-on learning for children.
-                </p>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>Families looking for time outdoors and hands-on learning for children.</span>
               </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary-600 dark:text-primary-400 mt-1">—</span>
-                <p className="text-muted">
-                  Anyone wanting a closer relationship with growing food.
-                </p>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1.5 text-xs">•</span>
+                <span>Anyone wanting a closer relationship with growing food.</span>
               </li>
             </ul>
           </div>

@@ -65,37 +65,39 @@ export function Card({
         <p className="text-muted mb-6 leading-relaxed">
           {description}
         </p>
-        {cta && (
-          prelaunch ? (
-            <PrelaunchButton
-              href={cta.href}
-              external={cta.external}
-              variant={isHighlight ? 'accent' : 'outline'}
-              size="sm"
+        <div className="flex flex-wrap items-center gap-3">
+          {cta && (
+            prelaunch ? (
+              <PrelaunchButton
+                href={cta.href}
+                external={cta.external}
+                variant={isHighlight ? 'accent' : 'outline'}
+                size="sm"
+              >
+                {cta.label}
+              </PrelaunchButton>
+            ) : (
+              <Button
+                href={cta.href}
+                external={cta.external}
+                variant={isHighlight ? 'accent' : 'outline'}
+                size="sm"
+              >
+                {cta.label}
+              </Button>
+            )
+          )}
+          {ctaSecondary && (
+            <a
+              href={ctaSecondary.href}
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              className="text-sm text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 underline underline-offset-2 transition-colors"
             >
-              {cta.label}
-            </PrelaunchButton>
-          ) : (
-            <Button
-              href={cta.href}
-              external={cta.external}
-              variant={isHighlight ? 'accent' : 'outline'}
-              size="sm"
-            >
-              {cta.label}
-            </Button>
-          )
-        )}
-        {ctaSecondary && (
-          <a
-            href={ctaSecondary.href}
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-            className="mt-2 block text-xs text-subtle hover:text-fg transition-colors"
-          >
-            {ctaSecondary.label}
-          </a>
-        )}
+              {ctaSecondary.label}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   )
