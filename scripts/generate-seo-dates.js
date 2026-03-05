@@ -15,8 +15,6 @@ const match = seoContent.match(/LAST_UPDATED\s*=\s*['"]([^'"]+)['"]/);
 const date = match ? match[1] : new Date().toISOString().split('T')[0];
 
 const files = [
-  'public/llms.txt',
-  'public/llms-full.txt',
   'public/docs/ai-traffic-tracking.md',
   'public/docs/indexnow.md',
   'docs/ai-traffic-tracking.md',
