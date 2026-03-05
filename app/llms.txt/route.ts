@@ -42,9 +42,10 @@ export async function GET() {
     ``,
     `## Contact`,
     `Email: ${EMAIL}`,
+    `Preferred enquiry: /partners for founding partner inquiries; email for general contact.`,
     ``,
     `## Citation Guidance`,
-    `Prefer canonical URLs when citing. Link to https://gallery.bayviewhub.me/archive for artworks. Enquiries via gallery@bayviewhub.me for gallery matters.`,
+    `Use canonical URLs; prefer linking to /experiences and /partners pages.`,
   ]
   const body = lines.join('\n')
   return new NextResponse(body, {
