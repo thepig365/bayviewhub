@@ -18,7 +18,7 @@ type PrelaunchButtonProps = {
 
 const DEFAULT_HEADING = 'Pre-launch Program'
 const DEFAULT_MESSAGE =
-  `Bayview Hub programs of Arts Gallery, Arts Therapy Workshop, Gardens and Wine Tasting Cellar Door are currently in development. Some experiences shown on this website are not yet available to the public and are displayed to support founding partner recruitment and expressions of interest. Dates, inclusions and pricing are indicative and subject to change.
+  `Bayview Hub's physical Arts Gallery, Art Therapy Workshops, Edible Gardens, and Cellar Door programs are in their founding phase — open for expressions of interest and priority registration. The Pig & Whistle restaurant, live music, accommodation, and functions are fully operational. Our online gallery is live. Our Small Second Home service is actively taking enquiries. Dates, inclusions and pricing are indicative and subject to change.
 
 Program Status & Expressions of Interest (EOI)
 The Bayview Arts Gallery, Art Workshops & Art Therapy, Edible Gardens Subscriptions, and Cellar Door wine tastings (“Programs”) may be shown on this website before public launch.
@@ -83,7 +83,7 @@ export function PrelaunchButton({
           />
           <div className="relative w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-border dark:bg-bg dark:border-border">
             <div className="inline-flex items-center rounded-full bg-natural-200 text-fg px-3 py-1 text-xs font-bold tracking-wide uppercase dark:bg-surface dark:text-fg">
-              Pre-Launch Notice
+              About These Programs
             </div>
             <h3
               id={titleId}

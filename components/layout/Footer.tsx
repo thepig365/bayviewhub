@@ -24,6 +24,9 @@ export function Footer() {
             <h3 className="text-2xl font-serif font-bold mb-4">
               {SITE_CONFIG.name}
             </h3>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              A 30-acre sanctuary estate in Victoria — winery dining, live music, accommodation, arts, gardens, creative programs, and small second home design-build.
+            </p>
             <p className="text-gray-400 leading-relaxed mb-2">
               365 Purves Road,
             </p>
@@ -113,7 +116,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/backyard-small-second-home" className="text-gray-400 hover:text-white transition-colors">
-                  Second Home
+                  Build Second Home
                 </Link>
               </li>
               <li>

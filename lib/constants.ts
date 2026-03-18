@@ -1,8 +1,8 @@
 // Site-wide constants
 export const SITE_CONFIG = {
   name: 'Bayview Hub',
-  tagline: 'Eat, Stay, Connect, Create, Mend',
-  description: 'A destination hub with winery dining, accommodation, art spaces, wellbeing programs, and edible gardens.',
+  tagline: 'A Sanctuary Estate in Victoria — Dining, Stays, Arts and Music, Gardens, Creative Programs and Second Homes',
+  description: 'Bayview Hub is a real-world sanctuary — a place to slow down, reconnect, and create more space for living well. 30-acre working estate in Main Ridge, Mornington Peninsula. Winery dining, live music, accommodation, arts, gardens, creative programs, and small second home design-build for Victorian homeowners.',
   url: process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me',
   pigAndWhistleUrl: 'https://thepigandwhistle.com.au',
   email: 'leonzh@bayviewestate.com.au',
@@ -50,6 +50,14 @@ export const PRIMARY_CTAS = [
 export const EXPERIENCES = {
   new: [
     {
+      id: 'second-home',
+      title: 'Build a Second Home',
+      blurb: 'Design and build a second home on your property — for rental income, multi-generational living, or long-term value. Now taking enquiries across Victoria. Come and view our on-site second home display at the estate.',
+      cta: { label: 'Check My Property', href: '/backyard-small-second-home' },
+      image: '/images/second-home/garden-studio.jpg',
+      category: 'stay',
+    },
+    {
       id: 'gallery',
       title: 'Bayview Arts Gallery',
       blurb: 'Curated exhibitions, openings, and collectible works.',
@@ -76,14 +84,6 @@ export const EXPERIENCES = {
       prelaunch: true,
       image: '/images/gardens.jpg',
       category: 'grow',
-    },
-    {
-      id: 'second-home',
-      title: 'Small Second Home Builder',
-      blurb: 'Turn your backyard into a beautiful granny flat or second home for family, guests, or rental income.',
-      cta: { label: 'Explore Options', href: '/backyard-small-second-home' },
-      image: '/images/second-home/garden-studio.jpg',
-      category: 'stay',
     },
   ],
   core: [
