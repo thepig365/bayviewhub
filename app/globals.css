@@ -16,9 +16,13 @@
     --muted: #374151;
     --subtle: #4B5563;
     --border: #E5E7EB;
-    --accent: #5EB1BF;
-    --accent-hover: #3D8A96;
+    --accent: #c9a84c;
+    --accent-hover: #e0c070;
     --accent-soft: #A8D5DD;
+    --accent-text: #1a1408;
+    --text-muted: #a89060;
+    --label-caps-size: 11px;
+    --label-caps-tracking: 0.1em;
     /* Legacy (for compatibility) */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
@@ -34,9 +38,9 @@
 
   .dark {
     /* Dark theme - high-contrast readable */
-    --bg: #0F172A;
+    --bg: #1a1408;
     --surface: #1E293B;
-    --fg: #F9FAFB;
+    --fg: #f5ede0;
     --muted: #D1D5DB;
     --subtle: #9CA3AF;
     --border: #334155;

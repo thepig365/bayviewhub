@@ -46,6 +46,7 @@ const config: Config = {
           800: 'var(--accent-hover)',
           900: 'var(--fg)',
         },
+        'accent-text': '#1a1408',
         accent: {
           DEFAULT: 'var(--accent)',
           hover: 'var(--accent-hover)',
@@ -69,7 +70,7 @@ const config: Config = {
           500: 'var(--muted)',
           600: 'var(--muted)',
           700: '#374151',
-          800: '#171717',
+          800: '#201a0e',
           900: 'var(--fg)',
         },
       },

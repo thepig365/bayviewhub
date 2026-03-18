@@ -16,7 +16,7 @@ export function Header() {
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const triggerBtnRef = useRef<HTMLButtonElement>(null)
   const { resolvedTheme } = useTheme()
-  const iconColor = resolvedTheme === 'dark' ? '#F9FAFB' : '#111827' // undefined = light
+  const iconColor = resolvedTheme === 'dark' ? '#f5ede0' : '#111827' // undefined = light
   const closeMenu = () => setIsMenuOpen(false)
 
   useEffect(() => {
@@ -82,8 +82,8 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white shadow-md dark:bg-[#0F172A]'
-          : 'bg-white dark:bg-[#0F172A]'
+          ? 'bg-white shadow-md dark:bg-[#1a1408]'
+          : 'bg-white dark:bg-[#1a1408]'
       )}
     >
       <div className="container mx-auto px-4">
