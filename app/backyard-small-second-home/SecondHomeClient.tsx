@@ -259,6 +259,17 @@ export function SecondHomeClient() {
         </div>
       </section>
 
+      <section className="py-6 bg-white dark:bg-neutral-800 border-t border-neutral-100 dark:border-neutral-700">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xs text-muted mb-2 uppercase tracking-widest">Also Known As</p>
+            <p className="text-xs text-muted leading-relaxed">
+              granny flat · secondary dwelling · backyard home · tiny house · accessory dwelling unit · garden studio · guest cottage · in-law suite · small second home · second dwelling Victoria · granny flat Victoria · backyard second home · SSD Victoria · small second dwelling
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section id="register" className="py-20 bg-neutral-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">

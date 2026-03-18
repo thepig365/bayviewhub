@@ -3,7 +3,7 @@
  * Single source of truth for "Last updated" dates.
  * Format: YYYY-MM-DD
  */
-export const LAST_UPDATED = '2026-02-10'
+export const LAST_UPDATED = '2026-03-18'
 
 export function robotsByEnv() {
   const isProd = process.env.NODE_ENV === 'production'
