@@ -10,6 +10,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/backyard-small-second-home/cost-rent-roi', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/feasibility-check', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/granny-flat-victoria', priority: 0.85, changeFreq: 'monthly' },
+  { path: '/backyard-small-second-home/tiny-house-victoria', priority: 0.85, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/mornington-peninsula', priority: 0.9, changeFreq: 'weekly' },
   { path: '/art-gallery/founding-partners', priority: 0.9, changeFreq: 'monthly' },
   { path: '/edible-gardens', priority: 0.9, changeFreq: 'monthly' },
