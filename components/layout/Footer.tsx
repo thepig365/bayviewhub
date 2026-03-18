@@ -116,7 +116,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/backyard-small-second-home" className="text-gray-400 hover:text-white transition-colors">
-                  Build Second Home
+                  Backyard Small Second Home
                 </Link>
               </li>
               <li>

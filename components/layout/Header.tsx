@@ -217,7 +217,7 @@ export function Header() {
                 </details>
                 <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40">
                   <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
-                    <span>Build Second Home</span>
+                    <span>Backyard Small Second Home</span>
                     <ChevronDown className="h-4 w-4" />
                   </summary>
                   <div className="px-4 pb-4 space-y-1">
