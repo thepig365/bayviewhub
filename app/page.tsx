@@ -12,11 +12,11 @@ import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 const heroSlides = [
   {
     id: 1,
-    category: 'Now Open',
-    title: 'Bayview Arts Gallery',
-    description: 'Curated exhibitions featuring emerging and established artists. Experience contemporary art in our beautifully restored gallery spaces. Visit today.',
-    cta: { label: 'Explore Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
-    image: '/images/gallery.jpg',
+    category: 'Enquiries Open',
+    title: 'Backyard Small Second Home',
+    description: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
+    cta: { label: 'Check If My Property Qualifies', href: '/backyard-small-second-home' },
+    image: '/images/second-home/garden-studio.jpg',
   },
   {
     id: 2,
@@ -28,11 +28,11 @@ const heroSlides = [
   },
   {
     id: 3,
-    category: 'New Program',
-    title: 'Edible Gardens Subscriptions',
-    description: 'Seasonal harvest boxes, garden days, and hands-on growing experiences. Connect with food from paddock to plate.',
-    cta: { label: 'Subscribe Now', href: '/edible-gardens' },
-    image: '/images/gardens.jpg',
+    category: 'Online Gallery Live',
+    title: 'Bayview Arts Gallery',
+    description: 'Explore the online collection now live at gallery.bayviewhub.me. Physical gallery launch in development — seeking the right cofounder and curator.',
+    cta: { label: 'Explore Online Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
+    image: '/images/gallery.jpg',
   },
   {
     id: 4,

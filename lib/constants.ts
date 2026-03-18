@@ -1,8 +1,8 @@
 // Site-wide constants
 export const SITE_CONFIG = {
   name: 'Bayview Hub',
-  tagline: 'A Sanctuary Estate in Victoria — Dining, Stays, Arts and Music, Gardens, Creative Programs and Second Homes',
-  description: 'Bayview Hub is a real-world sanctuary — a place to slow down, reconnect, and create more space for living well. 30-acre working estate in Main Ridge, Mornington Peninsula. Winery dining, live music, accommodation, arts, gardens, creative programs, and small second home design-build for Victorian homeowners.',
+  tagline: 'Backyard Small Second Home, Estate Dining & Creative Experiences in Victoria',
+  description: 'Estate dining, live music, and farmhouse accommodation at Bayview Hub, Main Ridge, Mornington Peninsula. Backyard Small Second Home design-build enquiries now open across Victoria. Creative programs including arts, workshops, and edible gardens in development.',
   url: process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me',
   pigAndWhistleUrl: 'https://thepigandwhistle.com.au',
   email: 'leonzh@bayviewestate.com.au',
@@ -37,7 +37,7 @@ export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = 
   { label: 'Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Gardens', href: '/edible-gardens' },
-  { label: 'Tiny House', href: '/backyard-small-second-home' },
+  { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
 ]
 
 // Primary CTAs
@@ -51,17 +51,17 @@ export const EXPERIENCES = {
   new: [
     {
       id: 'second-home',
-      title: 'Build a Second Home',
-      blurb: 'Design and build a second home on your property — for rental income, multi-generational living, or long-term value. Now taking enquiries across Victoria. Come and view our on-site second home display at the estate.',
-      cta: { label: 'Check My Property', href: '/backyard-small-second-home' },
+      title: 'Backyard Small Second Home',
+      blurb: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
+      cta: { label: 'Check If My Property Qualifies', href: '/backyard-small-second-home' },
       image: '/images/second-home/garden-studio.jpg',
       category: 'stay',
     },
     {
       id: 'gallery',
       title: 'Bayview Arts Gallery',
-      blurb: 'Curated exhibitions, openings, and collectible works.',
-      cta: { label: 'Explore Gallery', href: 'https://gallery.bayviewhub.me', external: true },
+      blurb: 'Explore the online collection — now live. Physical gallery launch in development. Seeking the right cofounder and curator to help shape the physical space.',
+      cta: { label: 'Explore Online Gallery', href: 'https://gallery.bayviewhub.me', external: true },
       ctaSecondary: { label: 'Submit for Curation', href: 'https://gallery.bayviewhub.me/portal/submit', external: true },
       prelaunch: true,
       image: '/images/gallery.jpg',

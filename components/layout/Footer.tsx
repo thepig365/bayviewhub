@@ -25,7 +25,7 @@ export function Footer() {
               {SITE_CONFIG.name}
             </h3>
             <p className="text-gray-400 leading-relaxed mb-4">
-              A 30-acre sanctuary estate in Victoria — winery dining, live music, accommodation, arts, gardens, creative programs, and small second home design-build.
+              Estate dining, live music, and farmhouse accommodation on a 30-acre Victoria estate. Backyard Small Second Home enquiries now open. Creative programs in development.
             </p>
             <p className="text-gray-400 leading-relaxed mb-2">
               365 Purves Road,
@@ -77,7 +77,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a href="https://gallery.bayviewhub.me" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                  Arts Gallery
+                  Arts Gallery — Online
                 </a>
               </li>
               <li>
