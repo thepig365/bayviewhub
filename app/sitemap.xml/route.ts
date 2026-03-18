@@ -9,6 +9,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/backyard-small-second-home/victoria-rules', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/cost-rent-roi', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/feasibility-check', priority: 0.9, changeFreq: 'monthly' },
+  { path: '/backyard-small-second-home/granny-flat-victoria', priority: 0.85, changeFreq: 'monthly' },
   { path: '/art-gallery/founding-partners', priority: 0.9, changeFreq: 'monthly' },
   { path: '/edible-gardens', priority: 0.9, changeFreq: 'monthly' },
   { path: '/edible-gardens/how-it-works', priority: 0.85, changeFreq: 'monthly' },
