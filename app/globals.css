@@ -21,6 +21,11 @@
     --accent-soft: #A8D5DD;
     --accent-text: #1a1408;
     --text-muted: #a89060;
+    /* Shell: footer / deep bands align with warm header dark (#1a1408), not cool slate */
+    --shell-footer: #1a1408;
+    --shell-footer-deep: #100c07;
+    --shell-footer-border: rgba(245, 237, 224, 0.12);
+    --shell-footer-muted: rgba(245, 237, 224, 0.62);
     --label-caps-size: 12px;
     --label-caps-tracking: 0.1em;
     /* Legacy (for compatibility) */
@@ -58,6 +63,10 @@
     --destructive: 0 84% 60%;
     --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
+    --shell-footer: #1a1408;
+    --shell-footer-deep: #100c07;
+    --shell-footer-border: rgba(245, 237, 224, 0.12);
+    --shell-footer-muted: rgba(245, 237, 224, 0.62);
   }
 
   body {

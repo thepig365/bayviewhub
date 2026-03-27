@@ -1,3 +1,20 @@
+/** External Bayview Arts Gallery (subdomain) — single source for hub → gallery links */
+export const GALLERY_EXTERNAL = {
+  base: 'https://gallery.bayviewhub.me',
+  archive: 'https://gallery.bayviewhub.me/archive',
+  /** Private Viewing Network programme (hosts, artists, viewers) */
+  openYourWall: 'https://gallery.bayviewhub.me/open-your-wall',
+  passportRegister: 'https://gallery.bayviewhub.me/passport/register',
+  submit: 'https://gallery.bayviewhub.me/submit',
+  protocol: 'https://gallery.bayviewhub.me/protocol',
+  rights: 'https://gallery.bayviewhub.me/rights',
+} as const
+
+/** Mailto for invited viewing access (viewer / collector path) */
+export const GALLERY_VIEWING_REQUEST_MAILTO =
+  'mailto:gallery@bayviewhub.me?subject=' +
+  encodeURIComponent('Viewing Access Request — Bayview Hub Private Viewing Network')
+
 // Site-wide constants
 export const SITE_CONFIG = {
   name: 'Bayview Hub',
@@ -34,7 +51,8 @@ export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = 
   { label: 'Visit', href: '/visit' },
   { label: "What's On", href: '/events' },
   { label: 'Food/Wine', href: 'https://www.thepigandwhistle.com.au/', external: true },
-  { label: 'Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
+  { label: 'Gallery', href: GALLERY_EXTERNAL.archive, external: true },
+  { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Gardens', href: '/edible-gardens' },
   { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
@@ -61,8 +79,8 @@ export const EXPERIENCES = {
       id: 'gallery',
       title: 'Bayview Arts Gallery',
       blurb: 'Explore the online collection — now live. Physical gallery launch in development. Seeking the right cofounder and curator to help shape the physical space.',
-      cta: { label: 'Explore Online Gallery', href: 'https://gallery.bayviewhub.me', external: true },
-      ctaSecondary: { label: 'Submit for Curation', href: 'https://gallery.bayviewhub.me/portal/submit', external: true },
+      cta: { label: 'Explore Online Gallery', href: GALLERY_EXTERNAL.archive, external: true },
+      ctaSecondary: { label: 'Submit for Curation', href: GALLERY_EXTERNAL.submit, external: true },
       prelaunch: true,
       image: '/images/gallery.jpg',
       category: 'create',

@@ -183,7 +183,7 @@ export default function HomePage() {
       </section>
 
       {/* Plan Your Visit Section */}
-      <section className="py-16 md:py-20 bg-white dark:bg-bg">
+      <section className="py-16 md:py-20 bg-bg">
         <div className="container mx-auto px-4">
           <HomeModule
             eyebrow="Visitor Information"
@@ -284,7 +284,7 @@ export default function HomePage() {
       </section>
 
       {/* Experiences Grid */}
-      <section className="py-16 md:py-20 bg-white dark:bg-bg">
+      <section className="py-16 md:py-20 bg-bg">
         <div className="container mx-auto px-4">
           <HomeModule
             eyebrow="Current Experiences"
@@ -319,10 +319,10 @@ export default function HomePage() {
       </section>
 
       {/* Stay In Touch Section */}
-      <section className="py-16 md:py-20 bg-gray-100 dark:bg-surface">
+      <section className="py-16 md:py-20 bg-natural-100 dark:bg-surface/40">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="bg-white dark:bg-bg border border-border rounded-lg p-8 md:p-12">
+            <div className="bg-surface border border-border rounded-lg p-8 md:p-12 shadow-sm dark:shadow-none">
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {/* Left - Text */}
                 <div>

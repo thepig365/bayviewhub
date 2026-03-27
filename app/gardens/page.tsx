@@ -43,7 +43,7 @@ export default function GardensPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-white dark:bg-bg">
+    <main className="min-h-screen bg-bg">
       {/* Hero */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">

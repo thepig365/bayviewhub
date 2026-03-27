@@ -32,7 +32,7 @@ export default function InvestPage() {
       </section>
 
       {/* The Opportunity */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-8 text-center ">
@@ -88,7 +88,7 @@ export default function InvestPage() {
       </section>
 
       {/* Use of Funds */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">

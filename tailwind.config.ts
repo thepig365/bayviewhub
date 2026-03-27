@@ -73,6 +73,12 @@ const config: Config = {
           800: '#201a0e',
           900: 'var(--fg)',
         },
+        shell: {
+          footer: 'var(--shell-footer)',
+          'footer-deep': 'var(--shell-footer-deep)',
+          'footer-border': 'var(--shell-footer-border)',
+          'footer-muted': 'var(--shell-footer-muted)',
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

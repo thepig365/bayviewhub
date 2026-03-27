@@ -54,7 +54,7 @@ const faqSchema = {
 export default function GrannyFlatVictoriaPage() {
   const baseUrl = SITE_CONFIG.url
   return (
-    <main className="min-h-screen bg-white dark:bg-bg">
+    <main className="min-h-screen bg-bg">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

@@ -30,7 +30,7 @@ export default function VisitPage() {
       </section>
 
       {/* Contact & Hours */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -145,7 +145,7 @@ export default function VisitPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-serif font-bold text-fg mb-8 text-center ">
@@ -490,7 +490,7 @@ export default function VisitPage() {
       </section>
 
       {/* FAQ/Visitor Info */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-fg mb-12 text-center ">

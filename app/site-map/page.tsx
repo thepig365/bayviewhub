@@ -61,7 +61,7 @@ const siteMapData = [
 
 export default function SiteMapPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-bg py-16">
+    <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-serif font-bold text-fg mb-4">

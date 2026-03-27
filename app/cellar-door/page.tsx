@@ -132,7 +132,7 @@ export default function CellarDoorPage() {
   }
 
   return (
-    <main className="bg-white dark:bg-bg">
+    <main className="bg-bg">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('/images/cellar.jpg')" }}>
         <div className="absolute inset-0 bg-black/50" />
@@ -175,7 +175,7 @@ export default function CellarDoorPage() {
       </section>
 
       {/* About Cellar Door */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -246,7 +246,7 @@ export default function CellarDoorPage() {
       </section>
 
       {/* Wine List */}
-      <section id="wine-list" className="py-20 bg-white dark:bg-bg">
+      <section id="wine-list" className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -592,7 +592,7 @@ export default function CellarDoorPage() {
       </section>
 
       {/* Getting Here */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg mb-6">
