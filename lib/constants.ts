@@ -15,6 +15,21 @@ export const GALLERY_VIEWING_REQUEST_MAILTO =
   'mailto:gallery@bayviewhub.me?subject=' +
   encodeURIComponent('Viewing Access Request — Bayview Hub Private Viewing Network')
 
+/** Main-site Backyard Small Second Home (SSD) landing and key conversion paths */
+export const SSD_LANDING = {
+  overview: '/backyard-small-second-home',
+  feasibility: '/backyard-small-second-home/feasibility-check',
+  costRoi: '/backyard-small-second-home/cost-rent-roi',
+  victoriaRules: '/backyard-small-second-home/victoria-rules',
+} as const
+
+export const SSD_QUICK_LINKS: { label: string; href: string }[] = [
+  { label: 'Overview', href: SSD_LANDING.overview },
+  { label: 'Feasibility check', href: SSD_LANDING.feasibility },
+  { label: 'Cost, rent & ROI', href: SSD_LANDING.costRoi },
+  { label: 'Victoria rules', href: SSD_LANDING.victoriaRules },
+]
+
 // Site-wide constants
 export const SITE_CONFIG = {
   name: 'Bayview Hub',
@@ -51,11 +66,11 @@ export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = 
   { label: 'Visit', href: '/visit' },
   { label: "What's On", href: '/events' },
   { label: 'Food/Wine', href: 'https://www.thepigandwhistle.com.au/', external: true },
+  { label: 'Backyard Small Second Home', href: SSD_LANDING.overview },
   { label: 'Gallery', href: GALLERY_EXTERNAL.archive, external: true },
   { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Gardens', href: '/edible-gardens' },
-  { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
 ]
 
 // Primary CTAs
@@ -71,16 +86,16 @@ export const EXPERIENCES = {
       id: 'second-home',
       title: 'Backyard Small Second Home',
       blurb: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
-      cta: { label: 'Check If My Property Qualifies', href: '/backyard-small-second-home' },
+      cta: { label: 'Check If My Property Qualifies', href: SSD_LANDING.overview },
       image: '/images/second-home/garden-studio.jpg',
       category: 'stay',
     },
     {
       id: 'gallery',
       title: 'Bayview Arts Gallery',
-      blurb: 'Explore the online collection — now live. Physical gallery launch in development. Seeking the right cofounder and curator to help shape the physical space.',
-      cta: { label: 'Explore Online Gallery', href: GALLERY_EXTERNAL.archive, external: true },
-      ctaSecondary: { label: 'Submit for Curation', href: GALLERY_EXTERNAL.submit, external: true },
+      blurb: 'Browse the collection online. Private viewing by arrangement — and a host pathway for works on private walls.',
+      cta: { label: 'Browse collection', href: GALLERY_EXTERNAL.archive, external: true },
+      ctaSecondary: { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
       prelaunch: true,
       image: '/images/gallery.jpg',
       category: 'create',

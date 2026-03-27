@@ -5,17 +5,28 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { HomeModule } from '@/components/ui/HomeModule'
-import { SITE_CONFIG, EXPERIENCES } from '@/lib/constants'
+import { EXPERIENCES, GALLERY_EXTERNAL, SITE_CONFIG, SSD_LANDING, SSD_QUICK_LINKS } from '@/lib/constants'
 import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 
+type HeroCta = { label: string; href: string; external?: boolean }
+
 // Hero slides data - 5 slides
-const heroSlides = [
+const heroSlides: {
+  id: number
+  category: string
+  title: string
+  description: string
+  cta: HeroCta
+  secondaryCta?: HeroCta
+  image: string
+}[] = [
   {
     id: 1,
     category: 'Enquiries Open',
     title: 'Backyard Small Second Home',
     description: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
-    cta: { label: 'Check If My Property Qualifies', href: '/backyard-small-second-home' },
+    cta: { label: 'Check If My Property Qualifies', href: SSD_LANDING.overview },
+    secondaryCta: { label: 'Feasibility check', href: SSD_LANDING.feasibility },
     image: '/images/second-home/garden-studio.jpg',
   },
   {
@@ -30,8 +41,9 @@ const heroSlides = [
     id: 3,
     category: 'Online Gallery Live',
     title: 'Bayview Arts Gallery',
-    description: 'Explore the online collection now live at gallery.bayviewhub.me. Physical gallery launch in development — seeking the right cofounder and curator.',
-    cta: { label: 'Explore Online Gallery', href: 'https://gallery.bayviewhub.me/archive', external: true },
+    description: 'Browse the curated collection online. Private viewing by arrangement — plus a discreet path for works on private walls.',
+    cta: { label: 'Browse collection', href: GALLERY_EXTERNAL.archive, external: true },
+    secondaryCta: { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
     image: '/images/gallery.jpg',
   },
   {
@@ -151,24 +163,44 @@ export default function HomePage() {
               {slide.description}
             </p>
 
-            {/* CTA Button - Outlined style like The Broad */}
-            {slide.cta.external ? (
-              <a
-                href={slide.cta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
-              >
-                {slide.cta.label}
-              </a>
-            ) : (
-              <Link
-                href={slide.cta.href}
-                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
-              >
-                {slide.cta.label}
-              </Link>
-            )}
+            {/* Primary + optional secondary CTA */}
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+              {slide.cta.external ? (
+                <a
+                  href={slide.cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+                >
+                  {slide.cta.label}
+                </a>
+              ) : (
+                <Link
+                  href={slide.cta.href}
+                  className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+                >
+                  {slide.cta.label}
+                </Link>
+              )}
+              {slide.secondaryCta &&
+                (slide.secondaryCta.external ? (
+                  <a
+                    href={slide.secondaryCta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-white font-semibold text-base tracking-wide uppercase border border-white/50 hover:bg-white/10 transition-colors"
+                  >
+                    {slide.secondaryCta.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={slide.secondaryCta.href}
+                    className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-white font-semibold text-base tracking-wide uppercase border border-white/50 hover:bg-white/10 transition-colors"
+                  >
+                    {slide.secondaryCta.label}
+                  </Link>
+                ))}
+            </div>
           </div>
 
           {/* Navigation Arrow - Left (Desktop only) */}
@@ -179,6 +211,78 @@ export default function HomePage() {
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
+        </div>
+      </section>
+
+      {/* Landing tracks — discoverability for SSD + Gallery / Private Viewing */}
+      <section className="py-12 md:py-16 bg-natural-100 dark:bg-surface/30 border-y border-border">
+        <div className="container mx-auto px-4">
+          <p className="eyebrow text-accent text-center mb-2">Start here</p>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-fg text-center mb-3">
+            Two programmes to explore
+          </h2>
+          <p className="text-muted text-center max-w-2xl mx-auto mb-10 reading">
+            Victorian small second dwelling guidance on-site — and the Bayview Arts Gallery with private viewing by arrangement.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
+              <h3 className="text-xl font-serif font-bold text-fg mb-2">Backyard Small Second Home</h3>
+              <p className="text-muted text-sm leading-relaxed mb-5">
+                For homeowners across Victoria — feasibility, rules, indicative costs, and registration.
+              </p>
+              <ul className="space-y-2 mb-6">
+                {SSD_QUICK_LINKS.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="text-accent font-medium hover:underline">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={SSD_LANDING.overview}
+                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+              >
+                Go to overview
+              </Link>
+            </div>
+            <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
+              <h3 className="text-xl font-serif font-bold text-fg mb-2">Gallery &amp; Private Viewing</h3>
+              <p className="text-muted text-sm leading-relaxed mb-5">
+                For collectors and invited viewers, artists, and hosts — collection online; viewing by arrangement.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li>
+                  <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-accent font-medium hover:underline">
+                    Private Viewing (programme overview)
+                  </a>
+                </li>
+                <li>
+                  <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-accent font-medium hover:underline">
+                    Open Your Wall — register a work
+                  </a>
+                </li>
+                <li>
+                  <a href={GALLERY_EXTERNAL.archive} target="_blank" rel="noopener noreferrer" className="text-accent font-medium hover:underline">
+                    Browse collection
+                  </a>
+                </li>
+                <li>
+                  <a href={GALLERY_EXTERNAL.submit} target="_blank" rel="noopener noreferrer" className="text-accent font-medium hover:underline">
+                    Submit artwork for curation
+                  </a>
+                </li>
+              </ul>
+              <a
+                href={GALLERY_EXTERNAL.archive}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+              >
+                Browse collection
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -247,8 +351,11 @@ export default function HomePage() {
                 <p className="text-muted leading-relaxed reading mb-4">
                   Wine, dining, art, workshops, live music, and gardens—all on 30 stunning acres.
                 </p>
-                <Link href="/experiences" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline">
+                <Link href="/experiences" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline block mb-2">
                   Learn More
+                </Link>
+                <Link href={SSD_LANDING.overview} className="text-fg font-medium text-base hover:text-accent hover:underline">
+                  Backyard Small Second Home
                 </Link>
               </div>
             </div>
@@ -257,7 +364,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Content Block */}
-      <section className="py-16 md:py-20 bg-gray-50 dark:bg-surface">
+      <section className="py-16 md:py-20 bg-natural-100 dark:bg-surface/40">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Image */}
@@ -340,7 +447,7 @@ export default function HomePage() {
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="flex-1 px-5 py-4 border border-border rounded bg-white dark:bg-surface text-fg placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="flex-1 px-5 py-4 border border-border rounded bg-surface text-fg placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                       required
                     />
                     <button
