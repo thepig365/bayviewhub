@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { NAV_ITEMS } from '@/lib/constants'
+import { GALLERY_EXTERNAL, GALLERY_VIEWING_REQUEST_MAILTO, NAV_ITEMS } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
@@ -195,24 +195,75 @@ export function Header() {
 
               <section className="space-y-3 border-t border-border pt-5">
                 <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Sub-Sites</h3>
-                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40">
+                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40" open>
                   <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
                     <span>Art Gallery</span>
-                    <ChevronDown className="h-4 w-4" />
+                    <ChevronDown className="h-4 w-4 shrink-0" />
                   </summary>
-                  <div className="px-4 pb-4 space-y-1">
-                    <a href="https://gallery.bayviewhub.me/archive" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Collection
-                    </a>
-                    <a href="https://gallery.bayviewhub.me/submit" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Submit Artwork for Curation
-                    </a>
-                    <a href="https://gallery.bayviewhub.me/protocol" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Assessment Protocol
-                    </a>
-                    <a href="https://gallery.bayviewhub.me/rights" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Rights & Licensing
-                    </a>
+                  <div className="px-4 pb-4 space-y-4">
+                    <div className="rounded-lg border border-accent/25 bg-natural-50 dark:bg-bg/80 p-3 space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-accent dark:text-accent">
+                        Private viewing network
+                      </p>
+                      <p className="text-sm text-muted leading-snug">
+                        By arrangement — for hosts, artists, and invited viewers.
+                      </p>
+                      <a
+                        href={GALLERY_EXTERNAL.openYourWall}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded-md px-3 py-2.5 text-base font-semibold text-fg bg-white/90 dark:bg-surface border border-border hover:border-accent hover:text-accent transition-colors"
+                      >
+                        Open Your Wall
+                      </a>
+                      <a
+                        href={GALLERY_VIEWING_REQUEST_MAILTO}
+                        onClick={closeMenu}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-fg/90 hover:text-accent transition-colors underline-offset-2 hover:underline"
+                      >
+                        Request private viewing
+                      </a>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="px-2 text-xs font-semibold uppercase tracking-wide text-muted">Collection & artists</p>
+                      <a
+                        href={GALLERY_EXTERNAL.archive}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
+                      >
+                        Browse collection
+                      </a>
+                      <a
+                        href={GALLERY_EXTERNAL.submit}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
+                      >
+                        Submit artwork for curation
+                      </a>
+                      <a
+                        href={GALLERY_EXTERNAL.protocol}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
+                      >
+                        Assessment protocol
+                      </a>
+                      <a
+                        href={GALLERY_EXTERNAL.rights}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
+                      >
+                        Rights & licensing
+                      </a>
+                    </div>
                   </div>
                 </details>
                 <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40">
@@ -249,8 +300,11 @@ export function Header() {
                   <Button href="/backyard-small-second-home#register" variant="outline" size="md" className="w-full" onClick={closeMenu}>
                     Build Second Home
                   </Button>
-                  <Button href="https://gallery.bayviewhub.me/archive" variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Collection of Arts
+                  <Button href={GALLERY_EXTERNAL.openYourWall} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                    Open Your Wall
+                  </Button>
+                  <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                    Browse gallery
                   </Button>
                 </div>
               </section>

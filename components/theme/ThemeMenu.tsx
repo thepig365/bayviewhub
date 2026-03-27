@@ -84,7 +84,7 @@ export function ThemeMenu({ className }: { className?: string }) {
                 'flex items-center gap-2 rounded-lg border px-3 py-2 text-left transition-colors',
                 selected
                   ? 'border-accent bg-accent-soft text-fg dark:bg-surface dark:text-fg dark:border-accent'
-                  : 'border-border bg-white dark:bg-bg text-fg hover:bg-natural-100 dark:hover:bg-surface dark:border-border'
+                  : 'border-border bg-bg text-fg hover:bg-natural-100 dark:hover:bg-surface dark:border-border'
               )}
             >
               <Icon className="h-4 w-4" />

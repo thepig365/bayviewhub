@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function FoundingGalleryPackPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-bg">
+    <main className="min-h-screen bg-bg">
       {/* Section 1: One-page statement */}
       <section className="py-20 md:py-28 border-b border-border">
         <div className="container mx-auto px-4">

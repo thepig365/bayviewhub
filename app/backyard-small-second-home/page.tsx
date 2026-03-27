@@ -132,7 +132,7 @@ export default function BackyardSmallSecondHomePage() {
           </div>
         </div>
       </div>
-      <Suspense fallback={<div className="min-h-screen bg-white dark:bg-neutral-900" />}>
+      <Suspense fallback={<div className="min-h-screen bg-bg" />}>
         <SecondHomeClient />
       </Suspense>
     </>

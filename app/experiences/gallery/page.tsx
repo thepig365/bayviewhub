@@ -57,7 +57,7 @@ export default function GalleryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg dark">
+    <div className="min-h-screen bg-bg">
       {/* Hero: Split Screen */}
       <section className="min-h-[80vh] flex">
         <div className="hidden md:flex w-1/2 bg-border items-center justify-center">

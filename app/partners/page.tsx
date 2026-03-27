@@ -79,7 +79,7 @@ export default function PartnersPage() {
       </section>
 
       {/* What We Offer */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-fg">
@@ -154,7 +154,7 @@ export default function PartnersPage() {
       </section>
 
       {/* Application Form */}
-      <section id="apply" className="py-20 bg-white dark:bg-bg">
+      <section id="apply" className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl font-serif font-bold text-natural-900 mb-8 text-center dark:text-fg">

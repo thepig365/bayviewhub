@@ -14,7 +14,7 @@ export const metadata = genMeta({
 
 export default function EdibleGardensHowItWorksPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-bg">
+    <main className="min-h-screen bg-bg">
       {/* Answer Capsule */}
       <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-natural-200 dark:border-border">
         <div className="container mx-auto px-4">

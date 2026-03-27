@@ -15,7 +15,7 @@ export const metadata = {
 export default function UtmToolsPage() {
   return (
     <div className="min-h-screen dark:bg-bg">
-      <section className="py-16 bg-white dark:bg-bg">
+      <section className="py-16 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 dark:text-fg">

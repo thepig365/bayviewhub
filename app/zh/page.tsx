@@ -235,7 +235,7 @@ export default function ChineseHomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white dark:bg-bg">
+      <section className="py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
