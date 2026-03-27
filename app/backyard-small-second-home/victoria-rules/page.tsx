@@ -54,7 +54,7 @@ export default function VictoriaRulesPage() {
       <section className="py-16 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-8">
-            <p className="text-sm text-muted mb-6">Summary — based on VC253 and VC282 as gazetted. Verify via official sources below.</p>
+            <p className="text-base text-muted mb-6">Summary — based on VC253 and VC282 as gazetted. Verify via official sources below.</p>
             <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
               <h3 className="font-bold text-natural-900 mb-2 dark:text-fg">Maximum GFA: 60 sqm</h3>
               <p className="text-muted">Gross Floor Area cannot exceed 60 square meters per DTP guidelines. No exceptions.</p>
@@ -79,7 +79,7 @@ export default function VictoriaRulesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h3 className="font-semibold text-fg mb-4">Official Sources &amp; Legislation</h3>
-            <ol className="list-decimal list-inside space-y-2 text-sm text-muted">
+            <ol className="list-decimal list-inside space-y-2 text-base text-muted">
               <li>
                 <a href="https://www.planning.vic.gov.au/guides-and-resources/strategies-and-initiatives/small-second-dwellings" target="_blank" rel="noopener noreferrer" className="underline hover:text-fg transition-colors">Victorian Planning Authority — Small Second Dwellings</a>
               </li>

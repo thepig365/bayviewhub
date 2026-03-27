@@ -93,7 +93,7 @@ export function PrelaunchButton({
             </h3>
             <p
               id={descId}
-              className="mt-3 text-sm leading-relaxed whitespace-pre-line text-fg"
+              className="mt-3 text-base leading-relaxed whitespace-pre-line text-fg"
             >
               {message}
             </p>

@@ -58,7 +58,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
         )}
       </button>
       {isOpen && answer && (
-        <div className="pb-5 text-muted-foreground leading-relaxed pr-12 text-sm">
+        <div className="pb-5 text-muted-foreground leading-relaxed pr-12 text-base">
           {answer}
         </div>
       )}
@@ -96,7 +96,7 @@ function ChecklistItem({ label, checked, onChange }: ChecklistItemProps) {
       >
         {checked && <Check className="w-3 h-3 text-primary-foreground" />}
       </div>
-      <span className="text-sm text-foreground leading-relaxed">{label}</span>
+      <span className="text-base text-foreground leading-relaxed">{label}</span>
     </div>
   );
 }
@@ -203,7 +203,7 @@ function FeasibilityForm() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="space-y-1.5">
-            <label htmlFor="suburb" className="text-sm font-medium">
+            <label htmlFor="suburb" className="text-base font-medium">
               Suburb/Address (VIC) <span className="text-destructive">*</span>
             </label>
             <input
@@ -215,14 +215,14 @@ function FeasibilityForm() {
                 handleInputChange("suburb", e.target.value);
                 if (formError) setFormError("");
               }}
-              className={`flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+              className={`flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 formError ? "border-destructive" : "border-input"
               }`}
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="lotSize" className="text-sm font-medium">
+            <label htmlFor="lotSize" className="text-base font-medium">
               Lot Size (sqm)
             </label>
             <input
@@ -231,12 +231,12 @@ function FeasibilityForm() {
               placeholder="e.g. 600"
               value={formData.lotSize}
               onChange={(e) => handleInputChange("lotSize", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label htmlFor="email" className="text-base font-medium">
               Email
             </label>
             <input
@@ -246,12 +246,12 @@ function FeasibilityForm() {
               placeholder="your@email.com"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="phone" className="text-sm font-medium">
+            <label htmlFor="phone" className="text-base font-medium">
               Phone
             </label>
             <input
@@ -261,19 +261,19 @@ function FeasibilityForm() {
               placeholder="0400 000 000"
               value={formData.phone}
               onChange={(e) => handleInputChange("phone", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="slope" className="text-sm font-medium">
+            <label htmlFor="slope" className="text-base font-medium">
               Site Slope
             </label>
             <select
               id="slope"
               value={formData.slope}
               onChange={(e) => handleInputChange("slope", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="">Select</option>
               <option value="flat">Flat</option>
@@ -284,14 +284,14 @@ function FeasibilityForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="access" className="text-sm font-medium">
+            <label htmlFor="access" className="text-base font-medium">
               Site Access
             </label>
             <select
               id="access"
               value={formData.access}
               onChange={(e) => handleInputChange("access", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="">Select</option>
               <option value="narrow">Narrow</option>
@@ -302,14 +302,14 @@ function FeasibilityForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="intention" className="text-sm font-medium">
+            <label htmlFor="intention" className="text-base font-medium">
               Primary Use
             </label>
             <select
               id="intention"
               value={formData.intention}
               onChange={(e) => handleInputChange("intention", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="">Select</option>
               <option value="family">Multi-generational</option>
@@ -319,14 +319,14 @@ function FeasibilityForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="readyToProceed" className="text-sm font-medium">
+            <label htmlFor="readyToProceed" className="text-base font-medium">
               Timeline
             </label>
             <select
               id="readyToProceed"
               value={formData.readyToProceed}
               onChange={(e) => handleInputChange("readyToProceed", e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="">Select</option>
               <option value="yes">Within 6 months</option>
@@ -337,7 +337,7 @@ function FeasibilityForm() {
         </div>
 
         {formError && (
-          <p className="text-sm text-destructive font-medium">{formError}</p>
+          <p className="text-base text-destructive font-medium">{formError}</p>
         )}
 
         {/* Honeypot field - hidden from humans */}
@@ -354,7 +354,7 @@ function FeasibilityForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 w-full md:w-auto disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-md text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 w-full md:w-auto disabled:opacity-50"
         >
           {isSubmitting ? "Processing..." : "Submit for Assessment"}
           {!isSubmitting && <ArrowRight className="w-4 h-4" />}
@@ -414,7 +414,7 @@ function PathToApprovalEngine() {
     <div className="bg-card border border-border rounded-xl overflow-hidden">
       <div className="p-6 border-b border-border bg-muted/30">
         <h3 className="text-lg font-bold text-foreground">Path to Approval Engine</h3>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Input your site parameters. The engine determines your approval pathway.
         </p>
       </div>
@@ -422,11 +422,11 @@ function PathToApprovalEngine() {
       <div className="p-6 space-y-5">
         {/* GFA Input */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Proposed GFA (Gross Floor Area)</label>
+          <label className="text-base font-medium">Proposed GFA (Gross Floor Area)</label>
           <div className="flex gap-3">
             <button
               onClick={() => setGfa("under60")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 gfa === "under60"
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background border-border hover:border-primary/50"
@@ -436,7 +436,7 @@ function PathToApprovalEngine() {
             </button>
             <button
               onClick={() => setGfa("over60")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 gfa === "over60"
                   ? "bg-destructive text-white border-destructive"
                   : "bg-background border-border hover:border-destructive/50"
@@ -449,11 +449,11 @@ function PathToApprovalEngine() {
 
         {/* Siting Input */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Proposed Siting</label>
+          <label className="text-base font-medium">Proposed Siting</label>
           <div className="flex gap-3">
             <button
               onClick={() => setSiting("behind")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 siting === "behind"
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background border-border hover:border-primary/50"
@@ -463,7 +463,7 @@ function PathToApprovalEngine() {
             </button>
             <button
               onClick={() => setSiting("front")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 siting === "front"
                   ? "bg-destructive text-white border-destructive"
                   : "bg-background border-border hover:border-destructive/50"
@@ -476,11 +476,11 @@ function PathToApprovalEngine() {
 
         {/* Overlays Input */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Planning Overlays (Heritage, Flood, etc.)</label>
+          <label className="text-base font-medium">Planning Overlays (Heritage, Flood, etc.)</label>
           <div className="flex gap-3">
             <button
               onClick={() => setOverlays("none")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 overlays === "none"
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background border-border hover:border-primary/50"
@@ -490,7 +490,7 @@ function PathToApprovalEngine() {
             </button>
             <button
               onClick={() => setOverlays("some")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 overlays === "some"
                   ? "bg-amber-500 text-white border-amber-500"
                   : "bg-background border-border hover:border-amber-500/50"
@@ -503,11 +503,11 @@ function PathToApprovalEngine() {
 
         {/* Setbacks Input */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Clause 54.03 Setbacks</label>
+          <label className="text-base font-medium">Clause 54.03 Setbacks</label>
           <div className="flex gap-3">
             <button
               onClick={() => setSetbacks("compliant")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 setbacks === "compliant"
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background border-border hover:border-primary/50"
@@ -517,7 +517,7 @@ function PathToApprovalEngine() {
             </button>
             <button
               onClick={() => setSetbacks("minor")}
-              className={`flex-1 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+              className={`flex-1 px-4 py-2.5 rounded-lg border text-base font-medium transition-all ${
                 setbacks === "minor"
                   ? "bg-amber-500 text-white border-amber-500"
                   : "bg-background border-border hover:border-amber-500/50"
@@ -544,10 +544,10 @@ function PathToApprovalEngine() {
                 </div>
                 <div>
                   <h4 className="font-bold text-emerald-700 dark:text-emerald-400">GREEN LANE: No Planning Permit</h4>
-                  <p className="text-sm text-emerald-600 dark:text-emerald-500">100% Compliant</p>
+                  <p className="text-base text-emerald-600 dark:text-emerald-500">100% Compliant</p>
                 </div>
               </div>
-              <p className="text-sm text-emerald-800 dark:text-emerald-300 leading-relaxed">
+              <p className="text-base text-emerald-800 dark:text-emerald-300 leading-relaxed">
                 Result: Site meets Deemed-to-Comply criteria under Clause 54.03. <strong>No Planning Permit required.</strong> Proceed directly to Building Permit application with a registered building surveyor.
               </p>
             </div>
@@ -561,10 +561,10 @@ function PathToApprovalEngine() {
                 </div>
                 <div>
                   <h4 className="font-bold text-amber-700 dark:text-amber-400">VICSMART FAST TRACK: 10-Day Approval</h4>
-                  <p className="text-sm text-amber-600 dark:text-amber-500">VC282 Expedited Pathway</p>
+                  <p className="text-base text-amber-600 dark:text-amber-500">VC282 Expedited Pathway</p>
                 </div>
               </div>
-              <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
+              <p className="text-base text-amber-800 dark:text-amber-300 leading-relaxed">
                 Result: Site is SSD-eligible but triggers overlay or requires minor setback variation. <strong>VicSmart pathway applies.</strong> Council must decide within 10 business days. No neighbor notification required. Reference: VC282 Fast-Track provisions.
               </p>
             </div>
@@ -578,10 +578,10 @@ function PathToApprovalEngine() {
                 </div>
                 <div>
                   <h4 className="font-bold text-red-700 dark:text-red-400">RED ZONE: Non-SSD Project</h4>
-                  <p className="text-sm text-red-600 dark:text-red-500">Outside Framework</p>
+                  <p className="text-base text-red-600 dark:text-red-500">Outside Framework</p>
                 </div>
               </div>
-              <p className="text-sm text-red-800 dark:text-red-300 leading-relaxed">
+              <p className="text-base text-red-800 dark:text-red-300 leading-relaxed">
                 Result: Project falls outside the Small Second Dwelling framework. <strong>Expect 12-18 months in Planning</strong> with standard permit process. Neighbor notification, potential objections, and VCAT risk. Consider engaging a traditional developer or reducing scope to comply with SSD requirements.
               </p>
             </div>
@@ -600,7 +600,7 @@ function PermitExplainer() {
     <div className="bg-card border border-border rounded-xl overflow-hidden">
       <div className="p-6 border-b border-border bg-muted/30">
         <h3 className="text-lg font-bold text-foreground">Do I Need a Permit?</h3>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Understanding the difference between Planning Permit and Building Permit.
         </p>
       </div>
@@ -608,7 +608,7 @@ function PermitExplainer() {
       <div className="flex border-b border-border">
         <button
           onClick={() => setActiveTab("planning")}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3 text-base font-medium transition-colors ${
             activeTab === "planning"
               ? "bg-primary/10 text-primary border-b-2 border-primary"
               : "text-muted-foreground hover:text-foreground"
@@ -618,7 +618,7 @@ function PermitExplainer() {
         </button>
         <button
           onClick={() => setActiveTab("building")}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3 text-base font-medium transition-colors ${
             activeTab === "building"
               ? "bg-primary/10 text-primary border-b-2 border-primary"
               : "text-muted-foreground hover:text-foreground"
@@ -635,18 +635,18 @@ function PermitExplainer() {
               <FileText className="w-5 h-5 text-primary mt-0.5" />
               <div>
                 <h4 className="font-medium text-foreground">Planning Permit</h4>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-base text-muted-foreground mt-1">
                   Assesses land use, neighborhood impact, overlays. Required when you <em>don&apos;t</em> meet Deemed-to-Comply criteria.
                 </p>
               </div>
             </div>
             <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-lg p-4">
-              <p className="text-sm text-emerald-800 dark:text-emerald-300">
+              <p className="text-base text-emerald-800 dark:text-emerald-300">
                 <strong>SSD Advantage:</strong> If your SSD meets Clause 54.03 criteria (≤60sqm, behind front wall, no gas, 25sqm POS retained), planning permit is <strong>bypassed entirely</strong>. That is the value proposition.
               </p>
             </div>
             <div className="bg-amber-50 dark:bg-amber-950/30 rounded-lg p-4">
-              <p className="text-sm text-amber-800 dark:text-amber-300">
+              <p className="text-base text-amber-800 dark:text-amber-300">
                 <strong>VicSmart Alternative:</strong> If overlays are present but SSD otherwise compliant, VicSmart expedites approval to 10 business days with no neighbor notification.
               </p>
             </div>
@@ -659,18 +659,18 @@ function PermitExplainer() {
               <Building className="w-5 h-5 text-primary mt-0.5" />
               <div>
                 <h4 className="font-medium text-foreground">Building Permit</h4>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-base text-muted-foreground mt-1">
                   Assesses structural safety, energy compliance, bushfire (BAL), NCC requirements. <strong>Always mandatory</strong> for any dwelling.
                 </p>
               </div>
             </div>
             <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 <strong>Process:</strong> Engage a Registered Building Surveyor (RBS). Submit working drawings, engineering, energy report. Surveyor issues permit. Inspections during build. Certificate of Occupancy on completion.
               </p>
             </div>
             <div className="bg-primary/5 rounded-lg p-4">
-              <p className="text-sm text-foreground">
+              <p className="text-base text-foreground">
                 <strong>Timeline:</strong> Building permit typically 2-4 weeks once documentation complete. No council discretion — surveyor assesses against code. If compliant, permit issued.
               </p>
             </div>
@@ -745,7 +745,7 @@ export default function FeasibilityChecklistPage() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-xs font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">
+          <div className="text-sm font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">
             Victorian SSD Logic Engine · VC253/VC282 · 2026
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-fg dark:text-white">
@@ -762,14 +762,14 @@ export default function FeasibilityChecklistPage() {
           <div className="flex flex-wrap gap-4">
             <button
               onClick={scrollToEngine}
-              className="inline-flex items-center gap-2 bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 h-10 px-6 rounded-md text-sm font-medium"
+              className="inline-flex items-center gap-2 bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 h-10 px-6 rounded-md text-base font-medium"
             >
               Run Path to Approval Engine
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center gap-2 border border-neutral-400 text-fg hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-800 h-10 px-6 rounded-md text-sm font-medium"
+              className="inline-flex items-center gap-2 border border-neutral-400 text-fg hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-800 h-10 px-6 rounded-md text-base font-medium"
             >
               Submit for Assessment
             </button>
@@ -795,8 +795,8 @@ export default function FeasibilityChecklistPage() {
               return (
                 <div key={idx} className="bg-card border border-border rounded-lg p-4 text-center">
                   <Icon className="w-5 h-5 mx-auto mb-2 text-primary" />
-                  <div className="text-xs text-muted-foreground">{item.label}</div>
-                  <div className="text-sm font-medium text-foreground">{item.value}</div>
+                  <div className="text-sm text-muted-foreground">{item.label}</div>
+                  <div className="text-base font-medium text-foreground">{item.value}</div>
                 </div>
               );
             })}
@@ -931,7 +931,7 @@ export default function FeasibilityChecklistPage() {
             ].map((risk, idx) => (
               <div key={idx} className="flex items-start gap-3 p-4 bg-destructive/5 border border-destructive/15 rounded-lg">
                 <XCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-sm">{risk}</span>
+                <span className="text-foreground text-base">{risk}</span>
               </div>
             ))}
           </div>
@@ -958,9 +958,9 @@ export default function FeasibilityChecklistPage() {
               return (
                 <div key={idx} className="bg-card border border-border rounded-xl p-6 text-center">
                   <Icon className="w-8 h-8 text-primary mx-auto mb-4" />
-                  <div className="text-xs font-medium text-primary uppercase tracking-wider mb-1">{item.tier}</div>
+                  <div className="text-sm font-medium text-primary uppercase tracking-wider mb-1">{item.tier}</div>
                   <h3 className="font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <p className="text-base text-muted-foreground">{item.desc}</p>
                 </div>
               );
             })}
@@ -988,11 +988,11 @@ export default function FeasibilityChecklistPage() {
               "Construction + handover",
             ].map((step, idx) => (
               <div key={idx} className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center text-base font-bold flex-shrink-0">
                   {idx + 1}
                 </div>
                 <div className="flex-1 bg-card border border-border rounded-lg py-3 px-4">
-                  <span className="text-foreground text-sm">{step}</span>
+                  <span className="text-foreground text-base">{step}</span>
                 </div>
               </div>
             ))}
@@ -1016,12 +1016,12 @@ export default function FeasibilityChecklistPage() {
           <div className="mt-8 flex flex-col items-center gap-2">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-full px-4 py-2 hover:bg-muted/50"
+              className="inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground border border-border rounded-full px-4 py-2 hover:bg-muted/50"
             >
               <Share2 className="w-4 h-4" />
               Share this tool
             </button>
-            {shareMessage && <span className="text-sm text-primary">{shareMessage}</span>}
+            {shareMessage && <span className="text-base text-primary">{shareMessage}</span>}
           </div>
         </div>
       </section>
@@ -1061,14 +1061,14 @@ export default function FeasibilityChecklistPage() {
       <section className="py-10 bg-neutral-100 dark:bg-neutral-800 border-t border-border">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-6">
-            <p className="text-sm font-medium text-muted mb-1">
+            <p className="text-base font-medium text-muted mb-1">
               Victorian SSD Regulatory Compliance Service
             </p>
-            <p className="text-xs text-muted">
+            <p className="text-sm text-muted">
               Registered VicSmart Pathway Provider · Clause 54.03 Specialist
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted mb-4">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted mb-4">
             <a
               href="https://www.planning.vic.gov.au/"
               target="_blank"
@@ -1083,7 +1083,7 @@ export default function FeasibilityChecklistPage() {
             <span>·</span>
             <span>Victoria Planning Provisions</span>
           </div>
-          <p className="text-xs text-muted text-center">
+          <p className="text-sm text-muted text-center">
             This tool provides regulatory guidance and does not constitute legal or planning advice.
             Engage qualified professionals for site-specific determinations.
           </p>

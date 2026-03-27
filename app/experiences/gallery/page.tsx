@@ -87,7 +87,7 @@ export default function GalleryPage() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <a href="#inquiry" className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all">
+              <a href="#inquiry" className="px-6 py-3 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all">
                 Inquire Now
               </a>
             </div>
@@ -154,7 +154,7 @@ export default function GalleryPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-muted text-sm mb-2">Name *</label>
+                    <label className="block text-muted text-base mb-2">Name *</label>
                     <input
                       type="text"
                       required
@@ -164,7 +164,7 @@ export default function GalleryPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-muted text-sm mb-2">Email *</label>
+                    <label className="block text-muted text-base mb-2">Email *</label>
                     <input
                       type="email"
                       required
@@ -176,7 +176,7 @@ export default function GalleryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-muted text-sm mb-2">Background *</label>
+                  <label className="block text-muted text-base mb-2">Background *</label>
                   <textarea
                     required
                     rows={2}
@@ -188,7 +188,7 @@ export default function GalleryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-muted text-sm mb-2">Vision *</label>
+                  <label className="block text-muted text-base mb-2">Vision *</label>
                   <textarea
                     required
                     rows={2}
@@ -208,7 +208,7 @@ export default function GalleryPage() {
                 </button>
 
                 {status === 'error' && (
-                  <p className="text-muted text-center text-sm">
+                  <p className="text-muted text-center text-base">
                     Error. Email: {SITE_CONFIG.email}
                   </p>
                 )}

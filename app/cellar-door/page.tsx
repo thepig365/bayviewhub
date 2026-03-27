@@ -152,20 +152,20 @@ export default function CellarDoorPage() {
             <div className="flex items-center space-x-2 md:space-x-3">
               <Clock className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm md:text-base">Wed–Sun</p>
-                <p className="text-xs md:text-sm text-white">11:00 AM - Late</p>
+                <p className="font-semibold text-base">Wed–Sun</p>
+                <p className="text-base text-white">11:00 AM - Late</p>
               </div>
             </div>
             <div className="flex items-center space-x-2 md:space-x-3">
               <MapPin className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
               <div>
-                <p className="font-semibold text-xs md:text-base">{SITE_CONFIG.address}</p>
+                <p className="font-semibold text-base">{SITE_CONFIG.address}</p>
               </div>
             </div>
             <div className="flex items-center space-x-2 md:space-x-3">
               <Phone className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
               <div>
-                <Link href={`tel:${SITE_CONFIG.phone}`} className="hover:text-accent transition-colors text-sm md:text-base font-semibold">
+                <Link href={`tel:${SITE_CONFIG.phone}`} className="hover:text-accent transition-colors text-base font-semibold">
                   {SITE_CONFIG.phone}
                 </Link>
               </div>
@@ -226,7 +226,7 @@ export default function CellarDoorPage() {
                   {experience.title}
                 </h3>
                 <p className="text-3xl font-bold text-accent mb-2">{experience.price}</p>
-                <p className="text-sm text-muted mb-4 flex items-center">
+                <p className="text-base text-muted mb-4 flex items-center">
                   <Clock className="w-4 h-4 mr-2" />
                   {experience.duration}
                 </p>
@@ -234,7 +234,7 @@ export default function CellarDoorPage() {
                   {experience.description}
                 </p>
                 <div className="bg-primary-400/20 rounded-lg p-3 mb-6 dark:bg-surface/50 dark:border dark:border-border">
-                  <p className="text-sm font-semibold text-fg dark:text-accent">Includes: {experience.wines}</p>
+                  <p className="text-base font-semibold text-fg dark:text-accent">Includes: {experience.wines}</p>
                 </div>
                 <Button href="#book" variant="primary" className="w-full">
                   Book This Experience
@@ -261,7 +261,7 @@ export default function CellarDoorPage() {
               <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
+                  className={`px-4 md:px-6 py-2 rounded-full text-base font-medium transition-colors ${
                     selectedCategory === 'all'
                       ? 'bg-primary text-white'
                       : 'bg-natural-100 text-fg hover:bg-natural-200'
@@ -271,7 +271,7 @@ export default function CellarDoorPage() {
                 </button>
                 <button
                   onClick={() => setSelectedCategory('sparklingAndRose')}
-                  className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
+                  className={`px-4 md:px-6 py-2 rounded-full text-base font-medium transition-colors ${
                     selectedCategory === 'sparklingAndRose'
                       ? 'bg-primary text-white'
                       : 'bg-natural-100 text-fg hover:bg-natural-200'
@@ -281,7 +281,7 @@ export default function CellarDoorPage() {
                 </button>
                 <button
                   onClick={() => setSelectedCategory('whites')}
-                  className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
+                  className={`px-4 md:px-6 py-2 rounded-full text-base font-medium transition-colors ${
                     selectedCategory === 'whites'
                       ? 'bg-primary text-white'
                       : 'bg-natural-100 text-fg hover:bg-natural-200'
@@ -291,7 +291,7 @@ export default function CellarDoorPage() {
                 </button>
                 <button
                   onClick={() => setSelectedCategory('reds')}
-                  className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
+                  className={`px-4 md:px-6 py-2 rounded-full text-base font-medium transition-colors ${
                     selectedCategory === 'reds'
                       ? 'bg-primary text-white'
                       : 'bg-natural-100 text-fg hover:bg-natural-200'
@@ -301,7 +301,7 @@ export default function CellarDoorPage() {
                 </button>
                 <button
                   onClick={() => setSelectedCategory('dessert')}
-                  className={`px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
+                  className={`px-4 md:px-6 py-2 rounded-full text-base font-medium transition-colors ${
                     selectedCategory === 'dessert'
                       ? 'bg-primary text-white'
                       : 'bg-natural-100 text-fg hover:bg-natural-200'
@@ -321,7 +321,7 @@ export default function CellarDoorPage() {
                       <h3 className="text-xl font-serif font-bold text-fg mb-1">
                         {wine.name}
                       </h3>
-                      <p className="text-sm text-muted mb-2">
+                      <p className="text-base text-muted mb-2">
                         {wine.variety} • {wine.vintage}
                       </p>
                     </div>
@@ -467,7 +467,7 @@ export default function CellarDoorPage() {
               </div>
 
               <div className="bg-accent-500 rounded-2xl p-8 text-fg border-4 border-accent-600 shadow-2xl relative">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-800 text-white px-6 py-2 rounded-full text-sm font-bold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-800 text-white px-6 py-2 rounded-full text-base font-bold">
                   MOST POPULAR
                 </div>
                 <h3 className="text-2xl font-serif font-bold mb-2 text-fg">Premium Membership</h3>

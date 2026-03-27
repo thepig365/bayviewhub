@@ -103,19 +103,19 @@ export default function FoundingGalleryPackPage() {
             </p>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <p className="text-muted text-sm mb-2 ">Not</p>
+                <p className="text-muted text-base mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Employment</p>
-                <p className="text-sm text-muted mt-2 ">You're not staff. You lead your own practice.</p>
+                <p className="text-base text-muted mt-2 ">You're not staff. You lead your own practice.</p>
               </div>
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <p className="text-muted text-sm mb-2 ">Not</p>
+                <p className="text-muted text-base mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Franchising</p>
-                <p className="text-sm text-muted mt-2 ">No playbook to follow. You shape the program.</p>
+                <p className="text-base text-muted mt-2 ">No playbook to follow. You shape the program.</p>
               </div>
               <div className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                <p className="text-muted text-sm mb-2 ">Not</p>
+                <p className="text-muted text-base mb-2 ">Not</p>
                 <p className="font-medium text-fg ">Rent / Tenancy</p>
-                <p className="text-sm text-muted mt-2 ">No lease. Partnership structure discussed after alignment.</p>
+                <p className="text-base text-muted mt-2 ">No lease. Partnership structure discussed after alignment.</p>
               </div>
             </div>
           </div>
@@ -239,21 +239,21 @@ export default function FoundingGalleryPackPage() {
             </p>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">1</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-base dark:bg-surface dark:text-primary-300">1</span>
                 <div>
                   <h3 className="font-bold text-fg ">Initial call</h3>
                   <p className="text-muted">A short conversation to see if there's mutual interest.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">2</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-base dark:bg-surface dark:text-primary-300">2</span>
                 <div>
                   <h3 className="font-bold text-fg ">Site walk</h3>
                   <p className="text-muted">Visit the estate. See the space. Feel the context.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm dark:bg-surface dark:text-primary-300">3</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-base dark:bg-surface dark:text-primary-300">3</span>
                 <div>
                   <h3 className="font-bold text-fg ">Deeper session</h3>
                   <p className="text-muted">If alignment exists, a longer conversation about program vision and partnership shape.</p>
@@ -282,7 +282,7 @@ export default function FoundingGalleryPackPage() {
       {/* Disclaimer */}
       <section className="py-6 bg-natural-900">
         <div className="container mx-auto px-4">
-          <p className="text-xs text-subtle text-center max-w-2xl mx-auto">
+          <p className="text-sm text-subtle text-center max-w-2xl mx-auto">
             Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services. This document is for exploratory conversation only and does not constitute an offer or contract.
           </p>
         </div>

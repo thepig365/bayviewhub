@@ -66,7 +66,7 @@ export function EdibleGardensClient() {
               {plannedFeatures.map((item) => (
                 <div key={item.title} className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
                   <h3 className="font-bold text-fg mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted">{item.description}</p>
+                  <p className="text-base text-muted">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -121,7 +121,7 @@ export function EdibleGardensClient() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-2xl p-8 shadow-lg border border-natural-200 dark:bg-surface dark:border-border">
                 <div>
-                  <label htmlFor="waitlist-name" className="block text-sm font-medium text-fg mb-2">
+                  <label htmlFor="waitlist-name" className="block text-base font-medium text-fg mb-2">
                     Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -134,7 +134,7 @@ export function EdibleGardensClient() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="waitlist-email" className="block text-sm font-medium text-fg mb-2">
+                  <label htmlFor="waitlist-email" className="block text-base font-medium text-fg mb-2">
                     Email <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -147,7 +147,7 @@ export function EdibleGardensClient() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="waitlist-family" className="block text-sm font-medium text-fg mb-2">
+                  <label htmlFor="waitlist-family" className="block text-base font-medium text-fg mb-2">
                     Family size (optional)
                   </label>
                   <input
@@ -163,7 +163,7 @@ export function EdibleGardensClient() {
                   {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
                 </Button>
                 {status === 'error' && (
-                  <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
+                  <p className="text-red-500 text-base text-center">Something went wrong. Please try again.</p>
                 )}
               </form>
             )}
@@ -195,7 +195,7 @@ export function EdibleGardensClient() {
       {/* Footer Note */}
       <section className="py-8 border-t border-border">
         <div className="container mx-auto px-4">
-          <p className="text-xs text-muted text-center max-w-2xl mx-auto">
+          <p className="text-sm text-muted text-center max-w-2xl mx-auto">
             This program is currently in Concept Plan stage. Launch timing depends on securing a Founding Partner.
             Joining the waitlist does not guarantee a subscription spot but gives you priority when we launch.
           </p>

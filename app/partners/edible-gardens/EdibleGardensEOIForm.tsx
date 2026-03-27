@@ -96,13 +96,13 @@ export function EdibleGardensEOIForm() {
       className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface dark:border-border"
     >
       {error ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-base text-red-900 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-100">
           {error}
         </div>
       ) : null}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Name *
           </label>
           <input
@@ -115,7 +115,7 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Email *
           </label>
           <input
@@ -130,7 +130,7 @@ export function EdibleGardensEOIForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Phone
           </label>
           <input
@@ -142,7 +142,7 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Website / LinkedIn
           </label>
           <input
@@ -156,7 +156,7 @@ export function EdibleGardensEOIForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             I’m applying as *
           </label>
           <select
@@ -173,7 +173,7 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             I can start a pilot *
           </label>
           <select
@@ -193,7 +193,7 @@ export function EdibleGardensEOIForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Have you run subscriptions/workshops before? *
           </label>
           <select
@@ -209,7 +209,7 @@ export function EdibleGardensEOIForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted mb-2">
+          <label className="block text-base font-medium text-muted mb-2">
             Availability / time commitment
           </label>
           <input
@@ -223,7 +223,7 @@ export function EdibleGardensEOIForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-muted mb-2">
+        <label className="block text-base font-medium text-muted mb-2">
           Briefly describe your subscription/workshop experience
           {form.hasRunProgramsBefore === 'Yes' ? ' *' : ''}
         </label>
@@ -238,7 +238,7 @@ export function EdibleGardensEOIForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-muted mb-2">
+        <label className="block text-base font-medium text-muted mb-2">
           Tell us who you are and what you want to build *
         </label>
         <textarea

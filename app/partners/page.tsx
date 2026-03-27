@@ -138,7 +138,7 @@ export default function PartnersPage() {
                 <p className="text-muted mb-6">{role.description}</p>
                 <ul className="space-y-3 mb-8">
                   {role.responsibilities.map((resp, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-muted">
+                    <li key={idx} className="flex items-start text-base text-muted">
                       <span className="text-primary-600 mr-2 font-bold">✓</span>
                       <span>{resp}</span>
                     </li>
@@ -170,7 +170,7 @@ export default function PartnersPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
               <div>
-                <label htmlFor="partner-name" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-name" className="block text-base font-medium text-fg mb-2">
                   Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -184,7 +184,7 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label htmlFor="partner-email" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-email" className="block text-base font-medium text-fg mb-2">
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -198,7 +198,7 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label htmlFor="partner-linkedin" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-linkedin" className="block text-base font-medium text-fg mb-2">
                   LinkedIn / Portfolio URL
                 </label>
                 <input
@@ -211,7 +211,7 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label htmlFor="partner-role" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-role" className="block text-base font-medium text-fg mb-2">
                   Role Applying For <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -231,10 +231,10 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label htmlFor="partner-plan" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-plan" className="block text-base font-medium text-fg mb-2">
                   Your 90-Day Plan <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-muted mb-2">Describe your vision or paste a link to a document.</p>
+                <p className="text-sm text-muted mb-2">Describe your vision or paste a link to a document.</p>
                 <textarea
                   id="partner-plan"
                   required
@@ -247,7 +247,7 @@ export default function PartnersPage() {
               </div>
 
               <div>
-                <label htmlFor="partner-availability" className="block text-sm font-medium text-fg mb-2">
+                <label htmlFor="partner-availability" className="block text-base font-medium text-fg mb-2">
                   Availability
                 </label>
                 <input
@@ -269,7 +269,7 @@ export default function PartnersPage() {
                       onChange={(e) => setFormData({ ...formData, hasQualification: e.target.checked })}
                       className="mt-1"
                     />
-                    <span className="text-sm text-muted">
+                    <span className="text-base text-muted">
                       I hold relevant qualifications in art therapy or equivalent
                     </span>
                   </label>
@@ -280,7 +280,7 @@ export default function PartnersPage() {
                       onChange={(e) => setFormData({ ...formData, hasInsurance: e.target.checked })}
                       className="mt-1"
                     />
-                    <span className="text-sm text-muted">
+                    <span className="text-base text-muted">
                       I have or can obtain professional indemnity insurance
                     </span>
                   </label>
@@ -303,7 +303,7 @@ export default function PartnersPage() {
               </Button>
 
               {status === 'error' && (
-                <p className="text-muted text-center text-sm">
+                <p className="text-muted text-center text-base">
                   Error submitting. Please try again or contact us directly.
                 </p>
               )}

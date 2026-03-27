@@ -91,7 +91,7 @@ export default function VisitPage() {
                   ))}
                 </div>
                 <div className="mt-6 pt-6 border-t border-border">
-                  <p className="text-sm text-muted flex items-start">
+                  <p className="text-base text-muted flex items-start">
                     <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
                     {SITE_HOURS.note}
                   </p>
@@ -167,7 +167,7 @@ export default function VisitPage() {
               {/* Map Legend */}
               <div className="p-6 bg-white border-t border-natural-200 dark:bg-bg dark:border-border">
                 <h3 className="font-bold text-fg mb-4 text-center ">Map Legend</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-base">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-accent-500 rounded-full"></div>
                     <span className="text-muted">Bayview Hub</span>
@@ -197,7 +197,7 @@ export default function VisitPage() {
                 {/* Quick Distance Reference */}
                 <div className="mt-6 pt-6 border-t border-border">
                   <h4 className="font-semibold text-fg mb-3 text-center ">Quick Distance Reference</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-base text-muted">
                     <div className="text-center">
                       <div className="font-bold text-primary-600">5 min</div>
                       <div>Eagle Chairlift</div>
@@ -239,7 +239,7 @@ export default function VisitPage() {
             
             {/* Alternative: Static Map Note */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted">
+              <p className="text-base text-muted">
                 📍 <strong>Tip:</strong> Click on markers to see attraction names and get directions to each location
               </p>
             </div>
@@ -263,14 +263,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Peninsula Hot Springs</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Natural thermal mineral springs with hilltop pools and spa experiences</p>
+                <p className="text-muted text-base mb-4 ">Natural thermal mineral springs with hilltop pools and spa experiences</p>
                 <a 
                   href="https://www.peninsulahotsprings.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -279,14 +279,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Alba Hot Springs</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Thermal mineral bathing and day spa in a natural bushland setting</p>
+                <p className="text-muted text-base mb-4 ">Thermal mineral bathing and day spa in a natural bushland setting</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -296,14 +296,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Eagle Chairlift & Maze</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Scenic chairlift rides with panoramic bay views and adventure maze</p>
+                <p className="text-muted text-base mb-4 ">Scenic chairlift rides with panoramic bay views and adventure maze</p>
                 <a 
                   href="https://www.enchantedmaze.com.au" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -312,14 +312,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Enchanted Adventure Garden</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Tree surfing, canopy walks, mazes, and tube slides for all ages</p>
+                <p className="text-muted text-base mb-4 ">Tree surfing, canopy walks, mazes, and tube slides for all ages</p>
                 <a 
                   href="https://www.enchantedmaze.com.au" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -328,14 +328,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Greens Bush</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Coastal heathland walks with stunning views and native wildlife</p>
+                <p className="text-muted text-base mb-4 ">Coastal heathland walks with stunning views and native wildlife</p>
                 <a 
                   href="https://www.parks.vic.gov.au/places-to-see/parks/greens-bush" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -344,14 +344,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Heronswood Gardens</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">10 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">10 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Historic gardens, nursery, and cafe with seasonal displays</p>
+                <p className="text-muted text-base mb-4 ">Historic gardens, nursery, and cafe with seasonal displays</p>
                 <a 
                   href="https://www.diggers.com.au/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -361,14 +361,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Cape Schanck</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">20 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">20 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4">Historic lighthouse, boardwalks, and dramatic coastal scenery</p>
+                <p className="text-muted text-base mb-4">Historic lighthouse, boardwalks, and dramatic coastal scenery</p>
                 <a 
                   href="https://www.parks.vic.gov.au/places-to-see/sites/cape-schanck-lighthouse" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Visit Website →
                 </a>
@@ -377,14 +377,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Gunnamatta Beach</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">15 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4">Surf beach with powerful waves, popular with surfers and beach lovers</p>
+                <p className="text-muted text-base mb-4">Surf beach with powerful waves, popular with surfers and beach lovers</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Gunnamatta Beach Visitor Guide →
                 </a>
@@ -393,14 +393,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Flinders Beach</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">25 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">25 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Calm bay beach perfect for families, swimming, and rock pools</p>
+                <p className="text-muted text-base mb-4 ">Calm bay beach perfect for families, swimming, and rock pools</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Flinders Beach Visitor Guide →
                 </a>
@@ -409,14 +409,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Sorrento Front Beach</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">20 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">20 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Protected bay beach with historic pier, cafes, and safe swimming</p>
+                <p className="text-muted text-base mb-4 ">Protected bay beach with historic pier, cafes, and safe swimming</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Sorrento Beach Visitor Guide →
                 </a>
@@ -425,14 +425,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Portsea Beach</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">25 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">25 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">Bay and ocean beaches, rock pools, and the famous London Bridge rock formation</p>
+                <p className="text-muted text-base mb-4 ">Bay and ocean beaches, rock pools, and the famous London Bridge rock formation</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Portsea Beach Visitor Guide →
                 </a>
@@ -441,14 +441,14 @@ export default function VisitPage() {
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow dark:bg-surface dark:border dark:border-border">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-bold text-fg">Wineries & Breweries</h3>
-                  <span className="text-sm font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5-30 min</span>
+                  <span className="text-base font-medium text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-1 rounded">5-30 min</span>
                 </div>
-                <p className="text-muted text-sm mb-4 ">100+ wineries and breweries throughout the Mornington Peninsula</p>
+                <p className="text-muted text-base mb-4 ">100+ wineries and breweries throughout the Mornington Peninsula</p>
                 <a 
                   href="https://www.visitmorningtonpeninsula.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium dark:text-primary-300 dark:hover:text-primary-200"
+                  className="text-primary-600 hover:text-primary-700 text-base font-medium dark:text-primary-300 dark:hover:text-primary-200"
                 >
                   Explore Wine Region →
                 </a>

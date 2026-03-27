@@ -157,7 +157,7 @@ export default function EventsPage() {
                     <h3 className="text-xl font-serif font-bold text-fg mb-2">
                       {event.title}
                     </h3>
-                    <div className="space-y-1 text-sm text-muted">
+                    <div className="space-y-1 text-base text-muted">
                       <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-2" />
                         {event.date} • {event.time}

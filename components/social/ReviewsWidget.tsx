@@ -45,12 +45,12 @@ export function ReviewsWidget() {
                 <Star key={i} className="w-5 h-5 fill-accent-500 text-accent-500" />
               ))}
             </div>
-            <span className="ml-2 text-sm text-muted">4.9 average rating</span>
+            <span className="ml-2 text-base text-muted">4.9 average rating</span>
           </div>
         </div>
         <a
           href="#"
-          className="text-primary-700 hover:text-primary-800 font-medium text-sm dark:text-primary-300 dark:hover:text-primary-200"
+          className="text-primary-700 hover:text-primary-800 font-medium text-base dark:text-primary-300 dark:hover:text-primary-200"
         >
           Write a review →
         </a>
@@ -75,10 +75,10 @@ export function ReviewsWidget() {
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-subtle">{review.date}</span>
+                  <span className="text-sm text-subtle">{review.date}</span>
                 </div>
               </div>
-              <span className="text-xs text-subtle capitalize">{review.platform}</span>
+              <span className="text-sm text-subtle capitalize">{review.platform}</span>
             </div>
             <p className="text-muted leading-relaxed">{review.text}</p>
           </div>
@@ -90,10 +90,10 @@ export function ReviewsWidget() {
           <MessageCircle className="w-4 h-4 mr-2" />
           Integration Options
         </h4>
-        <p className="text-sm text-muted">
+        <p className="text-base text-muted">
           Connect with review platforms:
         </p>
-        <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-muted">
+        <ul className="list-disc list-inside mt-2 space-y-1 text-base text-muted">
           <li>Google Business Profile API for Google reviews</li>
           <li>Facebook Graph API for Facebook reviews</li>
           <li>TripAdvisor Content API</li>

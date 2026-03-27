@@ -21,7 +21,7 @@
     --accent-soft: #A8D5DD;
     --accent-text: #1a1408;
     --text-muted: #a89060;
-    --label-caps-size: 11px;
+    --label-caps-size: 12px;
     --label-caps-tracking: 0.1em;
     /* Legacy (for compatibility) */
     --background: 0 0% 100%;
@@ -105,7 +105,7 @@
 
   /* Typography utility classes */
   .eyebrow {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
@@ -122,16 +122,25 @@
     opacity: 0.8;
   }
 
-  small,
+  small {
+    font-size: 0.875rem;
+  }
+
   nav {
-    font-size: 14px;
+    font-size: 1rem;
   }
 
   @media (min-width: 768px) {
-    small,
     nav {
-      font-size: 15px;
+      font-size: 1.125rem;
     }
+  }
+
+  /* 16px minimum for readable form fields (incl. iOS input zoom) */
+  input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+  textarea,
+  select {
+    font-size: 1rem;
   }
 
   code, pre, .font-mono {

@@ -27,7 +27,7 @@ export default function ThankYouPage() {
 
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 transition-colors"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 transition-colors"
               data-testid="button-back-home"
             >
               Back to Home

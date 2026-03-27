@@ -61,7 +61,7 @@ export function Footer() {
             <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
               Hours
             </h4>
-            <div className="text-gray-400 text-sm space-y-1">
+            <div className="text-gray-400 text-base space-y-1">
               <p>{SITE_HOURS.summary}</p>
               <p className="italic text-gray-500 mt-2">
                 Closed Christmas Day
@@ -148,7 +148,7 @@ export function Footer() {
       {/* Preferences - Simple inline */}
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-sm">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-base">
             {/* Language */}
             <div className="flex items-center gap-2">
               <span className="text-gray-500">Language:</span>
@@ -172,7 +172,7 @@ export function Footer() {
       {/* Secondary Links Bar */}
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-sm">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base">
             <Link href="/partners" className="text-gray-400 hover:text-white transition-colors tracking-wide uppercase">
               Partners
             </Link>
@@ -213,7 +213,7 @@ export function Footer() {
             </div>
 
             {/* Copyright & Legal */}
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+            <div className="flex flex-wrap justify-center gap-4 text-base text-gray-500">
               <span>© {currentYear} {SITE_CONFIG.name}. All rights reserved.</span>
               <span className="hidden md:inline">|</span>
               <Link href="/privacy" className="hover:text-white transition-colors">
@@ -228,7 +228,7 @@ export function Footer() {
 
           {/* Acknowledgement */}
           <div className="mt-6 pt-6 border-t border-gray-700/50">
-            <p className="text-xs text-gray-500 text-center leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm text-gray-500 text-center leading-relaxed max-w-3xl mx-auto">
               Bayview Hub acknowledges the Bunurong / Boon Wurrung people of the Kulin Nation as the Traditional Custodians of the lands and waters of the Mornington Peninsula, and pays respect to Elders past and present.
             </p>
           </div>

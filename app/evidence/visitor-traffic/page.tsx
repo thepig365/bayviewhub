@@ -82,7 +82,7 @@ export default function VisitorTrafficEvidencePage() {
                 <li>TODO: Cellar door visitor logs</li>
                 <li>TODO: Manual counts or sampling for foot traffic (if used)</li>
               </ul>
-              <p className="text-muted text-sm mt-4">
+              <p className="text-muted text-base mt-4">
                 No invented systems or exact numbers. Add confirmed sources here when available.
               </p>
             </div>

@@ -92,7 +92,7 @@ export function Card({
               href={ctaSecondary.href}
               target="_blank"
               rel="nofollow noopener noreferrer"
-              className="text-sm text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 underline underline-offset-2 transition-colors"
+              className="text-base text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 underline underline-offset-2 transition-colors"
             >
               {ctaSecondary.label}
             </a>

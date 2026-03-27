@@ -62,14 +62,14 @@ export function HomeModule({
                   href={primaryCta.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-sm tracking-wide uppercase hover:bg-accent-hover transition-colors rounded"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase hover:bg-accent-hover transition-colors rounded"
                 >
                   {primaryCta.label}
                 </a>
               ) : (
                 <Link
                   href={primaryCta.href}
-                  className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-sm tracking-wide uppercase hover:bg-accent-hover transition-colors rounded"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase hover:bg-accent-hover transition-colors rounded"
                 >
                   {primaryCta.label}
                 </Link>
@@ -81,14 +81,14 @@ export function HomeModule({
                   href={secondaryCta.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-accent text-accent font-semibold text-sm tracking-wide uppercase hover:bg-accent hover:text-white transition-colors rounded"
+                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-accent text-accent font-semibold text-base tracking-wide uppercase hover:bg-accent hover:text-white transition-colors rounded"
                 >
                   {secondaryCta.label}
                 </a>
               ) : (
                 <Link
                   href={secondaryCta.href}
-                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-accent text-accent font-semibold text-sm tracking-wide uppercase hover:bg-accent hover:text-white transition-colors rounded"
+                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-accent text-accent font-semibold text-base tracking-wide uppercase hover:bg-accent hover:text-white transition-colors rounded"
                 >
                   {secondaryCta.label}
                 </Link>

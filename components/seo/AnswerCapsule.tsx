@@ -39,7 +39,7 @@ export function AnswerCapsule({
       <p className={`${textColor} font-medium mb-4`}>{definition}</p>
       <ul className="space-y-2 mb-4">
         {facts.map((fact, i) => (
-          <li key={i} className={`flex items-start gap-2 text-sm ${textColor}`}>
+          <li key={i} className={`flex items-start gap-2 text-base ${textColor}`}>
             <span className="text-accent mt-0.5">•</span>
             <span>{fact}</span>
           </li>
@@ -47,7 +47,7 @@ export function AnswerCapsule({
       </ul>
       {sources.length > 0 && (
         <div className={`pt-3 border-t ${borderColor}`}>
-          <p className={`text-xs font-medium ${textMuted} mb-2`}>Evidence / Sources</p>
+          <p className={`text-sm font-medium ${textMuted} mb-2`}>Evidence / Sources</p>
           <ul className="space-y-1">
             {sources.map((s, i) => (
               <li key={i}>
@@ -55,7 +55,7 @@ export function AnswerCapsule({
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`text-sm ${linkColor}`}
+                  className={`text-base ${linkColor}`}
                 >
                   {s.label}
                 </a>
@@ -64,7 +64,7 @@ export function AnswerCapsule({
           </ul>
         </div>
       )}
-      <p className={`text-xs ${textMuted} mt-4`}>
+      <p className={`text-sm ${textMuted} mt-4`}>
         Last updated: {lastUpdated}
       </p>
     </aside>
