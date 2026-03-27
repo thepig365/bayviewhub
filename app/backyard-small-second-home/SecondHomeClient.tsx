@@ -76,7 +76,7 @@ export function SecondHomeClient() {
 
   return (
     <div className="min-h-screen bg-bg">
-      <section className="bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800 py-20 md:py-32">
+      <section className="bg-gradient-to-br from-natural-100 to-bg dark:from-bg dark:to-surface py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-sm font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">

@@ -4,7 +4,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { GALLERY_EXTERNAL, GALLERY_VIEWING_REQUEST_MAILTO, NAV_ITEMS } from '@/lib/constants'
+import {
+  GALLERY_EXTERNAL,
+  GALLERY_VIEWING_REQUEST_MAILTO,
+  NAV_ITEMS,
+  SSD_LANDING,
+} from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
@@ -206,7 +211,7 @@ export function Header() {
                         Private viewing network
                       </p>
                       <p className="text-sm text-muted leading-snug">
-                        By arrangement — for hosts, artists, and invited viewers.
+                        Collectors & invited viewers — or hosts & artists sharing work by arrangement.
                       </p>
                       <a
                         href={GALLERY_EXTERNAL.openYourWall}
@@ -215,14 +220,23 @@ export function Header() {
                         onClick={closeMenu}
                         className="block rounded-md px-3 py-2.5 text-base font-semibold text-fg bg-white/90 dark:bg-surface border border-border hover:border-accent hover:text-accent transition-colors"
                       >
-                        Open Your Wall
+                        Private Viewing
+                      </a>
+                      <a
+                        href={GALLERY_EXTERNAL.passportRegister}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-fg bg-white/70 dark:bg-surface/80 border border-border/80 hover:border-accent hover:text-accent transition-colors"
+                      >
+                        Open Your Wall — register a work
                       </a>
                       <a
                         href={GALLERY_VIEWING_REQUEST_MAILTO}
                         onClick={closeMenu}
                         className="block rounded-md px-3 py-2 text-base font-medium text-fg/90 hover:text-accent transition-colors underline-offset-2 hover:underline"
                       >
-                        Request private viewing
+                        Request private viewing access
                       </a>
                     </div>
                     <div className="space-y-1">
@@ -266,23 +280,23 @@ export function Header() {
                     </div>
                   </div>
                 </details>
-                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40">
+                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40" open>
                   <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
                     <span>Backyard Small Second Home</span>
                     <ChevronDown className="h-4 w-4" />
                   </summary>
                   <div className="px-4 pb-4 space-y-1">
-                    <Link href="/backyard-small-second-home" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                    <Link href={SSD_LANDING.overview} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
                       Overview
                     </Link>
-                    <Link href="/backyard-small-second-home/victoria-rules" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Victoria Rules
+                    <Link href={SSD_LANDING.feasibility} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Feasibility check
                     </Link>
-                    <Link href="/backyard-small-second-home/cost-rent-roi" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Cost & ROI Calculator
+                    <Link href={SSD_LANDING.costRoi} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Cost, rent & ROI
                     </Link>
-                    <Link href="/backyard-small-second-home/feasibility-check" onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Feasibility Check
+                    <Link href={SSD_LANDING.victoriaRules} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
+                      Victoria rules
                     </Link>
                   </div>
                 </details>
@@ -297,11 +311,14 @@ export function Header() {
                   <Button href="/cellar-door#book" variant="accent" size="md" className="w-full" onClick={closeMenu}>
                     Book Wine Tasting
                   </Button>
-                  <Button href="/backyard-small-second-home#register" variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Build Second Home
+                  <Button href={`${SSD_LANDING.overview}#register`} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                    Backyard Small Second Home
+                  </Button>
+                  <Button href={SSD_LANDING.feasibility} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                    Feasibility check
                   </Button>
                   <Button href={GALLERY_EXTERNAL.openYourWall} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Open Your Wall
+                    Private Viewing
                   </Button>
                   <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
                     Browse gallery

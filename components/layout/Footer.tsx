@@ -1,7 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react'
-import { GALLERY_EXTERNAL, GALLERY_VIEWING_REQUEST_MAILTO, SITE_CONFIG, SOCIAL_LINKS, SITE_HOURS } from '@/lib/constants'
+import {
+  GALLERY_EXTERNAL,
+  GALLERY_VIEWING_REQUEST_MAILTO,
+  SITE_CONFIG,
+  SOCIAL_LINKS,
+  SITE_HOURS,
+  SSD_LANDING,
+  SSD_QUICK_LINKS,
+} from '@/lib/constants'
 import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
 
 export function Footer() {
@@ -108,14 +116,14 @@ export function Footer() {
             <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
               Programs
             </h4>
-            <ul className="space-y-2 mb-8">
+            <ul className="space-y-2 mb-6">
               <li>
                 <Link href="/partners" className="text-shell-footer-muted hover:text-accent transition-colors">
                   Founding Partners
                 </Link>
               </li>
               <li>
-                <Link href="/backyard-small-second-home" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={SSD_LANDING.overview} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Backyard Small Second Home
                 </Link>
               </li>
@@ -126,18 +134,36 @@ export function Footer() {
               </li>
             </ul>
 
+            <h4 className="text-sm font-bold tracking-widest uppercase mb-3">
+              Small Second Home paths
+            </h4>
+            <ul className="space-y-2 mb-8">
+              {SSD_QUICK_LINKS.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-shell-footer-muted hover:text-accent transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
             <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
               Gallery
             </h4>
             <ul className="space-y-2">
               <li>
                 <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Open Your Wall
+                  Private Viewing
+                </a>
+              </li>
+              <li>
+                <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                  Open Your Wall — register a work
                 </a>
               </li>
               <li>
                 <a href={GALLERY_VIEWING_REQUEST_MAILTO} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Request private viewing
+                  Request private viewing access
                 </a>
               </li>
               <li>
