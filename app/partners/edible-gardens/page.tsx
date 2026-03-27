@@ -49,7 +49,7 @@ export default function EdibleGardensFoundingPartnerPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
-              <p className="text-xs font-bold tracking-wide uppercase text-fg">
+              <p className="text-sm font-bold tracking-wide uppercase text-fg">
                 Founding Partner Opportunity
               </p>
               <h1 className="mt-4 text-4xl md:text-5xl font-serif font-bold text-fg">
@@ -94,19 +94,19 @@ export default function EdibleGardensFoundingPartnerPage() {
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="text-3xl font-bold text-primary-700 dark:text-primary-300">50k+</p>
-              <p className="mt-1 text-sm text-muted ">
+              <p className="mt-1 text-base text-muted ">
                 <a href="/evidence/visitor-traffic" className="text-primary-600 hover:underline dark:text-primary-400">Estimated 50k+ annual visitors</a> (see Evidence) — existing destination
               </p>
             </div>
             <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="font-semibold text-fg ">Established destination context</p>
-              <p className="mt-2 text-sm text-muted ">
+              <p className="mt-2 text-base text-muted ">
                 Restaurant, cellar door, and events provide year-round visitor flow.
               </p>
             </div>
             <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
               <p className="font-semibold text-fg ">Hospitality ecosystem</p>
-              <p className="mt-2 text-sm text-muted ">
+              <p className="mt-2 text-base text-muted ">
                 On-site offerings + cross-promo to support subscription and workshop demand.
               </p>
             </div>
@@ -227,19 +227,19 @@ export default function EdibleGardensFoundingPartnerPage() {
               <div className="mt-6 grid md:grid-cols-3 gap-6">
                 <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg">Founding 100 Families Membership</p>
-                  <p className="mt-2 text-sm text-muted">
+                  <p className="mt-2 text-base text-muted">
                     Seasonal produce + scheduled Garden Days + kids grow sessions.
                   </p>
                 </div>
                 <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg">Market Garden Subscription</p>
-                  <p className="mt-2 text-sm text-muted">
+                  <p className="mt-2 text-base text-muted">
                     Monthly/fortnightly harvest + optional add-on workshops and community days.
                   </p>
                 </div>
                 <div className="rounded-2xl p-6 bg-natural-50 dark:bg-surface/50 dark:border dark:border-border">
                   <p className="font-semibold text-fg">Education + Workshops Layer</p>
-                  <p className="mt-2 text-sm text-muted">
+                  <p className="mt-2 text-base text-muted">
                     Kids programs, beginner growing classes, permaculture intro, seasonal skills.
                   </p>
                 </div>
@@ -348,7 +348,7 @@ export default function EdibleGardensFoundingPartnerPage() {
                 </Suspense>
               </div>
 
-              <p className="mt-8 text-xs text-muted">
+              <p className="mt-8 text-sm text-muted">
                 <strong>Footer Note:</strong> Bayview Hub partners with independent operators on a pilot-first basis. All
                 collaborations are subject to mutual agreement and alignment.
                 <span> Submitting an EOI does not create any obligation for either party.</span>

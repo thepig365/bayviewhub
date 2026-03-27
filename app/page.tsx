@@ -137,7 +137,7 @@ export default function HomePage() {
         <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
           <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
             {/* Category Label */}
-            <p className="text-white/80 text-xs md:text-sm font-semibold tracking-widest uppercase mb-3 md:mb-4">
+            <p className="text-white/80 text-sm md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
               {slide.category}
             </p>
 
@@ -157,14 +157,14 @@ export default function HomePage() {
                 href={slide.cta.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-sm md:text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
               >
                 {slide.cta.label}
               </a>
             ) : (
               <Link
                 href={slide.cta.href}
-                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-sm md:text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white font-semibold text-base tracking-wide uppercase hover:bg-white hover:text-accent transition-colors"
               >
                 {slide.cta.label}
               </Link>
@@ -236,7 +236,7 @@ export default function HomePage() {
                 <p className="text-muted leading-relaxed reading mb-4">
                   Opening hours, wine tasting bookings, and tips for planning your day.
                 </p>
-                <Link href="/visit" className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline">
+                <Link href="/visit" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline">
                   Learn More
                 </Link>
               </div>
@@ -247,7 +247,7 @@ export default function HomePage() {
                 <p className="text-muted leading-relaxed reading mb-4">
                   Wine, dining, art, workshops, live music, and gardens—all on 30 stunning acres.
                 </p>
-                <Link href="/experiences" className="text-accent font-semibold text-sm tracking-widest uppercase hover:underline">
+                <Link href="/experiences" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline">
                   Learn More
                 </Link>
               </div>

@@ -145,7 +145,7 @@ export default function WorkshopsPage() {
       <section className="py-8 bg-natural-50 dark:bg-surface/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <p className="text-sm text-subtle">
+            <p className="text-base text-subtle">
               Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services. If you are experiencing a mental health crisis, please contact Lifeline (13 11 14), Beyond Blue (1300 22 4636), or emergency services (000).
             </p>
           </div>

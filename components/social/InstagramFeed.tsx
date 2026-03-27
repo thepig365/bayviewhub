@@ -25,7 +25,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
           href={`https://instagram.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary-700 hover:text-primary-800 font-medium text-sm dark:text-primary-300 dark:hover:text-primary-200"
+          className="text-primary-700 hover:text-primary-800 font-medium text-base dark:text-primary-300 dark:hover:text-primary-200"
         >
           Follow →
         </a>
@@ -47,7 +47,7 @@ export function InstagramFeed({ username = 'bayviewhub', limit = 6 }: InstagramF
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-sm text-muted dark:bg-surface/50 dark:border dark:border-border">
+      <div className="mt-6 p-4 bg-natural-50 rounded-lg text-base text-muted dark:bg-surface/50 dark:border dark:border-border">
         <p>
           <strong>Implementation Note:</strong> Replace this component with actual Instagram feed using:
         </p>

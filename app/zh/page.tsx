@@ -18,7 +18,7 @@ export default function ChineseHomePage() {
       {/* Language Switcher */}
       <div className="bg-natural-100 border-b border-border dark:bg-bg dark:border-border">
         <div className="container mx-auto px-4 py-2">
-          <div className="flex justify-end space-x-4 text-sm">
+          <div className="flex justify-end space-x-4 text-base">
             <Link href="/" className="text-muted hover:text-fg">
               English
             </Link>
@@ -64,19 +64,19 @@ export default function ChineseHomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">50k+</div>
-              <div className="text-sm text-fg">年度访客</div>
+              <div className="text-base text-fg">年度访客</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🍷</div>
-              <div className="text-sm text-fg">酒庄餐厅</div>
+              <div className="text-base text-fg">酒庄餐厅</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🎵</div>
-              <div className="text-sm text-fg">周末现场音乐</div>
+              <div className="text-base text-fg">周末现场音乐</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary-700 mb-2">🌏</div>
-              <div className="text-sm text-fg">国际目的地</div>
+              <div className="text-base text-fg">国际目的地</div>
             </div>
           </div>
         </div>

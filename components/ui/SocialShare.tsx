@@ -37,7 +37,7 @@ export function SocialShare({ url, title, description, className }: SocialShareP
   return (
     <div className={className}>
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-muted">Share:</span>
+        <span className="text-base font-medium text-muted">Share:</span>
         <div className="flex gap-2">
           {platforms.map((platform) => {
             const Icon = platform.icon

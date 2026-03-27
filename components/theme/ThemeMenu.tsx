@@ -65,8 +65,8 @@ export function ThemeMenu({ className }: { className?: string }) {
     <div className={cn('rounded-xl border border-border bg-white dark:bg-surface p-3 dark:border-border', className)}>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <p className="text-sm font-semibold text-fg">Theme</p>
-          <p className="text-xs text-muted">
+          <p className="text-base font-semibold text-fg">Theme</p>
+          <p className="text-sm text-muted">
             Active: <span className="font-medium text-fg">{effective}</span>
           </p>
         </div>
@@ -89,8 +89,8 @@ export function ThemeMenu({ className }: { className?: string }) {
             >
               <Icon className="h-4 w-4" />
               <span className="leading-tight">
-                <span className="block text-sm font-medium">{label}</span>
-                <span className="block text-xs text-muted">{sub}</span>
+                <span className="block text-base font-medium">{label}</span>
+                <span className="block text-sm text-muted">{sub}</span>
               </span>
             </button>
           )

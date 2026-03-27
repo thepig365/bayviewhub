@@ -55,18 +55,18 @@ export default function CostRentRoiPage() {
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 1</h3>
-                <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Compliant & Compact</p>
-                <p className="text-muted text-sm">Practical finishes. Minimal complexity. Budget-optimized. $70k–$135k indicative.</p>
+                <p className="text-base text-primary-600 dark:text-primary-400 mb-2">Compliant & Compact</p>
+                <p className="text-muted text-base">Practical finishes. Minimal complexity. Budget-optimized. $70k–$135k indicative.</p>
               </div>
               <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 2</h3>
-                <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Rental-Ready</p>
-                <p className="text-muted text-sm">Better fit-out, durability, thermal comfort. $90k–$169k indicative.</p>
+                <p className="text-base text-primary-600 dark:text-primary-400 mb-2">Rental-Ready</p>
+                <p className="text-muted text-base">Better fit-out, durability, thermal comfort. $90k–$169k indicative.</p>
               </div>
               <div className="p-6 bg-white rounded-xl dark:bg-surface dark:border dark:border-border">
                 <h3 className="font-bold text-fg mb-1 ">Tier 3</h3>
-                <p className="text-sm text-primary-600 dark:text-primary-400 mb-2">Architectural</p>
-                <p className="text-muted text-sm">Higher spec. Complex siteworks. Custom detailing. $122k–$168k indicative.</p>
+                <p className="text-base text-primary-600 dark:text-primary-400 mb-2">Architectural</p>
+                <p className="text-muted text-base">Higher spec. Complex siteworks. Custom detailing. $122k–$168k indicative.</p>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function CostRentRoiPage() {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-serif font-bold text-fg mb-8 ">Rental Yield Context</h2>
             <p className="text-muted mb-6">Victoria vacancy under 1%. Compliant SSD equals bankable, recurring income. Quality SSD increases property value — documented, compliant, attractive to buyers.</p>
-            <p className="text-sm text-subtle">TODO: cite official rental vacancy or yield data if available.</p>
+            <p className="text-base text-subtle">TODO: cite official rental vacancy or yield data if available.</p>
           </div>
         </div>
       </section>

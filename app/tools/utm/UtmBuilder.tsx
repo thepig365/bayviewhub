@@ -68,7 +68,7 @@ export function UtmBuilder() {
       </div>
 
       <div className="rounded-2xl p-6 bg-white shadow-lg border border-border dark:bg-surface dark:border-border">
-        <p className="text-sm font-medium text-muted">Trackable link</p>
+        <p className="text-base font-medium text-muted">Trackable link</p>
         <div className="mt-2 flex flex-col md:flex-row gap-3 md:items-center">
           <input
             readOnly
@@ -83,7 +83,7 @@ export function UtmBuilder() {
             {copied ? 'Copied' : 'Copy'}
           </button>
         </div>
-        <p className="mt-3 text-xs text-muted">
+        <p className="mt-3 text-sm text-muted">
           Tip: keep `utm_campaign` consistent across a campaign, and change `utm_content` per post/ad creative.
         </p>
       </div>
@@ -94,13 +94,13 @@ export function UtmBuilder() {
 function Field(props: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-muted mb-2">{props.label}</label>
+      <label className="block text-base font-medium text-muted mb-2">{props.label}</label>
       <input
         type="text"
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
-        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-base text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
       />
     </div>
   )

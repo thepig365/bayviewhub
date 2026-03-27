@@ -146,7 +146,7 @@ export default function MorningtonPeninsulaPage() {
                   <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 flex items-center justify-center text-xs font-bold">→</span>
                   <div>
                     <p className="font-semibold text-natural-900 dark:text-fg">{label}</p>
-                    <p className="text-sm text-muted mt-0.5">{detail}</p>
+                    <p className="text-base text-muted mt-0.5">{detail}</p>
                   </div>
                 </div>
               ))}

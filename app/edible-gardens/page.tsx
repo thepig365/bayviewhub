@@ -17,7 +17,7 @@ export default function EdibleGardensPage() {
       <section className="py-20 md:py-28 bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xs font-bold tracking-wide uppercase text-primary-600 dark:text-primary-400 mb-4">
+            <p className="text-sm font-bold tracking-wide uppercase text-primary-600 dark:text-primary-400 mb-4">
               Coming Soon
             </p>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-6">

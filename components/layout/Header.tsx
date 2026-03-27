@@ -92,7 +92,7 @@ export function Header() {
           <Logo />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-5 text-sm" aria-label="Primary">
+          <nav className="hidden md:flex items-center gap-5 text-base md:text-lg" aria-label="Primary">
             {NAV_ITEMS.map((item) => (
               item.external ? (
                 <a
