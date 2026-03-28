@@ -12,10 +12,12 @@ export function SsdProgrammeMap() {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-4xl">
           <p className="text-micro mb-2 font-medium uppercase tracking-widest text-accent">Programme</p>
-          <h2 className="mb-3 font-serif text-xl font-bold text-fg md:text-2xl">Pick the page that matches your question</h2>
+          <h2 className="mb-3 font-serif text-xl font-bold text-fg md:text-2xl">
+            Where should I read next — rules, cost, fit, or my block?
+          </h2>
           <p className="mb-6 max-w-2xl text-base leading-relaxed text-muted sm:mb-8">
-            Each link is a single topic. Use the feasibility check when you are ready to test your lot against the
-            framework.
+            Each page answers one kind of question so this hub stays readable. Follow the topic you need, then use the
+            feasibility checklist when you want a structured pass over your answers.
           </p>
           <ul className="space-y-2.5 sm:space-y-3">
             {SSD_PROGRAMME_MAP.map((p) => (

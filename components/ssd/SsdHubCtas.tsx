@@ -20,7 +20,7 @@ export function SsdHubCtas() {
         className="w-full sm:w-auto"
         onClick={() => track('ssd_hub_cta_feasibility', attribution)}
       >
-        Run the feasibility check
+        Open the feasibility checklist
       </Button>
       <Button
         href="/backyard-small-second-home/is-this-for-you"

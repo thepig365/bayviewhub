@@ -19,12 +19,12 @@ export function SsdHubHouseArchetypes() {
             id="ssd-house-archetypes-heading"
             className="max-w-3xl font-serif text-2xl font-bold text-fg md:text-3xl"
           >
-            Small second-home shapes people picture
+            What kinds of small second homes do people picture?
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-            Victorian SSD is one planning pathway — these are common ways owners imagine using up to about{' '}
-            <strong className="text-fg">60 sqm</strong> behind the main house. Your title, overlays, and siting still
-            decide what is realistic; the feasibility check turns this into a pathway view for your lot.
+            Under the SSD cap (about <strong className="text-fg">60 sqm GFA</strong> for the second dwelling), owners
+            often sketch studio, annexe, or two-zone layouts. The examples below are visual shorthand — not separate
+            planning products. What you can build still depends on siting, overlays, and your title.
           </p>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
@@ -70,7 +70,7 @@ export function SsdHubHouseArchetypes() {
 
           <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Button href={SSD_LANDING.feasibility} variant="accent" size="lg" className="w-full sm:w-auto">
-              Run the feasibility check
+              Open the feasibility checklist
             </Button>
             <Button href={`${SSD_LANDING.overview}#ssd-programme`} variant="outline" size="lg" className="w-full sm:w-auto">
               Browse programme pages

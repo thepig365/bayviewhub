@@ -8,7 +8,9 @@ export function SsdHubFraming() {
       <section className="border-b border-border py-10 md:py-14">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <h2 className="font-serif text-2xl font-bold text-fg md:text-3xl">Who this is for</h2>
+            <h2 className="font-serif text-2xl font-bold text-fg md:text-3xl">
+              Who is the Victorian SSD pathway meant for?
+            </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
               Victorian homeowners who want a <strong className="text-fg">small second building</strong> on the same
               title — family use, rent, or a separate work room — and who want to know{' '}
@@ -34,15 +36,17 @@ export function SsdHubFraming() {
       <section className="border-b border-border py-10 md:py-14">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <h2 className="font-serif text-2xl font-bold text-fg md:text-3xl">How Bayview Hub treats this</h2>
+            <h2 className="font-serif text-2xl font-bold text-fg md:text-3xl">
+              How does Bayview Hub use this information?
+            </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              We start from the published rules and your site — not from a pre-chosen design. If the SSD framework does
-              not fit, we say that early so you can use the right process (standard planning, different use, or a smaller
-              brief).
+              Bayview Hub publishes these pages from the published State and scheme rules, not from a fixed catalogue of
+              designs. If SSD is a poor match for your block or goals, the aim is to surface that early so you can use
+              standard planning or a different brief instead of the wrong pathway.
             </p>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              The goal is a <strong className="text-fg">workable, documented pathway</strong>: what you can file, what
-              still needs a surveyor or planner, and where the risks sit.
+              Nothing here is a personal planning decision for your title — it is orientation so you know what to check
+              next with council maps, a surveyor, or a planner.
             </p>
             <div className="mt-8">
               <Button href="/backyard-small-second-home/approach" variant="outline" size="lg">

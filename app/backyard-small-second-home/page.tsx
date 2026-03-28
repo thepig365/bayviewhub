@@ -9,11 +9,12 @@ import { SsdHubFraming } from '@/components/ssd/SsdHubFraming'
 import { SsdHubHouseArchetypes } from '@/components/ssd/SsdHubHouseArchetypes'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
+import { SSD_HUB_FAQ } from '@/lib/ssd-hub-faq'
 
 export const metadata = genMeta({
-  title: `Backyard Small Second Home | SSD Builder Victoria | 60 sqm. No Planning Permit. | ${SITE_CONFIG.name}`,
+  title: `Backyard Small Second Home (Victorian SSD) | Rules, Feasibility & Next Steps | ${SITE_CONFIG.name}`,
   description:
-    'Victorian Small Second Dwelling (SSD) on your lot: up to 60 sqm, same title, all-electric. When you meet the rules you may skip a planning permit. Feasibility check and plain-English programme pages.',
+    'Victorian SSD (Small Second Dwelling): up to 60 sqm GFA, same title, behind front wall, all-electric. Planning permit may be omitted only when fully Deemed-to-Comply; overlays often change that. Building permit still required. Rules, cost context, checklist.',
   path: '/backyard-small-second-home',
   image: `${SITE_CONFIG.url}/og-second-home.png`,
 })
@@ -25,7 +26,7 @@ const ssdExpertJsonLd = {
   alternateName: 'Bayview Hub Backyard Small Second Home',
   url: `${SITE_CONFIG.url}/backyard-small-second-home`,
   description:
-    'Small Second Dwelling feasibility assessment and project management under Victorian Planning Provisions VC253/VC282. Clause 54.03 Deemed-to-Comply specialist. Green Lane, VicSmart, and standard pathway analysis.',
+    'Public information on Victorian Small Second Dwellings (SSD) under VC253/VC282: Deemed-to-Comply, VicSmart, and standard planning contexts. Main Ridge, Mornington Peninsula; content relevant statewide — confirm on your title and council scheme.',
   image: `${SITE_CONFIG.url}/og-second-home.png`,
   address: {
     '@type': 'PostalAddress',
@@ -44,7 +45,7 @@ const ssdExpertJsonLd = {
   },
   makesOffer: {
     '@type': 'Offer',
-    description: '48-hour feasibility assessment with Path to Approval determination',
+    description: 'Public SSD pathway information and on-site interactive checklist; optional contact via published channels',
     priceCurrency: 'AUD',
     price: '0',
   },
@@ -61,48 +62,14 @@ const ssdExpertJsonLd = {
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What is the Victorian SSD framework (VC253/VC282)?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The Victorian SSD framework under VC253/VC282 allows Small Second Dwellings up to 60 sqm on existing residential lots. Hard constraints: maximum 60 sqm GFA, siting behind front wall, all-electric (no gas), no subdivision, main dwelling retains 25 sqm POS. Compliant projects may bypass planning permit via Deemed-to-Comply pathway.',
-      },
+  mainEntity: SSD_HUB_FAQ.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
     },
-    {
-      '@type': 'Question',
-      name: 'What is the Green Lane approval pathway?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Green Lane means your SSD meets all Deemed-to-Comply criteria under Clause 54.03. No planning permit required. Proceed directly to building permit with a registered building surveyor. This is the primary advantage of the SSD framework: constraints in exchange for certainty.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'What triggers VicSmart instead of Green Lane?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'VicSmart applies when your SSD is otherwise compliant but triggers minor overlays (Heritage, Flood, etc.) or requires minor setback variations. Under VC282, council must decide within 10 business days. No neighbor notification required.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Can I subdivide an SSD from my main property?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'No. Under VC253/VC282, SSDs cannot be subdivided from the main lot. The dwelling must remain on the same title as the main dwelling. Subdivision intent disqualifies you from the SSD framework entirely.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'What if I need more than 60 sqm?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The SSD pathway is not for you. Projects exceeding 60 sqm fall outside the framework and require standard planning permit process: expect 12-18 months, neighbor notification, potential objections, and VCAT risk. Consider engaging a traditional developer.',
-      },
-    },
-  ],
+  })),
 }
 
 export default function BackyardSmallSecondHomePage() {
@@ -115,12 +82,15 @@ export default function BackyardSmallSecondHomePage() {
         <div className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
           <div className="mx-auto max-w-4xl">
             <h1 className="text-3xl font-bold leading-tight text-fg dark:text-white sm:text-4xl md:text-[2.25rem]">
-              Backyard Small Second Home
+              What is a Backyard Small Second Home in Victoria?
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted dark:text-white/75 sm:text-lg">
-              A Victorian <strong className="text-fg dark:text-white">Small Second Dwelling (SSD)</strong> on your
-              existing lot: up to 60 sqm, behind the front wall, all-electric, same title — no subdivision. When you
-              meet the published tests, you may not need a planning permit; you still need a building permit.
+              It is the everyday name we use for a Victorian{' '}
+              <strong className="text-fg dark:text-white">Small Second Dwelling (SSD)</strong>: a second small home on
+              your existing title, capped at <strong className="text-fg dark:text-white">60 sqm gross floor area</strong>
+              , usually behind the front wall, <strong className="text-fg dark:text-white">all-electric</strong>, not
+              sold off on its own lot. This page summarises the pathway; your council scheme and overlays decide what
+              applies to you.
             </p>
             <Suspense fallback={<div className="mt-6 h-12 animate-pulse rounded-lg bg-natural-200/80 dark:bg-white/10" />}>
               <SsdHubCtas />
@@ -128,11 +98,11 @@ export default function BackyardSmallSecondHomePage() {
 
             <div className="mt-10 border-t border-border pt-8 dark:border-neutral-700">
               <AnswerCapsule
-                definition="Quick read: SSD is a State-planned route for a small second building on the same title. It only works when siting, size, services, and overlays line up — which is why we separate rules, cost, and fit onto their own pages."
+                definition="A Backyard Small Second Home is a Victorian Small Second Dwelling (SSD): a second residence on the same title as your main house, up to 60 sqm gross floor area, generally behind the front wall, all-electric, with no subdivision of that dwelling onto a separate lot. You might avoid a planning permit only if your proposal meets every relevant Deemed-to-Comply test in the planning scheme for your land — overlays (heritage, flood, bushfire, and others), siting, services, and title details can all mean you still need planning approval, VicSmart, or a standard permit path instead. A building permit is still required for construction and compliance regardless. Always confirm against current scheme provisions and your title before acting."
                 facts={[
-                  'Hard limits: 60 sqm GFA, behind the front wall, all-electric, same title, no subdivision.',
-                  'If you meet every Deemed-to-Comply test, you may skip a planning permit and go to a building permit.',
-                  'Heritage, flood, bushfire, and other overlays can change the path — the feasibility check sorts that.',
+                  'Non-negotiable SSD lines: 60 sqm GFA for the second dwelling, behind the front wall, all-electric, same title, no separate-title sale.',
+                  'Planning permit: omitted only in full-compliance cases; if anything in the scheme is not met, assume council involvement until proven otherwise.',
+                  'Still to verify: scheme maps, overlays, covenant, bushfire and drainage, and how your surveyor reads the Deemed-to-Comply tests.',
                 ]}
                 sources={[
                   { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
