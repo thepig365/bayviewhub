@@ -1,62 +1,81 @@
 /**
- * Visual house-type row on the main SSD hub — one card per image in /public/images/second-home/.
- * Filenames match the project’s second-home asset set (see README in that folder).
+ * Named house-type visuals for the main SSD hub.
+ * Files live in /public/images/second-home/ — use exact filenames (including typos on disk).
  */
-export type SsdHouseArchetype = {
+export type SsdHouseArchetypeExterior = {
+  kind: 'exterior'
   image: string
   title: string
   description: string
+  /** Descriptive alt for accessibility / AEO */
+  imageAlt: string
   href?: string
   linkLabel?: string
 }
 
-export const SSD_HOUSE_ARCHETYPES: SsdHouseArchetype[] = [
+export type SsdHouseArchetypeFloorPlan = {
+  kind: 'floorPlan'
+  image: string
+  title: string
+  description: string
+  imageAlt: string
+  href?: string
+  linkLabel?: string
+}
+
+/** Four hero-style exterior / render cards */
+export const SSD_HOUSE_ARCHETYPES_EXTERIOR: SsdHouseArchetypeExterior[] = [
   {
-    image: '/images/second-home/garden-studio.jpg',
-    title: 'Garden studio',
+    kind: 'exterior',
+    image: '/images/second-home/Blackwood Reteat.jpg',
+    title: 'Blackwood Retreat',
+    imageAlt:
+      'Blackwood Retreat — small second dwelling with dark timber cladding and gabled roof, backyard setting.',
     description:
-      'A light backyard studio volume — work, music, or a quiet room. Still has to meet SSD gross floor area, siting, and title rules for your lot.',
+      'Dark timber and a simple gabled form — a compact annexe or guest read that still has to sit inside the SSD size and siting tests on your lot.',
     href: '/backyard-small-second-home/victoria-rules',
     linkLabel: 'Size and siting rules',
   },
   {
-    image: '/images/second-home/guest-cottage.jpg',
-    title: 'Guest cottage',
+    kind: 'exterior',
+    image: '/images/second-home/Skylark Pavilion.jpg',
+    title: 'Skylark Pavilion',
+    imageAlt: 'Skylark Pavilion — light-filled pavilion-style small home with large glass walls opening to garden.',
     description:
-      'Small cottage-style annexe for guests or family on the same title — the shape many people describe as a granny flat before they read the official SSD wording.',
-    href: '/backyard-small-second-home/granny-flat-victoria',
-    linkLabel: 'Granny flat wording → SSD',
-  },
-  {
-    image: '/images/second-home/family-pod.jpg',
-    title: 'Family pod',
-    description:
-      'Flexible pod-style space for a second adult, visitors, or part-time rent — always on one title and behind the main house when the pathway fits.',
-    href: '/backyard-small-second-home/cost-rent-roi',
-    linkLabel: 'Cost and rent context',
-  },
-  {
-    image: '/images/second-home/minimalist-studio.jpg',
-    title: 'Minimalist studio',
-    description:
-      'Simple form and glazing where the brief is a single clear room — overlays, bush fire, and services on your block still set the real constraints.',
+      'Pavilion-style glazing and a light shell — a useful mental model for a garden studio or second living volume when overlays and privacy allow.',
     href: '/backyard-small-second-home/mornington-peninsula',
     linkLabel: 'Peninsula & overlays',
   },
   {
-    image: '/images/second-home/california-bungalow.jpg',
-    title: 'California bungalow',
+    kind: 'exterior',
+    image: '/images/second-home/Skydeck Retreat.jpg',
+    title: 'Skydeck Retreat',
+    imageAlt: 'Skydeck Retreat — modern small second dwelling with deck and elevated outdoor living space.',
     description:
-      'Traditional roof and modest street presence; inside can stay compact enough for SSD if the measured GFA and siting stack up on your title.',
-    href: '/backyard-small-second-home/is-this-for-you',
-    linkLabel: 'Check fit for your goals',
+      'Deck-led outdoor living attached to a small box — shows how a second volume can feel separate without another title, if height and setbacks comply.',
+    href: '/backyard-small-second-home/cost-rent-roi',
+    linkLabel: 'Indicative cost context',
   },
   {
-    image: '/images/second-home/two-bedroom.jpg',
-    title: 'Two-bedroom',
+    kind: 'exterior',
+    image: '/images/second-home/Heritage Verandah.jpg',
+    title: 'Heritage Verandah',
+    imageAlt: 'Heritage Verandah — cottage-style small home with verandah and traditional roofline.',
     description:
-      'Sleep and living split in one small dwelling — only on the SSD pathway when the whole building stays within the State cap, not a full-size second house.',
-    href: '/backyard-small-second-home/victoria-rules',
-    linkLabel: 'Read the hard lines',
+      'Verandah-front cottage language many people associate with a granny flat — still only SSD if measured GFA and siting match the framework.',
+    href: '/backyard-small-second-home/granny-flat-victoria',
+    linkLabel: 'Granny flat wording → SSD',
   },
 ]
+
+/** Supporting layout — not a hero exterior; rendered smaller and separately */
+export const SSD_HOUSE_ARCHETYPE_FLOOR_PLAN: SsdHouseArchetypeFloorPlan = {
+  kind: 'floorPlan',
+  image: '/images/second-home/Typical two bedroom.jpg',
+  title: 'Typical two bedroom floor plan',
+  imageAlt: 'Typical two bedroom floor plan — schematic layout with bedroom, living, and wet areas in a compact footprint.',
+  description:
+    'Indicative plan only: one way to split sleep and living in a small footprint — your surveyor still measures gross floor area against the 60 sqm SSD cap.',
+  href: '/backyard-small-second-home/victoria-rules',
+  linkLabel: 'How GFA is counted',
+}

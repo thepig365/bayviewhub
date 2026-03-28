@@ -1,11 +1,11 @@
 import React from 'react'
+import Link from 'next/link'
 import { SITE_CONFIG, SSD_LANDING } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
-import { SsdHouseUseTypesSubpage } from '@/components/ssd/SsdHouseUseTypesSubpage'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
@@ -48,14 +48,16 @@ export default function CostRentRoiPage() {
             />
             <SsdPageShare path="/backyard-small-second-home/cost-rent-roi" className="mt-8" />
             <SsdFunnelNextSteps sentence="Figures are indicative — your surveyor and builder firm up numbers." />
+            <p className="mt-6 text-sm leading-relaxed text-muted">
+              Named house-type imagery and a typical floor plan sit on the{' '}
+              <Link href="/backyard-small-second-home#ssd-house-archetypes" className="font-medium text-accent underline-offset-4 hover:underline">
+                main SSD overview
+              </Link>
+              — this page stays focused on cost drivers and tiers below.
+            </p>
           </div>
         </div>
       </section>
-
-      <SsdHouseUseTypesSubpage
-        currentPath="/backyard-small-second-home/cost-rent-roi"
-        onPageAnchorId="indicative-cost-tiers"
-      />
 
       <section id="indicative-cost-tiers" className="scroll-mt-24 py-12 md:py-16">
         <div className="container mx-auto px-4">

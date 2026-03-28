@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { SITE_CONFIG, SSD_LANDING } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
@@ -47,6 +48,13 @@ export default function SsdAudienceFitPage() {
             />
             <SsdPageShare path="/backyard-small-second-home/is-this-for-you" className="mt-8" />
             <SsdFunnelNextSteps sentence="This is a screening page — your title and overlays still need a proper check." />
+            <p className="mt-5 text-sm leading-relaxed text-muted">
+              For visual examples of named formats (Blackwood Retreat, Skylark Pavilion, etc.), see the{' '}
+              <Link href="/backyard-small-second-home#ssd-house-archetypes" className="font-medium text-accent underline-offset-4 hover:underline">
+                house-type section on the overview
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </section>
