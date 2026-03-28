@@ -1,7 +1,6 @@
 /**
- * Visual archetypes for the main SSD landing — illustrative formats only.
- * All remain subject to Victorian SSD limits (e.g. ≤60 sqm GFA, same title, siting rules).
- * Images: /public/images/second-home/*.jpg (README names; replace with Bayview photography when ready).
+ * Visual house-type row on the main SSD hub — one card per image in /public/images/second-home/.
+ * Filenames match the project’s second-home asset set (see README in that folder).
  */
 export type SsdHouseArchetype = {
   image: string
@@ -16,48 +15,56 @@ export const SSD_HOUSE_ARCHETYPES: SsdHouseArchetype[] = [
     image: '/images/second-home/garden-studio.jpg',
     title: 'Garden studio',
     description:
-      'A light, single-volume building tucked into the backyard — work, music, or a quiet room away from the main house. The whole dwelling still has to fit the SSD gross floor area cap.',
+      'A light backyard studio volume — work, music, or a quiet room. Still has to meet SSD gross floor area, siting, and title rules for your lot.',
     href: '/backyard-small-second-home/victoria-rules',
     linkLabel: 'Size and siting rules',
   },
   {
     image: '/images/second-home/guest-cottage.jpg',
-    title: 'Guest annexe',
+    title: 'Guest cottage',
     description:
-      'Reads like a small cottage: sleeping, sitting, and services in one compact footprint. Often what people picture for parents or guests — same title, behind the main home.',
+      'Small cottage-style annexe for guests or family on the same title — the shape many people describe as a granny flat before they read the official SSD wording.',
     href: '/backyard-small-second-home/granny-flat-victoria',
     linkLabel: 'Granny flat wording → SSD',
   },
   {
     image: '/images/second-home/family-pod.jpg',
-    title: 'Flexible living pod',
+    title: 'Family pod',
     description:
-      'Open plan you can furnish for a young adult, guests, or part-time rent — still on your block and on one title. Running costs and rent context depend on your site and market.',
+      'Flexible pod-style space for a second adult, visitors, or part-time rent — always on one title and behind the main house when the pathway fits.',
     href: '/backyard-small-second-home/cost-rent-roi',
     linkLabel: 'Cost and rent context',
   },
   {
     image: '/images/second-home/minimalist-studio.jpg',
-    title: 'Courtyard studio',
+    title: 'Minimalist studio',
     description:
-      'Simple lines and glass where the brief favours clarity over rooms — common for a studio or deep-work space. Bushfire, overlays, and services still decide what you can build.',
+      'Simple form and glazing where the brief is a single clear room — overlays, bush fire, and services on your block still set the real constraints.',
     href: '/backyard-small-second-home/mornington-peninsula',
     linkLabel: 'Peninsula & overlays',
   },
   {
     image: '/images/second-home/california-bungalow.jpg',
-    title: 'Gabled backyard room',
+    title: 'California bungalow',
     description:
-      'A familiar roof form and modest street-facing discretion; inside can still be one or two small zones if the measured GFA stays within the SSD framework.',
+      'Traditional roof and modest street presence; inside can stay compact enough for SSD if the measured GFA and siting stack up on your title.',
     href: '/backyard-small-second-home/is-this-for-you',
     linkLabel: 'Check fit for your goals',
   },
   {
     image: '/images/second-home/two-bedroom.jpg',
-    title: 'Compact two-zone plan',
+    title: 'Two-bedroom',
     description:
-      'Rough sleep + living split when the overall envelope stays small enough for SSD — not a full “big second house”. If you need more than 60 sqm GFA, the pathway is different.',
+      'Sleep and living split in one small dwelling — only on the SSD pathway when the whole building stays within the State cap, not a full-size second house.',
     href: '/backyard-small-second-home/victoria-rules',
     linkLabel: 'Read the hard lines',
+  },
+  {
+    image: '/images/second-home/PHOTO-2024-05-14-17-07-00.jpg',
+    title: 'On site, Main Ridge',
+    description:
+      'Context from the Bayview Hub estate — useful when you want to see how a small second structure sits in a real Peninsula block before you commit to drawings.',
+    href: '/visit',
+    linkLabel: 'Plan a visit',
   },
 ]
