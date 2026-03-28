@@ -51,9 +51,9 @@ Add these **6 image files** with these **exact names**:
 - Dark or blurry photos
 - Images with watermarks
 
-## Temporary Solution
+## Current files
 
-Until you have real photos, the page uses beautiful gradient placeholders with home icons.
+The six `.jpg` names above are present for the main SSD landing **Formats** grid. They are **Unsplash stock placeholders** — replace with Bayview or project photography when available (keep filenames to avoid code changes, or update `lib/ssd-house-archetypes.ts`).
 
 ## Where to Find Images
 
