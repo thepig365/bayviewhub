@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { SITE_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, SSD_PROGRAMME_MAP } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
@@ -43,8 +43,7 @@ const siteMapData = [
   {
     heading: 'Programs',
     links: [
-      { label: 'Backyard Small Second Home', href: '/backyard-small-second-home' },
-      { label: 'Feasibility Check', href: '/backyard-small-second-home/feasibility-check' },
+      ...SSD_PROGRAMME_MAP.map((p) => ({ label: p.label, href: p.href })),
       { label: 'Invest', href: '/invest' },
     ],
   },

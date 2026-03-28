@@ -3,6 +3,8 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
+import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
+import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { Button } from '@/components/ui/Button'
 
 export const metadata = genMeta({
@@ -92,6 +94,7 @@ export default function MorningtonPeninsulaPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdFunnelNextSteps sentence="This page covers Mornington Peninsula overlays and local planning context — not a substitute for Shire advice." />
           </div>
         </div>
       </section>
@@ -212,28 +215,7 @@ export default function MorningtonPeninsulaPage() {
         </div>
       </section>
 
-      {/* Section 6 — Internal nav */}
-      <section className="py-16 border-t border-border">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto flex flex-wrap gap-4">
-            <Button href="/backyard-small-second-home" variant="primary" size="lg">
-              Backyard Small Second Home
-            </Button>
-            <Button href="/backyard-small-second-home/victoria-rules" variant="outline" size="lg">
-              Victoria Rules
-            </Button>
-            <Button href="/backyard-small-second-home/granny-flat-victoria" variant="outline" size="lg">
-              Granny Flat Victoria
-            </Button>
-            <Button href="/backyard-small-second-home/cost-rent-roi" variant="outline" size="lg">
-              Cost &amp; ROI
-            </Button>
-            <Button href="/backyard-small-second-home/feasibility-check" variant="outline" size="lg">
-              Feasibility Check
-            </Button>
-          </div>
-        </div>
-      </section>
+      <SsdFunnelReturn />
     </main>
   )
 }

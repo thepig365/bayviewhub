@@ -3,6 +3,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
+import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { SecondHomeClient } from './SecondHomeClient'
 
@@ -139,6 +140,7 @@ export default function BackyardSmallSecondHomePage() {
           </div>
         </div>
       </div>
+      <SsdProgrammeMap />
       <Suspense fallback={<div className="min-h-screen bg-bg" />}>
         <SecondHomeClient />
       </Suspense>

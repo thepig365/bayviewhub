@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { AnswerCapsule } from "@/components/seo/AnswerCapsule";
 import { LAST_UPDATED } from "@/lib/seo";
 
@@ -153,6 +154,26 @@ export default function FeasibilityChecklistLayout({
             ]}
             lastUpdated={LAST_UPDATED}
           />
+          <p className="mt-5 max-w-2xl text-center text-sm text-muted">
+            <Link href="/backyard-small-second-home" className="font-medium text-accent underline-offset-4 hover:underline">
+              ← Backyard Small Second Home overview
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/backyard-small-second-home/victoria-rules"
+              className="underline-offset-4 hover:underline"
+            >
+              Victoria rules
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href="/backyard-small-second-home/cost-rent-roi" className="underline-offset-4 hover:underline">
+              Cost &amp; ROI
+            </Link>
+          </p>
         </div>
       </div>
       {children}

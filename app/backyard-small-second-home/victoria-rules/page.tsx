@@ -3,7 +3,8 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
-import { Button } from '@/components/ui/Button'
+import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
+import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 
 export const metadata = genMeta({
   title: `Victoria SSD Rules (VC253/VC282) | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -34,6 +35,7 @@ export default function VictoriaRulesPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdFunnelNextSteps sentence="This page documents the regulatory hard lines for Victorian SSDs — verify details with official sources." />
           </div>
         </div>
       </section>
@@ -100,16 +102,7 @@ export default function VictoriaRulesPage() {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto flex flex-wrap gap-4">
-            <Button href="/backyard-small-second-home" variant="primary" size="lg">Backyard Small Second Home</Button>
-            <Button href="/backyard-small-second-home/victoria-rules" variant="outline" size="lg">Victoria Rules</Button>
-            <Button href="/backyard-small-second-home/cost-rent-roi" variant="outline" size="lg">Cost & ROI</Button>
-            <Button href="/backyard-small-second-home/feasibility-check" variant="outline" size="lg">Run Feasibility Check</Button>
-          </div>
-        </div>
-      </section>
+      <SsdFunnelReturn />
     </main>
   )
 }

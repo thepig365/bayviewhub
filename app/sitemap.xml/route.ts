@@ -6,6 +6,8 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '', priority: 1, changeFreq: 'weekly' },
   { path: '/zh', priority: 0.95, changeFreq: 'weekly' },
   { path: '/backyard-small-second-home', priority: 0.95, changeFreq: 'weekly' },
+  { path: '/backyard-small-second-home/approach', priority: 0.88, changeFreq: 'monthly' },
+  { path: '/backyard-small-second-home/is-this-for-you', priority: 0.88, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/victoria-rules', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/cost-rent-roi', priority: 0.9, changeFreq: 'monthly' },
   { path: '/backyard-small-second-home/feasibility-check', priority: 0.9, changeFreq: 'monthly' },

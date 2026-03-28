@@ -23,11 +23,58 @@ export const SSD_LANDING = {
   victoriaRules: '/backyard-small-second-home/victoria-rules',
 } as const
 
+/** Mobile nav + footer: hub, philosophy, fit, then practical + conversion */
 export const SSD_QUICK_LINKS: { label: string; href: string }[] = [
   { label: 'Overview', href: SSD_LANDING.overview },
+  { label: 'Why this pathway', href: '/backyard-small-second-home/approach' },
+  { label: 'Is this for you?', href: '/backyard-small-second-home/is-this-for-you' },
   { label: 'Feasibility check', href: SSD_LANDING.feasibility },
   { label: 'Cost, rent & ROI', href: SSD_LANDING.costRoi },
   { label: 'Victoria rules', href: SSD_LANDING.victoriaRules },
+]
+
+/** Full SSD funnel: one job per URL; used on the main hub programme map */
+export const SSD_PROGRAMME_MAP: { href: string; label: string; job: string }[] = [
+  {
+    href: SSD_LANDING.overview,
+    label: 'Overview',
+    job: 'Hub — quick answer, evidence links, enquiry, and the full on-page programme.',
+  },
+  {
+    href: '/backyard-small-second-home/approach',
+    label: 'Why this pathway',
+    job: 'Philosophy — why hard constraints and planning clarity sit at the centre of the offer.',
+  },
+  {
+    href: '/backyard-small-second-home/is-this-for-you',
+    label: 'Is this for you?',
+    job: 'Audience fit — Victorian homeowners we can help, and who should look elsewhere.',
+  },
+  {
+    href: SSD_LANDING.victoriaRules,
+    label: 'Victoria rules',
+    job: 'Regulatory hard lines — VC253/VC282, with official sources to verify.',
+  },
+  {
+    href: SSD_LANDING.costRoi,
+    label: 'Cost, rent & ROI',
+    job: 'Practical economics — indicative build tiers and rental context, not a quote.',
+  },
+  {
+    href: '/backyard-small-second-home/granny-flat-victoria',
+    label: 'Granny flat (Victoria)',
+    job: 'Trust entry — how everyday “granny flat” language maps to the SSD framework.',
+  },
+  {
+    href: '/backyard-small-second-home/mornington-peninsula',
+    label: 'Mornington Peninsula',
+    job: 'Local context — overlays, Shire links, and Bayview Hub’s Main Ridge base.',
+  },
+  {
+    href: SSD_LANDING.feasibility,
+    label: 'Feasibility check',
+    job: 'Conversion — interactive pathway logic; submit for a structured response when ready.',
+  },
 ]
 
 // Site-wide constants

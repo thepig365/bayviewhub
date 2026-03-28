@@ -3,7 +3,8 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
-import { Button } from '@/components/ui/Button'
+import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
+import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 
 export const metadata = genMeta({
   title: `SSD Cost, Rent & ROI | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -35,6 +36,7 @@ export default function CostRentRoiPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdFunnelNextSteps sentence="This page gives indicative cost tiers and rental context — not a fixed quote or contract price." />
           </div>
         </div>
       </section>
@@ -83,15 +85,7 @@ export default function CostRentRoiPage() {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto flex flex-wrap gap-4">
-            <Button href="/backyard-small-second-home" variant="primary" size="lg">Backyard Small Second Home</Button>
-            <Button href="/backyard-small-second-home/victoria-rules" variant="outline" size="lg">Victoria Rules</Button>
-            <Button href="/backyard-small-second-home/feasibility-check" variant="outline" size="lg">Run Feasibility Check</Button>
-          </div>
-        </div>
-      </section>
+      <SsdFunnelReturn />
     </main>
   )
 }

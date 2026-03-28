@@ -1057,6 +1057,35 @@ export default function FeasibilityChecklistPage() {
         </div>
       </section>
 
+      <section className="border-t border-border bg-background py-14">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="mx-auto mb-4 max-w-xl text-sm text-muted-foreground">
+            Need context before you submit? Return to the main Backyard Small Second Home page, or open rules and
+            indicative costs.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/backyard-small-second-home"
+              className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Backyard Small Second Home
+            </Link>
+            <Link
+              href="/backyard-small-second-home/victoria-rules"
+              className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted/50"
+            >
+              Victoria rules
+            </Link>
+            <Link
+              href="/backyard-small-second-home/cost-rent-roi"
+              className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted/50"
+            >
+              Cost &amp; ROI
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* GEO Footer */}
       <section className="py-10 bg-neutral-100 dark:bg-neutral-800 border-t border-border">
         <div className="max-w-4xl mx-auto px-6">
