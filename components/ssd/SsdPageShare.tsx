@@ -2,7 +2,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { SSD_FUNNEL_SHARE, type SsdFunnelSharePath } from '@/lib/ssd-funnel-share'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 
-/** Reuses site-wide ShareStrip (copy link, email, LinkedIn, Facebook) for SSD funnel URLs */
+/** Wraps site-wide ShareStrip for SSD URLs (expanded share row + “More” menu on all funnel pages). */
 export function SsdPageShare({
   path,
   className = 'mt-6',
