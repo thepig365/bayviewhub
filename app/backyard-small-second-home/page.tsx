@@ -5,6 +5,8 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdHubContent } from '@/components/ssd/SsdHubContent'
 import { SsdHubCtas } from '@/components/ssd/SsdHubCtas'
+import { SsdHubFraming } from '@/components/ssd/SsdHubFraming'
+import { SsdHubHouseTypes } from '@/components/ssd/SsdHubHouseTypes'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
@@ -145,6 +147,8 @@ export default function BackyardSmallSecondHomePage() {
           </div>
         </div>
       </div>
+      <SsdHubFraming />
+      <SsdHubHouseTypes />
       <SsdProgrammeMap />
       <SsdHubContent />
     </>
