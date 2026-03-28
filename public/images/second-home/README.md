@@ -1,27 +1,20 @@
 # Second Home Images Folder
 
-## Location
+## SSD hub “Formats” grid (`/backyard-small-second-home`)
 
-`public/images/second-home/`
+`lib/ssd-house-archetypes.ts` lists **six** cards. Each uses a JPG in this folder:
 
-## Files used on the SSD hub (`/backyard-small-second-home`)
-
-The **Formats** grid reads one card per file listed in `lib/ssd-house-archetypes.ts`. Current set:
-
-| File | Label on page |
-|------|----------------|
+| File | Card title |
+|------|------------|
 | `garden-studio.jpg` | Garden studio |
 | `guest-cottage.jpg` | Guest cottage |
 | `family-pod.jpg` | Family pod |
 | `minimalist-studio.jpg` | Minimalist studio |
 | `california-bungalow.jpg` | California bungalow |
 | `two-bedroom.jpg` | Two-bedroom |
-| `PHOTO-2024-05-14-17-07-00.jpg` | On site, Main Ridge |
 
-To add or rename a slot, update **`lib/ssd-house-archetypes.ts`** and keep files in this folder.
+**Source photo:** `PHOTO-2024-05-14-17-07-00.jpg` is the on-site Bayview reference. The six filenames above are currently **copies of that file** so the landing page shows your estate shot instead of stock placeholders. When you have **distinct** photos per format, replace each JPG (keep the filename) — no code change required.
 
-## Image tips
+## Optional archive
 
-- Landscape orientation, 1200px+ wide where possible  
-- JPG or WebP  
-- Show small second structures, garden context, or on-site estate context  
+`PHOTO-2024-05-14-17-07-00.jpg` can stay as the master reference or be removed once every slot has its own image.

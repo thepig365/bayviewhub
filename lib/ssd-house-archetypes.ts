@@ -59,12 +59,4 @@ export const SSD_HOUSE_ARCHETYPES: SsdHouseArchetype[] = [
     href: '/backyard-small-second-home/victoria-rules',
     linkLabel: 'Read the hard lines',
   },
-  {
-    image: '/images/second-home/PHOTO-2024-05-14-17-07-00.jpg',
-    title: 'On site, Main Ridge',
-    description:
-      'Context from the Bayview Hub estate — useful when you want to see how a small second structure sits in a real Peninsula block before you commit to drawings.',
-    href: '/visit',
-    linkLabel: 'Plan a visit',
-  },
 ]

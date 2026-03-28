@@ -63,7 +63,9 @@ export function SsdHubHouseArchetypes() {
           </ul>
 
           <p className="mt-8 text-center text-xs leading-relaxed text-muted">
-            Imagery is from the Bayview Hub <code className="rounded bg-natural-100 px-1 py-0.5 text-[0.7rem] dark:bg-white/10">second-home</code> set — illustrative formats only; your council path still depends on title and overlays.
+            Photos are Bayview Hub on-site photography (same estate shot across these six format labels until you add one file per archetype in{' '}
+            <code className="rounded bg-natural-100 px-1 py-0.5 text-[0.7rem] dark:bg-white/10">public/images/second-home/</code>
+            ). Illustrative only — your path still depends on title and overlays.
           </p>
 
           <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
