@@ -5,14 +5,16 @@ import { SsdPageHero } from "@/components/ssd/SsdPageHero";
 import { LAST_UPDATED } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
-  description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process. Victorian VC253/VC282 compliance tool.",
+  title: "SSD feasibility check | Victorian pathway tool | Bayview Hub",
+  description:
+    "Interactive Victorian Small Second Dwelling check: see whether your answers suggest Green Lane, VicSmart, or standard planning — optional written response.",
   alternates: {
     canonical: "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
   },
   openGraph: {
-    title: "SSD Logic Engine | Path to Approval Matrix — Victoria 2026",
-    description: "Determine your SSD approval pathway: Green Lane (no planning permit), VicSmart (10-day), or standard process.",
+    title: "SSD feasibility check | Bayview Hub",
+    description:
+      "Interactive checklist for Victorian SSD pathways — Green Lane, VicSmart, or standard planning. Optional written feasibility pass.",
     url: "https://www.bayviewhub.me/backyard-small-second-home/feasibility-check",
     siteName: "Bayview Hub",
     type: "website",
