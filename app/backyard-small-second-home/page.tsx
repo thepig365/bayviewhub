@@ -3,6 +3,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
+import { ShareStrip } from '@/components/ui/ShareStrip'
 import { SecondHomeClient } from './SecondHomeClient'
 
 export const metadata = genMeta({
@@ -128,6 +129,12 @@ export default function BackyardSmallSecondHomePage() {
                 { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
               ]}
               lastUpdated={LAST_UPDATED}
+            />
+            <ShareStrip
+              className="mt-8"
+              url={`${baseUrl}/backyard-small-second-home`}
+              mailtoSubject="Backyard Small Second Home — Bayview Hub"
+              mailtoIntro="Sharing Bayview Hub’s Victorian Backyard Small Second Home (SSD) overview — feasibility, rules, and cost tools."
             />
           </div>
         </div>
