@@ -3,19 +3,19 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
+import { SsdHubContent } from '@/components/ssd/SsdHubContent'
+import { SsdHubCtas } from '@/components/ssd/SsdHubCtas'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { ShareStrip } from '@/components/ui/ShareStrip'
-import { SecondHomeClient } from './SecondHomeClient'
 
 export const metadata = genMeta({
   title: `Backyard Small Second Home | SSD Builder Victoria | 60 sqm. No Planning Permit. | ${SITE_CONFIG.name}`,
   description:
-    'Victorian Small Second Dwelling (SSD) feasibility and build. Backyard Small Second Home — 60 sqm max under VC253/VC282. Deemed-to-Comply pathway under Clause 54.03 bypasses planning permit. We navigate the constraints.',
+    'Victorian Small Second Dwelling (SSD) on your lot: up to 60 sqm, same title, all-electric. When you meet the rules you may skip a planning permit. Feasibility check and plain-English programme pages.',
   path: '/backyard-small-second-home',
   image: `${SITE_CONFIG.url}/og-second-home.png`,
 })
 
-// Victorian SSD Regulatory Expert Schema
 const ssdExpertJsonLd = {
   '@context': 'https://schema.org',
   '@type': ['ProfessionalService', 'LocalBusiness'],
@@ -65,7 +65,7 @@ const faqJsonLd = {
       name: 'What is the Victorian SSD framework (VC253/VC282)?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Victorian SSD framework under VC253/VC282 allows Small Second Dwellings up to 60 sqm on existing residential lots. Hard constraints: maximum 60 sqm GFA, siting behind front wall, all-electric (no gas), no subdivision, main dwelling retains 25 sqm POS. Compliant projects bypass planning permit via Deemed-to-Comply pathway.',
+        text: 'The Victorian SSD framework under VC253/VC282 allows Small Second Dwellings up to 60 sqm on existing residential lots. Hard constraints: maximum 60 sqm GFA, siting behind front wall, all-electric (no gas), no subdivision, main dwelling retains 25 sqm POS. Compliant projects may bypass planning permit via Deemed-to-Comply pathway.',
       },
     },
     {
@@ -109,41 +109,49 @@ export default function BackyardSmallSecondHomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ssdExpertJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <div className="bg-natural-50 dark:bg-neutral-900 border-b border-border dark:border-neutral-800">
-        <div className="container mx-auto px-4 py-6">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold text-fg dark:text-white mb-6">
+      <div className="border-b border-border bg-natural-50 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
+          <div className="mx-auto max-w-4xl">
+            <h1 className="text-3xl font-bold leading-tight text-fg dark:text-white sm:text-4xl md:text-[2.25rem]">
               Backyard Small Second Home
             </h1>
-            <AnswerCapsule
-              definition="Backyard Small Second Home: Victorian Small Second Dwelling (SSD) feasibility and Path to Approval. Overview of deemed-to-comply pathway and key constraints. See Evidence on the rules page."
-              facts={[
-                'Max 60 sqm GFA. Siting behind front wall. All-electric. No subdivision.',
-                'Green Lane: full compliance → no planning permit. Building permit required.',
-                'VicSmart: minor overlays → 10-day council decision.',
-                'Multi-generational housing or rental yield. Same title.',
-              ]}
-              sources={[
-                { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
-                { label: 'Victoria Rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
-                { label: 'Cost & ROI', href: `${baseUrl}/backyard-small-second-home/cost-rent-roi` },
-                { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
-              ]}
-              lastUpdated={LAST_UPDATED}
-            />
-            <ShareStrip
-              className="mt-8"
-              url={`${baseUrl}/backyard-small-second-home`}
-              mailtoSubject="Backyard Small Second Home — Bayview Hub"
-              mailtoIntro="Sharing Bayview Hub’s Victorian Backyard Small Second Home (SSD) overview — feasibility, rules, and cost tools."
-            />
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted dark:text-white/75 sm:text-lg">
+              A Victorian <strong className="text-fg dark:text-white">Small Second Dwelling (SSD)</strong> on your
+              existing lot: up to 60 sqm, behind the front wall, all-electric, same title — no subdivision. When you
+              meet the published tests, you may not need a planning permit; you still need a building permit.
+            </p>
+            <Suspense fallback={<div className="mt-6 h-12 animate-pulse rounded-lg bg-natural-200/80 dark:bg-white/10" />}>
+              <SsdHubCtas />
+            </Suspense>
+
+            <div className="mt-10 border-t border-border pt-8 dark:border-neutral-700">
+              <AnswerCapsule
+                definition="Quick read: SSD is a State-planned route for a small second building on the same title. It only works when siting, size, services, and overlays line up — which is why we separate rules, cost, and fit onto their own pages."
+                facts={[
+                  'Hard limits: 60 sqm GFA, behind the front wall, all-electric, same title, no subdivision.',
+                  'If you meet every Deemed-to-Comply test, you may skip a planning permit and go to a building permit.',
+                  'Heritage, flood, bushfire, and other overlays can change the path — the feasibility check sorts that.',
+                ]}
+                sources={[
+                  { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
+                  { label: 'Understand Victoria rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
+                  { label: 'Explore likely costs', href: `${baseUrl}/backyard-small-second-home/cost-rent-roi` },
+                  { label: 'Run feasibility check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
+                ]}
+                lastUpdated={LAST_UPDATED}
+              />
+              <ShareStrip
+                className="mt-8"
+                url={`${baseUrl}/backyard-small-second-home`}
+                mailtoSubject="Backyard Small Second Home — Bayview Hub"
+                mailtoIntro="Sharing Bayview Hub’s Victorian Backyard Small Second Home (SSD) overview — feasibility, rules, and cost tools."
+              />
+            </div>
           </div>
         </div>
       </div>
       <SsdProgrammeMap />
-      <Suspense fallback={<div className="min-h-screen bg-bg" />}>
-        <SecondHomeClient />
-      </Suspense>
+      <SsdHubContent />
     </>
   )
 }

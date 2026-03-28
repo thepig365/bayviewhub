@@ -1,16 +1,17 @@
 import React from 'react'
-import { SITE_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, SSD_LANDING } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
+import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { Button } from '@/components/ui/Button'
 
 export const metadata = genMeta({
   title: `Granny Flat Victoria | Small Second Dwelling Builder | Mornington Peninsula | ${SITE_CONFIG.name}`,
   description:
-    'Build a granny flat in Victoria under the new 2024–2026 rules. No planning permit required for most lots over 300sqm. Bayview Hub delivers compliant 60sqm small second dwellings on the Mornington Peninsula and across Victoria.',
+    'If you searched “granny flat Victoria”: it is the same planning idea as a Small Second Dwelling (SSD) — 60 sqm, same title, all-electric. When you qualify, you may skip a planning permit.',
   path: '/backyard-small-second-home/granny-flat-victoria',
 })
 
@@ -23,7 +24,7 @@ const faqSchema = {
       name: 'Do I need a planning permit for a granny flat in Victoria?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In most cases, no. Under Amendment VC253 (December 2023), granny flats up to 60sqm on lots over 300sqm no longer require a planning permit, provided there are no flooding, heritage, or environmental overlays. A building permit is always required.',
+        text: 'Often no, when you meet SSD Deemed-to-Comply tests — for example many lots over 300 sqm without overlays. Heritage, flood, bushfire, or other overlays can still require planning. A building permit is always required.',
       },
     },
     {
@@ -31,7 +32,7 @@ const faqSchema = {
       name: 'What is the maximum size for a granny flat in Victoria?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '60 square metres gross floor area. This is a hard limit under VC253/VC282. There are no exceptions within the Deemed-to-Comply pathway.',
+        text: '60 square metres gross floor area under the SSD framework. There is no larger SSD on the same pathway.',
       },
     },
     {
@@ -39,7 +40,7 @@ const faqSchema = {
       name: 'Can I rent out my granny flat in Victoria?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Yes. Under the new rules, small second dwellings can be rented to anyone — not just family members. Victoria's rental vacancy rate is under 1%, making compliant SSDs a strong rental yield asset.",
+        text: 'Yes — a compliant Small Second Dwelling can be rented. Rental income depends on your market and lease; it is not guaranteed.',
       },
     },
     {
@@ -47,7 +48,7 @@ const faqSchema = {
       name: "What's the difference between a granny flat and a small second dwelling?",
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'They refer to the same thing. "Small second dwelling" is the current official Victorian planning term. "Granny flat" is the common name. Both describe a self-contained dwelling of up to 60sqm on the same lot as an existing home.',
+        text: 'Everyday language vs planning term. “Small second dwelling” (SSD) is the current Victorian planning label for a compliant second home up to 60 sqm on the same lot. People still say “granny flat”.',
       },
     },
   ],
@@ -57,132 +58,118 @@ export default function GrannyFlatVictoriaPage() {
   const baseUrl = SITE_CONFIG.url
   return (
     <main className="min-h-screen bg-bg">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
+      <SsdPageHero
+        title="Granny flat, Victoria — same idea as SSD"
+        explainer="If you typed “granny flat”, you are in the right place. Bayview uses the official name Backyard Small Second Home / Small Second Dwelling (SSD). Same rules either way."
+        primaryHref={SSD_LANDING.feasibility}
+        primaryLabel="Run the feasibility check"
+        secondaryHref="/backyard-small-second-home/victoria-rules"
+        secondaryLabel="Understand Victoria rules"
       />
 
-      <section className="py-8 bg-natural-50 dark:bg-surface/50 border-b border-border">
+      <section className="border-b border-border bg-natural-50 py-8 dark:bg-surface/50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto max-w-4xl">
             <AnswerCapsule
-              definition="Granny flat Victoria: Victorian Small Second Dwelling (SSD) rules — no planning permit required on most lots over 300sqm under Amendment VC253 (December 2023). 60sqm max. All-electric. Building permit always required."
+              definition="Since VC253 (2023), many Victorian lots can use the SSD route: up to 60 sqm, same title, all-electric, behind the front wall — overlays can still change the path."
               facts={[
-                'No planning permit needed on most lots over 300sqm (VC253, December 2023).',
-                'Maximum size: 60sqm gross floor area. Hard limit — no exceptions.',
-                'All-electric only. No gas connection permitted.',
-                'Cannot be subdivided or sold separately from the main dwelling.',
-                'Building permit always required. Typically 2–4 weeks once documentation is complete.',
+                'Lot size, overlays, and siting decide whether you skip planning or need VicSmart / full planning.',
+                'Building permit is always required.',
               ]}
               sources={[
                 { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
-                { label: 'Victoria SSD Rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
-                { label: 'Backyard Small Second Home Hub', href: `${baseUrl}/backyard-small-second-home` },
-                { label: 'Feasibility Check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
+                { label: 'Understand Victoria rules', href: `${baseUrl}/backyard-small-second-home/victoria-rules` },
+                { label: 'Mornington Peninsula context', href: `${baseUrl}/backyard-small-second-home/mornington-peninsula` },
+                { label: 'Run feasibility check', href: `${baseUrl}/backyard-small-second-home/feasibility-check` },
               ]}
               lastUpdated={LAST_UPDATED}
             />
-            <SsdFunnelNextSteps sentence="This page maps everyday “granny flat” language to the official Victorian SSD framework." />
+            <SsdFunnelNextSteps sentence="This page translates search language into the official framework — not a certificate for your title." />
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-natural-900 mb-8 dark:text-fg">
-              Granny Flat Victoria — No Planning Permit. 60sqm. Compliant.
-            </h1>
-            <p className="text-xl text-muted leading-relaxed">
-              Victoria's granny flat rules changed in December 2023. Most lots over 300sqm can now proceed straight to a building permit — no council planning approval needed.
+          <div className="mx-auto max-w-3xl space-y-6 text-base leading-relaxed text-muted">
+            <h2 className="font-serif text-xl font-semibold text-fg md:text-2xl">What changed in plain terms</h2>
+            <p>
+              The State added a route for a <strong className="text-fg">small second home on the same block</strong> as
+              the main house. People still say “granny flat”; planners say <strong className="text-fg">Small Second
+              Dwelling</strong>. Bayview publishes under <strong className="text-fg">Backyard Small Second Home</strong>{' '}
+              so the offer matches how homeowners search.
+            </p>
+            <p>
+              Renting is allowed for a compliant SSD — you are not limited to a dependent relative only. You are still
+              limited by size, siting, services, and title rules.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Section 1 — Rule change */}
-      <section className="py-16 bg-natural-50 dark:bg-surface/50">
+      <section className="border-t border-border bg-natural-50 py-12 dark:bg-surface/50">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 dark:text-fg">
-              Victoria's Granny Flat Rules Changed in 2023
-            </h2>
-            <p className="text-muted leading-relaxed">
-              In December 2023, the Victorian Government's Amendment VC253 removed the planning permit
-              requirement for most granny flats under 60 square metres. If your property is over
-              300sqm and has no flooding or environmental overlays, you can proceed directly to a
-              building permit — no council planning approval needed.
+          <div className="mx-auto max-w-3xl">
+            <h2 className="font-serif text-xl font-semibold text-fg md:text-2xl">Rules people ask about first</h2>
+            <ul className="mt-6 space-y-3 text-base text-muted">
+              <li className="flex gap-2">
+                <span className="text-fg">•</span>
+                <span>Up to 60 sqm gross floor area for the second dwelling.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-fg">•</span>
+                <span>Behind the front wall line — not a street-front second house.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-fg">•</span>
+                <span>All-electric — no reticulated gas to the second dwelling.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-fg">•</span>
+                <span>Stays on the same title — no subdivision of the SSD.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-fg">•</span>
+                <span>Main house keeps 25 sqm private open space.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-base leading-relaxed text-muted">
+            <h2 className="font-serif text-xl font-semibold text-fg md:text-2xl">On the Mornington Peninsula</h2>
+            <p className="mt-4">
+              Bayview Hub is in Main Ridge. Peninsula lots often pick up Green Wedge, landscape, bushfire, or heritage
+              overlays — those can change whether you get a light-touch path or need a full planning application. Read
+              the local page next if that is you.
             </p>
-            <p className="text-muted leading-relaxed">
-              What used to be called a Dependent Person's Unit (DPU) is now called a Small Second
-              Dwelling (SSD). The key difference: anyone can live in it — not just dependent family
-              members. You can rent it to anyone.
+            <p className="mt-4">
+              <a
+                href="/backyard-small-second-home/mornington-peninsula"
+                className="font-medium text-accent underline-offset-4 hover:underline"
+              >
+                See the Mornington Peninsula context →
+              </a>
             </p>
           </div>
         </div>
       </section>
 
-      {/* Section 2 — Key rules */}
-      <section className="py-16">
+      <section className="border-t border-border py-12 md:py-14">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 dark:text-fg mb-8">
-              Key Rules for Granny Flats in Victoria (2026)
-            </h2>
-            <div className="space-y-4">
-              {[
-                'Maximum size: 60 sqm gross floor area',
-                'Must be located behind the front wall of the main dwelling',
-                'All-electric only — no gas connection permitted',
-                'Cannot be subdivided or sold separately',
-                'Main dwelling must retain 25 sqm private open space',
-                'Building permit always required',
-                'Planning permit NOT required on most lots over 300sqm',
-              ].map((rule) => (
-                <div
-                  key={rule}
-                  className="p-5 bg-white rounded-xl dark:bg-surface dark:border dark:border-border flex items-start gap-3"
-                >
-                  <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 flex items-center justify-center text-xs font-bold">✓</span>
-                  <p className="text-natural-900 dark:text-fg">{rule}</p>
-                </div>
-              ))}
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-serif text-xl font-semibold text-fg md:text-2xl">Check your property</h2>
+            <p className="mt-3 text-base text-muted">Interactive pathway logic — about 48 hours if you submit the form.</p>
+            <div className="mt-8">
+              <Button href={SSD_LANDING.feasibility} variant="accent" size="lg" className="w-full sm:w-auto">
+                Run the feasibility check
+              </Button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3 — Mornington Peninsula */}
-      <section className="py-16 bg-natural-50 dark:bg-surface/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <h2 className="text-2xl font-serif font-bold text-natural-900 dark:text-fg">
-              Granny Flat Builders on the Mornington Peninsula
-            </h2>
-            <p className="text-muted leading-relaxed">
-              Bayview Hub is based in Main Ridge, Mornington Peninsula. We assess your specific site
-              against Mornington Peninsula Shire requirements and Victorian planning overlays before
-              recommending a design pathway.
-            </p>
-            <p className="text-muted leading-relaxed">
-              Our on-site SSD display home at Bayview Estate lets you walk through a real compliant
-              60sqm dwelling before committing to your build.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4 — CTA */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-serif font-bold text-natural-900 dark:text-fg mb-4">
-              Check If Your Property Qualifies
-            </h2>
-            <p className="text-muted mb-8">48-hour feasibility response. No cost.</p>
-            <Button href="/backyard-small-second-home/feasibility-check" variant="primary" size="lg">
-              Start Feasibility Check
-            </Button>
           </div>
         </div>
       </section>

@@ -1,20 +1,27 @@
 import Link from 'next/link'
 import { SSD_LANDING } from '@/lib/constants'
 
-/** Compact return strip: every support page points back to hub + feasibility check */
-export function SsdFunnelNextSteps({ sentence }: { sentence: string }) {
+export function SsdFunnelNextSteps({
+  sentence,
+  hubLabel = 'See the full SSD overview',
+  feasibilityLabel = 'Run the feasibility check',
+}: {
+  sentence: string
+  hubLabel?: string
+  feasibilityLabel?: string
+}) {
   return (
-    <p className="text-sm text-muted leading-relaxed border-l-2 border-accent/50 pl-4 mt-6">
+    <p className="mt-6 border-l-2 border-accent/50 pl-4 text-sm leading-relaxed text-muted">
       <span className="text-fg/90">{sentence}</span>
-      <span className="mt-2 block">
-        <Link href={SSD_LANDING.overview} className="font-medium text-accent hover:underline">
-          Back to Backyard Small Second Home
+      <span className="mt-2 block sm:mt-2">
+        <Link href={SSD_LANDING.feasibility} className="font-medium text-accent hover:underline">
+          {feasibilityLabel}
         </Link>
         <span className="mx-2 text-border" aria-hidden>
           ·
         </span>
-        <Link href={SSD_LANDING.feasibility} className="font-medium text-accent hover:underline">
-          Run feasibility check
+        <Link href={SSD_LANDING.overview} className="font-medium text-accent hover:underline">
+          {hubLabel}
         </Link>
       </span>
     </p>

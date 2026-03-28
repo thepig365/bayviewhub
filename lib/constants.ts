@@ -38,42 +38,42 @@ export const SSD_PROGRAMME_MAP: { href: string; label: string; job: string }[] =
   {
     href: SSD_LANDING.overview,
     label: 'Overview',
-    job: 'Hub — quick answer, evidence links, enquiry, and the full on-page programme.',
+    job: 'Start here: short definition, programme list, and feasibility CTA.',
   },
   {
     href: '/backyard-small-second-home/approach',
     label: 'Why this pathway',
-    job: 'Philosophy — why hard constraints and planning clarity sit at the centre of the offer.',
+    job: 'Why we lead with rules and planning clarity — not a sales script.',
   },
   {
     href: '/backyard-small-second-home/is-this-for-you',
     label: 'Is this for you?',
-    job: 'Audience fit — Victorian homeowners we can help, and who should look elsewhere.',
+    job: 'Fit check: strong match vs poor match; when to use the feasibility tool.',
   },
   {
     href: SSD_LANDING.victoriaRules,
     label: 'Victoria rules',
-    job: 'Regulatory hard lines — VC253/VC282, with official sources to verify.',
+    job: 'VC253/VC282 hard lines; official links — always verify on your title.',
   },
   {
     href: SSD_LANDING.costRoi,
     label: 'Cost, rent & ROI',
-    job: 'Practical economics — indicative build tiers and rental context, not a quote.',
+    job: 'What drives build cost; rental context without “get rich” framing.',
   },
   {
     href: '/backyard-small-second-home/granny-flat-victoria',
     label: 'Granny flat (Victoria)',
-    job: 'Trust entry — how everyday “granny flat” language maps to the SSD framework.',
+    job: 'If you searched “granny flat”: how that lines up with SSD.',
   },
   {
     href: '/backyard-small-second-home/mornington-peninsula',
     label: 'Mornington Peninsula',
-    job: 'Local context — overlays, Shire links, and Bayview Hub’s Main Ridge base.',
+    job: 'Peninsula overlays, access, and why site review still matters.',
   },
   {
     href: SSD_LANDING.feasibility,
     label: 'Feasibility check',
-    job: 'Conversion — interactive pathway logic; submit for a structured response when ready.',
+    job: 'Interactive pathway check + optional submission for a written response.',
   },
 ]
 

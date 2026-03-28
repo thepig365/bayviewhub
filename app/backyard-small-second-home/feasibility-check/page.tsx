@@ -742,36 +742,28 @@ export default function FeasibilityChecklistPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-50 to-natural-50 dark:from-neutral-900 dark:to-neutral-800 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-sm font-mono text-muted dark:text-white/90 mb-6 uppercase tracking-widest">
-            Victorian SSD Logic Engine · VC253/VC282 · 2026
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-fg dark:text-white">
-            SSD Feasibility Checklist
-            <span className="block text-muted dark:text-white/95 text-2xl md:text-3xl mt-2">Path to Approval Matrix</span>
-          </h1>
-          <p className="text-lg text-muted dark:text-white/90 mb-4 leading-relaxed max-w-3xl">
-            This tool determines your approval pathway. Green Lane bypasses planning entirely. 
-            VicSmart delivers 10-day council decision. Red Zone means standard permit process.
+      <section className="border-b border-border bg-background py-8 md:py-10">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <h2 className="text-xl font-semibold text-foreground md:text-2xl">How to use this page</h2>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            Answer the pathway questions, read what each outcome usually means, tick the self-check, then submit the form
+            if you want a written feasibility pass (about 48 hours). Nothing here replaces council or legal advice.
           </p>
-          <p className="text-fg dark:text-white/90 mb-8">
-            We navigate the constraints. You get certainty.
-          </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
+              type="button"
               onClick={scrollToEngine}
-              className="inline-flex items-center gap-2 bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 h-10 px-6 rounded-md text-base font-medium"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-neutral-900 px-6 text-base font-medium text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100"
             >
-              Run Path to Approval Engine
-              <ArrowRight className="w-4 h-4" />
+              Start the pathway questions
+              <ArrowRight className="h-4 w-4" />
             </button>
             <button
+              type="button"
               onClick={scrollToForm}
-              className="inline-flex items-center gap-2 border border-neutral-400 text-fg hover:bg-neutral-100 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-800 h-10 px-6 rounded-md text-base font-medium"
+              className="inline-flex h-11 items-center justify-center rounded-md border border-border px-6 text-base font-medium text-foreground hover:bg-muted/50"
             >
-              Submit for Assessment
+              Jump to submission form
             </button>
           </div>
         </div>
@@ -807,12 +799,10 @@ export default function FeasibilityChecklistPage() {
       {/* Logic Engine */}
       <section id="logic-engine" className="py-16 md:py-20 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Path to Approval Engine
-            </h2>
-            <p className="text-muted-foreground">
-              Input your site parameters. The engine outputs your approval pathway.
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">Pathway questions</h2>
+            <p className="text-base text-muted-foreground">
+              Your answers suggest Green Lane, VicSmart, or standard planning — then confirm on your title.
             </p>
           </div>
           <PathToApprovalEngine />
@@ -829,12 +819,10 @@ export default function FeasibilityChecklistPage() {
       {/* SSD Compliance Checklist */}
       <section className="py-16 md:py-20 bg-background border-b border-border">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              SSD Compliance Self-Check
-            </h2>
-            <p className="text-muted-foreground">
-              Verify your site against the framework. {checkedCount}/{totalChecks} confirmed.
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">Quick self-check</h2>
+            <p className="text-base text-muted-foreground">
+              Tick what you already know. {checkedCount}/{totalChecks} selected.
             </p>
           </div>
 
@@ -1004,11 +992,11 @@ export default function FeasibilityChecklistPage() {
       <section id="feasibility-form" className="py-16 md:py-20 bg-background border-b border-border">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Submit for Feasibility Assessment
+            <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">
+              Submit for a written feasibility pass
             </h2>
-            <p className="text-muted-foreground">
-              48-hour response. Path to Approval determination included.
+            <p className="text-base text-muted-foreground">
+              About 48 hours. Includes a pathway read based on what you tell us — not a council approval.
             </p>
           </div>
           <FeasibilityForm />
@@ -1060,27 +1048,26 @@ export default function FeasibilityChecklistPage() {
       <section className="border-t border-border bg-background py-14">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="mx-auto mb-4 max-w-xl text-sm text-muted-foreground">
-            Need context before you submit? Return to the main Backyard Small Second Home page, or open rules and
-            indicative costs.
+            Need context before you submit? Open the hub, the rules page, or indicative costs — then come back here.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/backyard-small-second-home"
               className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Backyard Small Second Home
+              See the full SSD overview
             </Link>
             <Link
               href="/backyard-small-second-home/victoria-rules"
               className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted/50"
             >
-              Victoria rules
+              Understand Victoria rules
             </Link>
             <Link
               href="/backyard-small-second-home/cost-rent-roi"
               className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted/50"
             >
-              Cost &amp; ROI
+              Explore likely costs
             </Link>
           </div>
         </div>

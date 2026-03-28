@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnswerCapsule } from "@/components/seo/AnswerCapsule";
+import { SsdPageHero } from "@/components/ssd/SsdPageHero";
 import { LAST_UPDATED } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -135,28 +136,34 @@ export default function FeasibilityChecklistLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Answer Capsule - above the fold */}
-      <div className="bg-muted/30 border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-6">
+      <SsdPageHero
+        title="SSD feasibility check"
+        explainer="Work through the checklist to see which pathway your answers suggest — Green Lane, VicSmart, or standard planning. Then submit the form if you want a written feasibility pass (about 48 hours)."
+        primaryHref="/backyard-small-second-home/feasibility-check#feasibility-form"
+        primaryLabel="Jump to submission form"
+        secondaryHref="/backyard-small-second-home"
+        secondaryLabel="See the full SSD overview"
+      />
+      <div className="border-b border-border bg-muted/30">
+        <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
           <AnswerCapsule
-            definition="Automated Deemed-to-Comply validation and Path to Approval engine. Determines Green Lane (no planning permit), VicSmart (10-day), or Red Zone (standard planning)."
+            definition="Interactive screen — not a council decision. It maps your answers to the usual SSD pathways so you know what to verify next."
             facts={[
-              "Green Lane: full compliance → no planning permit. Proceed to building permit.",
-              "VicSmart: minor overlays or variations → 10-day council decision.",
-              "Red Zone: GFA >60sqm or front-yard siting → standard planning process.",
-              "VC253/VC282 hard constraints: 60sqm max, behind front wall, all-electric, no subdivision.",
+              "Green Lane pattern: all Deemed-to-Comply tests met → often no planning permit; building permit still required.",
+              "VicSmart pattern: small overlay or variation issues → faster council route when it applies.",
+              "Outside SSD hard lines (size, siting, title) → expect standard planning — this tool flags that early.",
             ]}
             sources={[
               { label: "DTP Planning Portal", href: "https://www.planning.vic.gov.au/" },
-              { label: "Backyard Small Second Home Hub", href: "https://www.bayviewhub.me/backyard-small-second-home" },
-              { label: "Victoria Rules", href: "https://www.bayviewhub.me/backyard-small-second-home/victoria-rules" },
-              { label: "Cost & ROI", href: "https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi" },
+              { label: "See the full SSD overview", href: "https://www.bayviewhub.me/backyard-small-second-home" },
+              { label: "Understand Victoria rules", href: "https://www.bayviewhub.me/backyard-small-second-home/victoria-rules" },
+              { label: "Explore likely costs", href: "https://www.bayviewhub.me/backyard-small-second-home/cost-rent-roi" },
             ]}
             lastUpdated={LAST_UPDATED}
           />
-          <p className="mt-5 max-w-2xl text-center text-sm text-muted">
+          <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed text-muted">
             <Link href="/backyard-small-second-home" className="font-medium text-accent underline-offset-4 hover:underline">
-              ← Backyard Small Second Home overview
+              See the full SSD overview
             </Link>
             <span className="mx-2 text-border" aria-hidden>
               ·
@@ -165,13 +172,13 @@ export default function FeasibilityChecklistLayout({
               href="/backyard-small-second-home/victoria-rules"
               className="underline-offset-4 hover:underline"
             >
-              Victoria rules
+              Understand Victoria rules
             </Link>
             <span className="mx-2 text-border" aria-hidden>
               ·
             </span>
             <Link href="/backyard-small-second-home/cost-rent-roi" className="underline-offset-4 hover:underline">
-              Cost &amp; ROI
+              Explore likely costs
             </Link>
           </p>
         </div>
