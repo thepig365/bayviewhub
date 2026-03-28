@@ -4,15 +4,73 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import {
-  GALLERY_EXTERNAL,
-  GALLERY_VIEWING_REQUEST_MAILTO,
-  NAV_ITEMS,
-  SSD_LANDING,
-} from '@/lib/constants'
+import { GALLERY_EXTERNAL, SITE_NAV, type SiteNavChild, type SiteNavEntry, SSD_LANDING } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/utils'
+
+function DesktopNavLink({
+  href,
+  external,
+  className,
+  children,
+}: {
+  href: string
+  external?: boolean
+  className?: string
+  children: React.ReactNode
+}) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="nofollow noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    )
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  )
+}
+
+function MobileNavRow({
+  item,
+  onNavigate,
+  className,
+}: {
+  item: SiteNavChild
+  onNavigate: () => void
+  className?: string
+}) {
+  const rowClass = cn(
+    'block rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors',
+    className
+  )
+  if (item.external) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onNavigate}
+        className={rowClass}
+      >
+        {item.label}
+      </a>
+    )
+  }
+  return (
+    <Link href={item.href} onClick={onNavigate} className={rowClass}>
+      {item.label}
+    </Link>
+  )
+}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -21,7 +79,7 @@ export function Header() {
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const triggerBtnRef = useRef<HTMLButtonElement>(null)
   const { resolvedTheme } = useTheme()
-  const iconColor = resolvedTheme === 'dark' ? '#f5ede0' : '#111827' // undefined = light
+  const iconColor = resolvedTheme === 'dark' ? '#f5ede0' : '#111827'
   const closeMenu = () => setIsMenuOpen(false)
 
   useEffect(() => {
@@ -35,7 +93,6 @@ export function Header() {
   useEffect(() => {
     if (!isMenuOpen) return
 
-    // iOS-safe scroll lock: fix body and restore exact scroll position on close.
     const scrollY = window.scrollY
     const prevOverflow = document.body.style.overflow
     const prevPosition = document.body.style.position
@@ -82,6 +139,111 @@ export function Header() {
     }
   }, [isMenuOpen])
 
+  const topLinkClass =
+    'text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
+  const dropdownItemClass =
+    'block px-4 py-2.5 text-sm text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors'
+
+  const renderDesktopEntry = (entry: SiteNavEntry) => {
+    if (entry.kind === 'link') {
+      return (
+        <DesktopNavLink
+          key={entry.label}
+          href={entry.href}
+          external={entry.external}
+          className={topLinkClass}
+        >
+          {entry.label}
+        </DesktopNavLink>
+      )
+    }
+
+    return (
+      <div key={entry.label} className="relative group">
+        <DesktopNavLink
+          href={entry.href}
+          external={entry.external}
+          className={cn(topLinkClass, 'inline-flex items-center gap-1')}
+        >
+          {entry.label}
+          <ChevronDown className="h-3.5 w-3.5 opacity-70 shrink-0" aria-hidden />
+        </DesktopNavLink>
+        <div
+          className="absolute left-0 top-full z-50 hidden min-w-[15rem] pt-2 group-hover:block"
+          role="menu"
+          aria-label={entry.label}
+        >
+          <div className="rounded-lg border border-border bg-white py-1 shadow-lg dark:bg-surface dark:border-border">
+            {entry.children.map((child) => (
+              <DesktopNavLink
+                key={`${entry.label}-${child.href}`}
+                href={child.href}
+                external={child.external}
+                className={dropdownItemClass}
+              >
+                {child.label}
+              </DesktopNavLink>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const renderMobileEntry = (entry: SiteNavEntry) => {
+    if (entry.kind === 'group') {
+      return (
+        <details
+          key={entry.label}
+          className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40"
+        >
+          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-fg font-medium">
+            <span>{entry.label}</span>
+            <ChevronDown className="h-4 w-4 shrink-0" />
+          </summary>
+          <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
+            <MobileNavRow
+              item={{ label: `All ${entry.label}`, href: entry.href, external: entry.external }}
+              onNavigate={closeMenu}
+              className="text-muted font-medium"
+            />
+            {entry.children.map((child) => (
+              <MobileNavRow key={`${entry.label}-${child.href}`} item={child} onNavigate={closeMenu} />
+            ))}
+          </div>
+        </details>
+      )
+    }
+
+    if (entry.mobileSublinks?.length) {
+      return (
+        <details
+          key={entry.label}
+          className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40"
+        >
+          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-fg font-medium">
+            <span>{entry.label}</span>
+            <ChevronDown className="h-4 w-4 shrink-0" />
+          </summary>
+          <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
+            {entry.mobileSublinks.map((child) => (
+              <MobileNavRow key={child.href} item={child} onNavigate={closeMenu} />
+            ))}
+          </div>
+        </details>
+      )
+    }
+
+    return (
+      <MobileNavRow
+        key={entry.label}
+        item={{ label: entry.label, href: entry.href, external: entry.external }}
+        onNavigate={closeMenu}
+        className="font-medium"
+      />
+    )
+  }
+
   return (
     <header
       className={cn(
@@ -93,35 +255,15 @@ export function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-28 md:h-32">
-          {/* Logo */}
           <Logo />
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-5 text-base md:text-lg" aria-label="Primary">
-            {NAV_ITEMS.map((item) => (
-              item.external ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                  className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors"
-                >
-                  {item.label}
-                </Link>
-              )
-            ))}
+          <nav
+            className="hidden md:flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-5 text-base lg:text-lg"
+            aria-label="Primary"
+          >
+            {SITE_NAV.map(renderDesktopEntry)}
           </nav>
 
-          {/* Mobile Menu Toggle */}
           <div className="flex items-center md:hidden">
             <button
               ref={triggerBtnRef}
@@ -136,7 +278,6 @@ export function Header() {
             </button>
           </div>
         </div>
-
       </div>
 
       {isMenuOpen && (
@@ -153,14 +294,17 @@ export function Header() {
             aria-modal="true"
             aria-label="Site navigation menu"
             className="fixed top-0 right-0 h-[100dvh] w-[88vw] max-w-[420px] overflow-y-auto overscroll-contain border-l border-border bg-white dark:bg-surface shadow-2xl"
-            style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
+            style={{
+              paddingTop: 'env(safe-area-inset-top)',
+              paddingBottom: 'env(safe-area-inset-bottom)',
+            }}
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 border-b border-border bg-white/95 dark:bg-surface/95 backdrop-blur">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-white/95 px-5 py-4 backdrop-blur dark:bg-surface/95">
               <h2 className="text-lg font-semibold text-fg">Navigation</h2>
               <button
                 ref={closeBtnRef}
                 onClick={closeMenu}
-                className="p-2 rounded-md hover:bg-natural-100 dark:hover:bg-bg"
+                className="rounded-md p-2 hover:bg-natural-100 dark:hover:bg-bg"
                 style={{ color: iconColor }}
                 aria-label="Close navigation menu"
               >
@@ -168,163 +312,35 @@ export function Header() {
               </button>
             </div>
 
-            <div className="p-5 md:p-6 space-y-6">
-              <section className="space-y-3">
-                <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Primary Navigation</h3>
-                <nav className="grid grid-cols-1 md:grid-cols-2 gap-2" aria-label="Primary">
-                  {NAV_ITEMS.map((item) => (
-                    item.external ? (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        target="_blank"
-                        rel="nofollow noopener noreferrer"
-                        onClick={closeMenu}
-                        className="rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors"
-                      >
-                        {item.label}
-                      </a>
-                    ) : (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={closeMenu}
-                        className="rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    )
-                  ))}
-                </nav>
-              </section>
+            <div className="space-y-3 p-5">
+              {SITE_NAV.map(renderMobileEntry)}
+            </div>
 
-              <section className="space-y-3 border-t border-border pt-5">
-                <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Sub-Sites</h3>
-                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40" open>
-                  <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
-                    <span>Art Gallery</span>
-                    <ChevronDown className="h-4 w-4 shrink-0" />
-                  </summary>
-                  <div className="px-4 pb-4 space-y-4">
-                    <div className="rounded-lg border border-accent/25 bg-natural-50 dark:bg-bg/80 p-3 space-y-2">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-accent dark:text-accent">
-                        Private viewing network
-                      </p>
-                      <p className="text-sm text-muted leading-snug">
-                        Collectors & invited viewers — or hosts & artists sharing work by arrangement.
-                      </p>
-                      <a
-                        href={GALLERY_EXTERNAL.openYourWall}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded-md px-3 py-2.5 text-base font-semibold text-fg bg-white/90 dark:bg-surface border border-border hover:border-accent hover:text-accent transition-colors"
-                      >
-                        Private Viewing
-                      </a>
-                      <a
-                        href={GALLERY_EXTERNAL.passportRegister}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-fg bg-white/70 dark:bg-surface/80 border border-border/80 hover:border-accent hover:text-accent transition-colors"
-                      >
-                        Open Your Wall — register a work
-                      </a>
-                      <a
-                        href={GALLERY_VIEWING_REQUEST_MAILTO}
-                        onClick={closeMenu}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-fg/90 hover:text-accent transition-colors underline-offset-2 hover:underline"
-                      >
-                        Request private viewing access
-                      </a>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="px-2 text-xs font-semibold uppercase tracking-wide text-muted">Collection & artists</p>
-                      <a
-                        href={GALLERY_EXTERNAL.archive}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
-                      >
-                        Browse collection
-                      </a>
-                      <a
-                        href={GALLERY_EXTERNAL.submit}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
-                      >
-                        Submit artwork for curation
-                      </a>
-                      <a
-                        href={GALLERY_EXTERNAL.protocol}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
-                      >
-                        Assessment protocol
-                      </a>
-                      <a
-                        href={GALLERY_EXTERNAL.rights}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                        className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80"
-                      >
-                        Rights & licensing
-                      </a>
-                    </div>
-                  </div>
-                </details>
-                <details className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40" open>
-                  <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 text-fg font-medium">
-                    <span>Backyard Small Second Home</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </summary>
-                  <div className="px-4 pb-4 space-y-1">
-                    <Link href={SSD_LANDING.overview} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Overview
-                    </Link>
-                    <Link href={SSD_LANDING.feasibility} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Feasibility check
-                    </Link>
-                    <Link href={SSD_LANDING.costRoi} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Cost, rent & ROI
-                    </Link>
-                    <Link href={SSD_LANDING.victoriaRules} onClick={closeMenu} className="block rounded px-2 py-2 text-muted hover:text-fg hover:bg-natural-100 dark:hover:bg-surface/80">
-                      Victoria rules
-                    </Link>
-                  </div>
-                </details>
-              </section>
-
-              <section className="space-y-3 border-t border-border pt-5">
-                <h3 className="text-sm font-bold tracking-wide uppercase text-fg">Quick Actions</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <Button href="/partners" variant="primary" size="md" className="w-full" onClick={closeMenu}>
-                    Become a Partner
-                  </Button>
-                  <Button href="/cellar-door#book" variant="accent" size="md" className="w-full" onClick={closeMenu}>
-                    Book Wine Tasting
-                  </Button>
-                  <Button href={`${SSD_LANDING.overview}#register`} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Backyard Small Second Home
-                  </Button>
-                  <Button href={SSD_LANDING.feasibility} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Feasibility check
-                  </Button>
-                  <Button href={GALLERY_EXTERNAL.openYourWall} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Private Viewing
-                  </Button>
-                  <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                    Browse gallery
-                  </Button>
-                </div>
-              </section>
+            <div className="space-y-3 border-t border-border p-5 pt-2">
+              <h3 className="text-sm font-bold uppercase tracking-wide text-fg">Quick actions</h3>
+              <div className="grid grid-cols-1 gap-3">
+                <Button href="/partners" variant="primary" size="md" className="w-full" onClick={closeMenu}>
+                  Become a Partner
+                </Button>
+                <Button href="/cellar-door#book" variant="accent" size="md" className="w-full" onClick={closeMenu}>
+                  Book Wine Tasting
+                </Button>
+                <Button
+                  href={`${SSD_LANDING.overview}#register`}
+                  variant="outline"
+                  size="md"
+                  className="w-full"
+                  onClick={closeMenu}
+                >
+                  Backyard Small Second Home
+                </Button>
+                <Button href={SSD_LANDING.feasibility} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                  Feasibility check
+                </Button>
+                <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                  Browse gallery
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -332,4 +348,3 @@ export function Header() {
     </header>
   )
 }
-

@@ -61,16 +61,77 @@ export const SOCIAL_LINKS = {
   linkedin: 'https://www.linkedin.com/',
 }
 
-// Navigation items (visitor-focused, external links marked)
-export const NAV_ITEMS: { label: string; href: string; external?: boolean }[] = [
-  { label: 'Visit', href: '/visit' },
-  { label: "What's On", href: '/events' },
-  { label: 'Food/Wine', href: 'https://www.thepigandwhistle.com.au/', external: true },
-  { label: 'Backyard Small Second Home', href: SSD_LANDING.overview },
-  { label: 'Gallery', href: GALLERY_EXTERNAL.archive, external: true },
-  { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
-  { label: 'Workshops', href: '/workshops' },
-  { label: 'Gardens', href: '/edible-gardens' },
+/** Single row in a nav dropdown */
+export type SiteNavChild = { label: string; href: string; external?: boolean }
+
+/** Top-level navigation (desktop + mobile IA) */
+export type SiteNavEntry =
+  | {
+      kind: 'group'
+      label: string
+      /** Primary tap target for the parent label (desktop) */
+      href: string
+      external?: boolean
+      children: SiteNavChild[]
+    }
+  | {
+      kind: 'link'
+      label: string
+      href: string
+      external?: boolean
+      /** Extra rows in mobile drawer only (e.g. SSD deep links) */
+      mobileSublinks?: SiteNavChild[]
+    }
+
+const PIG_WHISTLE = 'https://www.thepigandwhistle.com.au/'
+
+export const SITE_NAV: SiteNavEntry[] = [
+  {
+    kind: 'group',
+    label: "What's On",
+    href: '/events',
+    children: [
+      { label: 'Workshops', href: '/workshops' },
+      { label: 'Events', href: '/events' },
+      { label: 'Live Music', href: `${PIG_WHISTLE}what-s-on`, external: true },
+      { label: 'Cellar Door', href: '/cellar-door' },
+    ],
+  },
+  { kind: 'link', label: 'Food/Wine', href: PIG_WHISTLE, external: true },
+  {
+    kind: 'link',
+    label: 'Backyard Small Second Home',
+    href: SSD_LANDING.overview,
+    mobileSublinks: SSD_QUICK_LINKS.map((l) => ({ label: l.label, href: l.href })),
+  },
+  {
+    kind: 'group',
+    label: 'Gallery',
+    href: GALLERY_EXTERNAL.archive,
+    external: true,
+    children: [
+      { label: 'Collection', href: GALLERY_EXTERNAL.archive, external: true },
+      { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
+      { label: 'Open Your Wall — Register a Work', href: GALLERY_EXTERNAL.passportRegister, external: true },
+      { label: 'Submit Artwork', href: GALLERY_EXTERNAL.submit, external: true },
+      { label: 'Assessment Protocol', href: GALLERY_EXTERNAL.protocol, external: true },
+      { label: 'Rights & Licensing', href: GALLERY_EXTERNAL.rights, external: true },
+    ],
+  },
+  { kind: 'link', label: 'Edible Gardens', href: '/edible-gardens' },
+  {
+    kind: 'group',
+    label: 'Visit Us',
+    href: '/visit',
+    children: [
+      { label: 'Plan your visit', href: '/visit' },
+      { label: 'Hours & contact', href: '/visit#visit-info' },
+      { label: 'Directions', href: '/visit#visit-directions' },
+      { label: 'Map', href: '/visit#visit-map' },
+      { label: 'Surrounding destinations', href: '/visit#visit-nearby' },
+      { label: 'Cellar Door tastings', href: '/visit#cellar' },
+    ],
+  },
 ]
 
 // Primary CTAs
