@@ -7,6 +7,7 @@ import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdMidCta } from '@/components/ssd/SsdMidCta'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
 export const metadata = genMeta({
   title: `Why this pathway | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -44,6 +45,7 @@ export default function SsdApproachPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/approach" className="mt-8" />
             <SsdFunnelNextSteps sentence="This page is context only — not a site-specific legal or planning opinion." />
           </div>
         </div>

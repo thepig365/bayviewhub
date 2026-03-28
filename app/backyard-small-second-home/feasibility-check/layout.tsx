@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnswerCapsule } from "@/components/seo/AnswerCapsule";
 import { SsdPageHero } from "@/components/ssd/SsdPageHero";
+import { SsdPageShare } from "@/components/ssd/SsdPageShare";
 import { LAST_UPDATED } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -163,6 +164,7 @@ export default function FeasibilityChecklistLayout({
             ]}
             lastUpdated={LAST_UPDATED}
           />
+          <SsdPageShare path="/backyard-small-second-home/feasibility-check" className="mt-8" />
           <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed text-muted">
             <Link href="/backyard-small-second-home" className="font-medium text-accent underline-offset-4 hover:underline">
               See the full SSD overview

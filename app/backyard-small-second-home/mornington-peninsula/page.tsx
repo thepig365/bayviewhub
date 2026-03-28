@@ -6,6 +6,7 @@ import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { Button } from '@/components/ui/Button'
 
 export const metadata = genMeta({
@@ -80,6 +81,7 @@ export default function MorningtonPeninsulaPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/mornington-peninsula" className="mt-8" />
             <SsdFunnelNextSteps sentence="Shire officers issue the formal view — we help you prepare realistic questions." />
           </div>
         </div>

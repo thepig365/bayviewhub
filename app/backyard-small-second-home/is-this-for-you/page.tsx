@@ -6,6 +6,7 @@ import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
 export const metadata = genMeta({
   title: `Is this for you? | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -44,6 +45,7 @@ export default function SsdAudienceFitPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/is-this-for-you" className="mt-8" />
             <SsdFunnelNextSteps sentence="This is a screening page — your title and overlays still need a proper check." />
           </div>
         </div>

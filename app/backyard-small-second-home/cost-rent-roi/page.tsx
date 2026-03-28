@@ -6,6 +6,7 @@ import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
 export const metadata = genMeta({
   title: `SSD Cost, Rent & ROI | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -44,6 +45,7 @@ export default function CostRentRoiPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/cost-rent-roi" className="mt-8" />
             <SsdFunnelNextSteps sentence="Figures are indicative — your surveyor and builder firm up numbers." />
           </div>
         </div>

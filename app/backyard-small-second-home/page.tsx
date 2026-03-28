@@ -6,7 +6,7 @@ import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdHubContent } from '@/components/ssd/SsdHubContent'
 import { SsdHubCtas } from '@/components/ssd/SsdHubCtas'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
-import { ShareStrip } from '@/components/ui/ShareStrip'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
 export const metadata = genMeta({
   title: `Backyard Small Second Home | SSD Builder Victoria | 60 sqm. No Planning Permit. | ${SITE_CONFIG.name}`,
@@ -140,12 +140,7 @@ export default function BackyardSmallSecondHomePage() {
                 ]}
                 lastUpdated={LAST_UPDATED}
               />
-              <ShareStrip
-                className="mt-8"
-                url={`${baseUrl}/backyard-small-second-home`}
-                mailtoSubject="Backyard Small Second Home — Bayview Hub"
-                mailtoIntro="Sharing Bayview Hub’s Victorian Backyard Small Second Home (SSD) overview — feasibility, rules, and cost tools."
-              />
+              <SsdPageShare path="/backyard-small-second-home" className="mt-8" />
             </div>
           </div>
         </div>

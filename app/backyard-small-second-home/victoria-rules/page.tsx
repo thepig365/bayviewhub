@@ -7,6 +7,7 @@ import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdMidCta } from '@/components/ssd/SsdMidCta'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
 export const metadata = genMeta({
   title: `Victoria SSD Rules (VC253/VC282) | Backyard Small Second Home | ${SITE_CONFIG.name}`,
@@ -45,6 +46,7 @@ export default function VictoriaRulesPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/victoria-rules" className="mt-8" />
             <SsdFunnelNextSteps sentence="Always verify against current instruments and your title — this page is a summary." />
           </div>
         </div>

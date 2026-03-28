@@ -6,6 +6,7 @@ import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
+import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { Button } from '@/components/ui/Button'
 
 export const metadata = genMeta({
@@ -86,6 +87,7 @@ export default function GrannyFlatVictoriaPage() {
               ]}
               lastUpdated={LAST_UPDATED}
             />
+            <SsdPageShare path="/backyard-small-second-home/granny-flat-victoria" className="mt-8" />
             <SsdFunnelNextSteps sentence="This page translates search language into the official framework — not a certificate for your title." />
           </div>
         </div>
