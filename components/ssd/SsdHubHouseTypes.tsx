@@ -1,7 +1,6 @@
-import Link from 'next/link'
-import { SSD_HOUSE_USE_TYPES } from '@/lib/ssd-house-use-types'
 import { SSD_LANDING } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
+import { SsdHouseUseTypesCards } from '@/components/ssd/SsdHouseUseTypesCards'
 
 /** Scannable use-case types — same SSD rules; links only where a programme page helps */
 export function SsdHubHouseTypes() {
@@ -19,24 +18,7 @@ export function SsdHubHouseTypes() {
             These are practical situations, not different planning products — the same 60 sqm cap, siting, and title rules
             apply. Pick the line that sounds like you, then use rules, cost, or the feasibility check as needed.
           </p>
-          <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-            {SSD_HOUSE_USE_TYPES.map((item) => (
-              <li
-                key={item.label}
-                className="rounded-lg border border-border bg-natural-50 p-4 dark:bg-surface/40 sm:p-5"
-              >
-                <h3 className="text-base font-semibold text-fg">{item.label}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted sm:text-[0.9375rem]">{item.description}</p>
-                {item.href && item.linkLabel ? (
-                  <p className="mt-3">
-                    <Link href={item.href} className="text-sm font-medium text-accent underline-offset-4 hover:underline">
-                      {item.linkLabel} →
-                    </Link>
-                  </p>
-                ) : null}
-              </li>
-            ))}
-          </ul>
+          <SsdHouseUseTypesCards />
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Button href={SSD_LANDING.feasibility} variant="accent" size="lg" className="w-full sm:w-auto">
               Run the feasibility check

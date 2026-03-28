@@ -5,6 +5,7 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule'
 import { SsdFunnelNextSteps } from '@/components/ssd/SsdFunnelNextSteps'
 import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
+import { SsdHouseUseTypesSubpage } from '@/components/ssd/SsdHouseUseTypesSubpage'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
@@ -51,7 +52,12 @@ export default function CostRentRoiPage() {
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
+      <SsdHouseUseTypesSubpage
+        currentPath="/backyard-small-second-home/cost-rent-roi"
+        onPageAnchorId="indicative-cost-tiers"
+      />
+
+      <section id="indicative-cost-tiers" className="scroll-mt-24 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <h2 className="font-serif text-xl font-bold text-fg md:text-2xl">Indicative cost tiers</h2>
