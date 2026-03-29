@@ -1,6 +1,6 @@
 # Bayview Landing Page SEO / AEO / GEO Operating Playbook
 
-_Last updated: 2026-03-29_
+_Last updated: 2026-03-28_
 
 ## What this document is for
 
@@ -398,7 +398,21 @@ For Bayview landing pages, the default standard should be:
 
 ---
 
-## 15. Source notes
+## 15. Related internal docs (this repository)
+
+| Document | Role |
+|----------|------|
+| `docs/landing-distribution-seo.md` | Channel copy, keyword clusters, Track A (SSD) / Track B (gallery). |
+| `docs/ssd-campaign-operating-pack.md` | SSD hub: brand citation, topic ownership, claim audit, LLM prompts, 7/14/30, scorecard. |
+| `docs/ssd-analytics-and-alerts.md` | SSD funnel: Plausible/GA4 + Supabase events, cron digests, instant alerts, env vars. |
+| `docs/supabase-ssd-campaign.sql` | Schema for anonymous `ssd_campaign_events` and alert deduplication. |
+| `docs/ai-traffic-tracking.md` | AI / chat referrer tracking notes (where applicable). |
+
+This playbook stays the **cross-page standard**; the SSD files are the **reference implementation** for one high-priority landing programme.
+
+---
+
+## 16. Source notes
 
 This playbook is grounded in current official documentation and current search behavior guidance:
 
@@ -410,3 +424,5 @@ This playbook is grounded in current official documentation and current search b
 - Bing Webmaster: URL Submission API and Webmaster API documentation
 
 Use this document as the default operating model for future Bayview landing pages.
+
+**Internal only** — do not publish under `public/` or other static web roots.
