@@ -31,6 +31,8 @@ This document complements **`docs/ssd-campaign-operating-pack.md`** with the tec
 2. Execute **`docs/supabase-ssd-campaign.sql`**.
 3. Do **not** expose this table to anonymous clients; only the Next.js API uses the service role / secret key.
 
+**Feasibility form vs SSD telemetry:** `POST /api/feasibility` checks **`SUPABASE_URL`** and **`SUPABASE_SECRET_KEY`** only (not `NEXT_PUBLIC_SUPABASE_URL` alone). SSD `getSupabaseServer()` accepts `SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL`, and `SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY`. Easiest: set **`SUPABASE_URL`** + **`SUPABASE_SECRET_KEY`** (service role) in Vercel for both paths.
+
 ## Vercel Cron
 
 `vercel.json` registers:
