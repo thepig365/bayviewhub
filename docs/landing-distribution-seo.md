@@ -114,6 +114,10 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 - **Who:** **Homeowners** on eligible **Victorian** lots seeking **compliance-first** clarity.  
 - **Action:** Read overview → run **feasibility check** → review **rules** and **cost/ROI** → register interest.
 
+### Campaign operating layer (SSD)
+
+- Full SOP-aligned pack (brand citation, topic ownership, claim audit, distribution checklist, LLM test prompts, 7/14/30 reviews, scorecard): **`docs/ssd-campaign-operating-pack.md`**
+
 ---
 
 ## SEO & GEO — Track B (Gallery / Private Viewing)

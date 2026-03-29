@@ -40,13 +40,10 @@ export function SsdHubFraming() {
               How does Bayview Hub use this information?
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              Bayview Hub publishes these pages from the published State and scheme rules, not from a fixed catalogue of
-              designs. If SSD is a poor match for your block or goals, the aim is to surface that early so you can use
-              standard planning or a different brief instead of the wrong pathway.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-muted">
-              Nothing here is a personal planning decision for your title — it is orientation so you know what to check
-              next with council maps, a surveyor, or a planner.
+              Bayview Hub draws on published State and scheme rules — not a fixed design catalogue. If SSD is a poor match,
+              the aim is to surface that early so you can pivot to standard planning or a different brief. Nothing here is a
+              planning decision for your title; it is orientation for what to check next with council maps, a surveyor, or a
+              planner.
             </p>
             <div className="mt-8">
               <Button href="/backyard-small-second-home/approach" variant="outline" size="lg">

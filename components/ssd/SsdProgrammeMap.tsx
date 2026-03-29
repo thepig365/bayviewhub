@@ -16,8 +16,8 @@ export function SsdProgrammeMap() {
             Where should I read next — rules, cost, fit, or my block?
           </h2>
           <p className="mb-6 max-w-2xl text-base leading-relaxed text-muted sm:mb-8">
-            Each page answers one kind of question so this hub stays readable. Follow the topic you need, then use the
-            feasibility checklist when you want a structured pass over your answers.
+            Each link is scoped to one question. Open the checklist when you want those answers turned into an indicative
+            pathway read — not a council decision.
           </p>
           <ul className="space-y-2.5 sm:space-y-3">
             {SSD_PROGRAMME_MAP.map((p) => (

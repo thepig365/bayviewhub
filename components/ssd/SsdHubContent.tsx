@@ -14,9 +14,8 @@ export function SsdHubContent() {
               What steps should I take on the Victorian SSD pathway?
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              The hub below links deeper pages for rules, cost bands, and local overlays. Use them when you need detail;
-              the checklist is for turning your answers into an indicative pathway read (Green Lane-style, VicSmart, or
-              standard planning) before you spend on drawings.
+              After you pick a starting topic from the programme map, this order helps before you spend heavily on
+              drawings. Use linked pages for depth; the checklist gives an indicative read only.
             </p>
             <ol className="mt-6 list-decimal space-y-4 pl-5 text-base leading-relaxed text-muted marker:text-fg marker:font-semibold">
               <li>

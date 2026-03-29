@@ -87,10 +87,10 @@ export default function BackyardSmallSecondHomePage() {
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted dark:text-white/75 sm:text-lg">
               It is the everyday name we use for a Victorian{' '}
               <strong className="text-fg dark:text-white">Small Second Dwelling (SSD)</strong>: a second small home on
-              your existing title, capped at <strong className="text-fg dark:text-white">60 sqm gross floor area</strong>
-              , usually behind the front wall, <strong className="text-fg dark:text-white">all-electric</strong>, not
-              sold off on its own lot. This page summarises the pathway; your council scheme and overlays decide what
-              applies to you.
+              your existing title, within the State SSD framework (capped footprint, siting and energy rules, same title,
+              not a separate lot). The <strong className="text-fg dark:text-white">Quick Answer</strong> below states the
+              permit split and non‑negotiables; this hub tracks published instruments — your council maps and overlays
+              still decide what applies to you.
             </p>
             <Suspense fallback={<div className="mt-6 h-12 animate-pulse rounded-lg bg-natural-200/80 dark:bg-white/10" />}>
               <SsdHubCtas />
@@ -98,11 +98,11 @@ export default function BackyardSmallSecondHomePage() {
 
             <div className="mt-10 border-t border-border pt-8 dark:border-neutral-700">
               <AnswerCapsule
-                definition="A Backyard Small Second Home is a Victorian Small Second Dwelling (SSD): a second residence on the same title as your main house, up to 60 sqm gross floor area, generally behind the front wall, all-electric, with no subdivision of that dwelling onto a separate lot. You might avoid a planning permit only if your proposal meets every relevant Deemed-to-Comply test in the planning scheme for your land — overlays (heritage, flood, bushfire, and others), siting, services, and title details can all mean you still need planning approval, VicSmart, or a standard permit path instead. A building permit is still required for construction and compliance regardless. Always confirm against current scheme provisions and your title before acting."
+                definition="It is a second dwelling on the same residential title, assessed under the planning scheme’s Small Second Dwelling tests. A planning permit may be omitted only if every relevant Deemed-to-Comply requirement is met for your land; overlays and site facts often mean planning, VicSmart, or a standard permit path instead. A building permit and National Construction Code compliance are still required for construction. Confirm current instruments and survey on your title before acting."
                 facts={[
                   'Non-negotiable SSD lines: 60 sqm GFA for the second dwelling, behind the front wall, all-electric, same title, no separate-title sale.',
-                  'Planning permit: omitted only in full-compliance cases; if anything in the scheme is not met, assume council involvement until proven otherwise.',
-                  'Still to verify: scheme maps, overlays, covenant, bushfire and drainage, and how your surveyor reads the Deemed-to-Comply tests.',
+                  'Planning: omitted only when fully Deemed-to-Comply; otherwise assume council involvement until proven on title.',
+                  'Verify: scheme maps, overlays, covenants, bushfire and drainage, and how your surveyor reads GFA and siting tests.',
                 ]}
                 sources={[
                   { label: 'DTP Planning Portal', href: 'https://www.planning.vic.gov.au/' },
