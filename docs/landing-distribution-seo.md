@@ -1,5 +1,9 @@
 # Landing pages: distribution & SEO / GEO pack
 
+**Doc hierarchy:** Master standard → [`landing-page-seo-aeo-geo-operating-playbook.md`](./landing-page-seo-aeo-geo-operating-playbook.md). SSD programme implementation → [`ssd-campaign-operating-pack.md`](./ssd-campaign-operating-pack.md). **GEO** in this file means the **playbook §Definitions** sense (citation-safe, explicit boundaries — **not** geographic / “local SEO” unless stated). If channel copy or notes below conflict with the playbook or a programme operating pack, **the playbook and that pack override** this document.
+
+---
+
 Canonical URLs:
 
 - **Backyard Small Second Home:** `https://www.bayviewhub.me/backyard-small-second-home`
@@ -35,7 +39,7 @@ We’re opening structured enquiries for **backyard small second homes** in Vict
 
 ### Recommended OG / meta share description (SSD)
 
-Victorian **Backyard Small Second Home** (SSD): **60 sqm**, feasibility, **Victoria rules**, and **cost / rent / ROI** — planning-certain pathway for compliant second dwellings on your lot.
+Victorian **Backyard Small Second Home** (SSD): **60 sqm**, feasibility, **Victoria rules**, and **cost / rent / ROI** — **compliance-first pathway** for second dwellings on your lot (verify on title; see playbook + SSD operating pack).
 
 ### One clear CTA line
 
@@ -77,6 +81,8 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 
 ## SEO & GEO — Track A (Backyard Small Second Home)
 
+_Playbook **GEO** applies (§Definitions); sections below mix keyword planning with AEO-style clarity._
+
 ### Primary keyword targets
 
 - backyard small second home Victoria  
@@ -87,8 +93,10 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 
 ### Supporting clusters
 
+_Internal SEO / search-language notes — queries people type; **not** preferred formal public wording. On-page copy, JSON-LD, and outreach should follow **Deemed-to-Comply**, permit distinctions, and boundaries in [`ssd-campaign-operating-pack.md`](./ssd-campaign-operating-pack.md)._
+
 - granny flat Victoria rules / SSD vs granny flat wording (use SSD as primary)  
-- VicSmart SSD, Green Lane / planning permit bypass (careful, factual)  
+- VicSmart SSD; colloquial search terms such as “Green Lane” or “planning permit bypass” (formal wording: Deemed-to-Comply; overlays may still require planning)  
 - Mornington Peninsula / Main Ridge (site context, not claiming local-only SSD)  
 - rental yield backyard dwelling Victoria  
 
@@ -122,6 +130,8 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 
 ## SEO & GEO — Track B (Gallery / Private Viewing)
 
+_Same **GEO** meaning as playbook §Definitions (citation-friendly positioning; not geographic SEO unless the page targets a region)._
+
 ### Primary keyword targets
 
 - Bayview Arts Gallery  
@@ -134,7 +144,7 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 - artwork enquiry / viewing by appointment  
 - artist submission curation Mend Index (protocol on subdomain)  
 - private viewing network Bayview Hub  
-- Open Your Wall programme (brand-specific; low generic volume — use for GEO + brand SERP)
+- Open Your Wall programme (brand-specific; low generic volume — use for **playbook GEO** + brand SERP)
 
 ### On-page structure
 
@@ -169,4 +179,4 @@ I wanted to share **Bayview Arts Gallery** — the **public collection** is live
 
 ---
 
-_Last updated: landing discoverability pass (bayviewhub repo)._
+_Last updated: terminology & hierarchy alignment with playbook + SSD operating pack (bayviewhub repo)._

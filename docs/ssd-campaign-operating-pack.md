@@ -2,6 +2,8 @@
 
 Canonical hub: **https://www.bayviewhub.me/backyard-small-second-home**
 
+**Hierarchy:** This pack implements **`docs/landing-page-seo-aeo-geo-operating-playbook.md`** (master standard). Channel copy in **`docs/landing-distribution-seo.md`** is subordinate; on any conflict, **the playbook and this pack override** channel-note wording.
+
 This document turns the SSD hub into a repeatable campaign asset aligned with **Brand Citation**, **Topic Ownership**, **Proof & Trust**, and **Distribution & Feedback**. Keep copy on the live page and this file in sync when you change definitions or boundaries.
 
 ---

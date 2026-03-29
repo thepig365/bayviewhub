@@ -398,7 +398,17 @@ For Bayview landing pages, the default standard should be:
 
 ---
 
-## 15. Source notes
+## 15. Bayview internal doc hierarchy
+
+For landing-page work in this repository:
+
+- **This playbook** is the **master standard** for SEO, AEO, and **GEO** as defined in **§Definitions** (citation-safe, boundary-clear pages for answer and AI-assisted surfaces — **not** “geographic SEO” unless a page explicitly targets a location).
+- **Programme operating packs** — e.g. **`docs/ssd-campaign-operating-pack.md`** for the SSD funnel — implement this playbook for a specific campaign.
+- **`docs/landing-distribution-seo.md`** holds **channel copy** and **internal SEO / search-language notes**. If anything there conflicts with this playbook or a programme operating pack, **the playbook and the operating pack override** channel wording.
+
+---
+
+## 16. Source notes
 
 This playbook is grounded in current official documentation and current search behavior guidance:
 
