@@ -1,4 +1,14 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/ssd-daily-digest",
+      "schedule": "30 21 * * *"
+    },
+    {
+      "path": "/api/cron/ssd-weekly-digest",
+      "schedule": "0 7 * * 1"
+    }
+  ],
   "rewrites": [
     {
       "source": "/pigandwhistle",

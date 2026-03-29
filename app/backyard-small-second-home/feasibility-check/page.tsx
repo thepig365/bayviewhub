@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
+  SsdFeasibilityCampaignAnalytics,
+  trackFeasibilityFormSubmitSuccess,
+} from "@/components/ssd/SsdFeasibilityCampaignAnalytics";
+import {
   Check,
   ChevronDown,
   ChevronUp,
@@ -176,6 +180,7 @@ function FeasibilityForm() {
       const result = await response.json();
 
       if (response.ok && result.ok) {
+        trackFeasibilityFormSubmitSuccess();
         router.push("/backyard-small-second-home/feasibility-check/thank-you");
       } else {
         setFormError(result.error || "Submission failed. Retry or email directly.");
@@ -741,6 +746,7 @@ export default function FeasibilityChecklistPage() {
   const totalChecks = Object.keys(checklist).length;
 
   return (
+    <SsdFeasibilityCampaignAnalytics>
     <main className="min-h-screen bg-background">
       <section className="border-b border-border bg-background py-8 md:py-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
@@ -1106,5 +1112,6 @@ export default function FeasibilityChecklistPage() {
         </div>
       </section>
     </main>
+    </SsdFeasibilityCampaignAnalytics>
   );
 }

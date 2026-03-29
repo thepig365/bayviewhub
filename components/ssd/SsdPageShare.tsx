@@ -12,12 +12,16 @@ export function SsdPageShare({
 }) {
   const cfg = SSD_FUNNEL_SHARE[path]
   const url = `${SITE_CONFIG.url}${path}`
+  const ssdCampaignShare = path === '/backyard-small-second-home'
   return (
-    <ShareStrip
-      className={className}
-      url={url}
-      mailtoSubject={cfg.subject}
-      mailtoIntro={cfg.intro}
-    />
+    <div {...(ssdCampaignShare ? { 'data-ssd-zone': 'share' } : {})}>
+      <ShareStrip
+        className={className}
+        url={url}
+        mailtoSubject={cfg.subject}
+        mailtoIntro={cfg.intro}
+        ssdCampaignShare={ssdCampaignShare}
+      />
+    </div>
   )
 }

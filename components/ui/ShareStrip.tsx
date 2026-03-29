@@ -23,6 +23,8 @@ export interface ShareStripProps {
   shortShareBlurb?: string
   variant?: ShareStripVariant
   className?: string
+  /** When set, adds data-ssd-share-channel on controls for SSD hub campaign capture */
+  ssdCampaignShare?: boolean
 }
 
 export function ShareStrip({
@@ -32,6 +34,7 @@ export function ShareStrip({
   shortShareBlurb,
   variant = 'surface',
   className,
+  ssdCampaignShare = false,
 }: ShareStripProps) {
   const [copied, setCopied] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
@@ -111,31 +114,58 @@ export function ShareStrip({
     >
       <p className={labelClass}>Share</p>
       <div className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2" role="group" aria-label="Share this page">
-        <button type="button" onClick={copyLink} className={linkClass}>
+        <button
+          type="button"
+          onClick={copyLink}
+          className={linkClass}
+          {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'copy_link' } : {})}
+        >
           {copied && !auxModal ? 'Link copied' : 'Copy link'}
         </button>
         <span className={sepClass} aria-hidden>
           ·
         </span>
-        <a href={mailtoHref} className={linkClass}>
+        <a
+          href={mailtoHref}
+          className={linkClass}
+          {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'email' } : {})}
+        >
           Email
         </a>
         <span className={sepClass} aria-hidden>
           ·
         </span>
-        <a href={linkedInShareUrl(url)} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a
+          href={linkedInShareUrl(url)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+          {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'linkedin' } : {})}
+        >
           LinkedIn
         </a>
         <span className={sepClass} aria-hidden>
           ·
         </span>
-        <a href={facebookShareUrl(url)} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a
+          href={facebookShareUrl(url)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+          {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'facebook' } : {})}
+        >
           Facebook
         </a>
         <span className={sepClass} aria-hidden>
           ·
         </span>
-        <a href={twitterIntentShareUrl(url, blurb)} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a
+          href={twitterIntentShareUrl(url, blurb)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+          {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'twitter' } : {})}
+        >
           X
         </a>
         <span className={sepClass} aria-hidden>
@@ -160,16 +190,35 @@ export function ShareStrip({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMoreOpen(false)}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'whatsapp' } : {})}
               >
                 WhatsApp
               </a>
-              <button type="button" role="menuitem" className={menuItemClass} onClick={() => openAux('wechat')}>
+              <button
+                type="button"
+                role="menuitem"
+                className={menuItemClass}
+                onClick={() => openAux('wechat')}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'wechat' } : {})}
+              >
                 WeChat
               </button>
-              <button type="button" role="menuitem" className={menuItemClass} onClick={() => openAux('xiaohongshu')}>
+              <button
+                type="button"
+                role="menuitem"
+                className={menuItemClass}
+                onClick={() => openAux('xiaohongshu')}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'xiaohongshu' } : {})}
+              >
                 Xiaohongshu
               </button>
-              <button type="button" role="menuitem" className={menuItemClass} onClick={() => openAux('messenger')}>
+              <button
+                type="button"
+                role="menuitem"
+                className={menuItemClass}
+                onClick={() => openAux('messenger')}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'messenger' } : {})}
+              >
                 Messenger
               </button>
             </div>

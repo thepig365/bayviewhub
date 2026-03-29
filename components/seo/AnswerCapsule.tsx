@@ -13,6 +13,8 @@ export interface AnswerCapsuleProps {
   className?: string
   /** Use light text for dark backgrounds */
   darkBg?: boolean
+  /** Optional id for in-page anchor / AEO */
+  id?: string
 }
 
 export function AnswerCapsule({
@@ -22,6 +24,7 @@ export function AnswerCapsule({
   lastUpdated,
   className = '',
   darkBg = false,
+  id,
 }: AnswerCapsuleProps) {
   const textColor = darkBg ? 'text-gray-100' : 'text-fg'
   const textMuted = darkBg ? 'text-gray-400' : 'text-muted'
@@ -30,6 +33,7 @@ export function AnswerCapsule({
 
   return (
     <aside
+      id={id}
       className={`rounded-xl border p-6 ${borderColor} ${darkBg ? '' : 'bg-natural-50 dark:bg-surface/50'} ${className}`}
       aria-label="Answer capsule"
     >

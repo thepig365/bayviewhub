@@ -11,6 +11,7 @@ export function SsdHubHouseArchetypes() {
   return (
     <section
       id="ssd-house-archetypes"
+      data-ssd-zone="house_types"
       className="scroll-mt-24 border-b border-border bg-bg py-12 md:py-16"
       aria-labelledby="ssd-house-archetypes-heading"
     >

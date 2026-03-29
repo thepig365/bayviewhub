@@ -57,18 +57,27 @@ export function getAttribution(params?: URLSearchParams): Attribution {
   return merged
 }
 
-export function track(eventName: string, props?: Record<string, string>) {
+type TrackProps = Record<string, string | number | boolean | undefined | null>
+
+/** Flattens props for Plausible (strings only) and GA4. */
+export function track(eventName: string, props?: TrackProps) {
   if (typeof window === 'undefined') return
 
-  // Prefer Plausible if present
+  const flat: Record<string, string> = {}
+  if (props) {
+    for (const [k, v] of Object.entries(props)) {
+      if (v === undefined || v === null) continue
+      flat[k] = typeof v === 'boolean' ? (v ? 'true' : 'false') : String(v).slice(0, 200)
+    }
+  }
+
   if (typeof window.plausible === 'function') {
-    window.plausible(eventName, props ? { props } : undefined)
+    window.plausible(eventName, Object.keys(flat).length ? { props: flat } : undefined)
     return
   }
 
-  // Fallback to GA4 if installed
   if (typeof window.gtag === 'function') {
-    window.gtag('event', eventName, props || {})
+    window.gtag('event', eventName, flat)
   }
 }
 

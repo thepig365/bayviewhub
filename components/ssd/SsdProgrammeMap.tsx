@@ -6,6 +6,7 @@ export function SsdProgrammeMap() {
   return (
     <section
       id="ssd-programme"
+      data-ssd-zone="programme"
       className="scroll-mt-24 border-b border-border bg-bg py-8 md:py-12"
       aria-label="Backyard Small Second Home programme pages"
     >

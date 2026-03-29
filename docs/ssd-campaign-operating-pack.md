@@ -123,3 +123,4 @@ _Revisit scorecard monthly or after material planning reform._
 
 - Channel copy starters: `docs/landing-distribution-seo.md` (Track A).
 - FAQ + JSON-LD source: `lib/ssd-hub-faq.ts` (must match on-page FAQ).
+- **Analytics, cron digests, instant alerts, env vars:** `docs/ssd-analytics-and-alerts.md` (implements the Distribution & Feedback loop in production).

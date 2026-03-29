@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { sendResendEmail } from "@/lib/resend-send";
+import { parseFeasibilityNotifyEmails } from "@/lib/ssd-campaign-server";
 
 export const runtime = "nodejs";
 
@@ -28,29 +30,6 @@ function isRateLimited(req: NextRequest): boolean {
     return true;
   }
   return false;
-}
-
-async function sendResendEmail(opts: { to: string; subject: string; html: string; replyTo?: string }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM;
-  if (!apiKey || !from) return false;
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [opts.to],
-      subject: opts.subject,
-      html: opts.html,
-      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
-    }),
-  });
-
-  return res.ok;
 }
 
 function sanitizeString(value: unknown, maxLength: number = 500): string | null {
@@ -152,14 +131,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Send notification email to admin after successful DB insert
-    const notifyEmail = "leonzh@bayviewestate.com.au";
+    const notifyTo = parseFeasibilityNotifyEmails();
     const timestamp = new Date().toISOString();
-    
+
     try {
       await sendResendEmail({
-        to: notifyEmail,
-        subject: `[SSD] ${sanitizedSuburb} — ${leadData.intention || "Not specified"}`,
+        to: notifyTo.length ? notifyTo : ["leonzh@bayviewestate.com.au"],
+        subject: `[SSD] Feasibility submit — ${sanitizedSuburb} — ${leadData.intention || "Not specified"}`,
         replyTo: sanitizedEmail || undefined,
         html: `
           <div style="font-family: system-ui, -apple-system, sans-serif; line-height:1.6; max-width:600px;">

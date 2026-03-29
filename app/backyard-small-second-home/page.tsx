@@ -9,6 +9,7 @@ import { SsdHubFraming } from '@/components/ssd/SsdHubFraming'
 import { SsdHubHouseArchetypes } from '@/components/ssd/SsdHubHouseArchetypes'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
+import { SsdHubCampaignAnalytics } from '@/components/ssd/SsdHubCampaignAnalytics'
 import { SSD_HUB_FAQ } from '@/lib/ssd-hub-faq'
 
 export const metadata = genMeta({
@@ -78,6 +79,7 @@ export default function BackyardSmallSecondHomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ssdExpertJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <SsdHubCampaignAnalytics>
       <div className="border-b border-border bg-natural-50 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
           <div className="mx-auto max-w-4xl">
@@ -98,6 +100,7 @@ export default function BackyardSmallSecondHomePage() {
 
             <div className="mt-10 border-t border-border pt-8 dark:border-neutral-700">
               <AnswerCapsule
+                id="quick-answer"
                 definition="It is a second dwelling on the same residential title, assessed under the planning scheme’s Small Second Dwelling tests. A planning permit may be omitted only if every relevant Deemed-to-Comply requirement is met for your land; overlays and site facts often mean planning, VicSmart, or a standard permit path instead. A building permit and National Construction Code compliance are still required for construction. Confirm current instruments and survey on your title before acting."
                 facts={[
                   'Non-negotiable SSD lines: 60 sqm GFA for the second dwelling, behind the front wall, all-electric, same title, no separate-title sale.',
@@ -121,6 +124,7 @@ export default function BackyardSmallSecondHomePage() {
       <SsdHubHouseArchetypes />
       <SsdProgrammeMap />
       <SsdHubContent />
+      </SsdHubCampaignAnalytics>
     </>
   )
 }
