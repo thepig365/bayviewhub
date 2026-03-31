@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function PrivateNewsletterLoginPage() {
+function PrivateNewsletterLoginInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
@@ -84,5 +84,13 @@ export default function PrivateNewsletterLoginPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function PrivateNewsletterLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <PrivateNewsletterLoginInner />
+    </Suspense>
   )
 }

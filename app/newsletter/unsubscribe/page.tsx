@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import React, { useMemo, useState } from 'react'
+import React, { Suspense, useMemo, useState } from 'react'
 
-export default function NewsletterUnsubscribePage() {
+function NewsletterUnsubscribeInner() {
   const searchParams = useSearchParams()
   const email = useMemo(() => searchParams.get('email') || '', [searchParams])
   const sig = useMemo(() => searchParams.get('sig') || '', [searchParams])
@@ -73,5 +73,13 @@ export default function NewsletterUnsubscribePage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function NewsletterUnsubscribePage() {
+  return (
+    <Suspense fallback={null}>
+      <NewsletterUnsubscribeInner />
+    </Suspense>
   )
 }
