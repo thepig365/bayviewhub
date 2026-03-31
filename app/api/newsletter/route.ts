@@ -46,36 +46,35 @@ async function saveNewsletterSubscription(
   sourcePage: string,
   userAgent: string
 ): Promise<{ ok: true; mode: string } | { ok: false; error: unknown }> {
-  const fullUpsert = await supabase
+  const coreUpsert = await supabase
     .from('newsletter_subscriptions')
     .upsert(
       {
         email,
+        status: 'subscribed',
+      },
+      { onConflict: 'email' }
+    )
+
+  if (!coreUpsert.error) {
+    const enrich = await supabase
+      .from('newsletter_subscriptions')
+      .update({
         interests,
         source_page: sourcePage,
         user_agent: userAgent,
-        status: 'active',
-      },
-      { onConflict: 'email' }
-    )
+      })
+      .eq('email', email)
 
-  if (!fullUpsert.error) return { ok: true, mode: 'full_upsert' }
+    if (enrich.error) {
+      console.warn('[Newsletter] enrich after core upsert failed', enrich.error)
+      return { ok: true, mode: 'core_upsert_only' }
+    }
 
-  console.warn('[Newsletter] full upsert failed; retrying minimal', fullUpsert.error)
+    return { ok: true, mode: 'core_upsert_plus_enrich' }
+  }
 
-  const minimalUpsert = await supabase
-    .from('newsletter_subscriptions')
-    .upsert(
-      {
-        email,
-        status: 'active',
-      },
-      { onConflict: 'email' }
-    )
-
-  if (!minimalUpsert.error) return { ok: true, mode: 'minimal_upsert' }
-
-  console.warn('[Newsletter] minimal upsert failed; retrying legacy path', minimalUpsert.error)
+  console.warn('[Newsletter] core upsert failed; retrying legacy path', coreUpsert.error)
 
   const existing = await supabase
     .from('newsletter_subscriptions')
@@ -90,7 +89,7 @@ async function saveNewsletterSubscription(
   if (existing.data && existing.data.length > 0) {
     const reactivate = await supabase
       .from('newsletter_subscriptions')
-      .update({ status: 'active' })
+      .update({ status: 'subscribed' })
       .eq('email', email)
 
     if (!reactivate.error) return { ok: true, mode: 'reactivate_existing' }
@@ -101,7 +100,7 @@ async function saveNewsletterSubscription(
     .from('newsletter_subscriptions')
     .insert({
       email,
-      status: 'active',
+      status: 'subscribed',
     })
 
   if (!insertMinimal.error) return { ok: true, mode: 'insert_minimal' }
