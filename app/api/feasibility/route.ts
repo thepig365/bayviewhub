@@ -133,9 +133,14 @@ export async function POST(req: NextRequest) {
     const timestamp = new Date().toISOString();
 
     try {
-      const toList = notifyTo.length ? notifyTo : ["info@bayviewestate.com.au", "leonzh@bayviewestate.com.au"];
+      const toList = notifyTo.length
+        ? notifyTo
+        : ["info@bayviewestate.com.au", "leonzh@bayviewestate.com.au", "ileonzh@gmail.com"];
+      const toPrimary = toList[0];
+      const bccRest = toList.length > 1 ? toList.slice(1) : undefined;
       const sent = await sendResendEmail({
-        to: toList,
+        to: toPrimary,
+        ...(bccRest?.length ? { bcc: bccRest } : {}),
         subject: `[SSD] Feasibility submit — ${sanitizedSuburb} — ${leadData.intention || "Not specified"}`,
         replyTo: sanitizedEmail || undefined,
         html: `
@@ -162,6 +167,7 @@ export async function POST(req: NextRequest) {
       if (!sent) {
         console.warn("[Feasibility] notify email not accepted by Resend", {
           recipient_count: toList.length,
+          to_primary_set: Boolean(toPrimary),
         });
       }
     } catch (e) {
