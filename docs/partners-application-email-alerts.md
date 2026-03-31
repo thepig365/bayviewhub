@@ -1,11 +1,15 @@
-# Founding Partners form — email alerts
+# Founding Partners form — email alerts & internal SOP
 
 Submissions from `/partners#apply` hit **`POST /api/partners`**. When configured, Resend sends:
 
 1. **Owner alert** — you get the full application (reply-to = applicant).
-2. **Applicant auto-reply** — confirmation to the address they entered.
+2. **Applicant auto-reply** — confirmation to the address they entered (copy aligned with the on-page success message).
 
-## What you need in production (e.g. Vercel)
+**Database:** This playbook does **not** require any Supabase schema or migration changes. Existing table **`partner_applications`** (if already created in your project) is unchanged; email behaviour is API-only.
+
+---
+
+## Environment (e.g. Vercel)
 
 | Variable | Purpose |
 |----------|---------|
@@ -16,9 +20,41 @@ Submissions from `/partners#apply` hit **`POST /api/partners`**. When configured
 
 Supabase (`partner_applications`) is separate from email: rows can save even if Resend is missing.
 
-## Quick checks
+---
 
-- After a test submit, open the **Network** tab: response JSON includes `emailedOwner` and `emailedApplicant` (both should be `true` when Resend accepted the sends).
-- **Vercel → Logs**: `[resend] skipped: missing env` means `RESEND_API_KEY` or `RESEND_FROM` is not set for that deployment.
-- **Resend dashboard → Emails**: delivery / bounces for debugging.
-- **Spam**: if alerts land in spam, set up **SPF/DKIM** for your sending domain in Resend.
+## CC / BCC rules
+
+- **Owner alert:** Resend **`to`** = first address in `PARTNERS_NOTIFY_EMAIL`, or `SSD_CAMPAIGN_OWNER_EMAIL` when the override is unset. Additional addresses in `PARTNERS_NOTIFY_EMAIL` are sent as **`bcc`** (each sees the same body; applicants are not copied on the internal alert).
+- **Applicant:** Only the address they typed receives the auto-reply (no CC).
+- **Reply:** Owner alert sets **`reply_to`** to the applicant’s email so you can hit Reply in your client.
+
+---
+
+## Response-time promise (edit to match your policy)
+
+_Use this section as your internal SLA; update the bullets whenever your process changes._
+
+- **Target first response:** _(e.g. within 5 business days)_
+- **Who owns triage:** _(e.g. inbox monitored by …)_
+- **If out of office:** _(e.g. alternate contact or auto-reply on the receiving mailbox)_
+
+---
+
+## Monitoring & reliability
+
+- **API response:** After submit, check JSON for `emailedOwner` and `emailedApplicant`. The route **retries each send once** (~600 ms delay) if the first attempt fails; duplicates are unlikely unless Resend accepted the first request without returning success (rare).
+- **Vercel logs:**  
+  - `[resend] skipped: missing env` → set `RESEND_API_KEY` and `RESEND_FROM`.  
+  - `[Application] partners resend first attempt failed, retrying` → transient issue; confirm second attempt in Resend dashboard.  
+  - `[Application] partners resend summary` with either flag `false` → investigate that path (owner vs applicant).
+- **Resend dashboard → Emails:** delivery, bounces, blocks.
+- **Spam:** Prefer **SPF/DKIM** on your sending domain in Resend; ask applicants to check spam once if they report missing mail.
+
+---
+
+## Quick verification checklist
+
+- [ ] Production env has `RESEND_API_KEY`, `RESEND_FROM`, and either `SSD_CAMPAIGN_OWNER_EMAIL` or `PARTNERS_NOTIFY_EMAIL`.
+- [ ] Test submit from `/partners#apply`; both email flags `true` in the network response.
+- [ ] Owner receives alert; **Reply** goes to the test applicant address.
+- [ ] Applicant receives confirmation; wording matches on-page “Thank you — application received” intent.

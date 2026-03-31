@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import { TrendingUp, Users, Target, Award } from 'lucide-react'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
@@ -166,22 +167,22 @@ export default function InvestPage() {
                 <input
                   type="text"
                   placeholder="Name"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
                 <input
                   type="email"
                   placeholder="Email"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
                 <input
                   type="text"
                   placeholder="Organization (Optional)"
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
                 <textarea
                   placeholder="Tell us about your investment interests"
                   rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
                 <Button variant="primary" size="lg" className="w-full">
                   Request Information

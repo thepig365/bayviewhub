@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 type UtmState = {
   baseUrl: string
@@ -73,7 +74,7 @@ export function UtmBuilder() {
           <input
             readOnly
             value={url}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg dark:border-border dark:bg-surface/40 dark:text-fg"
+            className={`${CONTRAST_FORM_CONTROL_CLASS} cursor-default`}
           />
           <button
             type="button"
@@ -100,7 +101,7 @@ function Field(props: { label: string; value: string; onChange: (v: string) => v
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
-        className="w-full px-4 py-3 rounded-lg border border-border bg-white text-base text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+        className={`${CONTRAST_FORM_CONTROL_CLASS} text-base`}
       />
     </div>
   )

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import { getAttribution, track } from '@/lib/analytics'
 
 type FormState = {
@@ -110,7 +111,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           />
         </div>
 
@@ -123,7 +124,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           />
         </div>
       </div>
@@ -137,7 +138,7 @@ export function EdibleGardensEOIForm() {
             type="tel"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           />
         </div>
 
@@ -149,7 +150,7 @@ export function EdibleGardensEOIForm() {
             type="url"
             value={form.website}
             onChange={(e) => setForm({ ...form, website: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           />
         </div>
       </div>
@@ -163,7 +164,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.applicantType}
             onChange={(e) => setForm({ ...form, applicantType: e.target.value as FormState['applicantType'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           >
             <option value="">Select one</option>
             <option value="Individual">Individual</option>
@@ -180,7 +181,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.pilotStart}
             onChange={(e) => setForm({ ...form, pilotStart: e.target.value as FormState['pilotStart'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           >
             <option value="">Select a timeframe</option>
             <option value="0–30 days">0–30 days</option>
@@ -200,7 +201,7 @@ export function EdibleGardensEOIForm() {
             required
             value={form.hasRunProgramsBefore}
             onChange={(e) => setForm({ ...form, hasRunProgramsBefore: e.target.value as FormState['hasRunProgramsBefore'] })}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           >
             <option value="">Select one</option>
             <option value="Yes">Yes</option>
@@ -217,7 +218,7 @@ export function EdibleGardensEOIForm() {
             value={form.availability}
             onChange={(e) => setForm({ ...form, availability: e.target.value })}
             placeholder="e.g., weekends only / 3 days per week / full-time"
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+            className={CONTRAST_FORM_CONTROL_CLASS}
           />
         </div>
       </div>
@@ -233,7 +234,7 @@ export function EdibleGardensEOIForm() {
           value={form.programExperience}
           onChange={(e) => setForm({ ...form, programExperience: e.target.value })}
           placeholder="What did you run? How many subscribers/attendees? What worked?"
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className={CONTRAST_FORM_CONTROL_CLASS}
         />
       </div>
 
@@ -247,7 +248,7 @@ export function EdibleGardensEOIForm() {
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           placeholder="Who you are • what you want to build • how you see an edible garden serving people and community"
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className={CONTRAST_FORM_CONTROL_CLASS}
         />
       </div>
 

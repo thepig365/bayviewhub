@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/Button'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import Link from 'next/link'
 
 const plannedFeatures = [
@@ -130,7 +131,7 @@ export function EdibleGardensClient() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg"
+                    className={CONTRAST_FORM_CONTROL_CLASS}
                   />
                 </div>
                 <div>
@@ -143,7 +144,7 @@ export function EdibleGardensClient() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg"
+                    className={CONTRAST_FORM_CONTROL_CLASS}
                   />
                 </div>
                 <div>
@@ -156,7 +157,7 @@ export function EdibleGardensClient() {
                     placeholder="e.g., 2 adults, 2 kids"
                     value={formData.familySize}
                     onChange={(e) => setFormData({ ...formData, familySize: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-white text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 dark:border-border dark:bg-surface/40 dark:text-fg"
+                    className={CONTRAST_FORM_CONTROL_CLASS}
                   />
                 </div>
                 <Button type="submit" variant="primary" size="lg" className="w-full" disabled={status === 'loading'}>

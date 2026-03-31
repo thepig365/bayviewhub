@@ -3,11 +3,7 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { FOUNDING_ROLES } from '@/lib/constants'
-import { Upload } from 'lucide-react'
-
-/** Readable on both themes: light fields use dark text; dark mode uses dark fill + light text (avoids washed-out fg/muted on white). */
-const partnerFieldClass =
-  'w-full px-4 py-3 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-400 dark:focus:ring-primary-300 [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_rgb(255_255_255)] [&:-webkit-autofill]:[-webkit-text-fill-color:rgb(23_23_23)] dark:[&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_rgb(24_24_27)] dark:[&:-webkit-autofill]:[-webkit-text-fill-color:rgb(244_244_245)]'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 export default function PartnersPage() {
   const [formData, setFormData] = useState({
@@ -185,7 +181,7 @@ export default function PartnersPage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
               </div>
 
@@ -199,7 +195,7 @@ export default function PartnersPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
               </div>
 
@@ -212,7 +208,7 @@ export default function PartnersPage() {
                   type="url"
                   value={formData.linkedin}
                   onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
               </div>
 
@@ -225,7 +221,7 @@ export default function PartnersPage() {
                   required
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 >
                   <option value="">Select a role</option>
                   {FOUNDING_ROLES.map((role) => (
@@ -248,7 +244,7 @@ export default function PartnersPage() {
                   value={formData.plan}
                   onChange={(e) => setFormData({ ...formData, plan: e.target.value })}
                   placeholder="What would you build in your first 90 days?"
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
               </div>
 
@@ -262,7 +258,7 @@ export default function PartnersPage() {
                   value={formData.availability}
                   onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
                   placeholder="e.g., Immediate, 2 weeks notice"
-                  className={partnerFieldClass}
+                  className={CONTRAST_FORM_CONTROL_CLASS}
                 />
               </div>
 

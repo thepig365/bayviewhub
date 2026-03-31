@@ -1,9 +1,27 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { FOUNDING_ROLES } from '@/lib/constants'
 import { sendResendEmail } from '@/lib/resend-send'
 import { parsePartnersNotifyEmails } from '@/lib/lead-notify'
 
 export const runtime = 'nodejs'
+
+function foundingRoleTitle(roleId: string): string {
+  const row = FOUNDING_ROLES.find((r) => r.id === roleId)
+  return row?.title ?? roleId
+}
+
+/** One retry on transient Resend/network failure (avoids duplicate if first call already succeeded). */
+async function sendPartnerEmailWithRetry(
+  opts: Parameters<typeof sendResendEmail>[0],
+  kind: 'owner' | 'applicant'
+): Promise<boolean> {
+  const first = await sendResendEmail(opts)
+  if (first) return true
+  console.warn('[Application] partners resend first attempt failed, retrying', { kind })
+  await new Promise((r) => setTimeout(r, 600))
+  return sendResendEmail(opts)
+}
 
 export async function POST(req: Request) {
   try {
@@ -73,15 +91,16 @@ export async function POST(req: Request) {
     let emailedOwner = false
     if (toPrimary) {
       try {
-        emailedOwner = await sendResendEmail({
+        emailedOwner = await sendPartnerEmailWithRetry(
+          {
           to: toPrimary,
           ...(bccRest?.length ? { bcc: bccRest } : {}),
-          subject: `[PARTNER] ${body.role} — ${body.name}`,
+          subject: `[PARTNER] ${foundingRoleTitle(String(body.role))} — ${body.name}`,
           replyTo: payload.form.email,
           html: `
             <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height:1.6; max-width:600px;">
               <h2 style="color:#1a365d;">New Founding Partner Application</h2>
-              <h3 style="color:#2d3748;">Role: ${escapeHtml(payload.form.role)}</h3>
+              <h3 style="color:#2d3748;">Role: ${escapeHtml(foundingRoleTitle(payload.form.role))}</h3>
               
               <table style="width:100%; border-collapse:collapse; margin:20px 0;">
                 <tr><td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-weight:bold; width:140px;">Name</td><td style="padding:8px 0; border-bottom:1px solid #e2e8f0;">${escapeHtml(payload.form.name)}</td></tr>
@@ -104,30 +123,41 @@ export async function POST(req: Request) {
               <p style="color:#718096; font-size:12px; margin-top:24px;">Received: ${payload.receivedAt}</p>
             </div>
           `,
-        })
+        },
+          'owner'
+        )
       } catch (e) {
         console.warn('[Application] partners owner email failed', e)
       }
     }
 
-    // Auto-reply to applicant
+    const roleTitle = foundingRoleTitle(payload.form.role)
+
     let emailedApplicant = false
     try {
-      emailedApplicant = await sendResendEmail({
+      emailedApplicant = await sendPartnerEmailWithRetry(
+        {
         to: payload.form.email,
-        subject: 'Application Received — Bayview Hub Founding Partners',
+        subject: 'Thank you — application received · Bayview Hub Founding Partners',
         html: `
           <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height:1.6; max-width:600px;">
+            <p style="font-size:18px;font-weight:600;color:#1a365d;">Thank you — application received</p>
             <p>Hi ${escapeHtml(payload.form.name)},</p>
-            <p>Thank you for applying to the <strong>${escapeHtml(payload.form.role)}</strong> Founding Partner role at Bayview Hub.</p>
-            <p>We've received your application and will review it carefully. If there's alignment, we'll reach out to arrange a conversation.</p>
+            <p>Thank you for applying for the <strong>${escapeHtml(roleTitle)}</strong> Founding Partner role at Bayview Hub.</p>
+            <p>We&#039;ve received your submission. Our team will review it and contact you if we&#039;d like to explore next steps together.</p>
             <p>In the meantime, feel free to explore more about Bayview Hub at <a href="https://www.bayviewhub.me">www.bayviewhub.me</a>.</p>
             <p>Warm regards,<br/>— Bayview Hub Team</p>
           </div>
         `,
-      })
+        },
+        'applicant'
+      )
     } catch (e) {
       console.warn('[Application] partners auto-reply failed', e)
+    }
+
+    if (!emailedOwner || !emailedApplicant) {
+      console.warn('[Application] partners resend summary', { emailedOwner, emailedApplicant })
     }
 
     return NextResponse.json({ ok: true, emailedOwner, emailedApplicant })

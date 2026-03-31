@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import { Button } from './Button'
 
 export function NewsletterForm() {
@@ -67,7 +68,7 @@ export function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 rounded-lg border border-border bg-white text-base text-fg placeholder:text-muted focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:border-border dark:bg-surface/40 dark:text-fg dark:placeholder:text-muted dark:focus:ring-primary-300"
+          className={`${CONTRAST_FORM_CONTROL_CLASS} text-base focus:border-transparent`}
           placeholder="your@email.com"
         />
       </div>
