@@ -26,11 +26,11 @@ export default function ThankYouPage() {
             </p>
 
             <Link
-              href="/"
+              href="/backyard-small-second-home"
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 transition-colors"
-              data-testid="button-back-home"
+              data-testid="button-back-ssd-hub"
             >
-              Back to Home
+              Back to SSD hub
             </Link>
           </div>
         </div>
