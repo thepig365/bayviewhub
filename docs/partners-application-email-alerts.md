@@ -33,18 +33,20 @@ Goal: Resend must consider **`bayviewhub.me`** a **verified sending domain**. Th
    - Sidebar: **Domains**, or go to [resend.com/domains](https://resend.com/domains).
 
 3. **Find `bayviewhub.me`**  
-   - If it is **already listed** and status is **Verified** (green): you are done with Step 1. Resend does **not** require a separate “add noreply” for each local-part: any address `@bayviewhub.me` is allowed for the API once the domain is verified (same reason `alerts@` works).  
+   - If status is **Verified** (green): you are done with Step 1. Resend does **not** require a separate “add noreply” for each local-part: any address `@bayviewhub.me` is allowed for the API once the domain is verified (same reason `alerts@` works).  
+   - If status is **Partially Failed** (red / warning): **do not skip** — some DNS checks passed and at least one **failed**. Open the domain (click the row) and read which record is red (e.g. **DKIM**, **SPF**, or **MX**). Fix only what Resend marks failed, then use **Verify** / refresh until it clears. Mail can be flaky or rejected until this is green.  
    - If the domain is **missing**: click **Add domain** → enter `bayviewhub.me` → continue.
 
-4. **If the domain is not verified yet**  
+4. **If the domain is not fully verified yet**  
    - Click **`bayviewhub.me`** in the list. Resend shows the **DNS records** to add (typically **SPF** via TXT, **DKIM**, sometimes **MX** for bounce handling — exact names/values are **copy-paste from Resend**, do not guess).  
    - In your **DNS host** (Cloudflare, Vercel DNS, registrar, etc.): create **exactly** those records. Common pitfalls:  
      - **Typos** in host/name or value.  
      - **Duplicate SPF**: only one SPF TXT at root; merge with existing mail providers if needed ([Resend SPF docs](https://resend.com/docs/dashboard/domains/introduction)).  
+     - **Wrong region**: you chose **Tokyo (`ap-northeast-1`)** when adding the domain; DNS values can be region-specific. If you moved region or see mismatch, follow the **current** record set shown on that domain’s detail page.  
      - **Propagation**: can take minutes to a few hours; Resend’s domain page usually has **Verify** / auto re-check.
 
 5. **Confirm verification**  
-   - Return until **`bayviewhub.me`** shows **Verified**.  
+   - Return until **`bayviewhub.me`** shows **Verified** (not **Partially Failed**).  
    - Official overview: [Resend — Domains](https://resend.com/docs/dashboard/domains/introduction).
 
 6. **Sanity check (optional)**  
