@@ -48,6 +48,18 @@ export default async function PrivateNewsletterPage() {
 
     if (!countQuery.error) {
       activeSubscriberCount = countQuery.count ?? 0
+    } else {
+      console.warn('[Newsletter Admin] subscriber count with status filter failed', countQuery.error)
+
+      const fallbackCountQuery = await supabase
+        .from('newsletter_subscriptions')
+        .select('email', { count: 'exact', head: true })
+
+      if (!fallbackCountQuery.error) {
+        activeSubscriberCount = fallbackCountQuery.count ?? 0
+      } else {
+        console.warn('[Newsletter Admin] subscriber count fallback failed', fallbackCountQuery.error)
+      }
     }
 
     const recentQuery = await supabase

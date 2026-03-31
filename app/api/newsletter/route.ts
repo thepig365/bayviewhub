@@ -39,6 +39,82 @@ function escapeHtml(value: string): string {
     .replaceAll("'", '&#039;')
 }
 
+async function saveNewsletterSubscription(
+  supabase: NonNullable<ReturnType<typeof getSupabaseServer>>,
+  email: string,
+  interests: string[],
+  sourcePage: string,
+  userAgent: string
+): Promise<{ ok: true; mode: string } | { ok: false; error: unknown }> {
+  const fullUpsert = await supabase
+    .from('newsletter_subscriptions')
+    .upsert(
+      {
+        email,
+        interests,
+        source_page: sourcePage,
+        user_agent: userAgent,
+        status: 'active',
+      },
+      { onConflict: 'email' }
+    )
+
+  if (!fullUpsert.error) return { ok: true, mode: 'full_upsert' }
+
+  console.warn('[Newsletter] full upsert failed; retrying minimal', fullUpsert.error)
+
+  const minimalUpsert = await supabase
+    .from('newsletter_subscriptions')
+    .upsert(
+      {
+        email,
+        status: 'active',
+      },
+      { onConflict: 'email' }
+    )
+
+  if (!minimalUpsert.error) return { ok: true, mode: 'minimal_upsert' }
+
+  console.warn('[Newsletter] minimal upsert failed; retrying legacy path', minimalUpsert.error)
+
+  const existing = await supabase
+    .from('newsletter_subscriptions')
+    .select('email')
+    .eq('email', email)
+    .limit(1)
+
+  if (existing.error) {
+    return { ok: false, error: existing.error }
+  }
+
+  if (existing.data && existing.data.length > 0) {
+    const reactivate = await supabase
+      .from('newsletter_subscriptions')
+      .update({ status: 'active' })
+      .eq('email', email)
+
+    if (!reactivate.error) return { ok: true, mode: 'reactivate_existing' }
+    return { ok: true, mode: 'existing_row' }
+  }
+
+  const insertMinimal = await supabase
+    .from('newsletter_subscriptions')
+    .insert({
+      email,
+      status: 'active',
+    })
+
+  if (!insertMinimal.error) return { ok: true, mode: 'insert_minimal' }
+
+  const insertEmailOnly = await supabase
+    .from('newsletter_subscriptions')
+    .insert({ email })
+
+  if (!insertEmailOnly.error) return { ok: true, mode: 'insert_email_only' }
+
+  return { ok: false, error: insertEmailOnly.error }
+}
+
 export async function POST(request: Request) {
   try {
     if (isRateLimited(request)) {
@@ -73,26 +149,26 @@ export async function POST(request: Request) {
       )
     }
 
-    const { error } = await supabase
-      .from('newsletter_subscriptions')
-      .upsert(
-        {
-          email,
-          interests,
-          source_page: sourcePage,
-          user_agent: userAgent,
-          status: 'active',
-        },
-        { onConflict: 'email' }
-      )
+    const saveResult = await saveNewsletterSubscription(
+      supabase,
+      email,
+      interests,
+      sourcePage,
+      userAgent
+    )
 
-    if (error) {
-      console.error('[Newsletter] subscribe upsert failed', error)
+    if (!saveResult.ok) {
+      console.error('[Newsletter] subscribe upsert failed', saveResult.error)
       return NextResponse.json(
         { ok: false, error: 'Failed to save subscription.' },
         { status: 500 }
       )
     }
+
+    console.log('[Newsletter] subscribe saved', {
+      email,
+      mode: saveResult.mode,
+    })
 
     const notifyList = parseNewsletterNotifyEmails()
     const toPrimary = notifyList[0]
