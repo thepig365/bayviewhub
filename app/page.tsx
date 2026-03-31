@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { HomeModule } from '@/components/ui/HomeModule'
 import { EXPERIENCES, GALLERY_EXTERNAL, SITE_CONFIG, SSD_LANDING, SSD_QUICK_LINKS } from '@/lib/constants'
+import { CONTRAST_FORM_CONTROL_ROW_CLASS } from '@/lib/contrast-form-field-class'
 import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 
 type HeroCta = { label: string; href: string; external?: boolean }
@@ -67,6 +68,37 @@ const heroSlides: {
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [newsletterHoneypot, setNewsletterHoneypot] = useState('')
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setNewsletterStatus('loading')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: newsletterEmail.trim(),
+          interests: [],
+          website: newsletterHoneypot,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok) {
+        setNewsletterStatus('success')
+        setNewsletterEmail('')
+        setNewsletterHoneypot('')
+      } else {
+        setNewsletterStatus('error')
+        console.warn('[Newsletter home]', res.status, data)
+      }
+    } catch {
+      setNewsletterStatus('error')
+    }
+  }
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
@@ -443,19 +475,46 @@ export default function HomePage() {
                 </div>
                 {/* Right - Form */}
                 <div>
-                  <form className="flex flex-col sm:flex-row gap-3">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="flex-1 px-5 py-4 border border-border rounded bg-surface text-fg placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-                      required
-                    />
-                    <button
-                      type="submit"
-                      className="px-8 py-4 bg-accent text-white font-semibold tracking-wide uppercase rounded hover:bg-accent-hover transition-colors whitespace-nowrap"
-                    >
-                      Sign Up
-                    </button>
+                  <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-2">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input
+                        type="text"
+                        name="website"
+                        value={newsletterHoneypot}
+                        onChange={(e) => setNewsletterHoneypot(e.target.value)}
+                        className="absolute -left-[9999px] h-px w-px opacity-0"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden
+                      />
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={newsletterEmail}
+                        onChange={(e) => {
+                          setNewsletterEmail(e.target.value)
+                          if (newsletterStatus !== 'idle') setNewsletterStatus('idle')
+                        }}
+                        className={`${CONTRAST_FORM_CONTROL_ROW_CLASS} py-4 px-5 focus:ring-accent dark:focus:ring-accent`}
+                        required
+                        disabled={newsletterStatus === 'loading'}
+                      />
+                      <button
+                        type="submit"
+                        disabled={newsletterStatus === 'loading'}
+                        className="px-8 py-4 bg-accent text-white font-semibold tracking-wide uppercase rounded hover:bg-accent-hover transition-colors whitespace-nowrap disabled:opacity-60"
+                      >
+                        {newsletterStatus === 'loading' ? 'Signing up…' : 'Sign Up'}
+                      </button>
+                    </div>
+                    {newsletterStatus === 'success' && (
+                      <p className="text-sm text-muted">Thanks — you&apos;re on the list.</p>
+                    )}
+                    {newsletterStatus === 'error' && (
+                      <p className="text-sm text-red-600 dark:text-red-400">
+                        Something went wrong. Try again or email {SITE_CONFIG.email}.
+                      </p>
+                    )}
                   </form>
                 </div>
               </div>
