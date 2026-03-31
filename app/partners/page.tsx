@@ -168,8 +168,10 @@ export default function PartnersPage() {
             {status === 'success' ? (
               <div className="bg-natural-50 rounded-2xl p-12 text-center dark:bg-surface dark:border dark:border-border">
                 <div className="text-accent-600 text-5xl mb-4">✓</div>
-                <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">Application Received</h3>
-                <p className="text-muted">We'll review your application and reach out if aligned.</p>
+                <h3 className="text-2xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">Thank you — application received</h3>
+                <p className="text-muted">
+                  We&apos;ve received your submission. Our team will review it and contact you if we&apos;d like to explore next steps together.
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
