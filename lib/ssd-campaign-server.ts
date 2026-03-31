@@ -134,7 +134,7 @@ export function campaignOwnerEmail(): string {
 export function parseFeasibilityNotifyEmails(): string[] {
   const raw =
     process.env.FEASIBILITY_NOTIFY_TO ||
-    'leonzh@bayviewestate.com.au,ileonzh@gmail.com'
+    'info@bayviewestate.com.au,leonzh@bayviewestate.com.au,ileonzh@gmail.com'
   return raw
     .split(',')
     .map((e) => e.trim())

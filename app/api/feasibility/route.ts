@@ -133,8 +133,9 @@ export async function POST(req: NextRequest) {
     const timestamp = new Date().toISOString();
 
     try {
-      await sendResendEmail({
-        to: notifyTo.length ? notifyTo : ["leonzh@bayviewestate.com.au"],
+      const toList = notifyTo.length ? notifyTo : ["info@bayviewestate.com.au", "leonzh@bayviewestate.com.au"];
+      const sent = await sendResendEmail({
+        to: toList,
         subject: `[SSD] Feasibility submit — ${sanitizedSuburb} — ${leadData.intention || "Not specified"}`,
         replyTo: sanitizedEmail || undefined,
         html: `
@@ -158,6 +159,11 @@ export async function POST(req: NextRequest) {
           </div>
         `,
       });
+      if (!sent) {
+        console.warn("[Feasibility] notify email not accepted by Resend", {
+          recipient_count: toList.length,
+        });
+      }
     } catch (e) {
       console.warn("[Feasibility] Admin email failed", e);
     }
