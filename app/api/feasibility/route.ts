@@ -133,9 +133,7 @@ export async function POST(req: NextRequest) {
     const timestamp = new Date().toISOString();
 
     try {
-      const toList = notifyTo.length
-        ? notifyTo
-        : ["info@bayviewestate.com.au", "leonzh@bayviewestate.com.au", "ileonzh@gmail.com"];
+      const toList = notifyTo;
       const toPrimary = toList[0];
       const bccRest = toList.length > 1 ? toList.slice(1) : undefined;
       const sent = await sendResendEmail({

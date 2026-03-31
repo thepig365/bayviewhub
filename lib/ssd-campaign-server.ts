@@ -131,12 +131,26 @@ export function campaignOwnerEmail(): string {
   return process.env.SSD_CAMPAIGN_OWNER_EMAIL?.trim() || 'ileonzh@gmail.com'
 }
 
+/** Always included as Resend primary `to` for feasibility admin copies. */
+const FEASIBILITY_PRIMARY_INBOX = 'info@bayviewestate.com.au'
+
+const FEASIBILITY_DEFAULT_NOTIFY =
+  'info@bayviewestate.com.au,leonzh@bayviewestate.com.au,ileonzh@gmail.com'
+
+/**
+ * Parses FEASIBILITY_NOTIFY_TO; always includes primary inbox once, first in list
+ * (so /api/feasibility uses it as `to` and others as `bcc`).
+ */
 export function parseFeasibilityNotifyEmails(): string[] {
-  const raw =
-    process.env.FEASIBILITY_NOTIFY_TO ||
-    'info@bayviewestate.com.au,leonzh@bayviewestate.com.au,ileonzh@gmail.com'
-  return raw
-    .split(',')
-    .map((e) => e.trim())
-    .filter(Boolean)
+  const raw = process.env.FEASIBILITY_NOTIFY_TO?.trim()
+  const parts = raw
+    ? raw.split(',').map((e) => e.trim()).filter(Boolean)
+    : FEASIBILITY_DEFAULT_NOTIFY.split(',').map((e) => e.trim()).filter(Boolean)
+
+  const list = parts.length > 0 ? parts : FEASIBILITY_DEFAULT_NOTIFY.split(',').map((e) => e.trim()).filter(Boolean)
+
+  const primaryLower = FEASIBILITY_PRIMARY_INBOX.toLowerCase()
+  const rest = list.filter((e) => e.toLowerCase() !== primaryLower)
+  const primaryEntry = list.find((e) => e.toLowerCase() === primaryLower) ?? FEASIBILITY_PRIMARY_INBOX
+  return [primaryEntry, ...rest]
 }
