@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
+
+const galleryEoiFieldClass = `${CONTRAST_FORM_CONTROL_CLASS} text-lg focus:ring-accent dark:focus:ring-accent`
 
 export function ArtGalleryClient() {
   const [formData, setFormData] = useState({
@@ -199,7 +202,7 @@ export function ArtGalleryClient() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-transparent border border-border text-fg text-lg focus:border-accent focus:outline-none"
+                      className={galleryEoiFieldClass}
                     />
                   </div>
                   <div>
@@ -209,7 +212,7 @@ export function ArtGalleryClient() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-transparent border border-border text-fg text-lg focus:border-accent focus:outline-none"
+                      className={galleryEoiFieldClass}
                     />
                   </div>
                 </div>
@@ -222,7 +225,7 @@ export function ArtGalleryClient() {
                     value={formData.background}
                     onChange={(e) => setFormData({ ...formData, background: e.target.value })}
                     placeholder="Curation, gallery, or relevant experience"
-                    className="w-full px-4 py-3 bg-transparent border border-border text-fg text-lg placeholder-neutral-600 focus:border-accent focus:outline-none"
+                    className={galleryEoiFieldClass}
                   />
                 </div>
 
@@ -234,7 +237,7 @@ export function ArtGalleryClient() {
                     value={formData.vision}
                     onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
                     placeholder="What would you build here?"
-                    className="w-full px-4 py-3 bg-transparent border border-border text-fg text-lg placeholder-neutral-600 focus:border-accent focus:outline-none"
+                    className={galleryEoiFieldClass}
                   />
                 </div>
 
