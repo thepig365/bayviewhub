@@ -14,7 +14,8 @@ Submissions from `/partners#apply` hit **`POST /api/partners`**. When configured
 | Variable | Purpose |
 |----------|---------|
 | **`RESEND_API_KEY`** | Resend API key ([resend.com](https://resend.com)). Without it, **no mail is sent** (`emailedOwner` / `emailedApplicant` stay false). |
-| **`RESEND_FROM`** | Verified sender, e.g. `Bayview Hub <hello@bayviewhub.me>`. Must use a domain you verified in Resend. |
+| **`RESEND_FROM`** | Verified sender for **internal** mail (e.g. `alerts@…` or `hello@…`). Partner **owner** alerts use this. |
+| **`RESEND_FROM_NOREPLY`** | **Optional.** If set, the **applicant** auto-reply uses this `From` (e.g. `Bayview Hub <noreply@bayviewhub.me>`). If unset, applicants see `RESEND_FROM` (same as today). Add the address in Resend (Domains → verify) like any other sender. |
 | **`SSD_CAMPAIGN_OWNER_EMAIL`** | **Default** inbox for partner **owner** alerts — same as SSD campaign digests and instant alerts. If unset, code falls back to **`ileonzh@gmail.com`** (see `campaignOwnerEmail()` in `lib/ssd-campaign-server.ts`). |
 | **`PARTNERS_NOTIFY_EMAIL`** | **Optional.** Comma-separated override for partner alerts only: first = Resend `to`, rest = `bcc`. If unset, **`SSD_CAMPAIGN_OWNER_EMAIL`** is used. |
 

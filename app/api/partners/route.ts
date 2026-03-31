@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { FOUNDING_ROLES } from '@/lib/constants'
-import { sendResendEmail } from '@/lib/resend-send'
+import { resendApplicantNoreplyFrom, sendResendEmail } from '@/lib/resend-send'
 import { parsePartnersNotifyEmails } from '@/lib/lead-notify'
 
 export const runtime = 'nodejs'
@@ -132,12 +132,14 @@ export async function POST(req: Request) {
     }
 
     const roleTitle = foundingRoleTitle(payload.form.role)
+    const applicantFrom = resendApplicantNoreplyFrom()
 
     let emailedApplicant = false
     try {
       emailedApplicant = await sendPartnerEmailWithRetry(
         {
         to: payload.form.email,
+        ...(applicantFrom ? { from: applicantFrom } : {}),
         subject: 'Thank you — application received · Bayview Hub Founding Partners',
         html: `
           <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height:1.6; max-width:600px;">
