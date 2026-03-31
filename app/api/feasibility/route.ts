@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 import { sendResendEmail } from "@/lib/resend-send";
-import { parseFeasibilityNotifyEmails } from "@/lib/ssd-campaign-server";
+import { getSupabaseServer, parseFeasibilityNotifyEmails } from "@/lib/ssd-campaign-server";
 
 export const runtime = "nodejs";
 
@@ -60,14 +59,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SECRET_KEY) {
+    const supabase = getSupabaseServer();
+    if (!supabase) {
       return NextResponse.json(
         { ok: false, error: "Database not configured" },
         { status: 500 }
       );
     }
-
-    const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SECRET_KEY!);
 
     const {
       suburb_or_address,

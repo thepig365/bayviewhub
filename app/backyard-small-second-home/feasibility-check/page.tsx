@@ -7,6 +7,7 @@ import {
   SsdFeasibilityCampaignAnalytics,
   trackFeasibilityFormSubmitSuccess,
 } from "@/components/ssd/SsdFeasibilityCampaignAnalytics";
+import { SsdPageShare } from "@/components/ssd/SsdPageShare";
 import {
   Check,
   ChevronDown,
@@ -24,7 +25,6 @@ import {
   Lightbulb,
   Building,
   Sparkles,
-  Share2,
   Zap,
   FileText,
   Shield,
@@ -698,8 +698,6 @@ export default function FeasibilityChecklistPage() {
     slope: false,
   });
 
-  const [shareMessage, setShareMessage] = useState("");
-
   const toggleCheck = (key: keyof typeof checklist) => {
     setChecklist((prev) => ({ ...prev, [key]: !prev[key] }));
   };
@@ -710,36 +708,6 @@ export default function FeasibilityChecklistPage() {
 
   const scrollToEngine = () => {
     document.getElementById("logic-engine")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleShare = async () => {
-    const shareData = {
-      title: "SSD Feasibility Logic Engine — Victoria 2026",
-      text: "Determine your approval pathway: Green Lane (no permit), VicSmart (10-day), or standard planning.",
-      url: typeof window !== "undefined" ? window.location.href : "",
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-        setShareMessage("Shared");
-      } else {
-        await navigator.clipboard.writeText(shareData.url);
-        setShareMessage("Link copied");
-      }
-      setTimeout(() => setShareMessage(""), 3000);
-    } catch (err) {
-      if ((err as Error).name !== "AbortError") {
-        try {
-          await navigator.clipboard.writeText(shareData.url);
-          setShareMessage("Link copied");
-          setTimeout(() => setShareMessage(""), 3000);
-        } catch {
-          setShareMessage("Could not share");
-          setTimeout(() => setShareMessage(""), 3000);
-        }
-      }
-    }
   };
 
   const checkedCount = Object.values(checklist).filter(Boolean).length;
@@ -1007,16 +975,24 @@ export default function FeasibilityChecklistPage() {
           </div>
           <FeasibilityForm />
 
-          <div className="mt-8 flex flex-col items-center gap-2">
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground border border-border rounded-full px-4 py-2 hover:bg-muted/50"
-            >
-              <Share2 className="w-4 h-4" />
-              Share this tool
-            </button>
-            {shareMessage && <span className="text-base text-primary">{shareMessage}</span>}
-          </div>
+          <SsdPageShare path="/backyard-small-second-home/feasibility-check" className="mt-10" />
+          <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+            <Link href="/backyard-small-second-home" className="font-medium text-accent underline-offset-4 hover:underline">
+              See the full SSD overview
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href="/backyard-small-second-home/victoria-rules" className="underline-offset-4 hover:underline">
+              Understand Victoria rules
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href="/backyard-small-second-home/cost-rent-roi" className="underline-offset-4 hover:underline">
+              Explore likely costs
+            </Link>
+          </p>
         </div>
       </section>
 

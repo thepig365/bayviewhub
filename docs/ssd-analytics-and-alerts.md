@@ -39,7 +39,7 @@ This document complements **`docs/ssd-campaign-operating-pack.md`** with the tec
 3. Execute **`docs/supabase-feasibility.sql`** — **`feasibility_leads`** for **`POST /api/feasibility`** (main-site SSD funnel; not gallery core). Same **replay** story as step 2.
 4. Do **not** expose these tables to anonymous clients; only the Next.js API uses the service role / secret key.
 
-**Feasibility form vs SSD telemetry:** `POST /api/feasibility` checks **`SUPABASE_URL`** and **`SUPABASE_SECRET_KEY`** only (not `NEXT_PUBLIC_SUPABASE_URL` alone). SSD `getSupabaseServer()` accepts `SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL`, and `SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY`. Easiest: set **`SUPABASE_URL`** + **`SUPABASE_SECRET_KEY`** (service role) in Vercel for both paths.
+**Feasibility form vs SSD telemetry:** Both use **`getSupabaseServer()`** — same env resolution: **`SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL`**, and **`SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY`** (service role). Easiest: set **`SUPABASE_URL`** + one of the secret key names in Vercel for Production.
 
 ## Vercel Cron
 
