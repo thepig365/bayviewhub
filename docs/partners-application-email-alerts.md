@@ -15,27 +15,56 @@ Submissions from `/partners#apply` hit **`POST /api/partners`**. When configured
 |----------|---------|
 | **`RESEND_API_KEY`** | Resend API key ([resend.com](https://resend.com)). Without it, **no mail is sent** (`emailedOwner` / `emailedApplicant` stay false). |
 | **`RESEND_FROM`** | Verified sender for **internal** mail (e.g. `alerts@…` or `hello@…`). Partner **owner** alerts use this. |
-| **`RESEND_FROM_NOREPLY`** | **Optional.** If set, the **applicant** auto-reply uses this `From` (e.g. `Bayview Hub <noreply@bayviewhub.me>`). If unset, applicants see `RESEND_FROM` (same as today). Add the address in Resend (Domains → verify) like any other sender. |
-
-### Baby steps: applicant mail from `noreply@` (do **step 1** first)
-
-1. **Resend — prove you may send as `noreply@`**  
-   In [Resend](https://resend.com): open your **domain** for `bayviewhub.me` (the same place `alerts@` was set up). Ensure **`noreply@bayviewhub.me`** is allowed — usually the whole domain is verified once, so any `@bayviewhub.me` address works; if Resend lists explicit senders, add `noreply` there. **Stop here until Resend shows the domain/sender as OK** (no code or Vercel change fixes a missing domain).
-
-2. **Vercel — set the env var**  
-   Project → Settings → Environment Variables → add  
-   `RESEND_FROM_NOREPLY` = `Bayview Hub <noreply@bayviewhub.me>`  
-   (match the exact format you use for `RESEND_FROM`.)
-
-3. **Redeploy**  
-   Trigger a new production deployment so the server reads the new variable.
-
-4. **Smoke test**  
-   Submit `/partners#apply` with a test address; the **applicant** email should show **From:** `noreply@…`. Your **internal** alert should still come from `RESEND_FROM` (e.g. `alerts@…`).
+| **`RESEND_FROM_NOREPLY`** | **Optional.** If set, the **applicant** auto-reply uses this `From` (e.g. `Bayview Hub <noreply@bayviewhub.me>`). If unset, applicants see `RESEND_FROM` (same as today). Domain must be verified in Resend (see **Step 1** below). |
 | **`SSD_CAMPAIGN_OWNER_EMAIL`** | **Default** inbox for partner **owner** alerts — same as SSD campaign digests and instant alerts. If unset, code falls back to **`ileonzh@gmail.com`** (see `campaignOwnerEmail()` in `lib/ssd-campaign-server.ts`). |
 | **`PARTNERS_NOTIFY_EMAIL`** | **Optional.** Comma-separated override for partner alerts only: first = Resend `to`, rest = `bcc`. If unset, **`SSD_CAMPAIGN_OWNER_EMAIL`** is used. |
 
 Supabase (`partner_applications`) is separate from email: rows can save even if Resend is missing.
+
+### Baby steps: applicant mail from `noreply@`
+
+#### Step 1 — Resend only (full detail; **finish this before Vercel**)
+
+Goal: Resend must consider **`bayviewhub.me`** a **verified sending domain**. Then the API may use **`From: … <noreply@bayviewhub.me>`** the same way it already uses `alerts@…`.
+
+1. **Sign in** at [resend.com](https://resend.com) with the **same Resend account** that owns the **`RESEND_API_KEY`** you use on Vercel (wrong account = domain verified but API still rejected).
+
+2. Open **Domains**  
+   - Sidebar: **Domains**, or go to [resend.com/domains](https://resend.com/domains).
+
+3. **Find `bayviewhub.me`**  
+   - If it is **already listed** and status is **Verified** (green): you are done with Step 1. Resend does **not** require a separate “add noreply” for each local-part: any address `@bayviewhub.me` is allowed for the API once the domain is verified (same reason `alerts@` works).  
+   - If the domain is **missing**: click **Add domain** → enter `bayviewhub.me` → continue.
+
+4. **If the domain is not verified yet**  
+   - Click **`bayviewhub.me`** in the list. Resend shows the **DNS records** to add (typically **SPF** via TXT, **DKIM**, sometimes **MX** for bounce handling — exact names/values are **copy-paste from Resend**, do not guess).  
+   - In your **DNS host** (Cloudflare, Vercel DNS, registrar, etc.): create **exactly** those records. Common pitfalls:  
+     - **Typos** in host/name or value.  
+     - **Duplicate SPF**: only one SPF TXT at root; merge with existing mail providers if needed ([Resend SPF docs](https://resend.com/docs/dashboard/domains/introduction)).  
+     - **Propagation**: can take minutes to a few hours; Resend’s domain page usually has **Verify** / auto re-check.
+
+5. **Confirm verification**  
+   - Return until **`bayviewhub.me`** shows **Verified**.  
+   - Official overview: [Resend — Domains](https://resend.com/docs/dashboard/domains/introduction).
+
+6. **Sanity check (optional)**  
+   - In Resend, open **Emails** (log). If you already send mail with `alerts@bayviewhub.me` successfully, the same domain verification covers **`noreply@`** — no extra Resend toggle for “noreply” in the typical setup.
+
+**Stop after Step 1 until the domain is Verified.** Wrong or missing DNS cannot be fixed in Vercel or in this repo.
+
+#### Step 2 — Vercel
+
+- Project → **Settings** → **Environment Variables** → add  
+  `RESEND_FROM_NOREPLY` = `Bayview Hub <noreply@bayviewhub.me>`  
+  (same display-name style as `RESEND_FROM`.)
+
+#### Step 3 — Redeploy
+
+- Trigger a new **production** deployment so the server reads `RESEND_FROM_NOREPLY`.
+
+#### Step 4 — Smoke test
+
+- Submit `/partners#apply` with a test inbox. Applicant message **From** should be **`noreply@bayviewhub.me`**; internal alert should still use **`RESEND_FROM`** (e.g. `alerts@…`).
 
 ---
 
