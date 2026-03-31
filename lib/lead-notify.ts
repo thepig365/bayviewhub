@@ -1,3 +1,5 @@
+import { campaignOwnerEmail } from '@/lib/ssd-campaign-server'
+
 /**
  * Default business inbox for EOI / lead notifications when env overrides are unset.
  * Matches feasibility primary inbox behaviour.
@@ -26,16 +28,15 @@ export function resolveEdibleGardensEoiOwnerEmail(): string {
 }
 
 /**
- * `/api/partners` owner alert list. Comma-separated `PARTNERS_NOTIFY_EMAIL`.
- * If unset, uses the same single inbox the route used before env wiring.
+ * `/api/partners` owner alert list. Same default recipient as SSD campaign digests/alerts
+ * (`SSD_CAMPAIGN_OWNER_EMAIL` via `campaignOwnerEmail()`).
+ * Optional comma-separated `PARTNERS_NOTIFY_EMAIL` overrides (first = to, rest = bcc).
  */
-const PARTNERS_NOTIFY_DEFAULT = 'leonzh@bayviewestate.com.au'
-
 export function parsePartnersNotifyEmails(): string[] {
   const raw = envTrim('PARTNERS_NOTIFY_EMAIL')
-  const parts = raw
-    ? raw.split(',').map((e) => e.trim()).filter(Boolean)
-    : []
-  if (parts.length > 0) return parts
-  return [PARTNERS_NOTIFY_DEFAULT]
+  if (raw) {
+    const parts = raw.split(',').map((e) => e.trim()).filter(Boolean)
+    if (parts.length > 0) return parts
+  }
+  return [campaignOwnerEmail()]
 }
