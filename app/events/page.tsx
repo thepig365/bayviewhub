@@ -200,7 +200,7 @@ export default function EventsPage() {
           <p className="text-muted mb-8 max-w-2xl mx-auto">
             Subscribe to our newsletter and get early access to tickets, exclusive events, and member-only experiences
           </p>
-          <Button href="/#newsletter" variant="primary" size="lg">
+          <Button href="/newsletter" variant="primary" size="lg">
             Subscribe Now
           </Button>
         </div>

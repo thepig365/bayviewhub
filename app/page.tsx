@@ -396,7 +396,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Content Block */}
-      <section className="py-16 md:py-20 bg-natural-100 dark:bg-surface/40">
+      <section id="newsletter" className="py-16 md:py-20 bg-natural-100 dark:bg-surface/40">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Image */}
@@ -471,6 +471,13 @@ export default function HomePage() {
                   </h2>
                   <p className="text-muted leading-relaxed reading">
                     Get the latest on exhibitions, events, wine releases, and special offers.
+                  </p>
+                  <p className="mt-3 text-sm text-muted">
+                    Prefer a full signup page?{' '}
+                    <Link href="/newsletter" className="text-accent hover:underline">
+                      Open the newsletter page
+                    </Link>
+                    .
                   </p>
                 </div>
                 {/* Right - Form */}

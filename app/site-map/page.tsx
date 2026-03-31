@@ -51,6 +51,7 @@ const siteMapData = [
     heading: 'About / Legal',
     links: [
       { label: 'Home', href: '/' },
+      { label: 'Newsletter', href: '/newsletter' },
       { label: 'Visitor Traffic Evidence', href: '/evidence/visitor-traffic' },
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },

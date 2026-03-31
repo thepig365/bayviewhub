@@ -21,6 +21,7 @@ export async function sendResendEmail(opts: {
   to: string | string[]
   subject: string
   html: string
+  text?: string
   replyTo?: string
   bcc?: string | string[]
   /** When set (e.g. noreply@), overrides `RESEND_FROM` for this send only. Must be a verified sender in Resend. */
@@ -56,6 +57,7 @@ export async function sendResendEmail(opts: {
       to,
       subject: opts.subject,
       html: opts.html,
+      ...(opts.text ? { text: opts.text } : {}),
       ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
       ...(bcc?.length ? { bcc } : {}),
     }),

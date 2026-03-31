@@ -20,6 +20,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/experiences', priority: 0.8, changeFreq: 'monthly' },
   { path: '/cellar-door', priority: 0.8, changeFreq: 'monthly' },
   { path: '/events', priority: 0.8, changeFreq: 'monthly' },
+  { path: '/newsletter', priority: 0.65, changeFreq: 'monthly' },
   { path: '/partners', priority: 0.85, changeFreq: 'monthly' },
   { path: '/partners/founding', priority: 0.85, changeFreq: 'monthly' },
   { path: '/partners/edible-gardens', priority: 0.85, changeFreq: 'monthly' },

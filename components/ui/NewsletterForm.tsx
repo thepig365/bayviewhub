@@ -118,7 +118,7 @@ export function NewsletterForm() {
 
       {status === 'success' && (
         <p className="text-base text-accent text-center">
-          ✓ Successfully subscribed! Check your email.
+          ✓ Successfully subscribed.
         </p>
       )}
       {status === 'error' && (
