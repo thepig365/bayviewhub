@@ -195,7 +195,7 @@ export const EXPERIENCES = {
       title: 'Backyard Small Second Home',
       blurb: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
       cta: { label: 'Check If My Property Qualifies', href: SSD_LANDING.overview },
-      image: '/images/second-home/garden-studio.jpg',
+      image: '/images/stay.jpg',
       category: 'stay',
     },
     {

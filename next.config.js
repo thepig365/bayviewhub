@@ -31,6 +31,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/images/bayview-estate-logo.png',
+        destination: '/images/bayview-estate-logo.jpg',
+        permanent: true,
+      },
+      {
         source: '/second-home',
         destination: '/backyard-small-second-home',
         permanent: true,

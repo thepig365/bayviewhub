@@ -28,7 +28,7 @@ const heroSlides: {
     description: 'Create a calm, flexible space on your property — for family, privacy, rental income, or long-term value. Enquiries for site assessment are now open across Victoria.',
     cta: { label: 'Check If My Property Qualifies', href: SSD_LANDING.overview },
     secondaryCta: { label: 'Feasibility check', href: SSD_LANDING.feasibility },
-    image: '/images/second-home/garden-studio.jpg',
+    image: '/images/stay.jpg',
   },
   {
     id: 2,
