@@ -1,28 +1,9 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { sendResendEmail } from '@/lib/resend-send'
+import { parsePartnersNotifyEmails } from '@/lib/lead-notify'
 
-async function sendResendEmail(opts: { to: string; subject: string; html: string; replyTo?: string }) {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM
-  if (!apiKey || !from) return false
-
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to: [opts.to],
-      subject: opts.subject,
-      html: opts.html,
-      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
-    }),
-  })
-
-  return res.ok
-}
+export const runtime = 'nodejs'
 
 export async function POST(req: Request) {
   try {
@@ -85,14 +66,16 @@ export async function POST(req: Request) {
       }
     }
 
-    // Send notification email to owner
+    const notifyTo = parsePartnersNotifyEmails()
+    const toPrimary = notifyTo[0]
+    const bccRest = notifyTo.length > 1 ? notifyTo.slice(1) : undefined
+
     let emailedOwner = false
-    const notifyEmail = 'leonzh@bayviewestate.com.au'
-    
-    if (notifyEmail) {
+    if (toPrimary) {
       try {
         emailedOwner = await sendResendEmail({
-          to: notifyEmail,
+          to: toPrimary,
+          ...(bccRest?.length ? { bcc: bccRest } : {}),
           subject: `[PARTNER] ${body.role} — ${body.name}`,
           replyTo: payload.form.email,
           html: `

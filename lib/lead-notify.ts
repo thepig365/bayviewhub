@@ -24,3 +24,18 @@ export function resolveGalleryEoiOwnerEmail(): string {
 export function resolveEdibleGardensEoiOwnerEmail(): string {
   return envTrim('EOI_EDIBLE_GARDENS_NOTIFY_EMAIL') || DEFAULT_BUSINESS_INBOX
 }
+
+/**
+ * `/api/partners` owner alert list. Comma-separated `PARTNERS_NOTIFY_EMAIL`.
+ * If unset, uses the same single inbox the route used before env wiring.
+ */
+const PARTNERS_NOTIFY_DEFAULT = 'leonzh@bayviewestate.com.au'
+
+export function parsePartnersNotifyEmails(): string[] {
+  const raw = envTrim('PARTNERS_NOTIFY_EMAIL')
+  const parts = raw
+    ? raw.split(',').map((e) => e.trim()).filter(Boolean)
+    : []
+  if (parts.length > 0) return parts
+  return [PARTNERS_NOTIFY_DEFAULT]
+}
