@@ -1,4 +1,15 @@
 /**
+ * Read server env at request time. Dynamic key avoids Next/Webpack inlining
+ * `process.env.FOO` as undefined when vars were added only in Vercel (post-build).
+ */
+function serverEnv(name: string): string | undefined {
+  const v = process.env[name]
+  if (typeof v !== 'string') return undefined
+  const t = v.trim()
+  return t.length ? t : undefined
+}
+
+/**
  * Minimal Resend HTTP API helper — shared by feasibility, SSD campaign alerts, and cron digests.
  */
 export async function sendResendEmail(opts: {
@@ -8,10 +19,13 @@ export async function sendResendEmail(opts: {
   replyTo?: string
   bcc?: string | string[]
 }): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM
+  const apiKey = serverEnv('RESEND_API_KEY')
+  const from = serverEnv('RESEND_FROM')
   if (!apiKey || !from) {
-    console.warn('[resend] skipped: missing RESEND_API_KEY or RESEND_FROM')
+    console.warn('[resend] skipped: missing env', {
+      has_RESEND_API_KEY: Boolean(serverEnv('RESEND_API_KEY')),
+      has_RESEND_FROM: Boolean(serverEnv('RESEND_FROM')),
+    })
     return false
   }
 
