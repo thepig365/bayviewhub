@@ -5,6 +5,7 @@ import {
   sanitizeCampaignString,
   sanitizeSessionId,
   getSupabaseServer,
+  getSsdSupabaseRuntimeDiagnostics,
 } from '@/lib/ssd-campaign-server'
 
 export const runtime = 'nodejs'
@@ -31,6 +32,10 @@ function clientIp(req: NextRequest): string {
 
 function allowedPath(path: string): boolean {
   return path.startsWith('/backyard-small-second-home')
+}
+
+function ssdInsertDebugEnabled(): boolean {
+  return process.env.SSD_INSERT_DEBUG === '1'
 }
 
 export async function POST(req: NextRequest) {
@@ -76,13 +81,50 @@ export async function POST(req: NextRequest) {
 
   const sb = getSupabaseServer()
   if (!sb) {
-    return NextResponse.json({ ok: true, stored: false })
+    return NextResponse.json({
+      ok: true,
+      stored: false,
+      ...(ssdInsertDebugEnabled()
+        ? {
+            debug: {
+              ...getSsdSupabaseRuntimeDiagnostics(),
+              getSupabaseServer: 'returned_null',
+            },
+          }
+        : {}),
+    })
   }
 
   const { error } = await sb.from('ssd_campaign_events').insert(row)
   if (error) {
-    console.warn('[ssd-campaign] insert failed', error.message)
-    return NextResponse.json({ ok: true, stored: false, warn: 'insert_failed' })
+    const runtime = getSsdSupabaseRuntimeDiagnostics()
+    console.warn('[ssd-campaign] insert failed', {
+      postgrest: {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint,
+      },
+      runtime,
+    })
+    return NextResponse.json({
+      ok: true,
+      stored: false,
+      warn: 'insert_failed',
+      ...(ssdInsertDebugEnabled()
+        ? {
+            debug: {
+              ...runtime,
+              postgrest: {
+                message: error.message,
+                code: error.code ?? null,
+                details: error.details ?? null,
+                hint: error.hint ?? null,
+              },
+            },
+          }
+        : {}),
+    })
   }
 
   try {
@@ -96,5 +138,9 @@ export async function POST(req: NextRequest) {
     console.warn('[ssd-campaign] alert evaluation failed', e)
   }
 
-  return NextResponse.json({ ok: true, stored: true })
+  return NextResponse.json({
+    ok: true,
+    stored: true,
+    ...(ssdInsertDebugEnabled() ? { debug: getSsdSupabaseRuntimeDiagnostics() } : {}),
+  })
 }
