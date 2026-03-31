@@ -54,6 +54,15 @@ Goal: Resend must consider **`bayviewhub.me`** a **verified sending domain**. Th
 
 **Stop after Step 1 until the domain is Verified.** Wrong or missing DNS cannot be fixed in Vercel or in this repo.
 
+##### If Resend shows **Partially Failed** but **DKIM** and **Enable Sending** are green
+
+Often the red item is **Enable Receiving** + **MX on `@` (root)** with a warning like *“Conflicting MX records”*. That means **another MX already exists** for `bayviewhub.me` (e.g. Google Workspace, Microsoft 365, or your registrar’s email) and Resend’s **inbound** MX cannot coexist at the apex.
+
+- **You only send mail via Resend** (alerts@, noreply@, API): you do **not** need **Enable Receiving** on the root domain. In Resend → domain → turn **Enable Receiving** **OFF**. The domain will usually move to **Verified** (or at least sending stays fully valid).  
+- **You must receive mail at `@bayviewhub.me` elsewhere:** keep your existing MX; do **not** add Resend’s inbound MX on `@`. Either leave receiving off in Resend or use Resend’s inbound on a **subdomain** if their product supports it (follow Resend’s warning: *subdomain or remove conflicting records*).
+
+Sending identity (`noreply@` vs `alerts@`) is **not** a DNS local-part; it uses the same verified **sending** setup.
+
 #### Step 2 — Vercel
 
 - Project → **Settings** → **Environment Variables** → add  
