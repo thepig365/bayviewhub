@@ -1,5 +1,22 @@
--- SSD campaign: anonymous first-party events + alert deduplication (service role / server only).
--- Run in Supabase SQL editor after reviewing RLS (typically no public access; API uses secret key).
+-- =============================================================================
+-- Bayview Hub — SSD campaign telemetry (portable DDL)
+-- =============================================================================
+-- Purpose: anonymous first-party events + alert deduplication (service role only).
+--
+-- Temporary topology: this file may be run inside the SAME Supabase project as
+-- gallery.bayviewhub.me for launch efficiency. Objects are namespaced (ssd_*)
+-- and must NOT be merged into gallery application tables.
+--
+-- Future split: create a dedicated Supabase project for bayviewhub.me, then
+-- RUN THIS FILE AGAIN there and point Vercel SUPABASE_* env at the new project
+-- (optionally export/import rows from the old project). No code change required
+-- for table names if you keep this schema as-is.
+-- Companion portable DDL: docs/supabase-feasibility.sql (feasibility_leads).
+-- If this table already existed with fewer columns, run:
+--   docs/supabase-ssd-campaign-align-columns.sql
+--
+-- Review RLS: typically no anonymous access; Next.js API uses the secret key.
+-- =============================================================================
 
 create table if not exists public.ssd_campaign_events (
   id uuid primary key default gen_random_uuid(),
@@ -31,4 +48,4 @@ create table if not exists public.ssd_campaign_alert_dedup (
   meta jsonb
 );
 
-comment on table public.ssd_campaign_events is 'Bayview SSD hub anonymous engagement (no PII). Populated by /api/ssd-campaign/event.';
+comment on table public.ssd_campaign_events is 'Bayview SSD hub anonymous engagement (no PII). Populated by /api/ssd-campaign/event. Portable: safe to recreate in a dedicated Supabase project when splitting from gallery.';

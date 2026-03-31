@@ -8,6 +8,29 @@ This document turns the SSD hub into a repeatable campaign asset aligned with **
 
 ---
 
+## Infrastructure boundary (temporary shared Supabase)
+
+- **Current reality:** The **bayviewhub.me** SSD backend may use the **same Supabase project** as **gallery.bayviewhub.me** to reduce setup cost and speed launch. This is **acceptable temporarily** — it is **not** the intended permanent boundary.
+- **Separation rule:** SSD campaign **tables**, **events**, **alert dedup**, and **cron digests** must stay **clearly namespaced** (`ssd_*` tables, `ssd_*` client event names, `/api/ssd-campaign/*` and `/api/cron/ssd-*` routes) so the main site can move to **its own Supabase project later** without entangling gallery data.
+- **Feasibility leads** are stored in **`feasibility_leads`** (SSD funnel on the main site; portable DDL **`docs/supabase-feasibility.sql`**). That table is **not** a gallery-core schema object; still, it lives in the **shared DB** today — treat it as **main-site SSD data** to migrate with the funnel when splitting.
+- **Do not** route SSD telemetry or campaign logic through gallery-owned core tables (e.g. artwork or passport tables on the gallery app).
+- **Future split (high level):** Create a dedicated Supabase project for the main site, set **new** `SUPABASE_URL` / secret in Vercel for **bayviewhub**, and **replay** **`docs/supabase-ssd-campaign.sql`** and **`docs/supabase-feasibility.sql`** in the new project (then optionally export/import historical rows). No merge of SSD or feasibility rows into gallery tables is required.
+
+### When to split to a dedicated Supabase project
+
+Split when **practical triggers** start to bite — not on a fixed calendar:
+
+- SSD is an **ongoing production funnel**, not a time-boxed experiment.
+- The main site **adds more backend flows** and shared-database operational risk increases.
+- **SSD-related table count** or event volume grows enough to want **isolated backups / exports / retention** policies.
+- **Permission or RLS** needs diverge (e.g. gallery operators vs SSD lead access).
+- **Compliance or audit** expectations differ between gallery and main-site funnels.
+- **Incident or migration coupling** between gallery and SSD becomes painful (one project change blocks the other).
+
+Technical replay steps and portable DDL: **`docs/ssd-analytics-and-alerts.md`**, **`docs/supabase-ssd-campaign.sql`**, **`docs/supabase-feasibility.sql`**.
+
+---
+
 ## A. Brand Citation (use verbatim in outreach where noted)
 
 ### Standard definition sentence
