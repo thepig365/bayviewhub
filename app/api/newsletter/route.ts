@@ -5,7 +5,10 @@ import {
   parseNewsletterNotifyEmails,
   sanitizeNewsletterInterests,
 } from '@/lib/newsletter'
-import { getSupabaseServer } from '@/lib/ssd-campaign-server'
+import {
+  getSupabaseServer,
+  getSsdSupabaseRuntimeDiagnostics,
+} from '@/lib/ssd-campaign-server'
 
 export const runtime = 'nodejs'
 
@@ -37,6 +40,43 @@ function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;')
+}
+
+function newsletterSubscribeDebugEnabled(): boolean {
+  return process.env.NEWSLETTER_SUBSCRIBE_DEBUG?.trim() === '1'
+}
+
+function sanitizeNewsletterDbError(error: unknown): {
+  message: string | null
+  code: string | null
+  details: string | null
+  hint: string | null
+} {
+  if (!error || typeof error !== 'object') {
+    return { message: null, code: null, details: null, hint: null }
+  }
+
+  const row = error as {
+    message?: unknown
+    code?: unknown
+    details?: unknown
+    hint?: unknown
+  }
+
+  return {
+    message: typeof row.message === 'string' ? row.message.slice(0, 500) : null,
+    code: typeof row.code === 'string' ? row.code.slice(0, 100) : null,
+    details: typeof row.details === 'string' ? row.details.slice(0, 500) : null,
+    hint: typeof row.hint === 'string' ? row.hint.slice(0, 500) : null,
+  }
+}
+
+function newsletterDebugPayload(error?: unknown) {
+  if (!newsletterSubscribeDebugEnabled()) return undefined
+  return {
+    runtime: getSsdSupabaseRuntimeDiagnostics(),
+    db_error: sanitizeNewsletterDbError(error),
+  }
 }
 
 async function saveNewsletterSubscription(
@@ -142,8 +182,13 @@ export async function POST(request: Request) {
 
     const supabase = getSupabaseServer()
     if (!supabase) {
+      const debug = newsletterDebugPayload()
       return NextResponse.json(
-        { ok: false, error: 'Database not configured.' },
+        {
+          ok: false,
+          error: 'Database not configured.',
+          ...(debug ? { debug } : {}),
+        },
         { status: 500 }
       )
     }
@@ -158,8 +203,13 @@ export async function POST(request: Request) {
 
     if (!saveResult.ok) {
       console.error('[Newsletter] subscribe upsert failed', saveResult.error)
+      const debug = newsletterDebugPayload(saveResult.error)
       return NextResponse.json(
-        { ok: false, error: 'Failed to save subscription.' },
+        {
+          ok: false,
+          error: 'Failed to save subscription.',
+          ...(debug ? { debug } : {}),
+        },
         { status: 500 }
       )
     }
@@ -202,8 +252,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, message: 'Successfully subscribed!' })
   } catch (error) {
     console.error('[Newsletter] subscribe error', error)
+    const debug = newsletterDebugPayload(error)
     return NextResponse.json(
-      { ok: false, error: 'Failed to subscribe. Please try again.' },
+      {
+        ok: false,
+        error: 'Failed to subscribe. Please try again.',
+        ...(debug ? { debug } : {}),
+      },
       { status: 500 }
     )
   }
