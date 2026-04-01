@@ -16,7 +16,7 @@ export default function JournalPage() {
     <JournalCollectionPage
       eyebrow="Mendpress"
       title="Journal"
-      intro="Mendpress is Bayview Hub thinking in public. Journal remains the primary reading and archive surface in v1, bringing together interpretation, dialogue, witness, and archival publication."
+      intro="Mendpress is Bayview Hub thinking in public. Journal remains the primary reading and archive surface in v1, bringing together editorial interpretation, dialogue, visual narrative, and reports."
     />
   )
 }

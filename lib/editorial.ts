@@ -135,7 +135,7 @@ type MendpressSectionMeta = {
 
 export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSectionMeta> = {
   the_edit: {
-    label: 'The Edit',
+    label: 'Editorial',
     description: 'Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub.',
   },
   dialogue: {
@@ -143,12 +143,12 @@ export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSection
     description: 'Profiles, conversations, and people-centred pieces with a clearer human voice.',
   },
   witness: {
-    label: 'Witness',
-    description: 'Observational writing from place, atmosphere, weather, objects, and lived time.',
+    label: 'Visual Narrative',
+    description: 'Place-based and image-led writing shaped by atmosphere, weather, objects, and lived time.',
   },
   archive: {
-    label: 'Archive',
-    description: 'Invitations, briefs, and contextual publication material that sit inside the Journal.',
+    label: 'Reports',
+    description: 'Dispatches, invitations, briefs, and contextual publication material gathered for the Journal.',
   },
 }
 
@@ -243,8 +243,8 @@ export function mendpressSectionIdForType(type: EditorialType): MendpressSection
     case 'profile':
       return 'dialogue'
     case 'field_note':
-    case 'dispatch':
       return 'witness'
+    case 'dispatch':
     case 'invitation':
     case 'project_brief':
       return 'archive'
