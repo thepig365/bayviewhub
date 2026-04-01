@@ -21,7 +21,7 @@ export const EDITORIAL_STATUSES = ['draft', 'published'] as const
 export type EditorialType = (typeof EDITORIAL_TYPES)[number]
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
 export type EditorialStatusFilter = EditorialStatus | 'all'
-export const MENDPRESS_SECTION_IDS = ['the_edit', 'dialogue', 'witness', 'archive'] as const
+export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative', 'reports'] as const
 export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
 
 type EditorialTypeMeta = {
@@ -35,37 +35,37 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   essay: {
     label: 'Essay',
     pluralLabel: 'Essays',
-    categoryPath: '/journal/essays',
+    categoryPath: '/mendpress/editorial',
     description: 'Longer-form pieces on art, place, hospitality, and cultural meaning.',
   },
   field_note: {
     label: 'Field Note',
     pluralLabel: 'Field Notes',
-    categoryPath: '/journal/field-notes',
+    categoryPath: '/mendpress/visual-narrative',
     description: 'Shorter notes from the estate as a living place.',
   },
   profile: {
     label: 'Profile',
     pluralLabel: 'Profiles',
-    categoryPath: '/journal/profiles',
+    categoryPath: '/mendpress/dialogue',
     description: 'People-centred pieces on artists, partners, hosts, and collaborators.',
   },
   invitation: {
     label: 'Invitation',
     pluralLabel: 'Invitations',
-    categoryPath: '/journal/invitations',
+    categoryPath: '/mendpress/reports',
     description: 'Elegant, share-ready pages for exhibitions, dinners, events, and viewings.',
   },
   project_brief: {
     label: 'Project Brief',
     pluralLabel: 'Projects',
-    categoryPath: '/journal/projects',
+    categoryPath: '/mendpress/reports',
     description: 'Commercially serious explainers for projects, opportunities, and participation paths.',
   },
   dispatch: {
     label: 'Dispatch',
     pluralLabel: 'Dispatches',
-    categoryPath: '/journal',
+    categoryPath: '/mendpress/reports',
     description: 'Shorter editorial notes with a sharper point of view.',
   },
 }
@@ -125,30 +125,36 @@ export type EditorialSection = {
   id: MendpressSectionId
   label: string
   description: string
+  path: string
   entries: EditorialEntry[]
 }
 
 type MendpressSectionMeta = {
   label: string
   description: string
+  path: string
 }
 
 export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSectionMeta> = {
-  the_edit: {
+  editorial: {
     label: 'Editorial',
     description: 'Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub.',
+    path: '/mendpress/editorial',
   },
   dialogue: {
     label: 'Dialogue',
     description: 'Profiles, conversations, and people-centred pieces with a clearer human voice.',
+    path: '/mendpress/dialogue',
   },
-  witness: {
+  visual_narrative: {
     label: 'Visual Narrative',
     description: 'Place-based and image-led writing shaped by atmosphere, weather, objects, and lived time.',
+    path: '/mendpress/visual-narrative',
   },
-  archive: {
+  reports: {
     label: 'Reports',
-    description: 'Dispatches, invitations, briefs, and contextual publication material gathered for the Journal.',
+    description: 'Dispatches, invitations, briefs, and contextual publication material gathered for Mendpress.',
+    path: '/mendpress/reports',
   },
 }
 
@@ -239,15 +245,15 @@ export function editorialTypeDescription(type: EditorialType): string {
 export function mendpressSectionIdForType(type: EditorialType): MendpressSectionId {
   switch (type) {
     case 'essay':
-      return 'the_edit'
+      return 'editorial'
     case 'profile':
       return 'dialogue'
     case 'field_note':
-      return 'witness'
+      return 'visual_narrative'
     case 'dispatch':
     case 'invitation':
     case 'project_brief':
-      return 'archive'
+      return 'reports'
   }
 }
 
@@ -259,12 +265,21 @@ export function mendpressSectionDescription(type: EditorialType): string {
   return MENDPRESS_SECTION_META[mendpressSectionIdForType(type)].description
 }
 
+export function mendpressSectionPath(
+  value: MendpressSectionId | EditorialType
+): string {
+  const id = MENDPRESS_SECTION_IDS.includes(value as MendpressSectionId)
+    ? (value as MendpressSectionId)
+    : mendpressSectionIdForType(value as EditorialType)
+  return MENDPRESS_SECTION_META[id].path
+}
+
 export function editorialCategoryPath(type: EditorialType): string {
-  return EDITORIAL_TYPE_META[type].categoryPath
+  return mendpressSectionPath(type)
 }
 
 export function editorialUrl(slug: string): string {
-  return `/journal/${slug}`
+  return `/mendpress/${slug}`
 }
 
 export function editorialAbsoluteUrl(slug: string): string {
@@ -330,6 +345,7 @@ function logEditorialReadError(scope: string, error: unknown) {
 
 export async function listPublishedEditorialEntries(options?: {
   type?: EditorialType
+  types?: EditorialType[]
   limit?: number
   excludeSlug?: string
 }): Promise<EditorialEntry[]> {
@@ -342,7 +358,15 @@ export async function listPublishedEditorialEntries(options?: {
     .order('published_at', { ascending: false })
     .order('created_at', { ascending: false })
 
-  if (options?.type) {
+  const normalizedTypes = Array.isArray(options?.types)
+    ? Array.from(new Set(options.types.map((type) => sanitizeEditorialType(type))))
+    : []
+
+  if (normalizedTypes.length > 1) {
+    query = query.in('editorial_type', normalizedTypes)
+  } else if (normalizedTypes.length === 1) {
+    query = query.eq('editorial_type', normalizedTypes[0])
+  } else if (options?.type) {
     query = query.eq('editorial_type', options.type)
   }
   if (options?.excludeSlug) {
@@ -531,7 +555,7 @@ export function editorialContextLinks(entry: EditorialEntry): EditorialLink[] {
       ]
     case 'dispatch':
       return [
-        { label: 'Journal', href: '/journal' },
+        { label: 'Mendpress', href: '/mendpress' },
         { label: 'Subscribe', href: '/newsletter' },
       ]
   }
@@ -551,6 +575,7 @@ export function groupEditorialEntries(entries: EditorialEntry[]): EditorialSecti
     id,
     label: MENDPRESS_SECTION_META[id].label,
     description: MENDPRESS_SECTION_META[id].description,
+    path: MENDPRESS_SECTION_META[id].path,
     entries: entries.filter((entry) => mendpressSectionIdForType(entry.editorialType) === id),
   })).filter((section) => section.entries.length > 0)
 }
@@ -566,11 +591,10 @@ export function editorialTypeMatches(
   return filter === 'all' ? true : entry.editorialType === filter
 }
 
-export const JOURNAL_CATEGORY_LINKS = [
-  { label: 'All', href: '/journal' },
-  { label: 'Essays', href: '/journal/essays' },
-  { label: 'Field Notes', href: '/journal/field-notes' },
-  { label: 'Profiles', href: '/journal/profiles' },
-  { label: 'Invitations', href: '/journal/invitations' },
-  { label: 'Projects', href: '/journal/projects' },
+export const MENDPRESS_CATEGORY_LINKS = [
+  { id: 'all', label: 'All', href: '/mendpress' },
+  { id: 'editorial', label: 'Editorial', href: '/mendpress/editorial' },
+  { id: 'dialogue', label: 'Dialogue', href: '/mendpress/dialogue' },
+  { id: 'visual_narrative', label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
+  { id: 'reports', label: 'Reports', href: '/mendpress/reports' },
 ] as const

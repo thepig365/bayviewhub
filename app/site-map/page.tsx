@@ -48,14 +48,13 @@ const siteMapData = [
     ],
   },
   {
-    heading: 'Journal',
+    heading: 'Mendpress',
     links: [
-      { label: 'Journal', href: '/journal' },
-      { label: 'Essays', href: '/journal/essays' },
-      { label: 'Field Notes', href: '/journal/field-notes' },
-      { label: 'Profiles', href: '/journal/profiles' },
-      { label: 'Invitations', href: '/journal/invitations' },
-      { label: 'Projects', href: '/journal/projects' },
+      { label: 'Mendpress', href: '/mendpress' },
+      { label: 'Editorial', href: '/mendpress/editorial' },
+      { label: 'Dialogue', href: '/mendpress/dialogue' },
+      { label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
+      { label: 'Reports', href: '/mendpress/reports' },
     ],
   },
   {

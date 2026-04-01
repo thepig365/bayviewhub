@@ -85,6 +85,41 @@ const nextConfig = {
         destination: 'https://www.thepigandwhistle.com.au/what-s-on',
         permanent: false,
       },
+      {
+        source: '/journal/essays',
+        destination: '/mendpress/editorial',
+        permanent: true,
+      },
+      {
+        source: '/journal/field-notes',
+        destination: '/mendpress/visual-narrative',
+        permanent: true,
+      },
+      {
+        source: '/journal/profiles',
+        destination: '/mendpress/dialogue',
+        permanent: true,
+      },
+      {
+        source: '/journal/invitations',
+        destination: '/mendpress/reports',
+        permanent: true,
+      },
+      {
+        source: '/journal/projects',
+        destination: '/mendpress/reports',
+        permanent: true,
+      },
+      {
+        source: '/journal/:slug',
+        destination: '/mendpress/:slug',
+        permanent: true,
+      },
+      {
+        source: '/journal',
+        destination: '/mendpress',
+        permanent: true,
+      },
     ]
   },
 }

@@ -19,8 +19,8 @@ export function JournalSubscribePanel({ compact = false }: Props) {
         <Button href="/newsletter" variant="accent">
           Go to Newsletter
         </Button>
-        <Link href="/journal" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-          Explore the Journal
+        <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+          Explore Mendpress
         </Link>
       </div>
     </section>

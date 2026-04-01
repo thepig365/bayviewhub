@@ -61,8 +61,8 @@ export function JournalCard({ entry, featured = false }: Props) {
           <Link href={entry.path} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
             Read piece
           </Link>
-          <Link href="/journal" className="text-muted hover:text-fg transition-colors">
-            Journal archive
+          <Link href={entry.categoryPath} className="text-muted hover:text-fg transition-colors">
+            More from {mendpressSectionLabel(entry.editorialType)}
           </Link>
         </div>
       </div>

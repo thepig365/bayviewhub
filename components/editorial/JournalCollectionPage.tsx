@@ -3,9 +3,10 @@ import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import {
   groupEditorialEntries,
-  JOURNAL_CATEGORY_LINKS,
+  MENDPRESS_CATEGORY_LINKS,
   listPublishedEditorialEntries,
   type EditorialType,
+  type MendpressSectionId,
 } from '@/lib/editorial'
 import { cn } from '@/lib/utils'
 
@@ -13,13 +14,18 @@ type Props = {
   eyebrow: string
   title: string
   intro: string
-  type?: EditorialType
+  types?: EditorialType[]
+  activeSection?: MendpressSectionId
 }
 
-export async function JournalCollectionPage({ eyebrow, title, intro, type }: Props) {
-  const entries = await listPublishedEditorialEntries({ type, limit: 24 })
+export async function JournalCollectionPage({ eyebrow, title, intro, types, activeSection }: Props) {
+  const entries = await listPublishedEditorialEntries({
+    types,
+    type: types?.length === 1 ? types[0] : undefined,
+    limit: 24,
+  })
   const [featured, ...rest] = entries
-  const sections = !type ? groupEditorialEntries(rest) : []
+  const sections = !activeSection ? groupEditorialEntries(rest) : []
 
   return (
     <main className="min-h-screen bg-bg py-16 md:py-20">
@@ -31,51 +37,28 @@ export async function JournalCollectionPage({ eyebrow, title, intro, type }: Pro
               {title}
             </h1>
             <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-muted">{intro}</p>
-            {!type ? (
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted">
-                Mendpress is the editorial brand. Journal is the primary public reading and archive surface within that brand in v1.
-              </p>
-            ) : null}
           </div>
 
           <div className="mt-10">
-            {!type ? (
-              <p className="mb-4 text-center text-xs uppercase tracking-[0.18em] text-muted">
-                Existing Journal archive routes
-              </p>
-            ) : null}
             <div className="flex flex-wrap justify-center gap-3">
-            {JOURNAL_CATEGORY_LINKS.map((item) => {
-              const active =
-                item.href === '/journal'
-                  ? !type
-                  : item.href.endsWith('/essays')
-                    ? type === 'essay'
-                    : item.href.endsWith('/field-notes')
-                      ? type === 'field_note'
-                      : item.href.endsWith('/profiles')
-                        ? type === 'profile'
-                        : item.href.endsWith('/invitations')
-                          ? type === 'invitation'
-                          : item.href.endsWith('/projects')
-                            ? type === 'project_brief'
-                            : false
+              {MENDPRESS_CATEGORY_LINKS.map((item) => {
+                const active = item.id === 'all' ? !activeSection : item.id === activeSection
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'rounded-full px-5 py-2 text-sm transition-colors',
-                    active
-                      ? 'bg-primary-700 text-white'
-                      : 'border border-border bg-white text-fg hover:border-accent dark:border-border dark:bg-surface'
-                  )}
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      'rounded-full px-5 py-2 text-sm transition-colors',
+                      active
+                        ? 'bg-primary-700 text-white'
+                        : 'border border-border bg-white text-fg hover:border-accent dark:border-border dark:bg-surface'
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
             </div>
           </div>
 
@@ -85,7 +68,7 @@ export async function JournalCollectionPage({ eyebrow, title, intro, type }: Pro
                 <JournalCard entry={featured} featured />
               </div>
 
-              {type && rest.length ? (
+              {activeSection && rest.length ? (
                 <div className="mt-10 grid gap-6 md:grid-cols-2">
                   {rest.map((entry) => (
                     <JournalCard key={entry.id} entry={entry} />
@@ -93,7 +76,7 @@ export async function JournalCollectionPage({ eyebrow, title, intro, type }: Pro
                 </div>
               ) : null}
 
-              {!type && sections.length ? (
+              {!activeSection && sections.length ? (
                 <div className="mt-14 space-y-14">
                   {sections.map((section) => (
                     <section key={section.id}>
@@ -106,6 +89,11 @@ export async function JournalCollectionPage({ eyebrow, title, intro, type }: Pro
                           <p className="mt-2 max-w-2xl text-sm leading-7 text-muted">
                             {section.description}
                           </p>
+                          <div className="mt-3">
+                            <Link href={section.path} className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                              View section
+                            </Link>
+                          </div>
                         </div>
                       </div>
                       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -121,12 +109,12 @@ export async function JournalCollectionPage({ eyebrow, title, intro, type }: Pro
           ) : (
             <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-50 px-6 py-16 text-center dark:border-border dark:bg-surface">
               <h2 className="text-3xl font-serif font-semibold text-fg">
-                {type ? `${title} are not published yet.` : 'Mendpress is opening.'}
+                {activeSection ? `${title} is not published yet.` : 'Mendpress is opening.'}
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted">
-                {type
-                  ? `Publish the first ${title.toLowerCase().replace(/\.$/, '')} from the private editorial workspace and it will appear here.`
-                  : 'Publish the first piece from the private editorial workspace and it will appear in the Journal archive here.'}
+                {activeSection
+                  ? `Publish the first piece for ${title.toLowerCase()} and it will appear here.`
+                  : 'Publish the first piece from the private editorial workspace and it will appear here.'}
               </p>
             </section>
           )}
