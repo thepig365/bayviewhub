@@ -242,6 +242,14 @@ export function editorialTypeDescription(type: EditorialType): string {
   return EDITORIAL_TYPE_META[type].description
 }
 
+export function editorialTypeAdminLabel(type: EditorialType): string {
+  return `${editorialTypeLabel(type)} -> ${mendpressSectionLabel(type)}`
+}
+
+export function editorialTypeAdminHint(type: EditorialType): string {
+  return `Internal type "${editorialTypeLabel(type)}" publishes under public Mendpress section "${mendpressSectionLabel(type)}".`
+}
+
 export function mendpressSectionIdForType(type: EditorialType): MendpressSectionId {
   switch (type) {
     case 'essay':

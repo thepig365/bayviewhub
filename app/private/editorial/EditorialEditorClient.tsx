@@ -1,11 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import type { EditorialEntry, EditorialStatus, EditorialType } from '@/lib/editorial'
 import {
   editorialAbsoluteUrlFromPath,
+  editorialTypeAdminHint,
+  editorialTypeAdminLabel,
   editorialTypeLabel,
+  mendpressSectionLabel,
   sanitizeEditorialSlug,
 } from '@/lib/editorial'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
@@ -37,6 +40,7 @@ function toDateTimeLocal(value: string | null): string {
 }
 
 export function EditorialEditorClient({ entry }: Props) {
+  const bodyTextareaRef = useRef<HTMLTextAreaElement | null>(null)
   const [title, setTitle] = useState(entry?.title || '')
   const [slug, setSlug] = useState(entry?.slug || '')
   const [summary, setSummary] = useState(entry?.summary || '')
@@ -57,7 +61,7 @@ export function EditorialEditorClient({ entry }: Props) {
   const [copied, setCopied] = useState(false)
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
-  const publicPath = useMemo(() => (publicSlug ? `/journal/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
+  const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
 
   const submit = async (desiredStatus: EditorialStatus) => {
     setStatus('loading')
@@ -130,6 +134,31 @@ export function EditorialEditorClient({ entry }: Props) {
     }
   }
 
+  const insertBodySnippet = (snippet: string) => {
+    const textarea = bodyTextareaRef.current
+    const current = bodyMarkdown
+    if (!textarea) {
+      setBodyMarkdown((prev) => `${prev}${prev.trim() ? '\n\n' : ''}${snippet}`)
+      return
+    }
+
+    const start = textarea.selectionStart ?? current.length
+    const end = textarea.selectionEnd ?? current.length
+    const before = current.slice(0, start)
+    const after = current.slice(end)
+    const needsLeadingBreak = before.trim().length > 0 && !before.endsWith('\n\n')
+    const needsTrailingBreak = after.trim().length > 0 && !after.startsWith('\n\n')
+    const insert = `${needsLeadingBreak ? '\n\n' : ''}${snippet}${needsTrailingBreak ? '\n\n' : ''}`
+    const nextValue = `${before}${insert}${after}`
+    setBodyMarkdown(nextValue)
+
+    window.requestAnimationFrame(() => {
+      const nextPos = before.length + insert.length
+      textarea.focus()
+      textarea.setSelectionRange(nextPos, nextPos)
+    })
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_360px]">
       <section className="rounded-2xl bg-natural-50 p-8 dark:border dark:border-border dark:bg-surface">
@@ -137,10 +166,10 @@ export function EditorialEditorClient({ entry }: Props) {
           <div>
             <p className="eyebrow mb-2 text-accent">Private</p>
             <h1 className="text-3xl font-serif font-bold text-fg">
-              {entry?.id ? 'Edit Journal Entry' : 'New Journal Entry'}
+              {entry?.id ? 'Edit Mendpress Entry' : 'New Mendpress Entry'}
             </h1>
             <p className="mt-2 text-sm text-muted">
-              Simple markdown is supported: blank lines create paragraphs, <code>##</code> creates a section heading, <code>-</code> creates bullets, and <code>[text](url)</code> creates a link.
+              Simple markdown is supported: blank lines create paragraphs, <code>##</code> creates a section heading, <code>-</code> creates bullets, <code>[text](url)</code> creates a link, and <code>![alt](image-url "caption")</code> inserts an image inside the article flow.
             </p>
           </div>
           <button type="button" onClick={logout} className="text-sm text-muted transition-colors hover:text-fg">
@@ -173,10 +202,11 @@ export function EditorialEditorClient({ entry }: Props) {
               >
                 {TYPE_OPTIONS.map((option) => (
                   <option key={option} value={option}>
-                    {editorialTypeLabel(option)}
+                    {editorialTypeAdminLabel(option)}
                   </option>
                 ))}
               </select>
+              <p className="mt-2 text-xs text-muted">{editorialTypeAdminHint(editorialType)}</p>
             </div>
           </div>
 
@@ -192,12 +222,39 @@ export function EditorialEditorClient({ entry }: Props) {
 
           <div>
             <label className="mb-2 block text-sm font-medium text-fg">Body</label>
+            <div className="mb-3 flex flex-wrap gap-3 text-xs">
+              <button
+                type="button"
+                onClick={() => insertBodySnippet('![Alt text](https://example.com/image.jpg "Optional caption")')}
+                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent"
+              >
+                Insert image block
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  insertBodySnippet(
+                    '![Artwork title](https://example.com/artwork.jpg "Artwork title, year")\n\nA short paragraph that responds to the image.'
+                  )
+                }
+                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent"
+              >
+                Insert image + text
+              </button>
+            </div>
             <textarea
+              ref={bodyTextareaRef}
               rows={20}
               value={bodyMarkdown}
               onChange={(e) => setBodyMarkdown(e.target.value)}
               className={`${CONTRAST_FORM_CONTROL_CLASS} font-mono text-sm leading-7`}
             />
+            <div className="mt-2 space-y-1 text-xs text-muted">
+              <p>Use one image block per paragraph flow for photo essays, artwork notes, and visual narrative sequences.</p>
+              <p>
+                Example: <code>![Alt text](https://example.com/image.jpg "Caption")</code>
+              </p>
+            </div>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
@@ -280,7 +337,7 @@ export function EditorialEditorClient({ entry }: Props) {
 
           <label className="flex items-center gap-3 text-sm text-fg">
             <input type="checkbox" checked={pinned} onChange={(e) => setPinned(e.target.checked)} className="h-4 w-4" />
-            Pin this entry to the top of Journal lists
+            Pin this entry to the top of Mendpress lists
           </label>
         </div>
       </section>
@@ -355,6 +412,9 @@ export function EditorialEditorClient({ entry }: Props) {
             Use title as slug
           </button>
           {publicPath ? <p className="mt-3 break-all text-xs text-muted">{publicPath}</p> : null}
+          <p className="mt-3 text-xs text-muted">
+            Current public section: <span className="font-medium text-fg">{mendpressSectionLabel(editorialType)}</span>
+          </p>
         </section>
       </aside>
     </div>

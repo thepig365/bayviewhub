@@ -18,6 +18,29 @@ function safeHref(value: string): string | null {
   return null
 }
 
+function safeImageSrc(value: string): string | null {
+  if (
+    value.startsWith('/') ||
+    value.startsWith('https://') ||
+    value.startsWith('http://')
+  ) {
+    return value
+  }
+  return null
+}
+
+function parseImageSyntax(line: string): { alt: string; src: string; caption: string | null } | null {
+  const match = line.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)$/)
+  if (!match) return null
+  const src = safeImageSrc(match[2].trim())
+  if (!src) return null
+  return {
+    alt: match[1].trim() || 'Editorial image',
+    src,
+    caption: match[3]?.trim() || null,
+  }
+}
+
 function renderInline(content: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = []
   const regex = /\[([^\]]+)\]\(([^)]+)\)/g
@@ -68,6 +91,23 @@ export function EditorialBody({ body, className }: Props) {
       {sections.map((section, index) => {
         const lines = section.split('\n').map((line) => line.trim()).filter(Boolean)
         if (!lines.length) return null
+
+        const imageBlock = parseImageSyntax(lines[0])
+        if (imageBlock) {
+          const caption = imageBlock.caption || lines.slice(1).join(' ').trim() || null
+          return (
+            <figure key={index} className="mt-8 first:mt-0">
+              <div className="overflow-hidden rounded-3xl border border-border bg-natural-100 dark:border-border dark:bg-surface">
+                <img src={imageBlock.src} alt={imageBlock.alt} className="h-auto w-full object-cover" />
+              </div>
+              {caption ? (
+                <figcaption className="mt-3 text-sm leading-7 text-muted">
+                  {renderInline(caption)}
+                </figcaption>
+              ) : null}
+            </figure>
+          )
+        }
 
         if (lines.length === 1 && lines[0].startsWith('## ')) {
           return (

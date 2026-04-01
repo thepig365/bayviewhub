@@ -10,7 +10,7 @@ import {
 } from '@/lib/newsletter-admin'
 
 export const metadata: Metadata = {
-  title: 'Edit Journal Entry',
+  title: 'Edit Mendpress Entry',
   robots: { index: false, follow: false },
 }
 

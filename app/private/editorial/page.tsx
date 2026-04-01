@@ -11,7 +11,7 @@ import {
 import { listEditorialEntriesForAdmin } from '@/lib/editorial'
 
 export const metadata: Metadata = {
-  title: 'Private Editorial Admin',
+  title: 'Private Mendpress Admin',
   robots: { index: false, follow: false },
 }
 
@@ -37,9 +37,9 @@ export default async function PrivateEditorialPage() {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="eyebrow mb-2 text-accent">Private</p>
-              <h1 className="text-4xl font-serif font-bold text-fg">Editorial Admin</h1>
+              <h1 className="text-4xl font-serif font-bold text-fg">Mendpress Admin</h1>
               <p className="mt-3 max-w-2xl text-muted">
-                Create, edit, draft, and publish Journal entries without introducing a heavy CMS.
+                Create, edit, draft, and publish Mendpress entries without introducing a heavy CMS.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -50,7 +50,7 @@ export default async function PrivateEditorialPage() {
                 Newsletter admin
               </Link>
               <Link href="/private/editorial/new" className="rounded-lg bg-accent px-4 py-3 text-sm font-medium text-white">
-                New Journal entry
+                New Mendpress entry
               </Link>
             </div>
           </div>
@@ -59,9 +59,9 @@ export default async function PrivateEditorialPage() {
             <EditorialAdminClient entries={entries} />
           ) : (
             <section className="overflow-hidden rounded-2xl border border-border bg-white px-6 py-16 text-center dark:border-border dark:bg-surface">
-              <h2 className="text-2xl font-serif font-semibold text-fg">No Journal entries yet</h2>
+              <h2 className="text-2xl font-serif font-semibold text-fg">No Mendpress entries yet</h2>
               <p className="mt-3 text-muted">
-                Create the first essay, field note, profile, invitation, or project brief to open the Journal.
+                Create the first essay, field note, profile, invitation, project brief, or dispatch to open Mendpress.
               </p>
             </section>
           )}

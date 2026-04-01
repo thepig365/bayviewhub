@@ -5,10 +5,11 @@ import React, { useMemo, useState } from 'react'
 import {
   EDITORIAL_TYPES,
   editorialAbsoluteUrlFromPath,
+  editorialTypeAdminLabel,
   editorialStatusMatches,
-  editorialTypeLabel,
   editorialTypeMatches,
   formatEditorialDate,
+  mendpressSectionLabel,
   type EditorialEntry,
   type EditorialStatusFilter,
   type EditorialType,
@@ -101,7 +102,7 @@ export function EditorialAdminClient({ entries }: Props) {
               <option value="all">All types</option>
               {EDITORIAL_TYPES.map((type) => (
                 <option key={type} value={type}>
-                  {editorialTypeLabel(type)}
+                  {editorialTypeAdminLabel(type)}
                 </option>
               ))}
             </select>
@@ -151,7 +152,8 @@ export function EditorialAdminClient({ entries }: Props) {
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm md:mt-0 md:contents">
                   <div className="text-sm text-fg">
                     <span className="mr-2 text-xs uppercase tracking-[0.12em] text-muted md:hidden">Type</span>
-                    {editorialTypeLabel(entry.editorialType)}
+                    {editorialTypeAdminLabel(entry.editorialType)}
+                    <span className="ml-2 text-xs text-muted">live as {mendpressSectionLabel(entry.editorialType)}</span>
                   </div>
                   <div className="text-sm text-fg">
                     <span className="mr-2 text-xs uppercase tracking-[0.12em] text-muted md:hidden">Status</span>
@@ -195,7 +197,7 @@ export function EditorialAdminClient({ entries }: Props) {
         ) : (
           <div className="px-6 py-16 text-center">
             <h2 className="text-2xl font-serif font-semibold text-fg">No entries match these filters</h2>
-            <p className="mt-3 text-muted">Adjust the type, status, or search filters to see more Journal entries.</p>
+            <p className="mt-3 text-muted">Adjust the type, status, or search filters to see more Mendpress entries.</p>
           </div>
         )}
       </section>

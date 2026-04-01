@@ -9,7 +9,7 @@ import {
 } from '@/lib/newsletter-admin'
 
 export const metadata: Metadata = {
-  title: 'New Journal Entry',
+  title: 'New Mendpress Entry',
   robots: { index: false, follow: false },
 }
 
