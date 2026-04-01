@@ -21,6 +21,8 @@ export const EDITORIAL_STATUSES = ['draft', 'published'] as const
 export type EditorialType = (typeof EDITORIAL_TYPES)[number]
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
 export type EditorialStatusFilter = EditorialStatus | 'all'
+export const MENDPRESS_SECTION_IDS = ['the_edit', 'dialogue', 'witness', 'archive'] as const
+export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
 
 type EditorialTypeMeta = {
   label: string
@@ -120,10 +122,34 @@ export type EditorialLink = {
 }
 
 export type EditorialSection = {
-  type: EditorialType
+  id: MendpressSectionId
   label: string
   description: string
   entries: EditorialEntry[]
+}
+
+type MendpressSectionMeta = {
+  label: string
+  description: string
+}
+
+export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSectionMeta> = {
+  the_edit: {
+    label: 'The Edit',
+    description: 'Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub.',
+  },
+  dialogue: {
+    label: 'Dialogue',
+    description: 'Profiles, conversations, and people-centred pieces with a clearer human voice.',
+  },
+  witness: {
+    label: 'Witness',
+    description: 'Observational writing from place, atmosphere, weather, objects, and lived time.',
+  },
+  archive: {
+    label: 'Archive',
+    description: 'Invitations, briefs, and contextual publication material that sit inside the Journal.',
+  },
 }
 
 const EDITORIAL_SELECT =
@@ -208,6 +234,29 @@ export function editorialPluralLabel(type: EditorialType): string {
 
 export function editorialTypeDescription(type: EditorialType): string {
   return EDITORIAL_TYPE_META[type].description
+}
+
+export function mendpressSectionIdForType(type: EditorialType): MendpressSectionId {
+  switch (type) {
+    case 'essay':
+      return 'the_edit'
+    case 'profile':
+      return 'dialogue'
+    case 'field_note':
+    case 'dispatch':
+      return 'witness'
+    case 'invitation':
+    case 'project_brief':
+      return 'archive'
+  }
+}
+
+export function mendpressSectionLabel(type: EditorialType): string {
+  return MENDPRESS_SECTION_META[mendpressSectionIdForType(type)].label
+}
+
+export function mendpressSectionDescription(type: EditorialType): string {
+  return MENDPRESS_SECTION_META[mendpressSectionIdForType(type)].description
 }
 
 export function editorialCategoryPath(type: EditorialType): string {
@@ -498,11 +547,11 @@ export function formatEditorialDate(value: string | null): string {
 }
 
 export function groupEditorialEntries(entries: EditorialEntry[]): EditorialSection[] {
-  return EDITORIAL_TYPES.map((type) => ({
-    type,
-    label: editorialPluralLabel(type),
-    description: editorialTypeDescription(type),
-    entries: entries.filter((entry) => entry.editorialType === type),
+  return MENDPRESS_SECTION_IDS.map((id) => ({
+    id,
+    label: MENDPRESS_SECTION_META[id].label,
+    description: MENDPRESS_SECTION_META[id].description,
+    entries: entries.filter((entry) => mendpressSectionIdForType(entry.editorialType) === id),
   })).filter((section) => section.entries.length > 0)
 }
 

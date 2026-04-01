@@ -2,9 +2,8 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import {
   type EditorialEntry,
-  editorialPluralLabel,
-  editorialTypeLabel,
   formatEditorialDate,
+  mendpressSectionLabel,
 } from '@/lib/editorial'
 
 type Props = {
@@ -43,7 +42,7 @@ export function JournalCard({ entry, featured = false }: Props) {
               <span aria-hidden>·</span>
             </>
           ) : null}
-          <span className="eyebrow text-accent">{editorialTypeLabel(entry.editorialType)}</span>
+          <span className="eyebrow text-accent">{mendpressSectionLabel(entry.editorialType)}</span>
           <span aria-hidden>·</span>
           <span>{formatEditorialDate(entry.publishedAt)}</span>
           <span aria-hidden>·</span>
@@ -62,8 +61,8 @@ export function JournalCard({ entry, featured = false }: Props) {
           <Link href={entry.path} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
             Read piece
           </Link>
-          <Link href={entry.categoryPath} className="text-muted hover:text-fg transition-colors">
-            More {editorialPluralLabel(entry.editorialType)}
+          <Link href="/journal" className="text-muted hover:text-fg transition-colors">
+            Journal archive
           </Link>
         </div>
       </div>

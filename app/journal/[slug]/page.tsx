@@ -11,11 +11,11 @@ import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
   editorialContextLinks,
-  editorialPluralLabel,
-  editorialTypeLabel,
   formatEditorialDate,
   getPublishedEditorialEntryBySlug,
   listRelatedEditorialEntries,
+  mendpressSectionDescription,
+  mendpressSectionLabel,
 } from '@/lib/editorial'
 
 export const revalidate = 300
@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const entry = await getPublishedEditorialEntryBySlug(slug)
   if (!entry) {
     return {
-      title: 'Journal',
-      description: 'Bayview Hub Journal',
+      title: 'Journal | Mendpress',
+      description: 'Mendpress at Bayview Hub',
     }
   }
 
@@ -85,7 +85,7 @@ export default async function JournalEntryPage({ params }: Props) {
       url: SITE_CONFIG.url,
     },
     image: entry.heroImage ? [entry.heroImage] : undefined,
-    articleSection: editorialTypeLabel(entry.editorialType),
+    articleSection: mendpressSectionLabel(entry.editorialType),
     mainEntityOfPage: absoluteUrl,
   }
 
@@ -96,13 +96,15 @@ export default async function JournalEntryPage({ params }: Props) {
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
           <div className="text-center">
-            <Link href={entry.categoryPath} className="eyebrow text-accent hover:text-accent-hover">
-              {editorialTypeLabel(entry.editorialType)}
-            </Link>
+            <p className="eyebrow text-accent">Mendpress</p>
+            <p className="mt-3 text-sm font-medium text-fg">{mendpressSectionLabel(entry.editorialType)}</p>
             <h1 className="mx-auto mt-4 max-w-4xl text-balance text-4xl font-serif font-semibold text-fg md:text-6xl">
               {entry.title}
             </h1>
             <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-muted">{entry.summary}</p>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted">
+              {mendpressSectionDescription(entry.editorialType)}
+            </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted">
               <span>{formatEditorialDate(entry.publishedAt)}</span>
               <span aria-hidden>·</span>
@@ -113,6 +115,11 @@ export default async function JournalEntryPage({ params }: Props) {
                   <span>By {entry.byline}</span>
                 </>
               ) : null}
+            </div>
+            <div className="mt-4">
+              <Link href="/journal" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                Back to the Journal archive
+              </Link>
             </div>
           </div>
 
@@ -128,7 +135,7 @@ export default async function JournalEntryPage({ params }: Props) {
 
               <ShareStrip
                 url={absoluteUrl}
-                mailtoSubject={`${entry.title} | Bayview Hub Journal`}
+                mailtoSubject={`${entry.title} | Mendpress`}
                 mailtoIntro={`${entry.summary}\n\nRead it here:`}
                 shortShareBlurb={entry.summary}
                 className="mt-10"
@@ -142,7 +149,7 @@ export default async function JournalEntryPage({ params }: Props) {
                   Continue from this piece
                 </h2>
                 <p className="mt-3 text-sm leading-7 text-muted">
-                  Each Journal piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
+                  Each Mendpress piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
                 </p>
                 <div className="mt-6">
                   <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">
@@ -174,10 +181,10 @@ export default async function JournalEntryPage({ params }: Props) {
                 <div>
                   <p className="eyebrow text-accent">Related reading</p>
                   <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
-                    More {editorialPluralLabel(entry.editorialType)}
+                    More from {mendpressSectionLabel(entry.editorialType)}
                   </h2>
                 </div>
-                <Link href={entry.categoryPath} className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                <Link href="/journal" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
                   View all
                 </Link>
               </div>

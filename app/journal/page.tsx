@@ -5,18 +5,18 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
-  title: 'Journal',
+  title: 'Journal | Mendpress',
   description:
-    'Essays, field notes, profiles, invitations, and project briefs from Bayview Hub.',
+    'Mendpress at Bayview Hub. Journal remains the primary public reading and archive surface in v1.',
   path: '/journal',
 })
 
 export default function JournalPage() {
   return (
     <JournalCollectionPage
-      eyebrow="Journal"
+      eyebrow="Mendpress"
       title="Journal"
-      intro="A public editorial layer for Bayview Hub: essays, field notes, profiles, invitations, and project briefs that connect place, culture, hospitality, and participation."
+      intro="Mendpress is Bayview Hub thinking in public. Journal remains the primary reading and archive surface in v1, bringing together interpretation, dialogue, witness, and archival publication."
     />
   )
 }
