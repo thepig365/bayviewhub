@@ -109,6 +109,19 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+
+            <ul className="mt-5 space-y-2 border-t border-shell-footer-border pt-4">
+              <li>
+                <Link href="/private/editorial/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
+                  Editorial Login
+                </Link>
+              </li>
+              <li>
+                <Link href="/private/newsletter/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
+                  Newsletter Login
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* Column 4: Programs */}
