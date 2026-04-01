@@ -198,3 +198,68 @@ export function buildNewsletterEmailDocument(input: NewsletterComposerInput): { 
     text: textSections.join('\n\n'),
   }
 }
+
+export function buildNewsletterWelcomeDocument(email: string): { subject: string; html: string; text: string } {
+  const unsubscribeUrl = buildNewsletterUnsubscribeUrl(email)
+  const subject = 'Welcome to Bayview Notes'
+  const journalUrl = `${newsletterBaseUrl()}/journal`
+  const visitUrl = `${newsletterBaseUrl()}/visit`
+  const newsletterUrl = `${newsletterBaseUrl()}/newsletter`
+
+  const html = `
+    <!doctype html>
+    <html>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${escapeHtml(subject)}</title>
+      </head>
+      <body style="margin:0;padding:0;background:#f8fafc;color:#0f172a;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8fafc;padding:24px 0;">
+          <tr>
+            <td align="center">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;">
+                <tr>
+                  <td style="padding:32px 32px 24px;background:#0f172a;color:#ffffff;">
+                    <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#cbd5e1;">Bayview Hub</p>
+                    <h1 style="margin:0;font-size:28px;line-height:1.2;font-weight:700;">Welcome to Bayview Notes</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:32px;">
+                    <p style="margin:0 0 16px;font-size:18px;line-height:1.7;color:#334155;">
+                      Thanks for subscribing. We use Bayview Notes to share selected Journal pieces, invitations, and estate updates when there is something worth sharing.
+                    </p>
+                    <p style="margin:0 0 20px;font-size:16px;line-height:1.75;color:#0f172a;">
+                      You can start here:
+                    </p>
+                    <ul style="margin:0;padding-left:20px;font-size:16px;line-height:1.75;color:#0f172a;">
+                      <li><a href="${journalUrl}" style="color:#0f766e;">Read the Journal</a></li>
+                      <li><a href="${visitUrl}" style="color:#0f766e;">Plan a visit</a></li>
+                      <li><a href="${newsletterUrl}" style="color:#0f766e;">Update your newsletter interests</a></li>
+                    </ul>
+                    <p style="margin-top:28px;font-size:12px;color:#64748b;">
+                      You are receiving this email because you subscribed to Bayview Hub updates.
+                      <a href="${unsubscribeUrl}" style="color:#0f766e;">Unsubscribe</a>.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `.trim()
+
+  const text = [
+    subject,
+    'Thanks for subscribing. We use Bayview Notes to share selected Journal pieces, invitations, and estate updates when there is something worth sharing.',
+    `Read the Journal: ${journalUrl}`,
+    `Plan a visit: ${visitUrl}`,
+    `Newsletter page: ${newsletterUrl}`,
+    `Unsubscribe: ${unsubscribeUrl}`,
+  ].join('\n\n')
+
+  return { subject, html, text }
+}

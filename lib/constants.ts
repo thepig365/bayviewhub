@@ -144,6 +144,7 @@ export const SITE_NAV: SiteNavEntry[] = [
       { label: 'Cellar Door', href: '/cellar-door' },
     ],
   },
+  { kind: 'link', label: 'Journal', href: '/journal' },
   { kind: 'link', label: 'Food/Wine', href: PIG_WHISTLE, external: true },
   {
     kind: 'link',

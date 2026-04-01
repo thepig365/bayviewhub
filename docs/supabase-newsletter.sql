@@ -31,6 +31,9 @@ create index if not exists newsletter_subscriptions_status_idx
 comment on table public.newsletter_subscriptions is
   'Bayview Hub newsletter subscribers from POST /api/newsletter. `active` is a legacy status kept for backward compatibility; new code writes `subscribed` / `unsubscribed`.';
 
+grant usage on schema public to service_role;
+grant select, insert, update, delete on table public.newsletter_subscriptions to service_role;
+
 create table if not exists public.newsletter_campaigns (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -57,6 +60,8 @@ create index if not exists newsletter_campaigns_created_at_idx
 comment on table public.newsletter_campaigns is
   'Newsletter compose/send log for the private newsletter admin tool.';
 
+grant select, insert, update, delete on table public.newsletter_campaigns to service_role;
+
 create table if not exists public.newsletter_deliveries (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -76,3 +81,5 @@ create index if not exists newsletter_deliveries_recipient_idx
 
 comment on table public.newsletter_deliveries is
   'Per-recipient send result log for newsletter campaigns.';
+
+grant select, insert, update, delete on table public.newsletter_deliveries to service_role;

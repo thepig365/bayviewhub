@@ -48,6 +48,17 @@ const siteMapData = [
     ],
   },
   {
+    heading: 'Journal',
+    links: [
+      { label: 'Journal', href: '/journal' },
+      { label: 'Essays', href: '/journal/essays' },
+      { label: 'Field Notes', href: '/journal/field-notes' },
+      { label: 'Profiles', href: '/journal/profiles' },
+      { label: 'Invitations', href: '/journal/invitations' },
+      { label: 'Projects', href: '/journal/projects' },
+    ],
+  },
+  {
     heading: 'About / Legal',
     links: [
       { label: 'Home', href: '/' },

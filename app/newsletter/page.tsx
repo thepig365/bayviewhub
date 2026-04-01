@@ -5,7 +5,7 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
   title: 'Newsletter',
-  description: 'Subscribe to Bayview Hub updates on exhibitions, events, wine releases, and special offers.',
+  description: 'Subscribe to Bayview Notes for selected Journal pieces, invitations, and estate updates.',
   path: '/newsletter',
 })
 
@@ -16,10 +16,10 @@ export default function NewsletterPage() {
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow text-accent mb-3 text-center">Newsletter</p>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg text-center mb-4">
-            Stay In Touch
+            Bayview Notes
           </h1>
           <p className="text-lg text-muted text-center mb-10">
-            Get the latest on exhibitions, events, wine releases, and special offers.
+            Selected Journal pieces, invitations, and estate updates when there is something worth sharing.
           </p>
 
           <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
@@ -31,7 +31,7 @@ export default function NewsletterPage() {
               We only send updates when there is something worth sharing. You can unsubscribe from any newsletter email.
             </p>
             <p>
-              Looking for what is on now? <Link href="/experiences" className="text-accent hover:underline">Browse Bayview experiences</Link>.
+              Looking for the editorial side? <Link href="/journal" className="text-accent hover:underline">Explore the Journal</Link>.
             </p>
           </div>
         </div>

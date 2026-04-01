@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import { sendResendEmail } from '@/lib/resend-send'
 import {
+  buildNewsletterWelcomeDocument,
   normalizeNewsletterEmail,
+  newsletterFromIdentity,
+  newsletterReplyTo,
   parseNewsletterNotifyEmails,
   sanitizeNewsletterInterests,
 } from '@/lib/newsletter'
@@ -218,6 +221,23 @@ export async function POST(request: Request) {
       email,
       mode: saveResult.mode,
     })
+
+    const welcomeFrom = newsletterFromIdentity()
+    if (welcomeFrom) {
+      try {
+        const welcome = buildNewsletterWelcomeDocument(email)
+        await sendResendEmail({
+          to: email,
+          from: welcomeFrom,
+          ...(newsletterReplyTo() ? { replyTo: newsletterReplyTo() } : {}),
+          subject: welcome.subject,
+          html: welcome.html,
+          text: welcome.text,
+        })
+      } catch (welcomeError) {
+        console.warn('[Newsletter] welcome email failed', welcomeError)
+      }
+    }
 
     const notifyList = parseNewsletterNotifyEmails()
     const toPrimary = notifyList[0]

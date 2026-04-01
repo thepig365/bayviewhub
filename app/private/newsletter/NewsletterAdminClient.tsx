@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import Link from 'next/link'
+import { editorialTypeLabel, formatEditorialDate, type EditorialType } from '@/lib/editorial'
 
 type CampaignSummary = {
   id: string
@@ -15,13 +17,24 @@ type CampaignSummary = {
 type Props = {
   activeSubscriberCount: number | null
   recentCampaigns: CampaignSummary[]
+  recentJournalEntries: Array<{
+    id: string
+    title: string
+    path: string
+    editorialType: string
+    publishedAt: string | null
+  }>
 }
 
 const DEFAULT_HTML = `<p>Hello from Bayview Hub,</p>
 <p>Use this space for the newsletter body. You can paste simple HTML such as paragraphs, headings, links, lists, and images.</p>
 <p><a href="https://www.bayviewhub.me/experiences">See what is on now</a>.</p>`
 
-export function NewsletterAdminClient({ activeSubscriberCount, recentCampaigns }: Props) {
+export function NewsletterAdminClient({
+  activeSubscriberCount,
+  recentCampaigns,
+  recentJournalEntries,
+}: Props) {
   const [subject, setSubject] = useState('')
   const [previewText, setPreviewText] = useState('')
   const [introText, setIntroText] = useState('')
@@ -209,6 +222,32 @@ export function NewsletterAdminClient({ activeSubscriberCount, recentCampaigns }
                   <p className="text-xs text-muted mt-1">
                     {new Date(campaign.created_at).toLocaleString()}
                   </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="bg-natural-50 rounded-2xl p-6 dark:bg-surface dark:border dark:border-border">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-xl font-serif font-bold text-fg">Recent Journal Entries</h2>
+            <Link href="/private/editorial" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+              Open editorial
+            </Link>
+          </div>
+          {recentJournalEntries.length === 0 ? (
+            <p className="mt-4 text-sm text-muted">
+              No published Journal entries yet. Publish one from the editorial workspace to link it in a newsletter.
+            </p>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {recentJournalEntries.map((entry) => (
+                <li key={entry.id} className="rounded-lg border border-border p-3">
+                  <p className="font-medium text-fg">{entry.title}</p>
+                  <p className="mt-1 text-xs text-muted">
+                    {editorialTypeLabel(entry.editorialType as EditorialType)} · {formatEditorialDate(entry.publishedAt)}
+                  </p>
+                  <p className="mt-2 break-all text-xs text-muted">{entry.path}</p>
                 </li>
               ))}
             </ul>

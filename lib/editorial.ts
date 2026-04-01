@@ -1,0 +1,497 @@
+import { type SupabaseClient } from '@supabase/supabase-js'
+import {
+  GALLERY_EXTERNAL,
+  GALLERY_VIEWING_REQUEST_MAILTO,
+  SITE_CONFIG,
+  SSD_LANDING,
+} from '@/lib/constants'
+import { getSupabaseServer } from '@/lib/ssd-campaign-server'
+
+export const EDITORIAL_TYPES = [
+  'essay',
+  'field_note',
+  'profile',
+  'invitation',
+  'project_brief',
+  'dispatch',
+] as const
+
+export const EDITORIAL_STATUSES = ['draft', 'published'] as const
+
+export type EditorialType = (typeof EDITORIAL_TYPES)[number]
+export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
+
+type EditorialTypeMeta = {
+  label: string
+  pluralLabel: string
+  categoryPath: string
+  description: string
+}
+
+export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
+  essay: {
+    label: 'Essay',
+    pluralLabel: 'Essays',
+    categoryPath: '/journal/essays',
+    description: 'Longer-form pieces on art, place, hospitality, and cultural meaning.',
+  },
+  field_note: {
+    label: 'Field Note',
+    pluralLabel: 'Field Notes',
+    categoryPath: '/journal/field-notes',
+    description: 'Shorter notes from the estate as a living place.',
+  },
+  profile: {
+    label: 'Profile',
+    pluralLabel: 'Profiles',
+    categoryPath: '/journal/profiles',
+    description: 'People-centred pieces on artists, partners, hosts, and collaborators.',
+  },
+  invitation: {
+    label: 'Invitation',
+    pluralLabel: 'Invitations',
+    categoryPath: '/journal/invitations',
+    description: 'Elegant, share-ready pages for exhibitions, dinners, events, and viewings.',
+  },
+  project_brief: {
+    label: 'Project Brief',
+    pluralLabel: 'Projects',
+    categoryPath: '/journal/projects',
+    description: 'Commercially serious explainers for projects, opportunities, and participation paths.',
+  },
+  dispatch: {
+    label: 'Dispatch',
+    pluralLabel: 'Dispatches',
+    categoryPath: '/journal',
+    description: 'Shorter editorial notes with a sharper point of view.',
+  },
+}
+
+export type EditorialEntry = {
+  id: string
+  slug: string
+  title: string
+  summary: string
+  bodyMarkdown: string
+  editorialType: EditorialType
+  status: EditorialStatus
+  publishedAt: string | null
+  heroImage: string | null
+  primaryCtaLabel: string | null
+  primaryCtaHref: string | null
+  seoTitle: string | null
+  seoDescription: string | null
+  tags: string[]
+  byline: string | null
+  pinned: boolean
+  createdAt: string | null
+  updatedAt: string | null
+  path: string
+  categoryPath: string
+  readingTimeMinutes: number
+}
+
+type EditorialDbRow = {
+  id: string
+  slug: string
+  title: string
+  summary: string | null
+  body_markdown: string | null
+  editorial_type: string | null
+  status: string | null
+  published_at: string | null
+  hero_image: string | null
+  primary_cta_label: string | null
+  primary_cta_href: string | null
+  seo_title: string | null
+  seo_description: string | null
+  tags: string[] | null
+  byline: string | null
+  pinned: boolean | null
+  created_at: string | null
+  updated_at: string | null
+}
+
+export type EditorialLink = {
+  label: string
+  href: string
+  external?: boolean
+}
+
+const EDITORIAL_SELECT =
+  'id,slug,title,summary,body_markdown,editorial_type,status,published_at,hero_image,primary_cta_label,primary_cta_href,seo_title,seo_description,tags,byline,pinned,created_at,updated_at'
+
+function trimString(value: unknown, max = 500): string {
+  if (typeof value !== 'string') return ''
+  return value.trim().replace(/\r\n/g, '\n').slice(0, max)
+}
+
+export function sanitizeEditorialText(value: unknown, max = 500): string {
+  return trimString(value, max)
+}
+
+export function sanitizeEditorialBody(value: unknown, max = 80_000): string {
+  return trimString(value, max)
+}
+
+function sanitizeHref(value: unknown): string | null {
+  const href = trimString(value, 800)
+  if (!href) return null
+  if (
+    href.startsWith('/') ||
+    href.startsWith('https://') ||
+    href.startsWith('http://') ||
+    href.startsWith('mailto:')
+  ) {
+    return href
+  }
+  return null
+}
+
+export function sanitizeEditorialSlug(value: unknown, fallbackTitle?: string): string {
+  const source = trimString(value, 160) || trimString(fallbackTitle, 160)
+  return source
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 80)
+}
+
+export function sanitizeEditorialType(value: unknown): EditorialType {
+  return EDITORIAL_TYPES.includes(value as EditorialType) ? (value as EditorialType) : 'essay'
+}
+
+export function sanitizeEditorialStatus(value: unknown): EditorialStatus {
+  return EDITORIAL_STATUSES.includes(value as EditorialStatus)
+    ? (value as EditorialStatus)
+    : 'draft'
+}
+
+export function sanitizeEditorialTags(value: unknown): string[] {
+  const raw =
+    Array.isArray(value)
+      ? value
+      : typeof value === 'string'
+        ? value.split(',')
+        : []
+
+  return Array.from(
+    new Set(
+      raw
+        .filter((item): item is string => typeof item === 'string')
+        .map((item) => item.trim().toLowerCase())
+        .filter(Boolean)
+        .map((item) => item.replace(/[^a-z0-9 -]/g, '').trim())
+        .filter(Boolean)
+        .slice(0, 12)
+    )
+  )
+}
+
+export function editorialTypeLabel(type: EditorialType): string {
+  return EDITORIAL_TYPE_META[type].label
+}
+
+export function editorialPluralLabel(type: EditorialType): string {
+  return EDITORIAL_TYPE_META[type].pluralLabel
+}
+
+export function editorialTypeDescription(type: EditorialType): string {
+  return EDITORIAL_TYPE_META[type].description
+}
+
+export function editorialCategoryPath(type: EditorialType): string {
+  return EDITORIAL_TYPE_META[type].categoryPath
+}
+
+export function editorialUrl(slug: string): string {
+  return `/journal/${slug}`
+}
+
+export function editorialAbsoluteUrl(slug: string): string {
+  return `${SITE_CONFIG.url}${editorialUrl(slug)}`
+}
+
+export function estimateReadingTimeMinutes(text: string): number {
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.ceil(words / 220))
+}
+
+function normalizeIsoString(value: unknown): string | null {
+  const raw = trimString(value, 80)
+  if (!raw) return null
+  const date = new Date(raw)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toISOString()
+}
+
+function normalizeEntry(row: EditorialDbRow): EditorialEntry {
+  const editorialType = sanitizeEditorialType(row.editorial_type)
+  const bodyMarkdown = sanitizeEditorialBody(row.body_markdown)
+  const publishedAt = normalizeIsoString(row.published_at)
+
+  return {
+    id: row.id,
+    slug: sanitizeEditorialSlug(row.slug, row.title),
+    title: sanitizeEditorialText(row.title, 180),
+    summary: sanitizeEditorialText(row.summary, 600),
+    bodyMarkdown,
+    editorialType,
+    status: sanitizeEditorialStatus(row.status),
+    publishedAt,
+    heroImage: sanitizeHref(row.hero_image),
+    primaryCtaLabel: sanitizeEditorialText(row.primary_cta_label, 120) || null,
+    primaryCtaHref: sanitizeHref(row.primary_cta_href),
+    seoTitle: sanitizeEditorialText(row.seo_title, 180) || null,
+    seoDescription: sanitizeEditorialText(row.seo_description, 300) || null,
+    tags: sanitizeEditorialTags(row.tags),
+    byline: sanitizeEditorialText(row.byline, 120) || null,
+    pinned: Boolean(row.pinned),
+    createdAt: normalizeIsoString(row.created_at),
+    updatedAt: normalizeIsoString(row.updated_at),
+    path: editorialUrl(row.slug),
+    categoryPath: editorialCategoryPath(editorialType),
+    readingTimeMinutes: estimateReadingTimeMinutes(
+      [row.title, row.summary, bodyMarkdown].filter(Boolean).join(' ')
+    ),
+  }
+}
+
+function editorialQuery(client: SupabaseClient) {
+  return client.from('editorial_entries').select(EDITORIAL_SELECT)
+}
+
+function logEditorialReadError(scope: string, error: unknown) {
+  console.warn(`[Editorial] ${scope} failed`, error)
+}
+
+export async function listPublishedEditorialEntries(options?: {
+  type?: EditorialType
+  limit?: number
+}): Promise<EditorialEntry[]> {
+  const supabase = getSupabaseServer()
+  if (!supabase) return []
+
+  let query = editorialQuery(supabase)
+    .eq('status', 'published')
+    .order('pinned', { ascending: false })
+    .order('published_at', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  if (options?.type) {
+    query = query.eq('editorial_type', options.type)
+  }
+  if (options?.limit) {
+    query = query.limit(options.limit)
+  }
+
+  const { data, error } = await query
+  if (error || !data) {
+    logEditorialReadError('list published entries', error)
+    return []
+  }
+
+  return (data as EditorialDbRow[]).map(normalizeEntry)
+}
+
+export async function getPublishedEditorialEntryBySlug(
+  slug: string
+): Promise<EditorialEntry | null> {
+  const supabase = getSupabaseServer()
+  if (!supabase) return null
+
+  const { data, error } = await editorialQuery(supabase)
+    .eq('slug', sanitizeEditorialSlug(slug))
+    .eq('status', 'published')
+    .limit(1)
+    .maybeSingle()
+
+  if (error || !data) {
+    if (error) logEditorialReadError(`get published slug ${slug}`, error)
+    return null
+  }
+
+  return normalizeEntry(data as EditorialDbRow)
+}
+
+export async function getEditorialEntryByIdForAdmin(id: string): Promise<EditorialEntry | null> {
+  const supabase = getSupabaseServer()
+  if (!supabase) return null
+
+  const { data, error } = await editorialQuery(supabase).eq('id', id).limit(1).maybeSingle()
+
+  if (error || !data) {
+    if (error) logEditorialReadError(`get admin entry ${id}`, error)
+    return null
+  }
+
+  return normalizeEntry(data as EditorialDbRow)
+}
+
+export async function listEditorialEntriesForAdmin(limit = 24): Promise<EditorialEntry[]> {
+  const supabase = getSupabaseServer()
+  if (!supabase) return []
+
+  const { data, error } = await editorialQuery(supabase)
+    .order('updated_at', { ascending: false })
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error || !data) {
+    logEditorialReadError('list admin entries', error)
+    return []
+  }
+
+  return (data as EditorialDbRow[]).map(normalizeEntry)
+}
+
+export async function listRelatedEditorialEntries(
+  entry: EditorialEntry,
+  limit = 3
+): Promise<EditorialEntry[]> {
+  const supabase = getSupabaseServer()
+  if (!supabase) return []
+
+  const { data, error } = await editorialQuery(supabase)
+    .eq('status', 'published')
+    .eq('editorial_type', entry.editorialType)
+    .neq('slug', entry.slug)
+    .order('published_at', { ascending: false })
+    .limit(limit)
+
+  if (!error && data && data.length > 0) {
+    return (data as EditorialDbRow[]).map(normalizeEntry)
+  }
+
+  const fallback = await editorialQuery(supabase)
+    .eq('status', 'published')
+    .neq('slug', entry.slug)
+    .order('published_at', { ascending: false })
+    .limit(limit)
+
+  if (fallback.error || !fallback.data) {
+    if (fallback.error) logEditorialReadError(`related entries for ${entry.slug}`, fallback.error)
+    return []
+  }
+
+  return (fallback.data as EditorialDbRow[]).map(normalizeEntry)
+}
+
+export function buildEditorialWritePayload(body: Record<string, unknown>) {
+  const title = sanitizeEditorialText(body.title, 180)
+  const slug = sanitizeEditorialSlug(body.slug, title)
+  const summary = sanitizeEditorialText(body.summary, 600)
+  const bodyMarkdown = sanitizeEditorialBody(body.bodyMarkdown, 80_000)
+  const editorialType = sanitizeEditorialType(body.editorialType)
+  const status = sanitizeEditorialStatus(body.status)
+  const publishedAtInput = sanitizeEditorialText(body.publishedAt, 40)
+  const publishedAt =
+    status === 'published'
+      ? normalizeIsoString(publishedAtInput || new Date().toISOString())
+      : publishedAtInput
+        ? normalizeIsoString(publishedAtInput)
+        : null
+
+  if (!title || !slug || !summary || !bodyMarkdown) {
+    return null
+  }
+
+  return {
+    slug,
+    title,
+    summary,
+    body_markdown: bodyMarkdown,
+    editorial_type: editorialType,
+    status,
+    published_at: publishedAt,
+    hero_image: sanitizeHref(body.heroImage),
+    primary_cta_label: sanitizeEditorialText(body.primaryCtaLabel, 120) || null,
+    primary_cta_href: sanitizeHref(body.primaryCtaHref),
+    seo_title: sanitizeEditorialText(body.seoTitle, 180) || null,
+    seo_description: sanitizeEditorialText(body.seoDescription, 300) || null,
+    tags: sanitizeEditorialTags(body.tags),
+    byline: sanitizeEditorialText(body.byline, 120) || null,
+    pinned: Boolean(body.pinned),
+    updated_at: new Date().toISOString(),
+  }
+}
+
+export function defaultEditorialPrimaryCta(entry: EditorialEntry): EditorialLink {
+  if (entry.primaryCtaLabel && entry.primaryCtaHref) {
+    return {
+      label: entry.primaryCtaLabel,
+      href: entry.primaryCtaHref,
+      external: entry.primaryCtaHref.startsWith('http') || entry.primaryCtaHref.startsWith('mailto:'),
+    }
+  }
+
+  switch (entry.editorialType) {
+    case 'essay':
+      return { label: 'Request Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true }
+    case 'field_note':
+      return { label: 'Plan Your Visit', href: '/visit' }
+    case 'profile':
+      return { label: 'Start a Conversation', href: GALLERY_VIEWING_REQUEST_MAILTO, external: true }
+    case 'invitation':
+      return { label: 'See What Is On', href: '/events' }
+    case 'project_brief':
+      return { label: 'Start Feasibility Check', href: SSD_LANDING.feasibility }
+    case 'dispatch':
+      return { label: 'Subscribe to Bayview Notes', href: '/newsletter' }
+  }
+}
+
+export function editorialContextLinks(entry: EditorialEntry): EditorialLink[] {
+  switch (entry.editorialType) {
+    case 'essay':
+      return [
+        { label: 'Subscribe', href: '/newsletter' },
+        { label: 'Gallery', href: GALLERY_EXTERNAL.archive, external: true },
+      ]
+    case 'field_note':
+      return [
+        { label: 'Visit Bayview Hub', href: '/visit' },
+        { label: 'Subscribe', href: '/newsletter' },
+      ]
+    case 'profile':
+      return [
+        { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
+        { label: 'Subscribe', href: '/newsletter' },
+      ]
+    case 'invitation':
+      return [
+        { label: 'Newsletter', href: '/newsletter' },
+        { label: 'Visit', href: '/visit' },
+      ]
+    case 'project_brief':
+      return [
+        { label: 'Feasibility', href: SSD_LANDING.feasibility },
+        { label: 'Partners', href: '/partners' },
+      ]
+    case 'dispatch':
+      return [
+        { label: 'Journal', href: '/journal' },
+        { label: 'Subscribe', href: '/newsletter' },
+      ]
+  }
+}
+
+export function formatEditorialDate(value: string | null): string {
+  if (!value) return 'Draft'
+  return new Date(value).toLocaleDateString('en-AU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+export const JOURNAL_CATEGORY_LINKS = [
+  { label: 'All', href: '/journal' },
+  { label: 'Essays', href: '/journal/essays' },
+  { label: 'Field Notes', href: '/journal/field-notes' },
+  { label: 'Profiles', href: '/journal/profiles' },
+  { label: 'Invitations', href: '/journal/invitations' },
+  { label: 'Projects', href: '/journal/projects' },
+] as const

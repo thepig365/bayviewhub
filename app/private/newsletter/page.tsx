@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NewsletterAdminClient } from '@/app/private/newsletter/NewsletterAdminClient'
+import { listPublishedEditorialEntries } from '@/lib/editorial'
 import {
   isNewsletterAdminCookieValid,
   NEWSLETTER_ADMIN_COOKIE,
@@ -25,6 +26,14 @@ type RecentCampaign = {
   created_at: string
 }
 
+type RecentJournalEntry = {
+  id: string
+  title: string
+  path: string
+  editorialType: string
+  publishedAt: string | null
+}
+
 export default async function PrivateNewsletterPage() {
   if (!newsletterAdminConfigured()) {
     redirect('/private/newsletter/login?missing=1')
@@ -39,6 +48,15 @@ export default async function PrivateNewsletterPage() {
   const supabase = getSupabaseServer()
   let activeSubscriberCount: number | null = null
   let recentCampaigns: RecentCampaign[] = []
+  const recentJournalEntries: RecentJournalEntry[] = (await listPublishedEditorialEntries({ limit: 5 })).map(
+    (entry) => ({
+      id: entry.id,
+      title: entry.title,
+      path: entry.path,
+      editorialType: entry.editorialType,
+      publishedAt: entry.publishedAt,
+    })
+  )
 
   if (supabase) {
     const countQuery = await supabase
@@ -79,6 +97,7 @@ export default async function PrivateNewsletterPage() {
         <NewsletterAdminClient
           activeSubscriberCount={activeSubscriberCount}
           recentCampaigns={recentCampaigns}
+          recentJournalEntries={recentJournalEntries}
         />
       </div>
     </main>
