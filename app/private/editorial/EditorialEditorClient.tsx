@@ -7,7 +7,6 @@ import {
   editorialAbsoluteUrlFromPath,
   editorialTypeAdminHint,
   editorialTypeAdminLabel,
-  editorialTypeLabel,
   mendpressSectionLabel,
   sanitizeEditorialSlug,
 } from '@/lib/editorial'
@@ -26,6 +25,94 @@ const TYPE_OPTIONS: EditorialType[] = [
   'dispatch',
 ]
 
+const INLINE_MAX_DIMENSION = 1800
+
+function baseFilename(value: string): string {
+  return value
+    .replace(/\.[^/.]+$/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'image'
+}
+
+function escapeImageSnippetText(value: string): string {
+  return value.trim().replaceAll('"', "'").replaceAll(']', ')')
+}
+
+function buildUploadedImageSnippet({
+  alt,
+  caption,
+  displaySrc,
+  fullSrc,
+}: {
+  alt: string
+  caption: string
+  displaySrc: string
+  fullSrc?: string | null
+}) {
+  const safeAlt = escapeImageSnippetText(alt) || 'Editorial image'
+  const safeCaption = escapeImageSnippetText(caption)
+  const captionPart = safeCaption ? ` "${safeCaption}"` : ''
+  const zoomPart = fullSrc && fullSrc !== displaySrc ? `{zoom=${fullSrc}}` : ''
+  return `![${safeAlt}](${displaySrc}${captionPart})${zoomPart}`
+}
+
+async function loadImage(file: File): Promise<HTMLImageElement> {
+  const objectUrl = URL.createObjectURL(file)
+
+  try {
+    return await new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new window.Image()
+      image.onload = () => resolve(image)
+      image.onerror = () => reject(new Error('Failed to process selected image.'))
+      image.src = objectUrl
+    })
+  } finally {
+    URL.revokeObjectURL(objectUrl)
+  }
+}
+
+async function createInlineImageVariant(file: File): Promise<File> {
+  if (
+    file.type === 'image/gif' ||
+    file.type === 'image/svg+xml' ||
+    file.type === 'image/avif'
+  ) {
+    return file
+  }
+
+  const image = await loadImage(file)
+  const maxDimension = Math.max(image.naturalWidth, image.naturalHeight)
+  if (maxDimension <= INLINE_MAX_DIMENSION && file.size <= 2_000_000) {
+    return file
+  }
+
+  const scale = Math.min(1, INLINE_MAX_DIMENSION / maxDimension)
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.max(1, Math.round(image.naturalWidth * scale))
+  canvas.height = Math.max(1, Math.round(image.naturalHeight * scale))
+
+  const context = canvas.getContext('2d')
+  if (!context) {
+    throw new Error('Failed to prepare image for upload.')
+  }
+
+  context.drawImage(image, 0, 0, canvas.width, canvas.height)
+
+  const outputType =
+    file.type === 'image/png' || file.type === 'image/webp' ? file.type : 'image/jpeg'
+  const blob = await new Promise<Blob | null>((resolve) => {
+    canvas.toBlob(resolve, outputType, outputType === 'image/png' ? undefined : 0.88)
+  })
+
+  if (!blob) {
+    throw new Error('Failed to optimize image for reading view.')
+  }
+
+  const ext = outputType === 'image/png' ? 'png' : outputType === 'image/webp' ? 'webp' : 'jpg'
+  return new File([blob], `${baseFilename(file.name)}-inline.${ext}`, { type: outputType })
+}
+
 function toDateTimeLocal(value: string | null): string {
   if (!value) return ''
   const date = new Date(value)
@@ -41,6 +128,7 @@ function toDateTimeLocal(value: string | null): string {
 
 export function EditorialEditorClient({ entry }: Props) {
   const bodyTextareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const uploadInputRef = useRef<HTMLInputElement | null>(null)
   const [title, setTitle] = useState(entry?.title || '')
   const [slug, setSlug] = useState(entry?.slug || '')
   const [summary, setSummary] = useState(entry?.summary || '')
@@ -59,6 +147,8 @@ export function EditorialEditorClient({ entry }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
   const [copied, setCopied] = useState(false)
+  const [uploadState, setUploadState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [uploadMessage, setUploadMessage] = useState('')
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
   const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
@@ -159,6 +249,58 @@ export function EditorialEditorClient({ entry }: Props) {
     })
   }
 
+  const uploadImageAsset = async (file: File, variant: 'inline' | 'full') => {
+    const formData = new FormData()
+    formData.set('file', file)
+    formData.set('variant', variant)
+    formData.set('slug', publicSlug || 'draft')
+
+    const res = await fetch('/api/editorial/upload-image', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok || !data.ok || typeof data.url !== 'string') {
+      throw new Error(data.error || 'Image upload failed.')
+    }
+
+    return data.url
+  }
+
+  const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    setUploadState('loading')
+    setUploadMessage('Optimizing and uploading image...')
+
+    try {
+      const alt = window.prompt('Alt text (recommended for accessibility)', baseFilename(file.name).replaceAll('-', ' ')) || ''
+      const caption = window.prompt('Caption (optional)', '') || ''
+      const inlineFile = await createInlineImageVariant(file)
+      const fullUrlPromise = uploadImageAsset(file, 'full')
+      const inlineUrlPromise = inlineFile === file ? fullUrlPromise : uploadImageAsset(inlineFile, 'inline')
+      const [fullUrl, inlineUrl] = await Promise.all([fullUrlPromise, inlineUrlPromise])
+
+      insertBodySnippet(
+        buildUploadedImageSnippet({
+          alt,
+          caption,
+          displaySrc: inlineUrl,
+          fullSrc: fullUrl,
+        })
+      )
+
+      setUploadState('success')
+      setUploadMessage('Image uploaded and inserted. Click-to-enlarge will use the full-resolution source.')
+    } catch (error) {
+      setUploadState('error')
+      setUploadMessage(error instanceof Error ? error.message : 'Image upload failed.')
+    }
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_360px]">
       <section className="rounded-2xl bg-natural-50 p-8 dark:border dark:border-border dark:bg-surface">
@@ -223,6 +365,21 @@ export function EditorialEditorClient({ entry }: Props) {
           <div>
             <label className="mb-2 block text-sm font-medium text-fg">Body</label>
             <div className="mb-3 flex flex-wrap gap-3 text-xs">
+              <input
+                ref={uploadInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleUploadImage}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => uploadInputRef.current?.click()}
+                disabled={uploadState === 'loading'}
+                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {uploadState === 'loading' ? 'Uploading image...' : 'Upload image'}
+              </button>
               <button
                 type="button"
                 onClick={() => insertBodySnippet('![Alt text](https://example.com/image.jpg "Optional caption")')}
@@ -252,8 +409,11 @@ export function EditorialEditorClient({ entry }: Props) {
             <div className="mt-2 space-y-1 text-xs text-muted">
               <p>Use one image block per paragraph flow for photo essays, artwork notes, and visual narrative sequences.</p>
               <p>
-                Example: <code>![Alt text](https://example.com/image.jpg "Caption")</code>
+                Upload image inserts optimized reading size plus zoom source. You can also write it manually as <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code>.
               </p>
+              {uploadMessage ? (
+                <p className={uploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}>{uploadMessage}</p>
+              ) : null}
             </div>
           </div>
 

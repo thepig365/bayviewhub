@@ -1,4 +1,5 @@
 import React from 'react'
+import { EditorialImageFigure } from '@/components/editorial/EditorialImageFigure'
 import { cn } from '@/lib/utils'
 
 type Props = {
@@ -29,14 +30,16 @@ function safeImageSrc(value: string): string | null {
   return null
 }
 
-function parseImageSyntax(line: string): { alt: string; src: string; caption: string | null } | null {
-  const match = line.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)$/)
+function parseImageSyntax(line: string): { alt: string; src: string; fullSrc: string | null; caption: string | null } | null {
+  const match = line.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)(?:\{zoom=([^}]+)\})?$/)
   if (!match) return null
   const src = safeImageSrc(match[2].trim())
   if (!src) return null
+  const fullSrc = match[4] ? safeImageSrc(match[4].trim()) : null
   return {
     alt: match[1].trim() || 'Editorial image',
     src,
+    fullSrc,
     caption: match[3]?.trim() || null,
   }
 }
@@ -96,16 +99,13 @@ export function EditorialBody({ body, className }: Props) {
         if (imageBlock) {
           const caption = imageBlock.caption || lines.slice(1).join(' ').trim() || null
           return (
-            <figure key={index} className="mt-8 first:mt-0">
-              <div className="overflow-hidden rounded-3xl border border-border bg-natural-100 dark:border-border dark:bg-surface">
-                <img src={imageBlock.src} alt={imageBlock.alt} className="h-auto w-full object-cover" />
-              </div>
-              {caption ? (
-                <figcaption className="mt-3 text-sm leading-7 text-muted">
-                  {renderInline(caption)}
-                </figcaption>
-              ) : null}
-            </figure>
+            <EditorialImageFigure
+              key={index}
+              src={imageBlock.src}
+              fullSrc={imageBlock.fullSrc}
+              alt={imageBlock.alt}
+              caption={caption ? renderInline(caption) : null}
+            />
           )
         }
 
