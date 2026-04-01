@@ -14,6 +14,7 @@ import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 type Props = {
   entry?: EditorialEntry | null
+  imageUploadEnabled?: boolean
 }
 
 const TYPE_OPTIONS: EditorialType[] = [
@@ -126,7 +127,7 @@ function toDateTimeLocal(value: string | null): string {
   return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 
-export function EditorialEditorClient({ entry }: Props) {
+export function EditorialEditorClient({ entry, imageUploadEnabled = false }: Props) {
   const bodyTextareaRef = useRef<HTMLTextAreaElement | null>(null)
   const uploadInputRef = useRef<HTMLInputElement | null>(null)
   const [title, setTitle] = useState(entry?.title || '')
@@ -365,21 +366,25 @@ export function EditorialEditorClient({ entry }: Props) {
           <div>
             <label className="mb-2 block text-sm font-medium text-fg">Body</label>
             <div className="mb-3 flex flex-wrap gap-3 text-xs">
-              <input
-                ref={uploadInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleUploadImage}
-                className="hidden"
-              />
-              <button
-                type="button"
-                onClick={() => uploadInputRef.current?.click()}
-                disabled={uploadState === 'loading'}
-                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {uploadState === 'loading' ? 'Uploading image...' : 'Upload image'}
-              </button>
+              {imageUploadEnabled ? (
+                <>
+                  <input
+                    ref={uploadInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleUploadImage}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => uploadInputRef.current?.click()}
+                    disabled={uploadState === 'loading'}
+                    className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {uploadState === 'loading' ? 'Uploading image...' : 'Upload image'}
+                  </button>
+                </>
+              ) : null}
               <button
                 type="button"
                 onClick={() => insertBodySnippet('![Alt text](https://example.com/image.jpg "Optional caption")')}
@@ -409,7 +414,17 @@ export function EditorialEditorClient({ entry }: Props) {
             <div className="mt-2 space-y-1 text-xs text-muted">
               <p>Use one image block per paragraph flow for photo essays, artwork notes, and visual narrative sequences.</p>
               <p>
-                Upload image inserts optimized reading size plus zoom source. You can also write it manually as <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code>.
+                {imageUploadEnabled
+                  ? (
+                    <>
+                      Upload image inserts optimized reading size plus zoom source. You can also write it manually as <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code>.
+                    </>
+                  )
+                  : (
+                    <>
+                      Image upload is not configured in this environment yet. Use manual image markdown such as <code>![Alt text](https://example.com/image.jpg "Caption")</code> or <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code> until Vercel Blob is enabled.
+                    </>
+                  )}
               </p>
               {uploadMessage ? (
                 <p className={uploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}>{uploadMessage}</p>
@@ -426,6 +441,9 @@ export function EditorialEditorClient({ entry }: Props) {
                 className={CONTRAST_FORM_CONTROL_CLASS}
                 placeholder="https://..."
               />
+              <p className="mt-2 text-xs text-muted">
+                Use this for the article cover/preview image. Inline body images should go in the main body field above.
+              </p>
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-fg">Byline</label>

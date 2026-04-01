@@ -24,10 +24,12 @@ export default async function NewEditorialEntryPage() {
     redirect('/private/editorial/login')
   }
 
+  const imageUploadEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
+
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
-        <EditorialEditorClient />
+        <EditorialEditorClient imageUploadEnabled={imageUploadEnabled} />
       </div>
     </main>
   )
