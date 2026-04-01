@@ -2,16 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { EditorialAdminClient } from '@/app/private/editorial/EditorialAdminClient'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
   newsletterAdminConfigured,
 } from '@/lib/newsletter-admin'
-import {
-  editorialTypeLabel,
-  formatEditorialDate,
-  listEditorialEntriesForAdmin,
-} from '@/lib/editorial'
+import { listEditorialEntriesForAdmin } from '@/lib/editorial'
 
 export const metadata: Metadata = {
   title: 'Private Editorial Admin',
@@ -31,7 +28,7 @@ export default async function PrivateEditorialPage() {
     redirect('/private/editorial/login')
   }
 
-  const entries = await listEditorialEntriesForAdmin(30)
+  const entries = await listEditorialEntriesForAdmin(100)
 
   return (
     <main className="min-h-screen bg-bg py-16">
@@ -58,54 +55,16 @@ export default async function PrivateEditorialPage() {
             </div>
           </div>
 
-          <section className="overflow-hidden rounded-2xl border border-border bg-white dark:border-border dark:bg-surface">
-            <div className="hidden gap-4 border-b border-border px-6 py-4 text-xs uppercase tracking-[0.18em] text-muted md:grid md:grid-cols-[minmax(0,2fr)_140px_140px_180px]">
-              <span>Entry</span>
-              <span>Type</span>
-              <span>Status</span>
-              <span>Updated</span>
-            </div>
-
-            {entries.length ? (
-              <ul>
-                {entries.map((entry) => (
-                  <li key={entry.id} className="border-b border-border px-6 py-5 last:border-b-0 md:grid md:grid-cols-[minmax(0,2fr)_140px_140px_180px] md:gap-4">
-                    <div className="min-w-0">
-                      <Link href={`/private/editorial/${entry.id}`} className="font-medium text-fg hover:text-accent">
-                        {entry.title}
-                      </Link>
-                      <p className="mt-1 truncate text-sm text-muted">{entry.summary}</p>
-                      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
-                        <span>{entry.slug}</span>
-                        {entry.pinned ? <span>pinned</span> : null}
-                      </div>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm md:mt-0 md:contents">
-                      <div className="text-sm text-fg">
-                        <span className="mr-2 text-xs uppercase tracking-[0.12em] text-muted md:hidden">Type</span>
-                        {editorialTypeLabel(entry.editorialType)}
-                      </div>
-                      <div className="text-sm text-fg">
-                        <span className="mr-2 text-xs uppercase tracking-[0.12em] text-muted md:hidden">Status</span>
-                        {entry.status}
-                      </div>
-                      <div className="text-sm text-muted">
-                        <span className="mr-2 text-xs uppercase tracking-[0.12em] text-muted md:hidden">Updated</span>
-                        {formatEditorialDate(entry.updatedAt || entry.createdAt)}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="px-6 py-16 text-center">
-                <h2 className="text-2xl font-serif font-semibold text-fg">No Journal entries yet</h2>
-                <p className="mt-3 text-muted">
-                  Create the first essay, field note, profile, invitation, or project brief to open the Journal.
-                </p>
-              </div>
-            )}
-          </section>
+          {entries.length ? (
+            <EditorialAdminClient entries={entries} />
+          ) : (
+            <section className="overflow-hidden rounded-2xl border border-border bg-white px-6 py-16 text-center dark:border-border dark:bg-surface">
+              <h2 className="text-2xl font-serif font-semibold text-fg">No Journal entries yet</h2>
+              <p className="mt-3 text-muted">
+                Create the first essay, field note, profile, invitation, or project brief to open the Journal.
+              </p>
+            </section>
+          )}
         </div>
       </div>
     </main>

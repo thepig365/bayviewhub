@@ -39,6 +39,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const mode = body?.mode === 'test' ? 'test' : body?.mode === 'send_all' ? 'send_all' : null
+    const campaignId =
+      typeof body?.campaignId === 'string' && body.campaignId.trim() ? body.campaignId.trim() : null
     if (!mode) {
       return NextResponse.json(
         { ok: false, error: 'Mode must be test or send_all.' },
@@ -118,11 +120,20 @@ export async function POST(request: Request) {
       test_recipient: testEmail,
     }
 
-    const { data: campaign, error: campaignError } = await supabase
-      .from('newsletter_campaigns')
-      .insert(campaignInsert)
-      .select('id')
-      .single<CampaignRow>()
+    const campaignResult = campaignId
+      ? await supabase
+          .from('newsletter_campaigns')
+          .update(campaignInsert)
+          .eq('id', campaignId)
+          .select('id')
+          .single<CampaignRow>()
+      : await supabase
+          .from('newsletter_campaigns')
+          .insert(campaignInsert)
+          .select('id')
+          .single<CampaignRow>()
+
+    const { data: campaign, error: campaignError } = campaignResult
 
     if (campaignError || !campaign?.id) {
       console.error('[Newsletter Admin] campaign insert failed', campaignError)

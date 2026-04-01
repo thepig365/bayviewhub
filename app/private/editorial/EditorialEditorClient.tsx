@@ -3,7 +3,11 @@
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
 import type { EditorialEntry, EditorialStatus, EditorialType } from '@/lib/editorial'
-import { editorialTypeLabel } from '@/lib/editorial'
+import {
+  editorialAbsoluteUrlFromPath,
+  editorialTypeLabel,
+  sanitizeEditorialSlug,
+} from '@/lib/editorial'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 type Props = {
@@ -47,10 +51,13 @@ export function EditorialEditorClient({ entry }: Props) {
   const [seoTitle, setSeoTitle] = useState(entry?.seoTitle || '')
   const [seoDescription, setSeoDescription] = useState(entry?.seoDescription || '')
   const [pinned, setPinned] = useState(Boolean(entry?.pinned))
+  const [entryStatus, setEntryStatus] = useState<EditorialStatus>(entry?.status || 'draft')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
+  const [copied, setCopied] = useState(false)
 
-  const publicPath = useMemo(() => (slug ? `/journal/${slug}` : entry?.path || ''), [entry?.path, slug])
+  const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
+  const publicPath = useMemo(() => (publicSlug ? `/journal/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
 
   const submit = async (desiredStatus: EditorialStatus) => {
     setStatus('loading')
@@ -90,14 +97,13 @@ export function EditorialEditorClient({ entry }: Props) {
       }
 
       setStatus('success')
+      setEntryStatus(desiredStatus)
       setMessage(desiredStatus === 'published' ? 'Entry published.' : 'Draft saved.')
 
       if (!entry?.id && data.id) {
         window.location.href = `/private/editorial/${data.id}`
         return
       }
-
-      window.location.href = `/private/editorial/${data.id || entry?.id}`
     } catch {
       setStatus('error')
       setMessage('Failed to save entry.')
@@ -107,6 +113,21 @@ export function EditorialEditorClient({ entry }: Props) {
   const logout = async () => {
     await fetch('/api/newsletter/admin/logout', { method: 'POST' })
     window.location.href = '/private/editorial/login'
+  }
+
+  const useTitleForSlug = () => {
+    setSlug(sanitizeEditorialSlug(title, title))
+  }
+
+  const copyPublicUrl = async () => {
+    if (!publicPath) return
+    try {
+      await navigator.clipboard.writeText(editorialAbsoluteUrlFromPath(publicPath))
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopied(false)
+    }
   }
 
   return (
@@ -267,6 +288,9 @@ export function EditorialEditorClient({ entry }: Props) {
       <aside className="space-y-6">
         <section className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface">
           <h2 className="text-xl font-serif font-bold text-fg">Actions</h2>
+          <p className="mt-2 text-sm text-muted">
+            Current state: <span className="font-medium text-fg">{entryStatus}</span>
+          </p>
           <div className="mt-5 space-y-3">
             <button
               type="button"
@@ -302,11 +326,35 @@ export function EditorialEditorClient({ entry }: Props) {
               Open newsletter admin
             </Link>
             {publicPath ? (
-              <Link href={publicPath} className="block text-fg underline underline-offset-4 hover:text-accent">
-                Open public path
-              </Link>
+              <>
+                <button type="button" onClick={copyPublicUrl} className="block text-fg underline underline-offset-4 hover:text-accent">
+                  {copied ? 'Public URL copied' : 'Copy public URL'}
+                </button>
+                {entryStatus === 'published' ? (
+                  <Link href={publicPath} className="block text-fg underline underline-offset-4 hover:text-accent">
+                    Open live article
+                  </Link>
+                ) : (
+                  <p className="text-muted">Publish this entry before opening the live article.</p>
+                )}
+              </>
             ) : null}
           </div>
+        </section>
+
+        <section className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface">
+          <h2 className="text-xl font-serif font-bold text-fg">Slug helper</h2>
+          <p className="mt-2 text-sm text-muted">
+            Keep public URLs clean and stable. If you change the slug after publishing, the live URL also changes.
+          </p>
+          <button
+            type="button"
+            onClick={useTitleForSlug}
+            className="mt-4 text-sm text-fg underline underline-offset-4 hover:text-accent"
+          >
+            Use title as slug
+          </button>
+          {publicPath ? <p className="mt-3 break-all text-xs text-muted">{publicPath}</p> : null}
         </section>
       </aside>
     </div>

@@ -20,6 +20,7 @@ export const EDITORIAL_STATUSES = ['draft', 'published'] as const
 
 export type EditorialType = (typeof EDITORIAL_TYPES)[number]
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
+export type EditorialStatusFilter = EditorialStatus | 'all'
 
 type EditorialTypeMeta = {
   label: string
@@ -118,6 +119,13 @@ export type EditorialLink = {
   external?: boolean
 }
 
+export type EditorialSection = {
+  type: EditorialType
+  label: string
+  description: string
+  entries: EditorialEntry[]
+}
+
 const EDITORIAL_SELECT =
   'id,slug,title,summary,body_markdown,editorial_type,status,published_at,hero_image,primary_cta_label,primary_cta_href,seo_title,seo_description,tags,byline,pinned,created_at,updated_at'
 
@@ -214,6 +222,10 @@ export function editorialAbsoluteUrl(slug: string): string {
   return `${SITE_CONFIG.url}${editorialUrl(slug)}`
 }
 
+export function editorialAbsoluteUrlFromPath(path: string): string {
+  return `${SITE_CONFIG.url}${path.startsWith('/') ? path : `/${path}`}`
+}
+
 export function estimateReadingTimeMinutes(text: string): number {
   const words = text.trim().split(/\s+/).filter(Boolean).length
   return Math.max(1, Math.ceil(words / 220))
@@ -270,6 +282,7 @@ function logEditorialReadError(scope: string, error: unknown) {
 export async function listPublishedEditorialEntries(options?: {
   type?: EditorialType
   limit?: number
+  excludeSlug?: string
 }): Promise<EditorialEntry[]> {
   const supabase = getSupabaseServer()
   if (!supabase) return []
@@ -282,6 +295,9 @@ export async function listPublishedEditorialEntries(options?: {
 
   if (options?.type) {
     query = query.eq('editorial_type', options.type)
+  }
+  if (options?.excludeSlug) {
+    query = query.neq('slug', sanitizeEditorialSlug(options.excludeSlug))
   }
   if (options?.limit) {
     query = query.limit(options.limit)
@@ -351,32 +367,26 @@ export async function listRelatedEditorialEntries(
   entry: EditorialEntry,
   limit = 3
 ): Promise<EditorialEntry[]> {
-  const supabase = getSupabaseServer()
-  if (!supabase) return []
+  const candidates = await listPublishedEditorialEntries({ limit: 40, excludeSlug: entry.slug })
+  if (!candidates.length) return []
 
-  const { data, error } = await editorialQuery(supabase)
-    .eq('status', 'published')
-    .eq('editorial_type', entry.editorialType)
-    .neq('slug', entry.slug)
-    .order('published_at', { ascending: false })
-    .limit(limit)
+  const withScore = candidates.map((candidate) => {
+    const sharedTags = candidate.tags.filter((tag) => entry.tags.includes(tag)).length
+    const score =
+      (candidate.editorialType === entry.editorialType ? 5 : 0) +
+      sharedTags * 3 +
+      (candidate.pinned ? 1 : 0)
 
-  if (!error && data && data.length > 0) {
-    return (data as EditorialDbRow[]).map(normalizeEntry)
-  }
+    return { candidate, score }
+  })
 
-  const fallback = await editorialQuery(supabase)
-    .eq('status', 'published')
-    .neq('slug', entry.slug)
-    .order('published_at', { ascending: false })
-    .limit(limit)
-
-  if (fallback.error || !fallback.data) {
-    if (fallback.error) logEditorialReadError(`related entries for ${entry.slug}`, fallback.error)
-    return []
-  }
-
-  return (fallback.data as EditorialDbRow[]).map(normalizeEntry)
+  return withScore
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score
+      return (b.candidate.publishedAt || '').localeCompare(a.candidate.publishedAt || '')
+    })
+    .map((item) => item.candidate)
+    .slice(0, limit)
 }
 
 export function buildEditorialWritePayload(body: Record<string, unknown>) {
@@ -485,6 +495,26 @@ export function formatEditorialDate(value: string | null): string {
     month: 'long',
     year: 'numeric',
   })
+}
+
+export function groupEditorialEntries(entries: EditorialEntry[]): EditorialSection[] {
+  return EDITORIAL_TYPES.map((type) => ({
+    type,
+    label: editorialPluralLabel(type),
+    description: editorialTypeDescription(type),
+    entries: entries.filter((entry) => entry.editorialType === type),
+  })).filter((section) => section.entries.length > 0)
+}
+
+export function editorialStatusMatches(entry: EditorialEntry, filter: EditorialStatusFilter): boolean {
+  return filter === 'all' ? true : entry.status === filter
+}
+
+export function editorialTypeMatches(
+  entry: EditorialEntry,
+  filter: EditorialType | 'all'
+): boolean {
+  return filter === 'all' ? true : entry.editorialType === filter
 }
 
 export const JOURNAL_CATEGORY_LINKS = [

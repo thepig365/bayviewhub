@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NewsletterAdminClient } from '@/app/private/newsletter/NewsletterAdminClient'
-import { listPublishedEditorialEntries } from '@/lib/editorial'
+import { editorialAbsoluteUrlFromPath, listPublishedEditorialEntries } from '@/lib/editorial'
 import {
   isNewsletterAdminCookieValid,
   NEWSLETTER_ADMIN_COOKIE,
@@ -24,14 +24,22 @@ type RecentCampaign = {
   sent_count: number
   failed_count: number
   created_at: string
+  sent_at: string | null
+  target_count: number
+  preview_text: string | null
+  intro_text: string | null
+  html_body: string
+  test_recipient: string | null
 }
 
 type RecentJournalEntry = {
   id: string
   title: string
   path: string
+  absoluteUrl: string
   editorialType: string
   publishedAt: string | null
+  summary: string
 }
 
 export default async function PrivateNewsletterPage() {
@@ -53,8 +61,10 @@ export default async function PrivateNewsletterPage() {
       id: entry.id,
       title: entry.title,
       path: entry.path,
+      absoluteUrl: editorialAbsoluteUrlFromPath(entry.path),
       editorialType: entry.editorialType,
       publishedAt: entry.publishedAt,
+      summary: entry.summary,
     })
   )
 
@@ -82,9 +92,9 @@ export default async function PrivateNewsletterPage() {
 
     const recentQuery = await supabase
       .from('newsletter_campaigns')
-      .select('id,subject,status,send_kind,sent_count,failed_count,created_at')
+      .select('id,subject,status,send_kind,sent_count,failed_count,created_at,sent_at,target_count,preview_text,intro_text,html_body,test_recipient')
       .order('created_at', { ascending: false })
-      .limit(5)
+      .limit(12)
 
     if (!recentQuery.error && recentQuery.data) {
       recentCampaigns = recentQuery.data as RecentCampaign[]

@@ -88,7 +88,37 @@ async function saveNewsletterSubscription(
   interests: string[],
   sourcePage: string,
   userAgent: string
-): Promise<{ ok: true; mode: string } | { ok: false; error: unknown }> {
+): Promise<
+  | { ok: true; mode: string; lifecycle: 'new' | 'reactivated' | 'already_active' | 'unknown' }
+  | { ok: false; error: unknown }
+> {
+  let existingStatus: string | null = null
+  let existingLookupFailed = false
+  const preExisting = await supabase
+    .from('newsletter_subscriptions')
+    .select('email,status')
+    .eq('email', email)
+    .limit(1)
+
+  if (!preExisting.error && preExisting.data && preExisting.data.length > 0) {
+    const row = preExisting.data[0] as { status?: unknown }
+    existingStatus = typeof row.status === 'string' ? row.status : null
+  } else if (preExisting.error) {
+    existingLookupFailed = true
+  }
+
+  const lifecycle =
+    existingLookupFailed
+      ? 'unknown'
+      :
+    existingStatus === 'unsubscribed'
+      ? 'reactivated'
+      : existingStatus === 'subscribed' || existingStatus === 'active'
+        ? 'already_active'
+        : existingStatus === null
+          ? 'new'
+          : 'unknown'
+
   const coreUpsert = await supabase
     .from('newsletter_subscriptions')
     .upsert(
@@ -111,10 +141,10 @@ async function saveNewsletterSubscription(
 
     if (enrich.error) {
       console.warn('[Newsletter] enrich after core upsert failed', enrich.error)
-      return { ok: true, mode: 'core_upsert_only' }
+      return { ok: true, mode: 'core_upsert_only', lifecycle }
     }
 
-    return { ok: true, mode: 'core_upsert_plus_enrich' }
+    return { ok: true, mode: 'core_upsert_plus_enrich', lifecycle }
   }
 
   console.warn('[Newsletter] core upsert failed; retrying legacy path', coreUpsert.error)
@@ -135,8 +165,8 @@ async function saveNewsletterSubscription(
       .update({ status: 'subscribed' })
       .eq('email', email)
 
-    if (!reactivate.error) return { ok: true, mode: 'reactivate_existing' }
-    return { ok: true, mode: 'existing_row' }
+    if (!reactivate.error) return { ok: true, mode: 'reactivate_existing', lifecycle }
+    return { ok: true, mode: 'existing_row', lifecycle }
   }
 
   const insertMinimal = await supabase
@@ -146,13 +176,13 @@ async function saveNewsletterSubscription(
       status: 'subscribed',
     })
 
-  if (!insertMinimal.error) return { ok: true, mode: 'insert_minimal' }
+  if (!insertMinimal.error) return { ok: true, mode: 'insert_minimal', lifecycle }
 
   const insertEmailOnly = await supabase
     .from('newsletter_subscriptions')
     .insert({ email })
 
-  if (!insertEmailOnly.error) return { ok: true, mode: 'insert_email_only' }
+  if (!insertEmailOnly.error) return { ok: true, mode: 'insert_email_only', lifecycle }
 
   return { ok: false, error: insertEmailOnly.error }
 }
@@ -220,10 +250,11 @@ export async function POST(request: Request) {
     console.log('[Newsletter] subscribe saved', {
       email,
       mode: saveResult.mode,
+      lifecycle: saveResult.lifecycle,
     })
 
     const welcomeFrom = newsletterFromIdentity()
-    if (welcomeFrom) {
+    if (welcomeFrom && (saveResult.lifecycle === 'new' || saveResult.lifecycle === 'reactivated')) {
       try {
         const welcome = buildNewsletterWelcomeDocument(email)
         await sendResendEmail({

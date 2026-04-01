@@ -35,6 +35,14 @@ export function JournalCard({ entry, featured = false }: Props) {
 
       <div className={cn('p-6 md:p-8', featured ? 'flex flex-col justify-center' : '')}>
         <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+          {featured || entry.pinned ? (
+            <>
+              <span className="rounded-full bg-accent/15 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-accent">
+                {featured ? 'Featured' : 'Pinned'}
+              </span>
+              <span aria-hidden>·</span>
+            </>
+          ) : null}
           <span className="eyebrow text-accent">{editorialTypeLabel(entry.editorialType)}</span>
           <span aria-hidden>·</span>
           <span>{formatEditorialDate(entry.publishedAt)}</span>
