@@ -247,7 +247,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us */}
-      <section id="about-us" className="py-16 md:py-20 bg-bg">
+      <section className="py-16 md:py-20 bg-bg">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <p className="eyebrow text-accent mb-3">About Us</p>

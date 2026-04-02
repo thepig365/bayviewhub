@@ -144,7 +144,6 @@ export const SITE_NAV: SiteNavEntry[] = [
       { label: 'Cellar Door', href: '/cellar-door' },
     ],
   },
-  { kind: 'link', label: 'About Us', href: '/#about-us' },
   { kind: 'link', label: 'Mendpress', href: '/mendpress' },
   { kind: 'link', label: 'Food/Wine', href: PIG_WHISTLE, external: true },
   {
