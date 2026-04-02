@@ -121,6 +121,19 @@ export type EditorialLink = {
   external?: boolean
 }
 
+export type EditorialLinkedInPackSource = Pick<
+  EditorialEntry,
+  'title' | 'summary' | 'slug' | 'editorialType' | 'heroImage' | 'tags' | 'path' | 'seoTitle' | 'byline'
+>
+
+export type EditorialLinkedInPack = {
+  articleTitle: string
+  articleUrl: string
+  primaryPost: string
+  shortHook: string
+  suggestedImageNote: string
+}
+
 export type EditorialSection = {
   id: MendpressSectionId
   label: string
@@ -248,6 +261,107 @@ export function editorialTypeAdminLabel(type: EditorialType): string {
 
 export function editorialTypeAdminHint(type: EditorialType): string {
   return `Internal type "${editorialTypeLabel(type)}" publishes under public Mendpress section "${mendpressSectionLabel(type)}".`
+}
+
+function socialSummarySentence(value: string): string {
+  const clean = sanitizeEditorialText(value, 320).replace(/\s+/g, ' ').trim()
+  if (!clean) return ''
+  const sentenceMatch = clean.match(/^.+?[.!?](?=\s|$)/)
+  return sentenceMatch ? sentenceMatch[0].trim() : clean
+}
+
+function mendpressSectionContextLine(type: EditorialType): string {
+  switch (mendpressSectionIdForType(type)) {
+    case 'editorial':
+      return 'It extends Bayview Hub’s editorial reading of art, place, hospitality, and cultural meaning.'
+    case 'dialogue':
+      return 'It stays close to people, practice, and the conversation around how cultural work is actually carried.'
+    case 'visual_narrative':
+      return 'It works through image, atmosphere, and lived detail, rather than summary alone.'
+    case 'reports':
+      return 'It frames invitations, dispatches, and project context as part of the public programme around Bayview Hub.'
+  }
+}
+
+function mendpressThemeLine(source: EditorialLinkedInPackSource): string {
+  if (source.tags.length) {
+    return `Themes include ${source.tags.slice(0, 3).join(', ')}.`
+  }
+
+  switch (source.editorialType) {
+    case 'essay':
+      return 'It is intended as a public-facing editorial text rather than campaign copy.'
+    case 'profile':
+      return 'The emphasis is on voice, practice, and the relationship between people and place.'
+    case 'field_note':
+      return 'The emphasis is on atmosphere, sequence, and what can only be understood by staying with the image.'
+    case 'invitation':
+      return 'The emphasis is on what is being convened, and why the invitation matters in public.'
+    case 'project_brief':
+      return 'The emphasis is on programme logic, participation, and the practical shape of the work.'
+    case 'dispatch':
+      return 'The emphasis is on a shorter public note with a clear point of view.'
+  }
+}
+
+function mendpressSuggestedLinkedInImage(source: EditorialLinkedInPackSource): string {
+  const prefix = source.heroImage
+    ? 'Use the article hero image if it crops cleanly for LinkedIn.'
+    : 'No hero image is set yet.'
+
+  switch (source.editorialType) {
+    case 'essay':
+      return `${prefix} Prefer a single artwork detail, installation view, or quietly composed landscape image.`
+    case 'profile':
+      return `${prefix} Prefer a strong portrait or a clear image of the subject in context.`
+    case 'field_note':
+      return `${prefix} Prefer an atmospheric landscape, object detail, or image-led sequence opener.`
+    case 'invitation':
+      return `${prefix} Prefer the event image, invitation artwork, or the clearest programme-facing visual.`
+    case 'project_brief':
+      return `${prefix} Prefer a project image, site view, plan, or visual that clarifies the opportunity.`
+    case 'dispatch':
+      return `${prefix} Prefer the strongest documentary image or detail that carries the note at a glance.`
+  }
+}
+
+export function buildEditorialLinkedInPack(
+  source: EditorialLinkedInPackSource
+): EditorialLinkedInPack {
+  const articleTitle = sanitizeEditorialText(source.seoTitle, 180) || sanitizeEditorialText(source.title, 180)
+  const articleUrl = editorialAbsoluteUrlFromPath(source.path || editorialUrl(source.slug))
+  const summaryLine =
+    socialSummarySentence(source.summary) ||
+    `${articleTitle} is now live on Mendpress.`
+  const sectionLabel = mendpressSectionLabel(source.editorialType)
+  const bylineLine = source.byline ? `By ${sanitizeEditorialText(source.byline, 120)}.` : null
+
+  const primaryPost = [
+    articleTitle,
+    '',
+    summaryLine,
+    '',
+    mendpressSectionContextLine(source.editorialType),
+    mendpressThemeLine(source),
+    bylineLine,
+    '',
+    `Read the article: ${articleUrl}`,
+  ]
+    .filter(Boolean)
+    .join('\n')
+
+  const shortHook = [
+    summaryLine,
+    `Published in ${sectionLabel} on Mendpress.`,
+  ].join(' ')
+
+  return {
+    articleTitle,
+    articleUrl,
+    primaryPost,
+    shortHook,
+    suggestedImageNote: mendpressSuggestedLinkedInImage(source),
+  }
 }
 
 export function mendpressSectionIdForType(type: EditorialType): MendpressSectionId {

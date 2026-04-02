@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
+import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import {
   EDITORIAL_TYPES,
   editorialAbsoluteUrlFromPath,
@@ -191,6 +192,16 @@ export function EditorialAdminClient({ entries }: Props) {
                     ) : null}
                   </div>
                 </div>
+                {entry.status === 'published' ? (
+                  <details className="mt-4 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-neutral-900/40 md:col-span-5">
+                    <summary className="cursor-pointer text-sm font-medium text-fg">
+                      LinkedIn pack
+                    </summary>
+                    <div className="mt-4">
+                      <LinkedInPackPanel source={entry} compact />
+                    </div>
+                  </details>
+                ) : null}
               </li>
             ))}
           </ul>

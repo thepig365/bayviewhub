@@ -2,12 +2,14 @@
 
 import Link from 'next/link'
 import React, { useMemo, useRef, useState } from 'react'
+import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import type { EditorialEntry, EditorialStatus, EditorialType } from '@/lib/editorial'
 import {
   editorialAbsoluteUrlFromPath,
   editorialTypeAdminHint,
   editorialTypeAdminLabel,
   mendpressSectionLabel,
+  sanitizeEditorialTags,
   sanitizeEditorialSlug,
 } from '@/lib/editorial'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
@@ -153,6 +155,20 @@ export function EditorialEditorClient({ entry, imageUploadEnabled = false }: Pro
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
   const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
+  const linkedInSource = useMemo(
+    () => ({
+      title: title.trim() || entry?.title || '',
+      summary: summary.trim() || entry?.summary || '',
+      slug: publicSlug || entry?.slug || '',
+      editorialType,
+      heroImage: heroImage.trim() || entry?.heroImage || null,
+      tags: sanitizeEditorialTags(tags),
+      path: publicPath || entry?.path || '',
+      seoTitle: seoTitle.trim() || entry?.seoTitle || null,
+      byline: byline.trim() || entry?.byline || null,
+    }),
+    [byline, editorialType, entry?.byline, entry?.heroImage, entry?.path, entry?.seoTitle, entry?.slug, entry?.summary, entry?.title, heroImage, publicPath, publicSlug, seoTitle, summary, tags, title]
+  )
 
   const submit = async (desiredStatus: EditorialStatus) => {
     setStatus('loading')
@@ -576,6 +592,10 @@ export function EditorialEditorClient({ entry, imageUploadEnabled = false }: Pro
             ) : null}
           </div>
         </section>
+
+        {entryStatus === 'published' && publicPath ? (
+          <LinkedInPackPanel source={linkedInSource} />
+        ) : null}
 
         <section className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface">
           <h2 className="text-xl font-serif font-bold text-fg">Slug helper</h2>
