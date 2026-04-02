@@ -1,4 +1,5 @@
 import React from 'react'
+import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialImageFigure } from '@/components/editorial/EditorialImageFigure'
 import { cn } from '@/lib/utils'
 
@@ -30,6 +31,15 @@ function safeImageSrc(value: string): string | null {
   return null
 }
 
+function formatDuration(value: number | null): string | null {
+  if (!value || value <= 0) return null
+  const hours = Math.floor(value / 3600)
+  const minutes = Math.floor((value % 3600) / 60)
+  const seconds = value % 60
+  if (hours > 0) return `${hours}:${`${minutes}`.padStart(2, '0')}:${`${seconds}`.padStart(2, '0')}`
+  return `${minutes}:${`${seconds}`.padStart(2, '0')}`
+}
+
 function parseImageSyntax(line: string): { alt: string; src: string; fullSrc: string | null; caption: string | null } | null {
   const match = line.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)(?:\{zoom=([^}]+)\})?$/)
   if (!match) return null
@@ -41,6 +51,48 @@ function parseImageSyntax(line: string): { alt: string; src: string; fullSrc: st
     src,
     fullSrc,
     caption: match[3]?.trim() || null,
+  }
+}
+
+function parseAudioSyntax(line: string): {
+  title: string
+  src: string
+  note: string | null
+  speakers: string[]
+  durationSeconds: number | null
+} | null {
+  const match = line.match(/^!audio\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)(.*)$/)
+  if (!match) return null
+
+  const src = safeImageSrc(match[2].trim())
+  if (!src) return null
+
+  const speakers: string[] = []
+  let durationSeconds: number | null = null
+  const options = match[4] || ''
+  const optionRegex = /\{([^=]+)=([^}]+)\}/g
+  let optionMatch: RegExpExecArray | null
+
+  while ((optionMatch = optionRegex.exec(options)) !== null) {
+    const key = optionMatch[1].trim().toLowerCase()
+    const value = optionMatch[2].trim()
+    if (key === 'speaker' && value) {
+      speakers.push(...value.split(',').map((item) => item.trim()).filter(Boolean))
+    }
+    if (key === 'duration') {
+      const parsed = Number(value)
+      if (Number.isFinite(parsed) && parsed > 0) {
+        durationSeconds = Math.round(parsed)
+      }
+    }
+  }
+
+  return {
+    title: match[1].trim() || 'Audio',
+    src,
+    note: match[3]?.trim() || null,
+    speakers,
+    durationSeconds,
   }
 }
 
@@ -105,6 +157,21 @@ export function EditorialBody({ body, className }: Props) {
               fullSrc={imageBlock.fullSrc}
               alt={imageBlock.alt}
               caption={caption ? renderInline(caption) : null}
+            />
+          )
+        }
+
+        const audioBlock = parseAudioSyntax(lines[0])
+        if (audioBlock) {
+          const note = audioBlock.note || lines.slice(1).join(' ').trim() || null
+          return (
+            <EditorialAudioPlayer
+              key={index}
+              title={audioBlock.title}
+              src={audioBlock.src}
+              speakers={audioBlock.speakers}
+              durationLabel={formatDuration(audioBlock.durationSeconds)}
+              note={note ? renderInline(note) : null}
             />
           )
         }

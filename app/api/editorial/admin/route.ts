@@ -30,10 +30,10 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const payload = buildEditorialWritePayload(body || {})
+    const { payload, error: payloadError } = buildEditorialWritePayload(body || {})
     if (!payload) {
       return NextResponse.json(
-        { ok: false, error: 'Title, slug, summary, and body are required.' },
+        { ok: false, error: payloadError || 'Invalid piece payload.' },
         { status: 400 }
       )
     }
@@ -57,9 +57,13 @@ export async function POST(request: Request) {
           error:
             error?.code === '23505'
               ? 'That slug is already in use.'
+              : error?.code === '42703' || String(error?.message || '').includes('audio_')
+                ? 'Editorial audio fields are not available yet. Run the latest docs/supabase-editorial.sql migration first.'
+                : error?.code === '23514'
+                  ? 'This editorial type is not available in the current database schema yet. Run the latest docs/supabase-editorial.sql migration first.'
               : 'Editorial table is missing or unavailable. Run docs/supabase-editorial.sql first.',
         },
-        { status: error?.code === '23505' ? 409 : 500 }
+        { status: error?.code === '23505' ? 409 : error?.code === '23514' ? 400 : 500 }
       )
     }
 

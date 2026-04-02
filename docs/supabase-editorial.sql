@@ -1,13 +1,14 @@
 -- =============================================================================
--- Bayview Hub — Editorial / Journal system (portable DDL)
+-- Bayview Hub — Mendpress editorial system with audio support (portable DDL)
 -- =============================================================================
 -- Purpose:
---   - store Journal entries for public /journal and /journal/[slug]
+--   - store Mendpress editorial entries for public /mendpress and /mendpress/[slug]
 --   - support private editorial create / edit / publish workflow
---   - keep the model minimal, additive, and production-usable
+--   - support written, audio-first, and hybrid pieces in one model
 --
 -- Safety:
---   - additive only; no DROP / destructive statements
+--   - additive / forward-safe statements only
+--   - no destructive data deletion
 --   - server-only writes via Vercel route handlers using service-role / secret key
 -- =============================================================================
 
@@ -19,8 +20,7 @@ create table if not exists public.editorial_entries (
   title text not null,
   summary text not null,
   body_markdown text not null,
-  editorial_type text not null
-    check (editorial_type in ('essay', 'field_note', 'profile', 'invitation', 'project_brief', 'dispatch')),
+  editorial_type text not null,
   status text not null default 'draft'
     check (status in ('draft', 'published')),
   published_at timestamptz,
@@ -31,8 +31,54 @@ create table if not exists public.editorial_entries (
   seo_description text,
   tags text[] not null default '{}',
   byline text,
-  pinned boolean not null default false
+  pinned boolean not null default false,
+  audio_url text,
+  audio_duration_seconds integer,
+  transcript_markdown text,
+  show_notes_markdown text,
+  speakers text[] not null default '{}'
 );
+
+alter table public.editorial_entries
+  add column if not exists audio_url text;
+
+alter table public.editorial_entries
+  add column if not exists audio_duration_seconds integer;
+
+alter table public.editorial_entries
+  add column if not exists transcript_markdown text;
+
+alter table public.editorial_entries
+  add column if not exists show_notes_markdown text;
+
+alter table public.editorial_entries
+  add column if not exists speakers text[] not null default '{}';
+
+alter table public.editorial_entries
+  drop constraint if exists editorial_entries_editorial_type_check;
+
+alter table public.editorial_entries
+  add constraint editorial_entries_editorial_type_check check (
+    editorial_type in (
+      'editorial',
+      'essay',
+      'conversation',
+      'interview',
+      'audio_essay',
+      'podcast_episode',
+      'field_note',
+      'profile',
+      'invitation',
+      'project_brief',
+      'dispatch'
+    )
+  );
+
+alter table public.editorial_entries
+  drop constraint if exists editorial_entries_status_check;
+
+alter table public.editorial_entries
+  add constraint editorial_entries_status_check check (status in ('draft', 'published'));
 
 create index if not exists editorial_entries_status_published_at_idx
   on public.editorial_entries (status, published_at desc);
@@ -46,8 +92,12 @@ create index if not exists editorial_entries_updated_at_idx
 create index if not exists editorial_entries_pinned_idx
   on public.editorial_entries (pinned desc, published_at desc);
 
+create index if not exists editorial_entries_audio_url_idx
+  on public.editorial_entries (audio_url)
+  where audio_url is not null;
+
 comment on table public.editorial_entries is
-  'Bayview Hub Journal / editorial entries for essays, field notes, profiles, invitations, project briefs, and dispatches.';
+  'Mendpress editorial entries for written, audio-first, and hybrid publishing at Bayview Hub.';
 
 grant usage on schema public to service_role;
 grant select, insert, update, delete on table public.editorial_entries to service_role;

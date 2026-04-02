@@ -9,7 +9,7 @@ import {
 } from '@/lib/newsletter-admin'
 
 export const metadata: Metadata = {
-  title: 'New Mendpress Entry',
+  title: 'New Piece',
   robots: { index: false, follow: false },
 }
 
@@ -24,12 +24,12 @@ export default async function NewEditorialEntryPage() {
     redirect('/private/editorial/login')
   }
 
-  const imageUploadEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
+  const blobEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
 
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
-        <EditorialEditorClient imageUploadEnabled={imageUploadEnabled} />
+        <EditorialEditorClient imageUploadEnabled={blobEnabled} audioUploadEnabled={blobEnabled} />
       </div>
     </main>
   )

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
 import { EditorialPullQuote } from '@/components/editorial/EditorialPullQuote'
 import { JournalCard } from '@/components/editorial/JournalCard'
@@ -12,8 +13,10 @@ import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
   editorialContextLinks,
+  editorialTypeAdminLabel,
   formatEditorialDate,
   getPublishedEditorialEntryBySlug,
+  isAudioFirstEditorialType,
   listRelatedEditorialEntries,
   mendpressSectionDescription,
   mendpressSectionLabel,
@@ -32,7 +35,7 @@ function bodyExcerpt(body: string, max = 220): string {
     .map((section) => section.trim())
     .find((section) => {
       const line = section.split('\n')[0]?.trim() || ''
-      return line && !line.startsWith('#') && !line.startsWith('![') && !line.startsWith('>') && !line.startsWith('- ')
+      return line && !line.startsWith('#') && !line.startsWith('![') && !line.startsWith('!audio[') && !line.startsWith('>') && !line.startsWith('- ')
     })
 
   const clean = (firstParagraph || '')
@@ -59,6 +62,23 @@ function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublis
   const summary = entry.summary.trim()
   if (summary.length >= 90 && summary.length <= 260) return summary
   return bodyExcerpt(entry.bodyMarkdown, 260) || summary || entry.title
+}
+
+function formatDuration(value: number | null): string | null {
+  if (!value || value <= 0) return null
+  const hours = Math.floor(value / 3600)
+  const minutes = Math.floor((value % 3600) / 60)
+  const seconds = value % 60
+  if (hours > 0) return `${hours}:${`${minutes}`.padStart(2, '0')}:${`${seconds}`.padStart(2, '0')}`
+  return `${minutes}:${`${seconds}`.padStart(2, '0')}`
+}
+
+function isoDuration(value: number | null): string | undefined {
+  if (!value || value <= 0) return undefined
+  const hours = Math.floor(value / 3600)
+  const minutes = Math.floor((value % 3600) / 60)
+  const seconds = value % 60
+  return `PT${hours ? `${hours}H` : ''}${minutes ? `${minutes}M` : ''}${seconds || (!hours && !minutes) ? `${seconds}S` : ''}`
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -109,9 +129,12 @@ export default async function MendpressEntryPage({ params }: Props) {
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
   const description = articleDescription(entry)
   const pullQuote = articlePullQuote(entry)
+  const durationLabel = formatDuration(entry.audioDurationSeconds)
+  const entryTypeLabel = editorialTypeAdminLabel(entry.editorialType)
+  const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': entry.audioUrl && isAudioFirstEditorialType(entry.editorialType) ? 'PodcastEpisode' : 'Article',
     headline: entry.title,
     description,
     datePublished: entry.publishedAt || undefined,
@@ -127,6 +150,14 @@ export default async function MendpressEntryPage({ params }: Props) {
     image: [articleOgImage(entry)],
     articleSection: mendpressSectionLabel(entry.editorialType),
     mainEntityOfPage: absoluteUrl,
+    duration: isoDuration(entry.audioDurationSeconds),
+    associatedMedia: entry.audioUrl
+      ? {
+          '@type': 'AudioObject',
+          contentUrl: entry.audioUrl,
+          duration: isoDuration(entry.audioDurationSeconds),
+        }
+      : undefined,
   }
 
   return (
@@ -139,6 +170,7 @@ export default async function MendpressEntryPage({ params }: Props) {
             <div className="mx-auto max-w-4xl text-center">
               <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
                 <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">{mendpressSectionLabel(entry.editorialType)}</span>
+                <span>{entryTypeLabel}</span>
                 <span>Mendpress</span>
               </div>
               <h1 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.1]">
@@ -160,6 +192,18 @@ export default async function MendpressEntryPage({ params }: Props) {
                   <>
                     <span aria-hidden>·</span>
                     <span>{entry.readingTimeMinutes} min read</span>
+                  </>
+                ) : null}
+                {durationLabel ? (
+                  <>
+                    <span aria-hidden>·</span>
+                    <span>{durationLabel} audio</span>
+                  </>
+                ) : null}
+                {entry.speakers.length ? (
+                  <>
+                    <span aria-hidden>·</span>
+                    <span>{entry.speakers.join(', ')}</span>
                   </>
                 ) : null}
               </div>
@@ -184,12 +228,44 @@ export default async function MendpressEntryPage({ params }: Props) {
                 <img src={entry.heroImage} alt={entry.title} className="h-auto w-full object-cover" />
               </div>
             ) : null}
+
+            {entry.audioUrl ? (
+              <div className="mx-auto mt-8 max-w-4xl">
+                <EditorialAudioPlayer
+                  title={audioLeadTitle}
+                  src={entry.audioUrl}
+                  speakers={entry.speakers}
+                  durationLabel={durationLabel}
+                  note={
+                    isAudioFirstEditorialType(entry.editorialType)
+                      ? 'This piece is published for listening first, with companion editorial material below.'
+                      : 'A playable audio version sits alongside the written piece.'
+                  }
+                />
+              </div>
+            ) : null}
           </header>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             <div>
               <EditorialPullQuote quote={pullQuote} articleTitle={entry.title} articleUrl={absoluteUrl} />
-              <EditorialBody body={entry.bodyMarkdown} />
+              {entry.bodyMarkdown ? <EditorialBody body={entry.bodyMarkdown} /> : null}
+
+              {entry.showNotesMarkdown ? (
+                <section className="mt-10">
+                  <p className="eyebrow text-accent">Show notes</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
+                  <EditorialBody body={entry.showNotesMarkdown} className="mt-5" />
+                </section>
+              ) : null}
+
+              {entry.transcriptMarkdown ? (
+                <section className="mt-10">
+                  <p className="eyebrow text-accent">Transcript</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
+                  <EditorialBody body={entry.transcriptMarkdown} className="mt-5" />
+                </section>
+              ) : null}
 
               <section className="mt-12 rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
                 <div className="flex flex-wrap items-start justify-between gap-4">

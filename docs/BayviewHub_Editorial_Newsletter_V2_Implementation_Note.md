@@ -4,16 +4,21 @@ This V2 pass is an operational improvement release for the existing BayviewHub e
 
 ## 1. Current editorial type enum values
 
-The current editorial type enum values are exactly:
+The current editorial type enum values now include the active Mendpress desk set plus older legacy content types for compatibility:
 
+- `editorial`
 - `essay`
+- `conversation`
+- `interview`
+- `audio_essay`
+- `podcast_episode`
 - `field_note`
 - `profile`
 - `invitation`
 - `project_brief`
 - `dispatch`
 
-The current editorial type enum values are internal operational content types and should not be treated as the final public-facing Mendpress section names.
+The current editorial type enum values remain internal operational content types and should not be treated as the final public-facing Mendpress section names.
 
 ## 2. Present role of `/mendpress`, editorial entries, and newsletter
 

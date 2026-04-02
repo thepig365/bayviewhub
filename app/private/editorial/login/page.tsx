@@ -42,9 +42,9 @@ function PrivateEditorialLoginInner() {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-md rounded-2xl bg-natural-50 p-8 dark:border dark:border-border dark:bg-surface">
           <p className="eyebrow mb-3 text-center text-accent">Private</p>
-          <h1 className="text-center text-3xl font-serif font-bold text-fg">Mendpress Admin</h1>
+          <h1 className="text-center text-3xl font-serif font-bold text-fg">Mendpress Editorial Desk</h1>
           <p className="mt-4 text-center text-muted">
-            Enter the private admin password to draft, edit, and publish Mendpress entries.
+            Enter the private admin password to draft, edit, and publish Mendpress pieces.
           </p>
 
           {notConfigured ? (

@@ -10,7 +10,7 @@ import {
 } from '@/lib/newsletter-admin'
 
 export const metadata: Metadata = {
-  title: 'Edit Mendpress Entry',
+  title: 'Edit Piece',
   robots: { index: false, follow: false },
 }
 
@@ -33,12 +33,12 @@ export default async function EditorialEntryPage({ params }: Props) {
   const entry = await getEditorialEntryByIdForAdmin(id)
   if (!entry) notFound()
 
-  const imageUploadEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
+  const blobEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
 
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
-        <EditorialEditorClient entry={entry} imageUploadEnabled={imageUploadEnabled} />
+        <EditorialEditorClient entry={entry} imageUploadEnabled={blobEnabled} audioUploadEnabled={blobEnabled} />
       </div>
     </main>
   )

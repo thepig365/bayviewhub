@@ -6,7 +6,7 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Editorial',
-  description: 'Editorial interpretation and longer-form essays from Mendpress at Bayview Hub.',
+  description: 'Editorial interpretation, essays, and audio-led editorials from Mendpress at Bayview Hub.',
   path: '/mendpress/editorial',
 })
 
@@ -15,8 +15,8 @@ export default function MendpressEditorialPage() {
     <JournalCollectionPage
       eyebrow="Mendpress"
       title="Editorial"
-      intro="Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub."
-      types={['essay']}
+      intro="Interpretive pieces, essays, and audio-led editorials from Bayview Hub."
+      types={['editorial', 'essay', 'audio_essay']}
       activeSection="editorial"
     />
   )

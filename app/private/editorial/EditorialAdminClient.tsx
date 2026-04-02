@@ -65,7 +65,7 @@ export function EditorialAdminClient({ entries }: Props) {
     <div className="space-y-8">
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
-          <p className="text-xs uppercase tracking-[0.18em] text-muted">Entries</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-muted">Pieces</p>
           <p className="mt-2 text-3xl font-serif font-semibold text-fg">{counts.total}</p>
         </div>
         <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
@@ -125,7 +125,7 @@ export function EditorialAdminClient({ entries }: Props) {
 
       <section className="overflow-hidden rounded-2xl border border-border bg-white dark:border-border dark:bg-surface">
         <div className="hidden gap-4 border-b border-border px-6 py-4 text-xs uppercase tracking-[0.18em] text-muted md:grid md:grid-cols-[minmax(0,2fr)_140px_140px_180px_160px]">
-          <span>Entry</span>
+          <span>Piece</span>
           <span>Type</span>
           <span>Status</span>
           <span>Updated</span>
@@ -148,6 +148,7 @@ export function EditorialAdminClient({ entries }: Props) {
                     <span>{entry.slug}</span>
                     {entry.pinned ? <span>pinned</span> : null}
                     {entry.publishedAt ? <span>published {formatEditorialDate(entry.publishedAt)}</span> : null}
+                    {entry.audioUrl ? <span>audio attached</span> : null}
                   </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm md:mt-0 md:contents">
@@ -207,8 +208,8 @@ export function EditorialAdminClient({ entries }: Props) {
           </ul>
         ) : (
           <div className="px-6 py-16 text-center">
-            <h2 className="text-2xl font-serif font-semibold text-fg">No entries match these filters</h2>
-            <p className="mt-3 text-muted">Adjust the type, status, or search filters to see more Mendpress entries.</p>
+            <h2 className="text-2xl font-serif font-semibold text-fg">No pieces match these filters</h2>
+            <p className="mt-3 text-muted">Adjust the type, status, or search filters to see more Mendpress pieces.</p>
           </div>
         )}
       </section>

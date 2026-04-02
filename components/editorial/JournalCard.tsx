@@ -1,10 +1,21 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import {
+  editorialTypeLabel,
   type EditorialEntry,
   formatEditorialDate,
+  isAudioFirstEditorialType,
   mendpressSectionLabel,
 } from '@/lib/editorial'
+
+function formatDuration(value: number | null): string | null {
+  if (!value || value <= 0) return null
+  const hours = Math.floor(value / 3600)
+  const minutes = Math.floor((value % 3600) / 60)
+  const seconds = value % 60
+  if (hours > 0) return `${hours}:${`${minutes}`.padStart(2, '0')}:${`${seconds}`.padStart(2, '0')}`
+  return `${minutes}:${`${seconds}`.padStart(2, '0')}`
+}
 
 type Props = {
   entry: EditorialEntry
@@ -44,9 +55,20 @@ export function JournalCard({ entry, featured = false }: Props) {
           ) : null}
           <span className="eyebrow text-accent">{mendpressSectionLabel(entry.editorialType)}</span>
           <span aria-hidden>·</span>
-          <span>{formatEditorialDate(entry.publishedAt)}</span>
+          <span>{editorialTypeLabel(entry.editorialType)}</span>
           <span aria-hidden>·</span>
-          <span>{entry.readingTimeMinutes} min read</span>
+          <span>{formatEditorialDate(entry.publishedAt)}</span>
+          {isAudioFirstEditorialType(entry.editorialType) && formatDuration(entry.audioDurationSeconds) ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>{formatDuration(entry.audioDurationSeconds)} audio</span>
+            </>
+          ) : entry.readingTimeMinutes ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>{entry.readingTimeMinutes} min read</span>
+            </>
+          ) : null}
         </div>
 
         <h2 className={cn('font-serif font-semibold text-fg', featured ? 'text-4xl' : 'text-2xl')}>
@@ -59,7 +81,7 @@ export function JournalCard({ entry, featured = false }: Props) {
 
         <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
           <Link href={entry.path} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
-            Read piece
+            {isAudioFirstEditorialType(entry.editorialType) ? 'Open piece' : 'Read piece'}
           </Link>
           <Link href={entry.categoryPath} className="text-muted hover:text-fg transition-colors">
             More from {mendpressSectionLabel(entry.editorialType)}
