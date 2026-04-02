@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
+import { EditorialPullQuote } from '@/components/editorial/EditorialPullQuote'
 import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { ShareStrip } from '@/components/ui/ShareStrip'
@@ -24,6 +25,42 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
+function bodyExcerpt(body: string, max = 220): string {
+  const firstParagraph = body
+    .trim()
+    .split(/\n{2,}/)
+    .map((section) => section.trim())
+    .find((section) => {
+      const line = section.split('\n')[0]?.trim() || ''
+      return line && !line.startsWith('#') && !line.startsWith('![') && !line.startsWith('>') && !line.startsWith('- ')
+    })
+
+  const clean = (firstParagraph || '')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  return clean.length > max ? `${clean.slice(0, max - 1).trimEnd()}…` : clean
+}
+
+function articleDescription(entry: Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>) {
+  if (!entry) return 'Mendpress at Bayview Hub'
+  return entry.seoDescription || entry.summary || bodyExcerpt(entry.bodyMarkdown) || 'Mendpress at Bayview Hub'
+}
+
+function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  if (entry.heroImage) {
+    return entry.heroImage.startsWith('http') ? entry.heroImage : `${SITE_CONFIG.url}${entry.heroImage}`
+  }
+  return `${SITE_CONFIG.url}/og-image.png`
+}
+
+function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  const summary = entry.summary.trim()
+  if (summary.length >= 90 && summary.length <= 260) return summary
+  return bodyExcerpt(entry.bodyMarkdown, 260) || summary || entry.title
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const entry = await getPublishedEditorialEntryBySlug(slug)
@@ -35,8 +72,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const title = entry.seoTitle || entry.title
-  const description = entry.seoDescription || entry.summary
+  const description = articleDescription(entry)
   const url = editorialAbsoluteUrl(entry.slug)
+  const ogImage = articleOgImage(entry)
 
   return {
     title,
@@ -48,14 +86,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       siteName: SITE_CONFIG.name,
-      images: entry.heroImage ? [{ url: entry.heroImage, alt: entry.title }] : undefined,
+      images: [{ url: ogImage, alt: entry.title }],
       publishedTime: entry.publishedAt || undefined,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: entry.heroImage ? [entry.heroImage] : ['/og-image.png'],
+      images: [ogImage],
     },
   }
 }
@@ -69,11 +107,13 @@ export default async function MendpressEntryPage({ params }: Props) {
   const primaryCta = defaultEditorialPrimaryCta(entry)
   const contextualLinks = editorialContextLinks(entry)
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
+  const description = articleDescription(entry)
+  const pullQuote = articlePullQuote(entry)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: entry.title,
-    description: entry.seoDescription || entry.summary,
+    description,
     datePublished: entry.publishedAt || undefined,
     author: {
       '@type': 'Person',
@@ -84,7 +124,7 @@ export default async function MendpressEntryPage({ params }: Props) {
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
     },
-    image: entry.heroImage ? [entry.heroImage] : undefined,
+    image: [articleOgImage(entry)],
     articleSection: mendpressSectionLabel(entry.editorialType),
     mainEntityOfPage: absoluteUrl,
   }
@@ -95,51 +135,93 @@ export default async function MendpressEntryPage({ params }: Props) {
         <article className="mx-auto max-w-5xl">
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          <div className="text-center">
-            <p className="eyebrow text-accent">Mendpress</p>
-            <p className="mt-3 text-sm font-medium text-fg">{mendpressSectionLabel(entry.editorialType)}</p>
-            <h1 className="mx-auto mt-4 max-w-4xl text-balance text-4xl font-serif font-semibold text-fg md:text-6xl">
-              {entry.title}
-            </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-muted">{entry.summary}</p>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted">
-              {mendpressSectionDescription(entry.editorialType)}
-            </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted">
-              <span>{formatEditorialDate(entry.publishedAt)}</span>
-              <span aria-hidden>·</span>
-              <span>{entry.readingTimeMinutes} min read</span>
-              {entry.byline ? (
-                <>
-                  <span aria-hidden>·</span>
-                  <span>By {entry.byline}</span>
-                </>
+          <header className="rounded-[2rem] border border-border bg-white/80 px-6 py-8 shadow-sm dark:border-border dark:bg-surface/95 md:px-10 md:py-10">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
+                <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">{mendpressSectionLabel(entry.editorialType)}</span>
+                <span>Mendpress</span>
+              </div>
+              <h1 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.1]">
+                {entry.title}
+              </h1>
+              {entry.summary ? (
+                <p className="mx-auto mt-6 max-w-3xl text-pretty text-xl leading-9 text-muted md:text-2xl md:leading-10">
+                  {entry.summary}
+                </p>
               ) : null}
-            </div>
-            <div className="mt-4">
-              <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-                Back to Mendpress
-              </Link>
-            </div>
-          </div>
-
-          {entry.heroImage ? (
-            <div className="mt-10 overflow-hidden rounded-3xl border border-border bg-natural-100 dark:border-border dark:bg-surface">
-              <img src={entry.heroImage} alt={entry.title} className="h-auto w-full object-cover" />
-            </div>
-          ) : null}
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-            <div>
-              <EditorialBody body={entry.bodyMarkdown} />
-
+              <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-muted">
+                {mendpressSectionDescription(entry.editorialType)}
+              </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted">
+                {entry.byline ? <span>By {entry.byline}</span> : null}
+                {entry.byline ? <span aria-hidden>·</span> : null}
+                <span>{formatEditorialDate(entry.publishedAt)}</span>
+                {entry.readingTimeMinutes ? (
+                  <>
+                    <span aria-hidden>·</span>
+                    <span>{entry.readingTimeMinutes} min read</span>
+                  </>
+                ) : null}
+              </div>
               <ShareStrip
                 url={absoluteUrl}
                 mailtoSubject={`${entry.title} | Mendpress`}
-                mailtoIntro={`${entry.summary}\n\nRead it here:`}
-                shortShareBlurb={entry.summary}
-                className="mt-10"
+                mailtoIntro={`${description}\n\nRead it here:`}
+                shortShareBlurb={description}
+                bordered={false}
+                label="Share"
+                className="mx-auto mt-7 max-w-3xl"
               />
+              <div className="mt-4">
+                <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                  Back to Mendpress
+                </Link>
+              </div>
+            </div>
+
+            {entry.heroImage ? (
+              <div className="mx-auto mt-8 max-w-5xl overflow-hidden rounded-[1.75rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
+                <img src={entry.heroImage} alt={entry.title} className="h-auto w-full object-cover" />
+              </div>
+            ) : null}
+          </header>
+
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+            <div>
+              <EditorialPullQuote quote={pullQuote} articleTitle={entry.title} articleUrl={absoluteUrl} />
+              <EditorialBody body={entry.bodyMarkdown} />
+
+              <section className="mt-12 rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <p className="eyebrow text-accent">Share this piece</p>
+                    <h2 className="mt-2 text-2xl font-serif font-semibold text-fg">
+                      Continue reading from Mendpress
+                    </h2>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
+                      Pass it on, or continue deeper into the editorial archive.
+                    </p>
+                  </div>
+                  <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                    Explore Mendpress
+                  </Link>
+                </div>
+                <ShareStrip
+                  url={absoluteUrl}
+                  mailtoSubject={`${entry.title} | Mendpress`}
+                  mailtoIntro={`${description}\n\nRead it here:`}
+                  shortShareBlurb={description}
+                  label="Share this piece"
+                  className="mt-6"
+                />
+                {relatedEntries.length ? (
+                  <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    {relatedEntries.map((relatedEntry) => (
+                      <JournalCard key={relatedEntry.id} entry={relatedEntry} />
+                    ))}
+                  </div>
+                ) : null}
+              </section>
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-24">
@@ -175,26 +257,17 @@ export default async function MendpressEntryPage({ params }: Props) {
             </aside>
           </div>
 
-          {relatedEntries.length ? (
-            <section className="mt-14">
-              <div className="mb-6 flex items-end justify-between gap-4">
-                <div>
-                  <p className="eyebrow text-accent">Related reading</p>
-                  <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
-                    More from {mendpressSectionLabel(entry.editorialType)}
-                  </h2>
-                </div>
-                <Link href={entry.categoryPath} className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-                  View all
+          {relatedEntries.length ? null : (
+            <section className="mt-14 rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
+              <p className="eyebrow text-accent">Continue reading</p>
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
+                <h2 className="text-2xl font-serif font-semibold text-fg">More from Mendpress</h2>
+                <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+                  Back to Mendpress
                 </Link>
               </div>
-              <div className="grid gap-6 md:grid-cols-3">
-                {relatedEntries.map((relatedEntry) => (
-                  <JournalCard key={relatedEntry.id} entry={relatedEntry} />
-                ))}
-              </div>
             </section>
-          ) : null}
+          )}
         </article>
       </div>
     </main>

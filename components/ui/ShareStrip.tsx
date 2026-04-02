@@ -23,6 +23,8 @@ export interface ShareStripProps {
   shortShareBlurb?: string
   variant?: ShareStripVariant
   className?: string
+  label?: string
+  bordered?: boolean
   /** When set, adds data-ssd-share-channel on controls for SSD hub campaign capture */
   ssdCampaignShare?: boolean
 }
@@ -34,6 +36,8 @@ export function ShareStrip({
   shortShareBlurb,
   variant = 'surface',
   className,
+  label = 'Share',
+  bordered = true,
   ssdCampaignShare = false,
 }: ShareStripProps) {
   const [copied, setCopied] = useState(false)
@@ -107,12 +111,12 @@ export function ShareStrip({
   return (
     <div
       className={cn(
-        'border-t pt-5',
-        isDark ? 'border-white/15' : 'border-border dark:border-neutral-700',
+        bordered ? 'border-t pt-5' : 'pt-0',
+        bordered ? (isDark ? 'border-white/15' : 'border-border dark:border-neutral-700') : '',
         className
       )}
     >
-      <p className={labelClass}>Share</p>
+      <p className={labelClass}>{label}</p>
       <div className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2" role="group" aria-label="Share this page">
         <button
           type="button"
