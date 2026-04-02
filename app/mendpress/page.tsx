@@ -7,7 +7,7 @@ export const revalidate = 300
 export const metadata: Metadata = genMeta({
   title: 'Mendpress',
   description:
-    'Mendpress is Bayview Hub thinking in public — a publishing layer for editorial interpretation, dialogue, visual narrative, and reports.',
+    'Mendpress is Bayview Hub thinking in public — a publishing layer for editorial interpretation, dialogue, visual narrative, and programme.',
   path: '/mendpress',
 })
 
@@ -16,7 +16,7 @@ export default function MendpressPage() {
     <JournalCollectionPage
       eyebrow="Bayview Hub"
       title="Mendpress"
-      intro="Mendpress is Bayview Hub thinking in public — a publishing layer for editorial interpretation, dialogue, visual narrative, and reports."
+      intro="Mendpress is Bayview Hub thinking in public — a publishing layer for editorial interpretation, dialogue, visual narrative, and programme."
     />
   )
 }

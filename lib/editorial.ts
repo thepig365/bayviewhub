@@ -152,7 +152,7 @@ export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSection
     path: '/mendpress/visual-narrative',
   },
   reports: {
-    label: 'Reports',
+    label: 'Programme',
     description: 'Dispatches, invitations, briefs, and contextual publication material gathered for Mendpress.',
     path: '/mendpress/reports',
   },
@@ -604,5 +604,5 @@ export const MENDPRESS_CATEGORY_LINKS = [
   { id: 'editorial', label: 'Editorial', href: '/mendpress/editorial' },
   { id: 'dialogue', label: 'Dialogue', href: '/mendpress/dialogue' },
   { id: 'visual_narrative', label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
-  { id: 'reports', label: 'Reports', href: '/mendpress/reports' },
+  { id: 'reports', label: 'Programme', href: '/mendpress/reports' },
 ] as const
