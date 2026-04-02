@@ -246,6 +246,52 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* About Us */}
+      <section className="py-16 md:py-20 bg-bg">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <p className="eyebrow text-accent mb-3">About Us</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-fg mb-6 leading-tight">
+              Why Bayview Hub exists
+            </h2>
+            <div className="max-w-3xl space-y-5 text-base md:text-lg leading-8 text-muted reading">
+              <p>
+                Bayview Hub exists because contemporary life has become increasingly efficient, connected, and accelerated
+                {' '}yet often thinner in attention, place, beauty, and shared experience.
+              </p>
+              <p>
+                We are building a living cultural place on the Mornington Peninsula where art, music, hospitality, gardens,
+                workshops, and slow life form part of one larger human ecology.
+              </p>
+              <p>
+                Here, these things belong together. The gallery is not an ornament. Music is not background. Gardens are not
+                scenery. Hospitality is not merely service. Each element helps restore attention, conversation, memory, and a
+                more grounded way of being with others.
+              </p>
+              <p>
+                Bayview Hub also stands in relation to a wider body of work. Mend is the deeper inquiry into emotional life,
+                meaning, repair, and reconciliation. Mendpress gives that inquiry language through essays, conversations, and
+                editorial work. Bayview Hub gives it a physical setting {' '}a rare kind of place where such questions can be
+                lived through art, non-clinical art therapeutic workshops, music, edible gardens, hospitality, beauty, and
+                community.
+              </p>
+              <p>
+                In an age shaped by screens, speed, isolation, and overstimulation, places like this matter. Not because they
+                offer escape, but because they make another way of living visible again.
+              </p>
+            </div>
+            <div className="mt-8">
+              <Link
+                href="/experiences"
+                className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+              >
+                Explore Bayview Hub
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Landing tracks — discoverability for SSD + Gallery / Private Viewing */}
       <section className="py-12 md:py-16 bg-natural-100 dark:bg-surface/30 border-y border-border">
         <div className="container mx-auto px-4">
