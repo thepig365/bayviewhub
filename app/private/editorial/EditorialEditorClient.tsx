@@ -352,8 +352,8 @@ export function EditorialEditorClient({
   }, [editorialMode, editorialType, entry?.editorialType])
   const hasAudioSupport = editorialMode !== 'written'
   const audioReady = Boolean(audioUrl)
-  const audioUploadPending = editorialMode === 'audio' && !audioReady && audioUploadEnabled
-  const revealAudioFields = editorialMode !== 'audio' || audioReady || !audioUploadEnabled
+  const audioUploadPending = editorialMode === 'audio' && !audioReady
+  const revealAudioFields = editorialMode !== 'audio' || audioReady
   const linkedInSource = useMemo(
     () => ({
       title: title.trim() || entry?.title || '',
@@ -832,77 +832,61 @@ export function EditorialEditorClient({
                 className="hidden"
               />
 
-              {audioUploadEnabled ? (
-                <div
-                  role={canChoosePrimaryAudio ? 'button' : undefined}
-                  tabIndex={canChoosePrimaryAudio ? 0 : -1}
-                  aria-disabled={!canChoosePrimaryAudio}
-                  onClick={openPrimaryAudioPicker}
-                  onKeyDown={(event) => {
-                    if (!canChoosePrimaryAudio) return
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault()
-                      openPrimaryAudioPicker()
-                    }
-                  }}
-                  onDragOver={(event) => {
+              <div
+                role={canChoosePrimaryAudio ? 'button' : undefined}
+                tabIndex={canChoosePrimaryAudio ? 0 : -1}
+                aria-disabled={!canChoosePrimaryAudio}
+                onClick={openPrimaryAudioPicker}
+                onKeyDown={(event) => {
+                  if (!canChoosePrimaryAudio) return
+                  if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault()
-                    if (canChoosePrimaryAudio) setAudioDragActive(true)
-                  }}
-                  onDragLeave={() => setAudioDragActive(false)}
-                  onDrop={handleAudioDrop}
-                  className={`mt-5 block rounded-3xl border border-dashed px-6 py-10 text-center transition-colors ${
-                    audioDragActive ? 'border-accent bg-accent/5' : 'border-border bg-natural-50 dark:bg-surface'
-                  } ${canChoosePrimaryAudio ? 'cursor-pointer hover:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40' : 'cursor-default opacity-80'}`}
-                >
-                  <div className="mx-auto max-w-2xl">
-                    <p className="text-xl font-serif font-semibold text-fg">
-                      {audioReady ? 'Audio is attached' : 'Drop an audio file here'}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-muted">
-                      {audioReady
-                        ? 'You can replace the current file at any time and keep refining the editorial draft.'
-                        : 'Choose the recording first. The system will detect duration and prepare transcript, show-notes, and companion-text drafts.'}
-                    </p>
-                    <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{SUPPORTED_AUDIO_COPY}</p>
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        event.stopPropagation()
-                        openPrimaryAudioPicker()
-                      }}
-                      disabled={!canChoosePrimaryAudio}
-                      className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
-                        canChoosePrimaryAudio
-                          ? 'bg-accent font-medium text-white'
-                          : 'border border-border text-fg'
-                      }`}
-                    >
-                      {audioUploadState === 'loading'
-                        ? 'Uploading…'
-                        : audioReady
-                          ? 'Choose replacement file'
-                          : 'Choose audio file'}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="mt-5 rounded-3xl border border-border bg-natural-50 px-6 py-8 dark:border-border dark:bg-surface">
-                  <p className="text-lg font-serif font-semibold text-fg">Audio upload is not enabled here</p>
-                  <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
-                    This deployment cannot receive direct audio uploads yet. You can still continue by pasting a direct audio file URL below.
+                    openPrimaryAudioPicker()
+                  }
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault()
+                  if (canChoosePrimaryAudio) setAudioDragActive(true)
+                }}
+                onDragLeave={() => setAudioDragActive(false)}
+                onDrop={handleAudioDrop}
+                className={`mt-5 block rounded-3xl border border-dashed px-6 py-10 text-center transition-colors ${
+                  audioDragActive ? 'border-accent bg-accent/5' : 'border-border bg-natural-50 dark:bg-surface'
+                } ${canChoosePrimaryAudio ? 'cursor-pointer hover:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40' : 'cursor-default opacity-80'}`}
+              >
+                <div className="mx-auto max-w-2xl">
+                  <p className="text-xl font-serif font-semibold text-fg">
+                    {audioReady ? 'Audio is attached' : 'Drop an audio file here'}
                   </p>
-                  <div className="mt-5 max-w-2xl">
-                    <label className="mb-2 block text-sm font-medium text-fg">Audio file URL</label>
-                    <input
-                      value={audioUrl}
-                      onChange={(e) => setAudioUrl(e.target.value)}
-                      className={FIELD_BASE_CLASS}
-                      placeholder="https://..."
-                    />
-                  </div>
+                  <p className="mt-3 text-sm leading-7 text-muted">
+                    {audioReady
+                      ? 'You can replace the current file at any time and keep refining the editorial draft.'
+                      : 'Choose the recording first. The system will detect duration and prepare transcript, show-notes, and companion-text drafts.'}
+                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{SUPPORTED_AUDIO_COPY}</p>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      openPrimaryAudioPicker()
+                    }}
+                    disabled={!canChoosePrimaryAudio}
+                    className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
+                      canChoosePrimaryAudio
+                        ? 'bg-accent font-medium text-white'
+                        : 'border border-border text-fg'
+                    }`}
+                  >
+                    {audioUploadState === 'loading'
+                      ? 'Uploading…'
+                      : audioReady
+                        ? 'Choose replacement file'
+                        : audioUploadEnabled
+                          ? 'Choose audio file'
+                          : 'Audio uploads unavailable'}
+                  </button>
                 </div>
-              )}
+              </div>
 
               {audioUrl ? (
                 <div className="mt-5 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-surface">
