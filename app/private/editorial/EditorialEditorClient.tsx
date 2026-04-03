@@ -24,8 +24,12 @@ type Props = {
 }
 
 type UploadStatus = 'idle' | 'loading' | 'success' | 'error'
+type AssistStatus = 'idle' | 'loading' | 'placeholder_ready' | 'ready'
 
 const INLINE_MAX_DIMENSION = 1800
+const SUPPORTED_AUDIO_COPY = 'MP3, M4A, WAV, OGG, or WebM up to 150 MB'
+const FIELD_BASE_CLASS = `${CONTRAST_FORM_CONTROL_CLASS} text-base`
+const WRITING_TEXTAREA_CLASS = `${CONTRAST_FORM_CONTROL_CLASS} text-base leading-8`
 
 const MODE_OPTIONS: Array<{
   id: EditorialMode
@@ -208,6 +212,80 @@ function formatDuration(value: number | null): string | null {
   return `${minutes}:${`${seconds}`.padStart(2, '0')}`
 }
 
+function wait(ms: number) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms))
+}
+
+function buildTranscriptPlaceholder({
+  title,
+  durationLabel,
+}: {
+  title: string
+  durationLabel?: string | null
+}) {
+  return [
+    '## Transcript draft',
+    '',
+    `A transcript placeholder was prepared for "${title || 'this piece'}".`,
+    durationLabel ? `Detected duration: ${durationLabel}.` : '',
+    '',
+    'Automatic speech-to-text is not connected in this environment yet.',
+    'Replace this placeholder with the processed transcript when it becomes available.',
+  ]
+    .filter(Boolean)
+    .join('\n')
+}
+
+function buildShowNotesDraft({
+  title,
+  summary,
+  speakers,
+}: {
+  title: string
+  summary: string
+  speakers: string[]
+}) {
+  return [
+    '## Show notes',
+    '',
+    summary || `A short introduction to ${title || 'this audio piece'}.`,
+    '',
+    '## In this piece',
+    '- Opening frame and context',
+    '- Main themes and conversation turns',
+    '- Closing note or invitation',
+    speakers.length ? '' : null,
+    speakers.length ? `## Speakers\n- ${speakers.join('\n- ')}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n')
+}
+
+function buildCompanionDraft({
+  title,
+  summary,
+}: {
+  title: string
+  summary: string
+}) {
+  return [
+    summary || `${title || 'This piece'} is now available to listen to on Mendpress.`,
+    '',
+    'This companion draft was prepared after upload as a starting point for editorial refinement.',
+    'Shape it into a stronger opening note, framing paragraph, or written companion to the listening experience.',
+  ].join('\n')
+}
+
+function simplifyUploadError(message: string, kind: 'audio' | 'image'): string {
+  if (message.includes('BLOB_READ_WRITE_TOKEN') || message.includes('Configure Vercel Blob')) {
+    return kind === 'audio'
+      ? 'Audio upload is not available right now.'
+      : 'Image upload is not available right now.'
+  }
+
+  return message
+}
+
 export function EditorialEditorClient({
   entry,
   imageUploadEnabled = false,
@@ -251,6 +329,16 @@ export function EditorialEditorClient({
   const [audioUploadMessage, setAudioUploadMessage] = useState('')
   const [bodyAudioUploadState, setBodyAudioUploadState] = useState<UploadStatus>('idle')
   const [bodyAudioUploadMessage, setBodyAudioUploadMessage] = useState('')
+  const [audioDragActive, setAudioDragActive] = useState(false)
+  const [assistStatus, setAssistStatus] = useState<{
+    transcript: AssistStatus
+    showNotes: AssistStatus
+    companion: AssistStatus
+  }>({
+    transcript: entry?.transcriptMarkdown ? 'ready' : 'idle',
+    showNotes: entry?.showNotesMarkdown ? 'ready' : 'idle',
+    companion: entry?.bodyMarkdown ? 'ready' : 'idle',
+  })
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
   const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
@@ -263,6 +351,9 @@ export function EditorialEditorClient({
     return Array.from(options)
   }, [editorialMode, editorialType, entry?.editorialType])
   const hasAudioSupport = editorialMode !== 'written'
+  const audioReady = Boolean(audioUrl)
+  const audioUploadPending = editorialMode === 'audio' && !audioReady
+  const revealAudioFields = editorialMode !== 'audio' || audioReady
   const linkedInSource = useMemo(
     () => ({
       title: title.trim() || entry?.title || '',
@@ -299,6 +390,50 @@ export function EditorialEditorClient({
     setEditorialMode(nextMode)
     if (!MODE_TYPE_OPTIONS[nextMode].includes(editorialType)) {
       setEditorialType(MODE_TYPE_OPTIONS[nextMode][0])
+    }
+  }
+
+  const runAudioAssistWorkflow = async ({
+    file,
+    duration,
+  }: {
+    file: File
+    duration: number | null
+  }) => {
+    const detectedSpeakers = sanitizeEditorialSpeakers(speakers)
+    const durationLabel = formatDuration(duration)
+    const fallbackTitle = title.trim() || baseFilename(file.name).replaceAll('-', ' ')
+
+    if (!transcriptMarkdown.trim()) {
+      setAssistStatus((current) => ({ ...current, transcript: 'loading' }))
+      await wait(500)
+      setTranscriptMarkdown(buildTranscriptPlaceholder({ title: fallbackTitle, durationLabel }))
+      setAssistStatus((current) => ({ ...current, transcript: 'placeholder_ready' }))
+    }
+
+    if (!showNotesMarkdown.trim()) {
+      setAssistStatus((current) => ({ ...current, showNotes: 'loading' }))
+      await wait(450)
+      setShowNotesMarkdown(
+        buildShowNotesDraft({
+          title: fallbackTitle,
+          summary: summary.trim(),
+          speakers: detectedSpeakers,
+        })
+      )
+      setAssistStatus((current) => ({ ...current, showNotes: 'placeholder_ready' }))
+    }
+
+    if (!bodyMarkdown.trim()) {
+      setAssistStatus((current) => ({ ...current, companion: 'loading' }))
+      await wait(400)
+      setBodyMarkdown(
+        buildCompanionDraft({
+          title: fallbackTitle,
+          summary: summary.trim(),
+        })
+      )
+      setAssistStatus((current) => ({ ...current, companion: 'placeholder_ready' }))
     }
   }
 
@@ -441,6 +576,25 @@ export function EditorialEditorClient({
     return data.url as string
   }
 
+  const startPrimaryAudioUpload = async (file: File) => {
+    setAudioUploadState('loading')
+    setAudioUploadMessage('Uploading audio and preparing draft fields...')
+
+    try {
+      const [url, duration] = await Promise.all([uploadAudioAsset(file), getAudioDuration(file)])
+      setAudioUrl(url)
+      setAudioDurationSeconds(duration)
+      await runAudioAssistWorkflow({ file, duration })
+      setAudioUploadState('success')
+      setAudioUploadMessage('Audio uploaded. Draft transcript and editorial fields are ready to refine.')
+    } catch (error) {
+      setAudioUploadState('error')
+      setAudioUploadMessage(
+        simplifyUploadError(error instanceof Error ? error.message : 'Audio upload failed.', 'audio')
+      )
+    }
+  }
+
   const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ''
@@ -474,7 +628,9 @@ export function EditorialEditorClient({
       setImageUploadMessage('Image uploaded and inserted. Click-to-enlarge will use the full-resolution source.')
     } catch (error) {
       setImageUploadState('error')
-      setImageUploadMessage(error instanceof Error ? error.message : 'Image upload failed.')
+      setImageUploadMessage(
+        simplifyUploadError(error instanceof Error ? error.message : 'Image upload failed.', 'image')
+      )
     }
   }
 
@@ -483,19 +639,7 @@ export function EditorialEditorClient({
     event.target.value = ''
     if (!file) return
 
-    setAudioUploadState('loading')
-    setAudioUploadMessage('Uploading audio...')
-
-    try {
-      const [url, duration] = await Promise.all([uploadAudioAsset(file), getAudioDuration(file)])
-      setAudioUrl(url)
-      setAudioDurationSeconds(duration)
-      setAudioUploadState('success')
-      setAudioUploadMessage('Audio uploaded. The top player will use this source.')
-    } catch (error) {
-      setAudioUploadState('error')
-      setAudioUploadMessage(error instanceof Error ? error.message : 'Audio upload failed.')
-    }
+    await startPrimaryAudioUpload(file)
   }
 
   const handleInsertAudioBlock = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -524,8 +668,35 @@ export function EditorialEditorClient({
       setBodyAudioUploadMessage('Audio block inserted into the body flow.')
     } catch (error) {
       setBodyAudioUploadState('error')
-      setBodyAudioUploadMessage(error instanceof Error ? error.message : 'Audio block upload failed.')
+      setBodyAudioUploadMessage(
+        simplifyUploadError(error instanceof Error ? error.message : 'Audio block upload failed.', 'audio')
+      )
     }
+  }
+
+  const handleAudioDrop = async (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault()
+    setAudioDragActive(false)
+    const file = event.dataTransfer.files?.[0]
+    if (!file) return
+    await startPrimaryAudioUpload(file)
+  }
+
+  const assistantTone =
+    assistStatus.transcript === 'loading' ||
+    assistStatus.showNotes === 'loading' ||
+    assistStatus.companion === 'loading'
+      ? 'System is preparing draft editorial materials from the uploaded audio.'
+      : 'Draft materials are ready for editorial refinement.'
+
+  const renderAssistStatus = (
+    value: AssistStatus,
+    labels: { loading: string; ready: string; placeholder: string }
+  ) => {
+    if (value === 'loading') return <span className="text-accent">{labels.loading}</span>
+    if (value === 'placeholder_ready') return <span className="text-muted">{labels.placeholder}</span>
+    if (value === 'ready') return <span className="text-muted">{labels.ready}</span>
+    return null
   }
 
   return (
@@ -538,10 +709,7 @@ export function EditorialEditorClient({
               {entry?.id ? 'Edit piece' : 'New piece'}
             </h1>
             <p className="mt-2 text-sm text-muted">
-              Mendpress pieces can now be written, audio-first, or hybrid. Simple markdown is supported:
-              blank lines create paragraphs, <code>##</code> creates a section heading, <code>-</code>{' '}
-              creates bullets, <code>[text](url)</code> creates a link, <code>![alt](image-url "caption")</code>{' '}
-              inserts an image, and <code>!audio[title](audio-url "note")</code> inserts an audio block.
+              Build the piece in the mode that matches how it will be experienced. Written stays text-first. Audio begins with upload, then refinement.
             </p>
           </div>
           <button type="button" onClick={logout} className="text-sm text-muted transition-colors hover:text-fg">
@@ -578,25 +746,27 @@ export function EditorialEditorClient({
         <div className="space-y-5">
           <div>
             <label className="mb-2 block text-sm font-medium text-fg">Title</label>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} className={CONTRAST_FORM_CONTROL_CLASS} />
+            <input value={title} onChange={(e) => setTitle(e.target.value)} className={FIELD_BASE_CLASS} />
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Slug</label>
+              <label className="mb-2 block text-sm font-medium text-fg">Slug (optional)</label>
               <input
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
+                className={FIELD_BASE_CLASS}
                 placeholder="in-the-age-of-ai"
               />
+              <p className="mt-2 text-xs text-muted">Leave this blank if you want the system to derive it from the title.</p>
             </div>
-            <div>
+            {revealAudioFields ? (
+              <div>
               <label className="mb-2 block text-sm font-medium text-fg">Editorial type</label>
               <select
                 value={editorialType}
                 onChange={(e) => setEditorialType(e.target.value as EditorialType)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
+                className={FIELD_BASE_CLASS}
               >
                 {currentTypeOptions.map((option) => (
                   <option key={option} value={option}>
@@ -605,7 +775,12 @@ export function EditorialEditorClient({
                 ))}
               </select>
               <p className="mt-2 text-xs text-muted">{editorialTypeAdminHint(editorialType)}</p>
-            </div>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-border px-4 py-4 text-sm text-muted dark:border-border">
+                Upload the audio first and the publishing setup will open underneath.
+              </div>
+            )}
           </div>
 
           <div>
@@ -614,7 +789,7 @@ export function EditorialEditorClient({
               rows={3}
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
-              className={CONTRAST_FORM_CONTROL_CLASS}
+              className={WRITING_TEXTAREA_CLASS}
             />
           </div>
 
@@ -622,79 +797,70 @@ export function EditorialEditorClient({
             <section className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <h2 className="text-xl font-serif font-semibold text-fg">Audio source</h2>
+                  <h2 className="text-xl font-serif font-semibold text-fg">
+                    {editorialMode === 'audio' ? 'Upload the audio first' : 'Add the main audio'}
+                  </h2>
                   <p className="mt-2 text-sm text-muted">
-                    Use a single primary audio file for audio-first pieces, or as the narrated / companion audio for hybrid pieces.
+                    {editorialMode === 'audio'
+                      ? 'Begin with the recording. Mendpress will open the editing workspace after the upload lands.'
+                      : 'Attach a narrated version or companion audio without interrupting the writing flow.'}
                   </p>
                 </div>
-                {audioUploadEnabled ? (
-                  <>
-                    <input
-                      ref={audioUploadInputRef}
-                      type="file"
-                      accept="audio/*"
-                      onChange={handleUploadPrimaryAudio}
-                      className="hidden"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => audioUploadInputRef.current?.click()}
-                      disabled={audioUploadState === 'loading'}
-                      className="rounded-full border border-border px-3 py-1 text-sm text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {audioUploadState === 'loading' ? 'Uploading audio...' : 'Upload audio'}
-                    </button>
-                  </>
+                {audioReady ? (
+                  <button
+                    type="button"
+                    onClick={() => audioUploadInputRef.current?.click()}
+                    className="rounded-full border border-border px-3 py-1 text-sm text-fg transition-colors hover:border-accent"
+                  >
+                    Replace audio
+                  </button>
                 ) : null}
               </div>
 
-              <div className="mt-5 grid gap-5 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-fg">Audio file URL</label>
-                  <input
-                    value={audioUrl}
-                    onChange={(e) => setAudioUrl(e.target.value)}
-                    className={CONTRAST_FORM_CONTROL_CLASS}
-                    placeholder="https://..."
-                  />
-                  <p className="mt-2 text-xs text-muted">
-                    {audioUploadEnabled
-                      ? 'Upload audio to set this automatically, or paste a direct audio URL.'
-                      : 'Audio upload is not configured in this environment yet. Paste a direct audio URL for now.'}
-                  </p>
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-fg">Speakers / guests</label>
-                  <input
-                    value={speakers}
-                    onChange={(e) => setSpeakers(e.target.value)}
-                    className={CONTRAST_FORM_CONTROL_CLASS}
-                    placeholder="Leon Zhang, Guest Name"
-                  />
-                  <p className="mt-2 text-xs text-muted">Comma-separated. Use this for hosts, guests, or featured voices.</p>
-                </div>
-              </div>
+              <input
+                ref={audioUploadInputRef}
+                type="file"
+                accept="audio/*"
+                onChange={handleUploadPrimaryAudio}
+                className="hidden"
+              />
 
-              <div className="mt-5 grid gap-5 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-fg">Show notes / companion text</label>
-                  <textarea
-                    rows={6}
-                    value={showNotesMarkdown}
-                    onChange={(e) => setShowNotesMarkdown(e.target.value)}
-                    className={`${CONTRAST_FORM_CONTROL_CLASS} font-mono text-sm leading-7`}
-                  />
+              <label
+                onDragOver={(event) => {
+                  event.preventDefault()
+                  if (audioUploadEnabled) setAudioDragActive(true)
+                }}
+                onDragLeave={() => setAudioDragActive(false)}
+                onDrop={handleAudioDrop}
+                className={`mt-5 block rounded-3xl border border-dashed px-6 py-10 text-center transition-colors ${
+                  audioDragActive ? 'border-accent bg-accent/5' : 'border-border bg-natural-50 dark:bg-surface'
+                } ${audioUploadEnabled ? 'cursor-pointer hover:border-accent/60' : 'cursor-default opacity-80'}`}
+              >
+                <div className="mx-auto max-w-2xl">
+                  <p className="text-xl font-serif font-semibold text-fg">
+                    {audioReady ? 'Audio is attached' : 'Drop an audio file here'}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-muted">
+                    {audioReady
+                      ? 'You can replace the current file at any time and keep refining the editorial draft.'
+                      : 'Choose the recording first. The system will detect duration and prepare transcript, show-notes, and companion-text drafts.'}
+                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{SUPPORTED_AUDIO_COPY}</p>
+                  <span className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
+                    audioUploadEnabled
+                      ? 'bg-accent font-medium text-white'
+                      : 'border border-border text-fg'
+                  }`}>
+                    {audioUploadState === 'loading'
+                      ? 'Uploading…'
+                      : audioReady
+                        ? 'Replace audio'
+                        : audioUploadEnabled
+                          ? 'Choose audio file'
+                          : 'Audio uploads unavailable'}
+                  </span>
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-fg">Transcript</label>
-                  <textarea
-                    rows={6}
-                    value={transcriptMarkdown}
-                    onChange={(e) => setTranscriptMarkdown(e.target.value)}
-                    className={`${CONTRAST_FORM_CONTROL_CLASS} font-mono text-sm leading-7`}
-                  />
-                </div>
-              </div>
+              </label>
 
               {audioUrl ? (
                 <div className="mt-5 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-surface">
@@ -702,220 +868,317 @@ export function EditorialEditorClient({
                     <p className="text-sm font-medium text-fg">Audio preview</p>
                     {formatDuration(audioDurationSeconds) ? (
                       <p className="text-xs text-muted">Detected duration: {formatDuration(audioDurationSeconds)}</p>
-                    ) : (
-                      <p className="text-xs text-muted">Duration can be set automatically from uploads when available.</p>
-                    )}
+                    ) : null}
                   </div>
                   <audio controls src={audioUrl} className="mt-3 w-full" />
                 </div>
               ) : null}
 
               {audioUploadMessage ? (
-                <p className={`mt-3 text-xs ${audioUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
+                <p className={`mt-3 text-sm ${audioUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
                   {audioUploadMessage}
                 </p>
+              ) : null}
+
+              {audioReady ? (
+                <div className="mt-5 rounded-2xl border border-border bg-white p-4 dark:border-border dark:bg-neutral-950">
+                  <p className="text-sm font-medium text-fg">Processing</p>
+                  <p className="mt-2 text-sm text-muted">{assistantTone}</p>
+                  <div className="mt-4 grid gap-3 md:grid-cols-3">
+                    <div className="rounded-2xl bg-natural-50 px-4 py-3 text-sm dark:bg-surface">
+                      <p className="font-medium text-fg">Transcript</p>
+                      <p className="mt-1 text-xs leading-6">
+                        {renderAssistStatus(assistStatus.transcript, {
+                          loading: 'Generating transcript…',
+                          placeholder: 'Placeholder draft ready',
+                          ready: 'Ready',
+                        })}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl bg-natural-50 px-4 py-3 text-sm dark:bg-surface">
+                      <p className="font-medium text-fg">Show notes</p>
+                      <p className="mt-1 text-xs leading-6">
+                        {renderAssistStatus(assistStatus.showNotes, {
+                          loading: 'Drafting show notes…',
+                          placeholder: 'Placeholder draft ready',
+                          ready: 'Ready',
+                        })}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl bg-natural-50 px-4 py-3 text-sm dark:bg-surface">
+                      <p className="font-medium text-fg">Companion text</p>
+                      <p className="mt-1 text-xs leading-6">
+                        {renderAssistStatus(assistStatus.companion, {
+                          loading: 'Drafting companion text…',
+                          placeholder: 'Placeholder draft ready',
+                          ready: 'Ready',
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ) : null}
             </section>
           ) : null}
 
-          <div>
-            <label className="mb-2 block text-sm font-medium text-fg">
-              {editorialMode === 'audio' ? 'Companion text' : 'Body'}
-            </label>
-            <div className="mb-3 flex flex-wrap gap-3 text-xs">
-              {imageUploadEnabled ? (
+          {revealAudioFields ? (
+            <>
+              {editorialMode === 'audio' ? (
                 <>
-                  <input
-                    ref={imageUploadInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleUploadImage}
-                    className="hidden"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => imageUploadInputRef.current?.click()}
-                    disabled={imageUploadState === 'loading'}
-                    className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {imageUploadState === 'loading' ? 'Uploading image...' : 'Upload image'}
-                  </button>
+                  <div>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <label className="block text-sm font-medium text-fg">Transcript</label>
+                      <span className="text-xs text-muted">
+                        {renderAssistStatus(assistStatus.transcript, {
+                          loading: 'Generating transcript…',
+                          placeholder: 'Placeholder draft',
+                          ready: 'Ready',
+                        })}
+                      </span>
+                    </div>
+                    <textarea
+                      rows={12}
+                      value={transcriptMarkdown}
+                      onChange={(e) => {
+                        setTranscriptMarkdown(e.target.value)
+                        if (e.target.value.trim()) {
+                          setAssistStatus((current) => ({ ...current, transcript: 'ready' }))
+                        }
+                      }}
+                      className={WRITING_TEXTAREA_CLASS}
+                    />
+                  </div>
+
+                  <div>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <label className="block text-sm font-medium text-fg">Show notes</label>
+                      <span className="text-xs text-muted">
+                        {renderAssistStatus(assistStatus.showNotes, {
+                          loading: 'Drafting show notes…',
+                          placeholder: 'Placeholder draft',
+                          ready: 'Ready',
+                        })}
+                      </span>
+                    </div>
+                    <textarea
+                      rows={10}
+                      value={showNotesMarkdown}
+                      onChange={(e) => {
+                        setShowNotesMarkdown(e.target.value)
+                        if (e.target.value.trim()) {
+                          setAssistStatus((current) => ({ ...current, showNotes: 'ready' }))
+                        }
+                      }}
+                      className={WRITING_TEXTAREA_CLASS}
+                    />
+                  </div>
                 </>
               ) : null}
-              {audioUploadEnabled ? (
-                <>
+
+              <div>
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                  <label className="block text-sm font-medium text-fg">
+                    {editorialMode === 'audio' ? 'Companion text' : 'Body'}
+                  </label>
+                  {(editorialMode === 'hybrid' || editorialMode === 'written') ? (
+                    <div className="flex flex-wrap gap-3 text-sm">
+                      {imageUploadEnabled ? (
+                        <>
+                          <input
+                            ref={imageUploadInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleUploadImage}
+                            className="hidden"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => imageUploadInputRef.current?.click()}
+                            disabled={imageUploadState === 'loading'}
+                            className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {imageUploadState === 'loading' ? 'Adding image…' : 'Add image'}
+                          </button>
+                        </>
+                      ) : null}
+                      {audioUploadEnabled ? (
+                        <>
+                          <input
+                            ref={bodyAudioUploadInputRef}
+                            type="file"
+                            accept="audio/*"
+                            onChange={handleInsertAudioBlock}
+                            className="hidden"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => bodyAudioUploadInputRef.current?.click()}
+                            disabled={bodyAudioUploadState === 'loading'}
+                            className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {bodyAudioUploadState === 'loading' ? 'Adding audio…' : 'Add audio'}
+                          </button>
+                        </>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <span className="text-xs text-muted">
+                      {renderAssistStatus(assistStatus.companion, {
+                        loading: 'Drafting companion text…',
+                        placeholder: 'Placeholder draft',
+                        ready: 'Ready',
+                      })}
+                    </span>
+                  )}
+                </div>
+                <textarea
+                  ref={bodyTextareaRef}
+                  rows={editorialMode === 'audio' ? 12 : 20}
+                  value={bodyMarkdown}
+                  onChange={(e) => {
+                    setBodyMarkdown(e.target.value)
+                    if (editorialMode === 'audio' && e.target.value.trim()) {
+                      setAssistStatus((current) => ({ ...current, companion: 'ready' }))
+                    }
+                  }}
+                  className={WRITING_TEXTAREA_CLASS}
+                />
+                {imageUploadMessage ? (
+                  <p className={`mt-2 text-sm ${imageUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
+                    {imageUploadMessage}
+                  </p>
+                ) : null}
+                {bodyAudioUploadMessage ? (
+                  <p className={`mt-2 text-sm ${bodyAudioUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
+                    {bodyAudioUploadMessage}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                {hasAudioSupport ? (
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-fg">Speakers / guests</label>
+                    <input
+                      value={speakers}
+                      onChange={(e) => setSpeakers(e.target.value)}
+                      className={FIELD_BASE_CLASS}
+                      placeholder="Leon Zhang, Guest Name"
+                    />
+                  </div>
+                ) : null}
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-fg">
+                    {hasAudioSupport ? 'Cover / hero image URL' : 'Hero image URL'}
+                  </label>
                   <input
-                    ref={bodyAudioUploadInputRef}
-                    type="file"
-                    accept="audio/*"
-                    onChange={handleInsertAudioBlock}
-                    className="hidden"
+                    value={heroImage}
+                    onChange={(e) => setHeroImage(e.target.value)}
+                    className={FIELD_BASE_CLASS}
+                    placeholder="https://..."
                   />
-                  <button
-                    type="button"
-                    onClick={() => bodyAudioUploadInputRef.current?.click()}
-                    disabled={bodyAudioUploadState === 'loading'}
-                    className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {bodyAudioUploadState === 'loading' ? 'Uploading audio...' : 'Insert audio block'}
-                  </button>
-                </>
-              ) : null}
-              <button
-                type="button"
-                onClick={() => insertBodySnippet('![Alt text](https://example.com/image.jpg "Optional caption")')}
-                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent"
-              >
-                Insert image block
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  insertBodySnippet(
-                    '!audio[Audio title](https://example.com/audio.mp3 "Optional note"){speaker=Leon Zhang}{duration=245}'
-                  )
-                }
-                className="rounded-full border border-border px-3 py-1 text-fg transition-colors hover:border-accent"
-              >
-                Insert audio block syntax
-              </button>
-            </div>
-            <textarea
-              ref={bodyTextareaRef}
-              rows={20}
-              value={bodyMarkdown}
-              onChange={(e) => setBodyMarkdown(e.target.value)}
-              className={`${CONTRAST_FORM_CONTROL_CLASS} font-mono text-sm leading-7`}
-            />
-            <div className="mt-2 space-y-1 text-xs text-muted">
-              <p>Use one media block per paragraph flow for essays, interviews, field notes, and hybrid listening pieces.</p>
-              <p>
-                {imageUploadEnabled ? (
-                  <>
-                    Upload image inserts optimized reading size plus zoom source. You can also write it manually as{' '}
-                    <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code>.
-                  </>
-                ) : (
-                  <>
-                    Image upload is not configured in this environment yet. Use manual image markdown such as{' '}
-                    <code>![Alt text](https://example.com/image.jpg "Caption")</code> or{' '}
-                    <code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code>.
-                  </>
-                )}
-              </p>
-              <p>
-                {audioUploadEnabled ? (
-                  <>
-                    Audio upload can insert playable body blocks automatically. Manual audio syntax is{' '}
-                    <code>!audio[Title](https://example.com/audio.mp3 "Optional note")&#123;speaker=Name&#125;&#123;duration=245&#125;</code>.
-                  </>
-                ) : (
-                  <>
-                    Audio upload is not configured in this environment yet. Use manual audio syntax such as{' '}
-                    <code>!audio[Title](https://example.com/audio.mp3 "Optional note")&#123;speaker=Name&#125;</code>.
-                  </>
-                )}
-              </p>
-              {imageUploadMessage ? (
-                <p className={imageUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}>
-                  {imageUploadMessage}
-                </p>
-              ) : null}
-              {bodyAudioUploadMessage ? (
-                <p className={bodyAudioUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}>
-                  {bodyAudioUploadMessage}
-                </p>
-              ) : null}
-            </div>
-          </div>
+                </div>
+              </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">
-                {hasAudioSupport ? 'Cover / hero image URL' : 'Hero image URL'}
-              </label>
-              <input
-                value={heroImage}
-                onChange={(e) => setHeroImage(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-                placeholder="https://..."
-              />
-              <p className="mt-2 text-xs text-muted">
-                Use this for the article cover, social preview, or audio episode artwork. Inline body media should go in the main field above.
-              </p>
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Byline</label>
-              <input
-                value={byline}
-                onChange={(e) => setByline(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-                placeholder="Mendpress Editorial Desk"
-              />
-            </div>
-          </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-fg">Byline</label>
+                  <input
+                    value={byline}
+                    onChange={(e) => setByline(e.target.value)}
+                    className={FIELD_BASE_CLASS}
+                    placeholder="Mendpress Editorial Desk"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-fg">Tags</label>
+                  <input
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                    className={FIELD_BASE_CLASS}
+                    placeholder="art, listening, place"
+                  />
+                </div>
+              </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Primary CTA label</label>
-              <input
-                value={primaryCtaLabel}
-                onChange={(e) => setPrimaryCtaLabel(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-                placeholder={isAudioFirstEditorialType(editorialType) ? 'Listen on Mendpress' : 'Read on Mendpress'}
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Primary CTA href</label>
-              <input
-                value={primaryCtaHref}
-                onChange={(e) => setPrimaryCtaHref(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-                placeholder="/newsletter or https://..."
-              />
-            </div>
-          </div>
+              <details className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
+                <summary className="cursor-pointer text-sm font-medium text-fg">Advanced</summary>
+                <div className="mt-4 space-y-5">
+                  {hasAudioSupport ? (
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Audio file URL</label>
+                      <input
+                        value={audioUrl}
+                        onChange={(e) => setAudioUrl(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                        placeholder="https://..."
+                      />
+                    </div>
+                  ) : null}
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Publish date</label>
-              <input
-                type="datetime-local"
-                value={publishedAt}
-                onChange={(e) => setPublishedAt(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">Tags</label>
-              <input
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-                placeholder="art, listening, place"
-              />
-            </div>
-          </div>
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Primary CTA label</label>
+                      <input
+                        value={primaryCtaLabel}
+                        onChange={(e) => setPrimaryCtaLabel(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                        placeholder={isAudioFirstEditorialType(editorialType) ? 'Listen on Mendpress' : 'Read on Mendpress'}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Primary CTA href</label>
+                      <input
+                        value={primaryCtaHref}
+                        onChange={(e) => setPrimaryCtaHref(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                        placeholder="/newsletter or https://..."
+                      />
+                    </div>
+                  </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">SEO title</label>
-              <input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} className={CONTRAST_FORM_CONTROL_CLASS} />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-fg">SEO description</label>
-              <input
-                value={seoDescription}
-                onChange={(e) => setSeoDescription(e.target.value)}
-                className={CONTRAST_FORM_CONTROL_CLASS}
-              />
-            </div>
-          </div>
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Publish date</label>
+                      <input
+                        type="datetime-local"
+                        value={publishedAt}
+                        onChange={(e) => setPublishedAt(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">SEO title</label>
+                      <input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} className={FIELD_BASE_CLASS} />
+                    </div>
+                  </div>
 
-          <label className="flex items-center gap-3 text-sm text-fg">
-            <input type="checkbox" checked={pinned} onChange={(e) => setPinned(e.target.checked)} className="h-4 w-4" />
-            Pin this piece to the top of Mendpress lists
-          </label>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-fg">SEO description</label>
+                    <input
+                      value={seoDescription}
+                      onChange={(e) => setSeoDescription(e.target.value)}
+                      className={FIELD_BASE_CLASS}
+                    />
+                  </div>
+
+                  <label className="flex items-center gap-3 text-sm text-fg">
+                    <input type="checkbox" checked={pinned} onChange={(e) => setPinned(e.target.checked)} className="h-4 w-4" />
+                    Pin this piece to the top of Mendpress lists
+                  </label>
+
+                  <div className="rounded-2xl border border-border bg-natural-50 p-4 text-sm dark:border-border dark:bg-surface">
+                    <p className="font-medium text-fg">Advanced body helpers</p>
+                    <p className="mt-2 text-muted">These are optional fallbacks for direct embeds or hand-edited markdown.</p>
+                    <div className="mt-3 space-y-2 text-xs text-muted">
+                      <p><code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code></p>
+                      <p><code>!audio[Title](https://example.com/audio.mp3 "Optional note")&#123;speaker=Name&#125;&#123;duration=245&#125;</code></p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </>
+          ) : null}
         </div>
       </section>
 
@@ -929,24 +1192,30 @@ export function EditorialEditorClient({
             <p>Mode: <span className="font-medium text-fg">{MODE_OPTIONS.find((option) => option.id === editorialMode)?.label}</span></p>
             <p>Public section: <span className="font-medium text-fg">{mendpressSectionLabel(editorialType)}</span></p>
           </div>
-          <div className="mt-5 space-y-3">
-            <button
-              type="button"
-              onClick={() => submit('draft')}
-              disabled={status === 'loading'}
-              className="w-full rounded-lg bg-primary-700 px-4 py-3 font-medium text-white transition-colors hover:bg-primary-800 disabled:opacity-60"
-            >
-              {status === 'loading' ? 'Saving…' : 'Save Draft'}
-            </button>
-            <button
-              type="button"
-              onClick={() => submit('published')}
-              disabled={status === 'loading'}
-              className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
-            >
-              {status === 'loading' ? 'Publishing…' : 'Publish'}
-            </button>
-          </div>
+          {audioUploadPending ? (
+            <p className="mt-5 text-sm leading-7 text-muted">
+              Upload the audio first. Once the system has prepared the listening workspace, draft and publish controls will appear here.
+            </p>
+          ) : (
+            <div className="mt-5 space-y-3">
+              <button
+                type="button"
+                onClick={() => submit('draft')}
+                disabled={status === 'loading'}
+                className="w-full rounded-lg bg-primary-700 px-4 py-3 font-medium text-white transition-colors hover:bg-primary-800 disabled:opacity-60"
+              >
+                {status === 'loading' ? 'Saving…' : 'Save Draft'}
+              </button>
+              <button
+                type="button"
+                onClick={() => submit('published')}
+                disabled={status === 'loading'}
+                className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
+              >
+                {status === 'loading' ? 'Publishing…' : 'Publish'}
+              </button>
+            </div>
+          )}
           {message ? (
             <p className={`mt-4 text-sm ${status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
               {message}
