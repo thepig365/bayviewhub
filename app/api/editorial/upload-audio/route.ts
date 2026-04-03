@@ -8,19 +8,15 @@ import {
 
 export const runtime = 'nodejs'
 
-async function rejectIfUnauthorized() {
+async function ensureAuthorizedForToken() {
   const cookieStore = await cookies()
   const token = cookieStore.get(NEWSLETTER_ADMIN_COOKIE)?.value
   if (!isNewsletterAdminCookieValid(token)) {
-    return NextResponse.json({ ok: false, error: 'Unauthorized.' }, { status: 401 })
+    throw new Error('Unauthorized.')
   }
-  return null
 }
 
 export async function POST(request: Request) {
-  const unauthorized = await rejectIfUnauthorized()
-  if (unauthorized) return unauthorized
-
   try {
     const body = (await request.json()) as HandleUploadBody
 
@@ -29,6 +25,8 @@ export async function POST(request: Request) {
       request,
       token: process.env.BLOB_READ_WRITE_TOKEN,
       onBeforeGenerateToken: async (pathname) => {
+        await ensureAuthorizedForToken()
+
         if (!pathname.startsWith('mendpress/audio/')) {
           throw new Error('Invalid audio upload path.')
         }
@@ -54,14 +52,15 @@ export async function POST(request: Request) {
     return NextResponse.json(jsonResponse)
   } catch (error) {
     console.error('[Editorial Upload] audio upload failed', error)
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Audio upload failed. Configure Vercel Blob storage and BLOB_READ_WRITE_TOKEN before using audio uploads.'
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Audio upload failed. Configure Vercel Blob storage and BLOB_READ_WRITE_TOKEN before using audio uploads.',
+        error: message,
       },
-      { status: 400 }
+      { status: message === 'Unauthorized.' ? 401 : 400 }
     )
   }
 }

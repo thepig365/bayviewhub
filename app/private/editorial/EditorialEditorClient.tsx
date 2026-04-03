@@ -25,7 +25,7 @@ type Props = {
 }
 
 type UploadStatus = 'idle' | 'loading' | 'success' | 'error'
-type AssistStatus = 'idle' | 'loading' | 'placeholder_ready' | 'ready'
+type AssistStatus = 'idle' | 'loading' | 'ready' | 'error'
 
 const INLINE_MAX_DIMENSION = 1800
 const SUPPORTED_AUDIO_COPY = 'MP3, M4A, WAV, OGG, or WebM up to 150 MB'
@@ -233,70 +233,6 @@ function formatDuration(value: number | null): string | null {
   return `${minutes}:${`${seconds}`.padStart(2, '0')}`
 }
 
-function wait(ms: number) {
-  return new Promise((resolve) => window.setTimeout(resolve, ms))
-}
-
-function buildTranscriptPlaceholder({
-  title,
-  durationLabel,
-}: {
-  title: string
-  durationLabel?: string | null
-}) {
-  return [
-    '## Transcript draft',
-    '',
-    `A transcript placeholder was prepared for "${title || 'this piece'}".`,
-    durationLabel ? `Detected duration: ${durationLabel}.` : '',
-    '',
-    'Automatic speech-to-text is not connected in this environment yet.',
-    'Replace this placeholder with the processed transcript when it becomes available.',
-  ]
-    .filter(Boolean)
-    .join('\n')
-}
-
-function buildShowNotesDraft({
-  title,
-  summary,
-  speakers,
-}: {
-  title: string
-  summary: string
-  speakers: string[]
-}) {
-  return [
-    '## Show notes',
-    '',
-    summary || `A short introduction to ${title || 'this audio piece'}.`,
-    '',
-    '## In this piece',
-    '- Opening frame and context',
-    '- Main themes and conversation turns',
-    '- Closing note or invitation',
-    speakers.length ? '' : null,
-    speakers.length ? `## Speakers\n- ${speakers.join('\n- ')}` : null,
-  ]
-    .filter(Boolean)
-    .join('\n')
-}
-
-function buildCompanionDraft({
-  title,
-  summary,
-}: {
-  title: string
-  summary: string
-}) {
-  return [
-    summary || `${title || 'This piece'} is now available to listen to on Mendpress.`,
-    '',
-    'This companion draft was prepared after upload as a starting point for editorial refinement.',
-    'Shape it into a stronger opening note, framing paragraph, or written companion to the listening experience.',
-  ].join('\n')
-}
-
 function simplifyUploadError(message: string, kind: 'audio' | 'image'): string {
   if (message.includes('BLOB_READ_WRITE_TOKEN') || message.includes('Configure Vercel Blob')) {
     return kind === 'audio'
@@ -351,6 +287,7 @@ export function EditorialEditorClient({
   const [bodyAudioUploadState, setBodyAudioUploadState] = useState<UploadStatus>('idle')
   const [bodyAudioUploadMessage, setBodyAudioUploadMessage] = useState('')
   const [audioDragActive, setAudioDragActive] = useState(false)
+  const [assistMessage, setAssistMessage] = useState('')
   const [assistStatus, setAssistStatus] = useState<{
     transcript: AssistStatus
     showNotes: AssistStatus
@@ -422,47 +359,56 @@ export function EditorialEditorClient({
   }
 
   const runAudioAssistWorkflow = async ({
-    file,
-    duration,
+    audioUrl,
   }: {
-    file: File
-    duration: number | null
+    audioUrl: string
   }) => {
-    const detectedSpeakers = sanitizeEditorialSpeakers(speakers)
-    const durationLabel = formatDuration(duration)
-    const fallbackTitle = title.trim() || baseFilename(file.name).replaceAll('-', ' ')
+    setAssistMessage('')
+    setAssistStatus({
+      transcript: 'loading',
+      showNotes: 'loading',
+      companion: 'loading',
+    })
 
-    if (!transcriptMarkdown.trim()) {
-      setAssistStatus((current) => ({ ...current, transcript: 'loading' }))
-      await wait(500)
-      setTranscriptMarkdown(buildTranscriptPlaceholder({ title: fallbackTitle, durationLabel }))
-      setAssistStatus((current) => ({ ...current, transcript: 'placeholder_ready' }))
+    const res = await fetch('/api/editorial/process-audio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        audioUrl,
+        title,
+        summary,
+        editorialType,
+        speakers,
+      }),
+    })
+
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok || !data.ok) {
+      const errorMessage = data.error || 'Audio processing failed.'
+      setAssistStatus({
+        transcript: 'error',
+        showNotes: 'error',
+        companion: 'error',
+      })
+      setAssistMessage(errorMessage)
+      throw new Error(errorMessage)
     }
 
-    if (!showNotesMarkdown.trim()) {
-      setAssistStatus((current) => ({ ...current, showNotes: 'loading' }))
-      await wait(450)
-      setShowNotesMarkdown(
-        buildShowNotesDraft({
-          title: fallbackTitle,
-          summary: summary.trim(),
-          speakers: detectedSpeakers,
-        })
-      )
-      setAssistStatus((current) => ({ ...current, showNotes: 'placeholder_ready' }))
+    if (typeof data.transcriptMarkdown === 'string') {
+      setTranscriptMarkdown(data.transcriptMarkdown)
+    }
+    if (typeof data.showNotesMarkdown === 'string') {
+      setShowNotesMarkdown(data.showNotesMarkdown)
+    }
+    if (typeof data.companionMarkdown === 'string') {
+      setBodyMarkdown(data.companionMarkdown)
     }
 
-    if (!bodyMarkdown.trim()) {
-      setAssistStatus((current) => ({ ...current, companion: 'loading' }))
-      await wait(400)
-      setBodyMarkdown(
-        buildCompanionDraft({
-          title: fallbackTitle,
-          summary: summary.trim(),
-        })
-      )
-      setAssistStatus((current) => ({ ...current, companion: 'placeholder_ready' }))
-    }
+    setAssistStatus({
+      transcript: typeof data.transcriptMarkdown === 'string' && data.transcriptMarkdown.trim() ? 'ready' : 'error',
+      showNotes: typeof data.showNotesMarkdown === 'string' && data.showNotesMarkdown.trim() ? 'ready' : 'error',
+      companion: typeof data.companionMarkdown === 'string' && data.companionMarkdown.trim() ? 'ready' : 'error',
+    })
   }
 
   const submit = async (desiredStatus: EditorialStatus) => {
@@ -599,20 +545,26 @@ export function EditorialEditorClient({
 
   const startPrimaryAudioUpload = async (file: File) => {
     setAudioUploadState('loading')
-    setAudioUploadMessage('Uploading audio and preparing draft fields...')
+    setAudioUploadMessage('Uploading audio...')
+    setAssistMessage('')
+    let uploadedUrl: string | null = null
 
     try {
       const [url, duration] = await Promise.all([uploadAudioAsset(file), getAudioDuration(file)])
+      uploadedUrl = url
       setAudioUrl(url)
       setAudioDurationSeconds(duration)
-      await runAudioAssistWorkflow({ file, duration })
       setAudioUploadState('success')
-      setAudioUploadMessage('Audio uploaded. Draft transcript and editorial fields are ready to refine.')
+      setAudioUploadMessage('Audio uploaded. Generating transcript and editorial drafts...')
+      await runAudioAssistWorkflow({ audioUrl: url })
+      setAudioUploadState('success')
+      setAudioUploadMessage('Audio uploaded. Transcript and editorial drafts are ready to refine.')
     } catch (error) {
-      setAudioUploadState('error')
-      setAudioUploadMessage(
-        simplifyUploadError(error instanceof Error ? error.message : 'Audio upload failed.', 'audio')
-      )
+      const message = simplifyUploadError(error instanceof Error ? error.message : 'Audio upload failed.', 'audio')
+      if (!uploadedUrl) {
+        setAudioUploadState('error')
+      }
+      setAudioUploadMessage(message)
     }
   }
 
@@ -707,16 +659,20 @@ export function EditorialEditorClient({
     assistStatus.transcript === 'loading' ||
     assistStatus.showNotes === 'loading' ||
     assistStatus.companion === 'loading'
-      ? 'System is preparing draft editorial materials from the uploaded audio.'
-      : 'Draft materials are ready for editorial refinement.'
+      ? 'System is transcribing the uploaded audio and preparing editorial drafts.'
+      : assistStatus.transcript === 'error' ||
+          assistStatus.showNotes === 'error' ||
+          assistStatus.companion === 'error'
+        ? 'Audio processing did not complete. Review the error below before trying again.'
+        : 'Transcript and editorial drafts are ready for refinement.'
 
   const renderAssistStatus = (
     value: AssistStatus,
-    labels: { loading: string; ready: string; placeholder: string }
+    labels: { loading: string; ready: string }
   ) => {
     if (value === 'loading') return <span className="text-accent">{labels.loading}</span>
-    if (value === 'placeholder_ready') return <span className="text-muted">{labels.placeholder}</span>
     if (value === 'ready') return <span className="text-muted">{labels.ready}</span>
+    if (value === 'error') return <span className="text-red-600 dark:text-red-400">Failed</span>
     return null
   }
 
@@ -919,6 +875,9 @@ export function EditorialEditorClient({
                   {audioUploadMessage}
                 </p>
               ) : null}
+              {assistMessage ? (
+                <p className="mt-2 text-sm text-red-600 dark:text-red-400">{assistMessage}</p>
+              ) : null}
 
               {audioReady ? (
                 <div className="mt-5 rounded-2xl border border-border bg-white p-4 dark:border-border dark:bg-neutral-950">
@@ -930,7 +889,6 @@ export function EditorialEditorClient({
                       <p className="mt-1 text-xs leading-6">
                         {renderAssistStatus(assistStatus.transcript, {
                           loading: 'Generating transcript…',
-                          placeholder: 'Placeholder draft ready',
                           ready: 'Ready',
                         })}
                       </p>
@@ -940,7 +898,6 @@ export function EditorialEditorClient({
                       <p className="mt-1 text-xs leading-6">
                         {renderAssistStatus(assistStatus.showNotes, {
                           loading: 'Drafting show notes…',
-                          placeholder: 'Placeholder draft ready',
                           ready: 'Ready',
                         })}
                       </p>
@@ -950,7 +907,6 @@ export function EditorialEditorClient({
                       <p className="mt-1 text-xs leading-6">
                         {renderAssistStatus(assistStatus.companion, {
                           loading: 'Drafting companion text…',
-                          placeholder: 'Placeholder draft ready',
                           ready: 'Ready',
                         })}
                       </p>
@@ -971,7 +927,6 @@ export function EditorialEditorClient({
                       <span className="text-xs text-muted">
                         {renderAssistStatus(assistStatus.transcript, {
                           loading: 'Generating transcript…',
-                          placeholder: 'Placeholder draft',
                           ready: 'Ready',
                         })}
                       </span>
@@ -995,7 +950,6 @@ export function EditorialEditorClient({
                       <span className="text-xs text-muted">
                         {renderAssistStatus(assistStatus.showNotes, {
                           loading: 'Drafting show notes…',
-                          placeholder: 'Placeholder draft',
                           ready: 'Ready',
                         })}
                       </span>
@@ -1065,7 +1019,6 @@ export function EditorialEditorClient({
                     <span className="text-xs text-muted">
                       {renderAssistStatus(assistStatus.companion, {
                         loading: 'Drafting companion text…',
-                        placeholder: 'Placeholder draft',
                         ready: 'Ready',
                       })}
                     </span>
