@@ -26,6 +26,11 @@ type Props = {
 
 type UploadStatus = 'idle' | 'loading' | 'success' | 'error'
 type AssistStatus = 'idle' | 'loading' | 'ready' | 'error'
+type AiMetadataSuggestions = {
+  title: string
+  slugSuggestion: string
+  seoKeywords: string[]
+}
 
 const INLINE_MAX_DIMENSION = 1800
 const SUPPORTED_AUDIO_COPY = 'MP3, M4A, WAV, OGG, or WebM up to 150 MB'
@@ -68,6 +73,19 @@ function baseFilename(value: string): string {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '') || 'asset'
   )
+}
+
+function labelForAudioSource(url: string): string {
+  if (!url) return 'Audio source attached'
+
+  try {
+    const parsed = new URL(url)
+    const lastSegment = parsed.pathname.split('/').filter(Boolean).pop()
+    if (!lastSegment) return 'Audio source attached'
+    return decodeURIComponent(lastSegment)
+  } catch {
+    return 'Audio source attached'
+  }
 }
 
 function escapeSnippetText(value: string): string {
@@ -256,9 +274,12 @@ export function EditorialEditorClient({
   const initialMode = entry ? inferEditorialMode(entry) : 'written'
   const [editorialMode, setEditorialMode] = useState<EditorialMode>(initialMode)
   const [title, setTitle] = useState(entry?.title || '')
+  const [titleZh, setTitleZh] = useState(entry?.titleZh || '')
   const [slug, setSlug] = useState(entry?.slug || '')
   const [summary, setSummary] = useState(entry?.summary || '')
+  const [summaryZh, setSummaryZh] = useState(entry?.summaryZh || '')
   const [bodyMarkdown, setBodyMarkdown] = useState(entry?.bodyMarkdown || '')
+  const [bodyMarkdownZh, setBodyMarkdownZh] = useState(entry?.bodyMarkdownZh || '')
   const [editorialType, setEditorialType] = useState<EditorialType>(
     entry?.editorialType || (initialMode === 'audio' ? 'audio_essay' : 'editorial')
   )
@@ -269,12 +290,16 @@ export function EditorialEditorClient({
   const [primaryCtaLabel, setPrimaryCtaLabel] = useState(entry?.primaryCtaLabel || '')
   const [primaryCtaHref, setPrimaryCtaHref] = useState(entry?.primaryCtaHref || '')
   const [seoTitle, setSeoTitle] = useState(entry?.seoTitle || '')
+  const [seoTitleZh, setSeoTitleZh] = useState(entry?.seoTitleZh || '')
   const [seoDescription, setSeoDescription] = useState(entry?.seoDescription || '')
+  const [seoDescriptionZh, setSeoDescriptionZh] = useState(entry?.seoDescriptionZh || '')
   const [pinned, setPinned] = useState(Boolean(entry?.pinned))
   const [audioUrl, setAudioUrl] = useState(entry?.audioUrl || '')
   const [audioDurationSeconds, setAudioDurationSeconds] = useState<number | null>(entry?.audioDurationSeconds || null)
   const [transcriptMarkdown, setTranscriptMarkdown] = useState(entry?.transcriptMarkdown || '')
+  const [transcriptMarkdownZh, setTranscriptMarkdownZh] = useState(entry?.transcriptMarkdownZh || '')
   const [showNotesMarkdown, setShowNotesMarkdown] = useState(entry?.showNotesMarkdown || '')
+  const [showNotesMarkdownZh, setShowNotesMarkdownZh] = useState(entry?.showNotesMarkdownZh || '')
   const [speakers, setSpeakers] = useState((entry?.speakers || []).join(', '))
   const [entryStatus, setEntryStatus] = useState<EditorialStatus>(entry?.status || 'draft')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -288,6 +313,13 @@ export function EditorialEditorClient({
   const [bodyAudioUploadMessage, setBodyAudioUploadMessage] = useState('')
   const [audioDragActive, setAudioDragActive] = useState(false)
   const [assistMessage, setAssistMessage] = useState('')
+  const [audioUrlCopied, setAudioUrlCopied] = useState(false)
+  const [showAudioUrlField, setShowAudioUrlField] = useState(false)
+  const [aiMetadataSuggestions, setAiMetadataSuggestions] = useState<AiMetadataSuggestions>({
+    title: '',
+    slugSuggestion: '',
+    seoKeywords: [],
+  })
   const [assistStatus, setAssistStatus] = useState<{
     transcript: AssistStatus
     showNotes: AssistStatus
@@ -358,12 +390,28 @@ export function EditorialEditorClient({
     audioUploadInputRef.current?.click()
   }
 
+  const copyAudioUrl = async () => {
+    if (!audioUrl) return
+    try {
+      await navigator.clipboard.writeText(audioUrl)
+      setAudioUrlCopied(true)
+      window.setTimeout(() => setAudioUrlCopied(false), 2000)
+    } catch {
+      setAudioUrlCopied(false)
+    }
+  }
+
   const runAudioAssistWorkflow = async ({
     audioUrl,
   }: {
     audioUrl: string
   }) => {
     setAssistMessage('')
+    setAiMetadataSuggestions({
+      title: '',
+      slugSuggestion: '',
+      seoKeywords: [],
+    })
     setAssistStatus({
       transcript: 'loading',
       showNotes: 'loading',
@@ -397,12 +445,55 @@ export function EditorialEditorClient({
     if (typeof data.transcriptMarkdown === 'string') {
       setTranscriptMarkdown(data.transcriptMarkdown)
     }
+    if (!transcriptMarkdownZh.trim() && typeof data.transcriptMarkdownZh === 'string') {
+      setTranscriptMarkdownZh(data.transcriptMarkdownZh)
+    }
     if (typeof data.showNotesMarkdown === 'string') {
       setShowNotesMarkdown(data.showNotesMarkdown)
+    }
+    if (!showNotesMarkdownZh.trim() && typeof data.showNotesMarkdownZh === 'string') {
+      setShowNotesMarkdownZh(data.showNotesMarkdownZh)
     }
     if (typeof data.companionMarkdown === 'string') {
       setBodyMarkdown(data.companionMarkdown)
     }
+    if (!bodyMarkdownZh.trim() && typeof data.companionMarkdownZh === 'string') {
+      setBodyMarkdownZh(data.companionMarkdownZh)
+    }
+    const metadata = typeof data.metadata === 'object' && data.metadata ? data.metadata : {}
+    const nextTitle = typeof metadata.title === 'string' ? metadata.title.trim() : ''
+    const nextTitleZh = typeof metadata.titleZh === 'string' ? metadata.titleZh.trim() : ''
+    const nextSummary = typeof metadata.summary === 'string' ? metadata.summary.trim() : ''
+    const nextSummaryZh = typeof metadata.summaryZh === 'string' ? metadata.summaryZh.trim() : ''
+    const nextTags = Array.isArray(metadata.tags) ? sanitizeEditorialTags(metadata.tags).join(', ') : ''
+    const nextSeoTitle = typeof metadata.seoTitle === 'string' ? metadata.seoTitle.trim() : ''
+    const nextSeoTitleZh = typeof metadata.seoTitleZh === 'string' ? metadata.seoTitleZh.trim() : ''
+    const nextSeoDescription = typeof metadata.seoDescription === 'string' ? metadata.seoDescription.trim() : ''
+    const nextSeoDescriptionZh = typeof metadata.seoDescriptionZh === 'string' ? metadata.seoDescriptionZh.trim() : ''
+    const nextSpeakers = Array.isArray(metadata.speakers) ? sanitizeEditorialSpeakers(metadata.speakers).join(', ') : ''
+    const nextPrimaryCtaLabel = typeof metadata.primaryCtaLabel === 'string' ? metadata.primaryCtaLabel.trim() : ''
+    const nextPrimaryCtaHref = typeof metadata.primaryCtaHref === 'string' ? metadata.primaryCtaHref.trim() : ''
+    const nextSlugSuggestion = typeof metadata.slugSuggestion === 'string' ? sanitizeEditorialSlug(metadata.slugSuggestion) : ''
+    const nextSeoKeywords = Array.isArray(metadata.seoKeywords) ? sanitizeEditorialTags(metadata.seoKeywords) : []
+
+    if (!title.trim() && nextTitle) setTitle(nextTitle)
+    if (!titleZh.trim() && nextTitleZh) setTitleZh(nextTitleZh)
+    if (!summary.trim() && nextSummary) setSummary(nextSummary)
+    if (!summaryZh.trim() && nextSummaryZh) setSummaryZh(nextSummaryZh)
+    if (!tags.trim() && nextTags) setTags(nextTags)
+    if (!seoTitle.trim() && nextSeoTitle) setSeoTitle(nextSeoTitle)
+    if (!seoTitleZh.trim() && nextSeoTitleZh) setSeoTitleZh(nextSeoTitleZh)
+    if (!seoDescription.trim() && nextSeoDescription) setSeoDescription(nextSeoDescription)
+    if (!seoDescriptionZh.trim() && nextSeoDescriptionZh) setSeoDescriptionZh(nextSeoDescriptionZh)
+    if (!speakers.trim() && nextSpeakers) setSpeakers(nextSpeakers)
+    if (!primaryCtaLabel.trim() && nextPrimaryCtaLabel) setPrimaryCtaLabel(nextPrimaryCtaLabel)
+    if (!primaryCtaHref.trim() && nextPrimaryCtaHref) setPrimaryCtaHref(nextPrimaryCtaHref)
+
+    setAiMetadataSuggestions({
+      title: nextTitle,
+      slugSuggestion: nextSlugSuggestion,
+      seoKeywords: nextSeoKeywords,
+    })
 
     setAssistStatus({
       transcript: typeof data.transcriptMarkdown === 'string' && data.transcriptMarkdown.trim() ? 'ready' : 'error',
@@ -414,6 +505,10 @@ export function EditorialEditorClient({
   const submit = async (desiredStatus: EditorialStatus) => {
     setStatus('loading')
     setMessage('')
+    const effectiveSlug = slug.trim() || sanitizeEditorialSlug('', title)
+    if (!slug.trim() && effectiveSlug) {
+      setSlug(effectiveSlug)
+    }
 
     const endpoint = entry?.id ? `/api/editorial/admin/${entry.id}` : '/api/editorial/admin'
     const method = entry?.id ? 'PATCH' : 'POST'
@@ -424,9 +519,12 @@ export function EditorialEditorClient({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title,
-          slug,
+          titleZh,
+          slug: effectiveSlug,
           summary,
+          summaryZh,
           bodyMarkdown,
+          bodyMarkdownZh,
           editorialType,
           editorialMode,
           status: desiredStatus,
@@ -437,12 +535,16 @@ export function EditorialEditorClient({
           primaryCtaLabel,
           primaryCtaHref,
           seoTitle,
+          seoTitleZh,
           seoDescription,
+          seoDescriptionZh,
           pinned,
           audioUrl,
           audioDurationSeconds,
           transcriptMarkdown,
+          transcriptMarkdownZh,
           showNotesMarkdown,
+          showNotesMarkdownZh,
           speakers,
         }),
       })
@@ -456,6 +558,9 @@ export function EditorialEditorClient({
 
       setStatus('success')
       setEntryStatus(desiredStatus)
+      if (typeof data.slug === 'string' && data.slug.trim()) {
+        setSlug(data.slug)
+      }
       setMessage(desiredStatus === 'published' ? 'Piece published.' : 'Draft saved.')
 
       if (!entry?.id && data.id) {
@@ -555,10 +660,10 @@ export function EditorialEditorClient({
       setAudioUrl(url)
       setAudioDurationSeconds(duration)
       setAudioUploadState('success')
-      setAudioUploadMessage('Audio uploaded. Generating transcript and editorial drafts...')
+      setAudioUploadMessage('Audio uploaded. Generating transcript, editorial drafts, and publishing metadata...')
       await runAudioAssistWorkflow({ audioUrl: url })
       setAudioUploadState('success')
-      setAudioUploadMessage('Audio uploaded. Transcript and editorial drafts are ready to refine.')
+      setAudioUploadMessage('Audio uploaded. Transcript, drafts, and metadata suggestions are ready to refine.')
     } catch (error) {
       const message = simplifyUploadError(error instanceof Error ? error.message : 'Audio upload failed.', 'audio')
       if (!uploadedUrl) {
@@ -659,12 +764,12 @@ export function EditorialEditorClient({
     assistStatus.transcript === 'loading' ||
     assistStatus.showNotes === 'loading' ||
     assistStatus.companion === 'loading'
-      ? 'System is transcribing the uploaded audio and preparing editorial drafts.'
+      ? 'System is transcribing the uploaded audio and preparing editorial drafts and metadata.'
       : assistStatus.transcript === 'error' ||
           assistStatus.showNotes === 'error' ||
           assistStatus.companion === 'error'
         ? 'Audio processing did not complete. Review the error below before trying again.'
-        : 'Transcript and editorial drafts are ready for refinement.'
+        : 'Transcript, editorial drafts, and metadata suggestions are ready for refinement.'
 
   const renderAssistStatus = (
     value: AssistStatus,
@@ -735,7 +840,8 @@ export function EditorialEditorClient({
                 className={FIELD_BASE_CLASS}
                 placeholder="in-the-age-of-ai"
               />
-              <p className="mt-2 text-xs text-muted">Leave this blank if you want the system to derive it from the title.</p>
+              <p className="mt-2 text-xs text-muted">Leave this blank and Mendpress will derive it from the title when you save or publish.</p>
+              {publicPath ? <p className="mt-2 break-all text-xs text-muted">Preview: {publicPath}</p> : null}
             </div>
             {revealAudioFields ? (
               <div>
@@ -861,10 +967,21 @@ export function EditorialEditorClient({
               {audioUrl ? (
                 <div className="mt-5 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-surface">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-sm font-medium text-fg">Audio preview</p>
-                    {formatDuration(audioDurationSeconds) ? (
-                      <p className="text-xs text-muted">Detected duration: {formatDuration(audioDurationSeconds)}</p>
-                    ) : null}
+                    <div>
+                      <p className="text-sm font-medium text-fg">Audio source attached</p>
+                      <p className="mt-1 break-all text-xs text-muted">{labelForAudioSource(audioUrl)}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+                      {formatDuration(audioDurationSeconds) ? (
+                        <p>Detected duration: {formatDuration(audioDurationSeconds)}</p>
+                      ) : null}
+                      <button type="button" onClick={copyAudioUrl} className="underline underline-offset-4 hover:text-fg">
+                        {audioUrlCopied ? 'URL copied' : 'Copy URL'}
+                      </button>
+                      <Link href={audioUrl} className="underline underline-offset-4 hover:text-fg" target="_blank" rel="noreferrer">
+                        Open file
+                      </Link>
+                    </div>
                   </div>
                   <audio controls src={audioUrl} className="mt-3 w-full" />
                 </div>
@@ -912,6 +1029,20 @@ export function EditorialEditorClient({
                       </p>
                     </div>
                   </div>
+                  {(aiMetadataSuggestions.seoKeywords.length || aiMetadataSuggestions.slugSuggestion || aiMetadataSuggestions.title) ? (
+                    <div className="mt-4 rounded-2xl bg-natural-50 px-4 py-3 text-sm dark:bg-surface">
+                      <p className="font-medium text-fg">Editorial suggestions</p>
+                      {aiMetadataSuggestions.title && !title.trim() ? (
+                        <p className="mt-2 text-xs text-muted">Suggested title: {aiMetadataSuggestions.title}</p>
+                      ) : null}
+                      {aiMetadataSuggestions.slugSuggestion ? (
+                        <p className="mt-2 text-xs text-muted">Slug suggestion: {aiMetadataSuggestions.slugSuggestion}</p>
+                      ) : null}
+                      {aiMetadataSuggestions.seoKeywords.length ? (
+                        <p className="mt-2 text-xs text-muted">Topic terms: {aiMetadataSuggestions.seoKeywords.join(', ')}</p>
+                      ) : null}
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </section>
@@ -1048,6 +1179,63 @@ export function EditorialEditorClient({
                 ) : null}
               </div>
 
+              <section className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
+                <h2 className="text-xl font-serif font-semibold text-fg">Chinese version</h2>
+                <p className="mt-2 text-sm text-muted">
+                  Use these fields when the piece has a real Chinese public version. For audio and interview pieces, the Chinese transcript/script should live here even if the audio file itself remains single-language.
+                </p>
+                <div className="mt-5 grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-fg">Chinese title</label>
+                    <input value={titleZh} onChange={(e) => setTitleZh(e.target.value)} className={FIELD_BASE_CLASS} />
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-fg">Chinese summary / dek</label>
+                    <textarea
+                      rows={3}
+                      value={summaryZh}
+                      onChange={(e) => setSummaryZh(e.target.value)}
+                      className={WRITING_TEXTAREA_CLASS}
+                    />
+                  </div>
+                </div>
+
+                {editorialMode === 'audio' ? (
+                  <div className="mt-5 grid gap-5">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Chinese transcript / script</label>
+                      <textarea
+                        rows={12}
+                        value={transcriptMarkdownZh}
+                        onChange={(e) => setTranscriptMarkdownZh(e.target.value)}
+                        className={WRITING_TEXTAREA_CLASS}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Chinese show notes</label>
+                      <textarea
+                        rows={10}
+                        value={showNotesMarkdownZh}
+                        onChange={(e) => setShowNotesMarkdownZh(e.target.value)}
+                        className={WRITING_TEXTAREA_CLASS}
+                      />
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="mt-5">
+                  <label className="mb-2 block text-sm font-medium text-fg">
+                    {editorialMode === 'audio' ? 'Chinese companion text' : 'Chinese body'}
+                  </label>
+                  <textarea
+                    rows={editorialMode === 'audio' ? 12 : 18}
+                    value={bodyMarkdownZh}
+                    onChange={(e) => setBodyMarkdownZh(e.target.value)}
+                    className={WRITING_TEXTAREA_CLASS}
+                  />
+                </div>
+              </section>
+
               <div className="grid gap-5 md:grid-cols-2">
                 {hasAudioSupport ? (
                   <div>
@@ -1089,23 +1277,50 @@ export function EditorialEditorClient({
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
                     className={FIELD_BASE_CLASS}
-                    placeholder="art, listening, place"
+                    placeholder="listening, memory, public life"
                   />
+                  {aiMetadataSuggestions.seoKeywords.length ? (
+                    <p className="mt-2 text-xs text-muted">AI topic terms available below if you want them.</p>
+                  ) : null}
                 </div>
               </div>
 
               <details className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
-                <summary className="cursor-pointer text-sm font-medium text-fg">Advanced</summary>
+                <summary className="cursor-pointer text-sm font-medium text-fg">Publishing details</summary>
                 <div className="mt-4 space-y-5">
                   {hasAudioSupport ? (
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-fg">Audio file URL</label>
-                      <input
-                        value={audioUrl}
-                        onChange={(e) => setAudioUrl(e.target.value)}
-                        className={FIELD_BASE_CLASS}
-                        placeholder="https://..."
-                      />
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <label className="mb-2 block text-sm font-medium text-fg">Audio source</label>
+                          <p className="text-sm text-muted">{audioUrl ? labelForAudioSource(audioUrl) : 'No audio source attached yet.'}</p>
+                        </div>
+                        {audioUrl ? (
+                          <div className="flex flex-wrap gap-3 text-sm text-muted">
+                            <button type="button" onClick={copyAudioUrl} className="underline underline-offset-4 hover:text-fg">
+                              {audioUrlCopied ? 'URL copied' : 'Copy URL'}
+                            </button>
+                            <Link href={audioUrl} className="underline underline-offset-4 hover:text-fg" target="_blank" rel="noreferrer">
+                              Open file
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => setShowAudioUrlField((current) => !current)}
+                              className="underline underline-offset-4 hover:text-fg"
+                            >
+                              {showAudioUrlField ? 'Hide full URL' : 'Reveal full URL'}
+                            </button>
+                          </div>
+                        ) : null}
+                      </div>
+                      {showAudioUrlField ? (
+                        <input
+                          value={audioUrl}
+                          onChange={(e) => setAudioUrl(e.target.value)}
+                          className={`${FIELD_BASE_CLASS} mt-3`}
+                          placeholder="https://..."
+                        />
+                      ) : null}
                     </div>
                   ) : null}
 
@@ -1146,28 +1361,54 @@ export function EditorialEditorClient({
                     </div>
                   </div>
 
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">SEO description</label>
+                      <input
+                        value={seoDescription}
+                        onChange={(e) => setSeoDescription(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Chinese SEO title</label>
+                      <input
+                        value={seoTitleZh}
+                        onChange={(e) => setSeoTitleZh(e.target.value)}
+                        className={FIELD_BASE_CLASS}
+                      />
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-fg">SEO description</label>
+                    <label className="mb-2 block text-sm font-medium text-fg">Chinese SEO description</label>
                     <input
-                      value={seoDescription}
-                      onChange={(e) => setSeoDescription(e.target.value)}
+                      value={seoDescriptionZh}
+                      onChange={(e) => setSeoDescriptionZh(e.target.value)}
                       className={FIELD_BASE_CLASS}
                     />
                   </div>
 
+                  {aiMetadataSuggestions.seoKeywords.length ? (
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-fg">Suggested topic terms</label>
+                      <p className="text-sm text-muted">{aiMetadataSuggestions.seoKeywords.join(', ')}</p>
+                    </div>
+                  ) : null}
+
                   <label className="flex items-center gap-3 text-sm text-fg">
                     <input type="checkbox" checked={pinned} onChange={(e) => setPinned(e.target.checked)} className="h-4 w-4" />
-                    Pin this piece to the top of Mendpress lists
+                    Feature this piece at the top of Mendpress
                   </label>
 
-                  <div className="rounded-2xl border border-border bg-natural-50 p-4 text-sm dark:border-border dark:bg-surface">
-                    <p className="font-medium text-fg">Advanced body helpers</p>
-                    <p className="mt-2 text-muted">These are optional fallbacks for direct embeds or hand-edited markdown.</p>
+                  <details className="rounded-2xl border border-border bg-natural-50 p-4 text-sm dark:border-border dark:bg-surface">
+                    <summary className="cursor-pointer font-medium text-fg">Embed syntax helpers</summary>
+                    <p className="mt-2 text-muted">Optional fallbacks for hand-edited markdown.</p>
                     <div className="mt-3 space-y-2 text-xs text-muted">
                       <p><code>![Alt text](https://example.com/image.jpg "Caption")&#123;zoom=https://example.com/full.jpg&#125;</code></p>
                       <p><code>!audio[Title](https://example.com/audio.mp3 "Optional note")&#123;speaker=Name&#125;&#123;duration=245&#125;</code></p>
                     </div>
-                  </div>
+                  </details>
                 </div>
               </details>
             </>

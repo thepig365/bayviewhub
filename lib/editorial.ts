@@ -48,82 +48,119 @@ export type EditorialType = (typeof EDITORIAL_TYPES)[number]
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
 export type EditorialStatusFilter = EditorialStatus | 'all'
 export type EditorialMode = 'written' | 'audio' | 'hybrid'
+export type EditorialLocale = 'en' | 'zh'
 export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative', 'reports'] as const
 export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
 
 type EditorialTypeMeta = {
   label: string
+  zhLabel: string
   pluralLabel: string
+  zhPluralLabel: string
   categoryPath: string
   description: string
+  zhDescription: string
 }
 
 export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   editorial: {
     label: 'Editorial',
+    zhLabel: '主编稿',
     pluralLabel: 'Editorial',
+    zhPluralLabel: '主编稿',
     categoryPath: '/mendpress/editorial',
     description: 'Foundational editorial pieces and public statements from Mendpress.',
+    zhDescription: 'Mendpress 的主编式文章、公开判断与立场文本。',
   },
   essay: {
     label: 'Essay',
+    zhLabel: '随笔',
     pluralLabel: 'Essays',
+    zhPluralLabel: '随笔',
     categoryPath: '/mendpress/editorial',
     description: 'Longer-form pieces on art, place, hospitality, and cultural meaning.',
+    zhDescription: '围绕艺术、场所、款待与文化意义展开的较长篇写作。',
   },
   conversation: {
     label: 'Conversation',
+    zhLabel: '对话',
     pluralLabel: 'Conversations',
+    zhPluralLabel: '对话',
     categoryPath: '/mendpress/dialogue',
     description: 'Written exchanges that stay close to voice, method, and lived conversation.',
+    zhDescription: '保持声音感、方法感与真实交谈纹理的书面对话。',
   },
   interview: {
     label: 'Interview',
+    zhLabel: '访谈',
     pluralLabel: 'Interviews',
+    zhPluralLabel: '访谈',
     categoryPath: '/mendpress/dialogue',
     description: 'Structured Q&A pieces, interviews, and profile-led conversations.',
+    zhDescription: '结构化问答、访谈与以人物为核心的交流文本。',
   },
   audio_essay: {
     label: 'Audio Essay',
+    zhLabel: '音频随笔',
     pluralLabel: 'Audio Essays',
+    zhPluralLabel: '音频随笔',
     categoryPath: '/mendpress/editorial',
     description: 'Voice-led editorials, narrated essays, and spoken pieces shaped for listening.',
+    zhDescription: '以声音为主导、为聆听而组织的主编稿、朗读型随笔与 spoken piece。',
   },
   podcast_episode: {
     label: 'Podcast Episode',
+    zhLabel: '播客单集',
     pluralLabel: 'Podcast Episodes',
+    zhPluralLabel: '播客单集',
     categoryPath: '/mendpress/dialogue',
     description: 'Audio-first episodes, interviews, and spoken conversations published through Mendpress.',
+    zhDescription: '通过 Mendpress 发布的音频优先单集、访谈与 spoken conversation。',
   },
   field_note: {
     label: 'Field Note',
+    zhLabel: '现场笔记',
     pluralLabel: 'Field Notes',
+    zhPluralLabel: '现场笔记',
     categoryPath: '/mendpress/visual-narrative',
     description: 'Shorter notes from the estate as a living place.',
+    zhDescription: '从庄园生活现场生长出来的较短篇观察与笔记。',
   },
   profile: {
     label: 'Profile',
+    zhLabel: '人物稿',
     pluralLabel: 'Profiles',
+    zhPluralLabel: '人物稿',
     categoryPath: '/mendpress/dialogue',
     description: 'People-centred pieces on artists, partners, hosts, and collaborators.',
+    zhDescription: '聚焦艺术家、合作方、主理人与协作者的人物型文章。',
   },
   invitation: {
     label: 'Invitation',
+    zhLabel: '邀请函',
     pluralLabel: 'Invitations',
+    zhPluralLabel: '邀请函',
     categoryPath: '/mendpress/reports',
     description: 'Elegant, share-ready pages for exhibitions, dinners, events, and viewings.',
+    zhDescription: '面向展览、晚宴、活动与 viewing 的公开邀请型页面。',
   },
   project_brief: {
     label: 'Project Brief',
+    zhLabel: '项目简报',
     pluralLabel: 'Projects',
+    zhPluralLabel: '项目简报',
     categoryPath: '/mendpress/reports',
     description: 'Commercially serious explainers for projects, opportunities, and participation paths.',
+    zhDescription: '面向项目、机会与参与路径的公开说明文本。',
   },
   dispatch: {
     label: 'Dispatch',
+    zhLabel: '发布札记',
     pluralLabel: 'Dispatches',
+    zhPluralLabel: '发布札记',
     categoryPath: '/mendpress/reports',
     description: 'Shorter editorial notes with a sharper point of view.',
+    zhDescription: '更短、更直接、观点更明确的主编式发布札记。',
   },
 }
 
@@ -131,8 +168,11 @@ export type EditorialEntry = {
   id: string
   slug: string
   title: string
+  titleZh: string | null
   summary: string
+  summaryZh: string | null
   bodyMarkdown: string
+  bodyMarkdownZh: string | null
   editorialType: EditorialType
   status: EditorialStatus
   publishedAt: string | null
@@ -140,14 +180,18 @@ export type EditorialEntry = {
   primaryCtaLabel: string | null
   primaryCtaHref: string | null
   seoTitle: string | null
+  seoTitleZh: string | null
   seoDescription: string | null
+  seoDescriptionZh: string | null
   tags: string[]
   byline: string | null
   pinned: boolean
   audioUrl: string | null
   audioDurationSeconds: number | null
   transcriptMarkdown: string | null
+  transcriptMarkdownZh: string | null
   showNotesMarkdown: string | null
+  showNotesMarkdownZh: string | null
   speakers: string[]
   createdAt: string | null
   updatedAt: string | null
@@ -160,8 +204,11 @@ type EditorialDbRow = {
   id: string
   slug: string
   title: string
+  title_zh?: string | null
   summary: string | null
+  summary_zh?: string | null
   body_markdown: string | null
+  body_markdown_zh?: string | null
   editorial_type: string | null
   status: string | null
   published_at: string | null
@@ -169,14 +216,18 @@ type EditorialDbRow = {
   primary_cta_label: string | null
   primary_cta_href: string | null
   seo_title: string | null
+  seo_title_zh?: string | null
   seo_description: string | null
+  seo_description_zh?: string | null
   tags: string[] | null
   byline: string | null
   pinned: boolean | null
   audio_url?: string | null
   audio_duration_seconds?: number | null
   transcript_markdown?: string | null
+  transcript_markdown_zh?: string | null
   show_notes_markdown?: string | null
+  show_notes_markdown_zh?: string | null
   speakers?: string[] | null
   created_at: string | null
   updated_at: string | null
@@ -211,29 +262,39 @@ export type EditorialSection = {
 
 type MendpressSectionMeta = {
   label: string
+  zhLabel: string
   description: string
+  zhDescription: string
   path: string
 }
 
 export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSectionMeta> = {
   editorial: {
     label: 'Editorial',
+    zhLabel: 'Editorial',
     description: 'Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub.',
+    zhDescription: '围绕 Bayview Hub 的主编式判断、essay 与更长篇的 editorial framing。',
     path: '/mendpress/editorial',
   },
   dialogue: {
     label: 'Dialogue',
+    zhLabel: 'Dialogue',
     description: 'Profiles, conversations, and people-centred pieces with a clearer human voice.',
+    zhDescription: '以人物、对话、访谈与更明确的人声为中心的栏目。',
     path: '/mendpress/dialogue',
   },
   visual_narrative: {
     label: 'Visual Narrative',
+    zhLabel: 'Visual Narrative',
     description: 'Place-based and image-led writing shaped by atmosphere, weather, objects, and lived time.',
+    zhDescription: '以场所、图像、天气、物件与 lived time 为线索的视觉叙事写作。',
     path: '/mendpress/visual-narrative',
   },
   reports: {
     label: 'Programme',
+    zhLabel: 'Programme',
     description: 'Dispatches, invitations, briefs, and contextual publication material gathered for Mendpress.',
+    zhDescription: '围绕 Mendpress 的 dispatch、invitation、brief 与 programme 语境材料。',
     path: '/mendpress/reports',
   },
 }
@@ -243,6 +304,9 @@ const EDITORIAL_SELECT_BASE =
 
 const EDITORIAL_SELECT_AUDIO =
   `${EDITORIAL_SELECT_BASE},audio_url,audio_duration_seconds,transcript_markdown,show_notes_markdown,speakers`
+
+const EDITORIAL_SELECT_BILINGUAL =
+  `${EDITORIAL_SELECT_AUDIO},title_zh,summary_zh,body_markdown_zh,seo_title_zh,seo_description_zh,transcript_markdown_zh,show_notes_markdown_zh`
 
 function trimString(value: unknown, max = 500): string {
   if (typeof value !== 'string') return ''
@@ -350,12 +414,24 @@ export function editorialTypeLabel(type: EditorialType): string {
   return EDITORIAL_TYPE_META[type].label
 }
 
+export function editorialTypeLabelForLocale(type: EditorialType, locale: EditorialLocale): string {
+  return locale === 'zh' ? EDITORIAL_TYPE_META[type].zhLabel : EDITORIAL_TYPE_META[type].label
+}
+
 export function editorialPluralLabel(type: EditorialType): string {
   return EDITORIAL_TYPE_META[type].pluralLabel
 }
 
+export function editorialPluralLabelForLocale(type: EditorialType, locale: EditorialLocale): string {
+  return locale === 'zh' ? EDITORIAL_TYPE_META[type].zhPluralLabel : EDITORIAL_TYPE_META[type].pluralLabel
+}
+
 export function editorialTypeDescription(type: EditorialType): string {
   return EDITORIAL_TYPE_META[type].description
+}
+
+export function editorialTypeDescriptionForLocale(type: EditorialType, locale: EditorialLocale): string {
+  return locale === 'zh' ? EDITORIAL_TYPE_META[type].zhDescription : EDITORIAL_TYPE_META[type].description
 }
 
 export function editorialTypeAdminLabel(type: EditorialType): string {
@@ -511,8 +587,18 @@ export function mendpressSectionLabel(type: EditorialType): string {
   return MENDPRESS_SECTION_META[mendpressSectionIdForType(type)].label
 }
 
+export function mendpressSectionLabelForLocale(type: EditorialType, locale: EditorialLocale): string {
+  const meta = MENDPRESS_SECTION_META[mendpressSectionIdForType(type)]
+  return locale === 'zh' ? meta.zhLabel : meta.label
+}
+
 export function mendpressSectionDescription(type: EditorialType): string {
   return MENDPRESS_SECTION_META[mendpressSectionIdForType(type)].description
+}
+
+export function mendpressSectionDescriptionForLocale(type: EditorialType, locale: EditorialLocale): string {
+  const meta = MENDPRESS_SECTION_META[mendpressSectionIdForType(type)]
+  return locale === 'zh' ? meta.zhDescription : meta.description
 }
 
 export function mendpressSectionPath(
@@ -556,14 +642,18 @@ function normalizeIsoString(value: unknown): string | null {
 function normalizeEntry(row: EditorialDbRow): EditorialEntry {
   const editorialType = sanitizeEditorialType(row.editorial_type)
   const bodyMarkdown = sanitizeEditorialBody(row.body_markdown)
+  const bodyMarkdownZh = sanitizeEditorialBody(row.body_markdown_zh, 80_000) || null
   const publishedAt = normalizeIsoString(row.published_at)
 
   return {
     id: row.id,
     slug: sanitizeEditorialSlug(row.slug, row.title),
     title: sanitizeEditorialText(row.title, 180),
+    titleZh: sanitizeEditorialText(row.title_zh, 180) || null,
     summary: sanitizeEditorialText(row.summary, 600),
+    summaryZh: sanitizeEditorialText(row.summary_zh, 600) || null,
     bodyMarkdown,
+    bodyMarkdownZh,
     editorialType,
     status: sanitizeEditorialStatus(row.status),
     publishedAt,
@@ -571,7 +661,9 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
     primaryCtaLabel: sanitizeEditorialText(row.primary_cta_label, 120) || null,
     primaryCtaHref: sanitizeHref(row.primary_cta_href),
     seoTitle: sanitizeEditorialText(row.seo_title, 180) || null,
+    seoTitleZh: sanitizeEditorialText(row.seo_title_zh, 180) || null,
     seoDescription: sanitizeEditorialText(row.seo_description, 300) || null,
+    seoDescriptionZh: sanitizeEditorialText(row.seo_description_zh, 300) || null,
     tags: sanitizeEditorialTags(row.tags),
     byline: sanitizeEditorialText(row.byline, 120) || null,
     pinned: Boolean(row.pinned),
@@ -581,7 +673,9 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
         ? Math.max(1, Math.round(row.audio_duration_seconds))
         : null,
     transcriptMarkdown: sanitizeEditorialBody(row.transcript_markdown, 120_000) || null,
+    transcriptMarkdownZh: sanitizeEditorialBody(row.transcript_markdown_zh, 120_000) || null,
     showNotesMarkdown: sanitizeEditorialBody(row.show_notes_markdown, 80_000) || null,
+    showNotesMarkdownZh: sanitizeEditorialBody(row.show_notes_markdown_zh, 80_000) || null,
     speakers: sanitizeEditorialSpeakers(row.speakers),
     createdAt: normalizeIsoString(row.created_at),
     updatedAt: normalizeIsoString(row.updated_at),
@@ -593,22 +687,55 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
   }
 }
 
-function editorialQuery(client: SupabaseClient, includeAudio = true) {
-  return client.from('editorial_entries').select(includeAudio ? EDITORIAL_SELECT_AUDIO : EDITORIAL_SELECT_BASE)
+function editorialQuery(client: SupabaseClient, level: 'bilingual' | 'audio' | 'base' = 'bilingual') {
+  const select =
+    level === 'bilingual'
+      ? EDITORIAL_SELECT_BILINGUAL
+      : level === 'audio'
+        ? EDITORIAL_SELECT_AUDIO
+        : EDITORIAL_SELECT_BASE
+
+  return client.from('editorial_entries').select(select)
 }
 
 function logEditorialReadError(scope: string, error: unknown) {
   console.warn(`[Editorial] ${scope} failed`, error)
 }
 
-function editorialMissingColumnError(error: unknown): boolean {
+export function editorialMissingColumnError(error: unknown): boolean {
   if (!error || typeof error !== 'object') return false
   const message = 'message' in error && typeof error.message === 'string' ? error.message : ''
   const details = 'details' in error && typeof error.details === 'string' ? error.details : ''
   const hint = 'hint' in error && typeof error.hint === 'string' ? error.hint : ''
   const code = 'code' in error && typeof error.code === 'string' ? error.code : ''
   const joined = `${message} ${details} ${hint}`.toLowerCase()
-  return code === '42703' || code === 'PGRST204' || joined.includes('audio_') || joined.includes('transcript_markdown') || joined.includes('show_notes_markdown') || joined.includes('speakers')
+  return code === '42703' || code === 'PGRST204' || joined.includes('audio_') || joined.includes('transcript_markdown') || joined.includes('show_notes_markdown') || joined.includes('speakers') || joined.includes('title_zh') || joined.includes('summary_zh') || joined.includes('body_markdown_zh') || joined.includes('seo_title_zh') || joined.includes('seo_description_zh') || joined.includes('transcript_markdown_zh') || joined.includes('show_notes_markdown_zh')
+}
+
+export function editorialMissingAudioWriteColumnError(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false
+  const message = 'message' in error && typeof error.message === 'string' ? error.message : ''
+  const details = 'details' in error && typeof error.details === 'string' ? error.details : ''
+  const hint = 'hint' in error && typeof error.hint === 'string' ? error.hint : ''
+  const code = 'code' in error && typeof error.code === 'string' ? error.code : ''
+  const joined = `${message} ${details} ${hint}`.toLowerCase()
+
+  return (
+    code === '42703' ||
+    code === 'PGRST204' ||
+    joined.includes('audio_url') ||
+    joined.includes('audio_duration_seconds') ||
+    joined.includes('transcript_markdown') ||
+    joined.includes('show_notes_markdown') ||
+    joined.includes('speakers') ||
+    joined.includes('title_zh') ||
+    joined.includes('summary_zh') ||
+    joined.includes('body_markdown_zh') ||
+    joined.includes('seo_title_zh') ||
+    joined.includes('seo_description_zh') ||
+    joined.includes('transcript_markdown_zh') ||
+    joined.includes('show_notes_markdown_zh')
+  )
 }
 
 export async function listPublishedEditorialEntries(options?: {
@@ -620,8 +747,8 @@ export async function listPublishedEditorialEntries(options?: {
   const supabase = getSupabaseServer()
   if (!supabase) return []
 
-  const runQuery = async (includeAudio: boolean) => {
-    let query = editorialQuery(supabase, includeAudio)
+  const runQuery = async (level: 'bilingual' | 'audio' | 'base') => {
+    let query = editorialQuery(supabase, level)
       .eq('status', 'published')
       .order('pinned', { ascending: false })
       .order('published_at', { ascending: false })
@@ -648,9 +775,12 @@ export async function listPublishedEditorialEntries(options?: {
     return query
   }
 
-  let { data, error } = await runQuery(true)
+  let { data, error } = await runQuery('bilingual')
   if (error && editorialMissingColumnError(error)) {
-    ;({ data, error } = await runQuery(false))
+    ;({ data, error } = await runQuery('audio'))
+  }
+  if (error && editorialMissingColumnError(error)) {
+    ;({ data, error } = await runQuery('base'))
   }
   if (error || !data) {
     logEditorialReadError('list published entries', error)
@@ -666,16 +796,19 @@ export async function getPublishedEditorialEntryBySlug(
   const supabase = getSupabaseServer()
   if (!supabase) return null
 
-  const runQuery = (includeAudio: boolean) =>
-    editorialQuery(supabase, includeAudio)
+  const runQuery = (level: 'bilingual' | 'audio' | 'base') =>
+    editorialQuery(supabase, level)
       .eq('slug', sanitizeEditorialSlug(slug))
       .eq('status', 'published')
       .limit(1)
       .maybeSingle()
 
-  let { data, error } = await runQuery(true)
+  let { data, error } = await runQuery('bilingual')
   if (error && editorialMissingColumnError(error)) {
-    ;({ data, error } = await runQuery(false))
+    ;({ data, error } = await runQuery('audio'))
+  }
+  if (error && editorialMissingColumnError(error)) {
+    ;({ data, error } = await runQuery('base'))
   }
 
   if (error || !data) {
@@ -690,9 +823,12 @@ export async function getEditorialEntryByIdForAdmin(id: string): Promise<Editori
   const supabase = getSupabaseServer()
   if (!supabase) return null
 
-  let { data, error } = await editorialQuery(supabase, true).eq('id', id).limit(1).maybeSingle()
+  let { data, error } = await editorialQuery(supabase, 'bilingual').eq('id', id).limit(1).maybeSingle()
   if (error && editorialMissingColumnError(error)) {
-    ;({ data, error } = await editorialQuery(supabase, false).eq('id', id).limit(1).maybeSingle())
+    ;({ data, error } = await editorialQuery(supabase, 'audio').eq('id', id).limit(1).maybeSingle())
+  }
+  if (error && editorialMissingColumnError(error)) {
+    ;({ data, error } = await editorialQuery(supabase, 'base').eq('id', id).limit(1).maybeSingle())
   }
 
   if (error || !data) {
@@ -707,12 +843,18 @@ export async function listEditorialEntriesForAdmin(limit = 24): Promise<Editoria
   const supabase = getSupabaseServer()
   if (!supabase) return []
 
-  let { data, error } = await editorialQuery(supabase, true)
+  let { data, error } = await editorialQuery(supabase, 'bilingual')
     .order('updated_at', { ascending: false })
     .order('created_at', { ascending: false })
     .limit(limit)
   if (error && editorialMissingColumnError(error)) {
-    ;({ data, error } = await editorialQuery(supabase, false)
+    ;({ data, error } = await editorialQuery(supabase, 'audio')
+      .order('updated_at', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(limit))
+  }
+  if (error && editorialMissingColumnError(error)) {
+    ;({ data, error } = await editorialQuery(supabase, 'base')
       .order('updated_at', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(limit))
@@ -757,16 +899,21 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
   error: string | null
 } {
   const title = sanitizeEditorialText(body.title, 180)
+  const titleZh = sanitizeEditorialText(body.titleZh, 180) || null
   const slug = sanitizeEditorialSlug(body.slug, title)
   const summary = sanitizeEditorialText(body.summary, 600)
+  const summaryZh = sanitizeEditorialText(body.summaryZh, 600) || null
   const bodyMarkdown = sanitizeEditorialBody(body.bodyMarkdown, 80_000)
+  const bodyMarkdownZh = sanitizeEditorialBody(body.bodyMarkdownZh, 80_000) || null
   const editorialType = sanitizeEditorialType(body.editorialType)
   const editorialMode = body.editorialMode === 'audio' || body.editorialMode === 'hybrid' ? body.editorialMode : 'written'
   const status = sanitizeEditorialStatus(body.status)
   const publishedAtInput = sanitizeEditorialText(body.publishedAt, 40)
   const audioUrl = sanitizeHref(body.audioUrl)
   const transcriptMarkdown = sanitizeEditorialBody(body.transcriptMarkdown, 120_000) || null
+  const transcriptMarkdownZh = sanitizeEditorialBody(body.transcriptMarkdownZh, 120_000) || null
   const showNotesMarkdown = sanitizeEditorialBody(body.showNotesMarkdown, 80_000) || null
+  const showNotesMarkdownZh = sanitizeEditorialBody(body.showNotesMarkdownZh, 80_000) || null
   const speakers = sanitizeEditorialSpeakers(body.speakers)
   const audioDurationSeconds =
     typeof body.audioDurationSeconds === 'number' && Number.isFinite(body.audioDurationSeconds)
@@ -784,8 +931,8 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
         ? normalizeIsoString(publishedAtInput)
         : null
 
-  if (!title || !slug || !summary) {
-    return { payload: null, error: 'Title, slug, and summary are required.' }
+  if (!title || !summary) {
+    return { payload: null, error: 'Title and summary are required.' }
   }
 
   if ((editorialMode === 'written' || editorialMode === 'hybrid') && !bodyMarkdown) {
@@ -814,18 +961,69 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
       primary_cta_label: sanitizeEditorialText(body.primaryCtaLabel, 120) || null,
       primary_cta_href: sanitizeHref(body.primaryCtaHref),
       seo_title: sanitizeEditorialText(body.seoTitle, 180) || null,
+      title_zh: titleZh,
+      summary_zh: summaryZh,
+      body_markdown_zh: bodyMarkdownZh,
+      seo_title_zh: sanitizeEditorialText(body.seoTitleZh, 180) || null,
       seo_description: sanitizeEditorialText(body.seoDescription, 300) || null,
+      seo_description_zh: sanitizeEditorialText(body.seoDescriptionZh, 300) || null,
       tags: sanitizeEditorialTags(body.tags),
       byline: sanitizeEditorialText(body.byline, 120) || null,
       pinned: Boolean(body.pinned),
       audio_url: audioUrl,
       audio_duration_seconds: audioDurationSeconds,
       transcript_markdown: transcriptMarkdown,
+      transcript_markdown_zh: transcriptMarkdownZh,
       show_notes_markdown: showNotesMarkdown,
+      show_notes_markdown_zh: showNotesMarkdownZh,
       speakers,
       updated_at: new Date().toISOString(),
     },
   }
+}
+
+export function editorialTitleForLocale(entry: EditorialEntry, locale: EditorialLocale): string {
+  return locale === 'zh' ? entry.titleZh || entry.title : entry.title
+}
+
+export function editorialSummaryForLocale(entry: EditorialEntry, locale: EditorialLocale): string {
+  return locale === 'zh' ? entry.summaryZh || entry.summary : entry.summary
+}
+
+export function editorialBodyForLocale(entry: EditorialEntry, locale: EditorialLocale): string {
+  return locale === 'zh' ? entry.bodyMarkdownZh || entry.bodyMarkdown : entry.bodyMarkdown
+}
+
+export function editorialSeoTitleForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
+  return locale === 'zh' ? entry.seoTitleZh || entry.seoTitle : entry.seoTitle
+}
+
+export function editorialSeoDescriptionForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
+  return locale === 'zh' ? entry.seoDescriptionZh || entry.seoDescription : entry.seoDescription
+}
+
+export function editorialTranscriptForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
+  return locale === 'zh' ? entry.transcriptMarkdownZh || null : entry.transcriptMarkdown
+}
+
+export function editorialShowNotesForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
+  return locale === 'zh' ? entry.showNotesMarkdownZh || null : entry.showNotesMarkdown
+}
+
+export function editorialHasChineseCardContent(entry: EditorialEntry): boolean {
+  return Boolean(entry.titleZh || entry.summaryZh)
+}
+
+export function editorialHasChinesePageContent(entry: EditorialEntry): boolean {
+  const hasChineseReadingLayer = Boolean(
+    entry.bodyMarkdownZh || entry.transcriptMarkdownZh || entry.showNotesMarkdownZh
+  )
+
+  if (isAudioFirstEditorialType(entry.editorialType) || entry.audioUrl) {
+    return Boolean(entry.titleZh && entry.summaryZh && hasChineseReadingLayer)
+  }
+
+  return Boolean(entry.titleZh && entry.summaryZh && entry.bodyMarkdownZh)
 }
 
 export function defaultEditorialPrimaryCta(entry: EditorialEntry): EditorialLink {
@@ -923,20 +1121,24 @@ export function editorialContextLinks(entry: EditorialEntry): EditorialLink[] {
   }
 }
 
-export function formatEditorialDate(value: string | null): string {
+export function formatEditorialDate(value: string | null, locale: EditorialLocale = 'en'): string {
   if (!value) return 'Draft'
-  return new Date(value).toLocaleDateString('en-AU', {
+  return new Date(value).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-AU', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   })
 }
 
-export function groupEditorialEntries(entries: EditorialEntry[]): EditorialSection[] {
+export function groupEditorialEntries(
+  entries: EditorialEntry[],
+  locale: EditorialLocale = 'en'
+): EditorialSection[] {
   return MENDPRESS_SECTION_IDS.map((id) => ({
     id,
-    label: MENDPRESS_SECTION_META[id].label,
-    description: MENDPRESS_SECTION_META[id].description,
+    label: locale === 'zh' ? MENDPRESS_SECTION_META[id].zhLabel : MENDPRESS_SECTION_META[id].label,
+    description:
+      locale === 'zh' ? MENDPRESS_SECTION_META[id].zhDescription : MENDPRESS_SECTION_META[id].description,
     path: MENDPRESS_SECTION_META[id].path,
     entries: entries.filter((entry) => mendpressSectionIdForType(entry.editorialType) === id),
   })).filter((section) => section.entries.length > 0)

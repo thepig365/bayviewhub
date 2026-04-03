@@ -2,11 +2,14 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { GALLERY_EXTERNAL, SITE_NAV, type SiteNavChild, type SiteNavEntry, SSD_LANDING } from '@/lib/constants'
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
+import { localizedHref, localeFromPathname } from '@/lib/language-routing'
 import { cn } from '@/lib/utils'
 
 function DesktopNavLink({
@@ -79,6 +82,8 @@ export function Header() {
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const triggerBtnRef = useRef<HTMLButtonElement>(null)
   const { resolvedTheme } = useTheme()
+  const pathname = usePathname() || '/'
+  const locale = localeFromPathname(pathname)
   const iconColor = resolvedTheme === 'dark' ? '#f5ede0' : '#111827'
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -145,11 +150,12 @@ export function Header() {
     'block px-4 py-2.5 text-sm text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors'
 
   const renderDesktopEntry = (entry: SiteNavEntry) => {
+    const localizedEntryHref = entry.external ? entry.href : localizedHref(entry.href, locale)
     if (entry.kind === 'link') {
       return (
         <DesktopNavLink
           key={entry.label}
-          href={entry.href}
+          href={localizedEntryHref}
           external={entry.external}
           className={topLinkClass}
         >
@@ -161,7 +167,7 @@ export function Header() {
     return (
       <div key={entry.label} className="relative group">
         <DesktopNavLink
-          href={entry.href}
+          href={localizedEntryHref}
           external={entry.external}
           className={cn(topLinkClass, 'inline-flex items-center gap-1')}
         >
@@ -177,7 +183,7 @@ export function Header() {
             {entry.children.map((child) => (
               <DesktopNavLink
                 key={`${entry.label}-${child.href}`}
-                href={child.href}
+                href={child.external ? child.href : localizedHref(child.href, locale)}
                 external={child.external}
                 className={dropdownItemClass}
               >
@@ -191,6 +197,7 @@ export function Header() {
   }
 
   const renderMobileEntry = (entry: SiteNavEntry) => {
+    const localizedEntryHref = entry.external ? entry.href : localizedHref(entry.href, locale)
     if (entry.kind === 'group') {
       return (
         <details
@@ -203,12 +210,16 @@ export function Header() {
           </summary>
           <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
             <MobileNavRow
-              item={{ label: `All ${entry.label}`, href: entry.href, external: entry.external }}
+              item={{ label: `All ${entry.label}`, href: localizedEntryHref, external: entry.external }}
               onNavigate={closeMenu}
               className="text-muted font-medium"
             />
             {entry.children.map((child) => (
-              <MobileNavRow key={`${entry.label}-${child.href}`} item={child} onNavigate={closeMenu} />
+              <MobileNavRow
+                key={`${entry.label}-${child.href}`}
+                item={{ ...child, href: child.external ? child.href : localizedHref(child.href, locale) }}
+                onNavigate={closeMenu}
+              />
             ))}
           </div>
         </details>
@@ -227,7 +238,11 @@ export function Header() {
           </summary>
           <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
             {entry.mobileSublinks.map((child) => (
-              <MobileNavRow key={child.href} item={child} onNavigate={closeMenu} />
+              <MobileNavRow
+                key={child.href}
+                item={{ ...child, href: child.external ? child.href : localizedHref(child.href, locale) }}
+                onNavigate={closeMenu}
+              />
             ))}
           </div>
         </details>
@@ -237,7 +252,7 @@ export function Header() {
     return (
       <MobileNavRow
         key={entry.label}
-        item={{ label: entry.label, href: entry.href, external: entry.external }}
+        item={{ label: entry.label, href: localizedEntryHref, external: entry.external }}
         onNavigate={closeMenu}
         className="font-medium"
       />
@@ -255,7 +270,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-28 md:h-32">
-          <Logo />
+          <Logo href={localizedHref('/', locale)} />
 
           <nav
             className="hidden md:flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-5 text-base lg:text-lg"
@@ -263,6 +278,10 @@ export function Header() {
           >
             {SITE_NAV.map(renderDesktopEntry)}
           </nav>
+
+          <div className="hidden md:flex items-center gap-5">
+            <LanguageSwitcher compact />
+          </div>
 
           <div className="flex items-center md:hidden">
             <button
@@ -313,20 +332,23 @@ export function Header() {
             </div>
 
             <div className="space-y-3 p-5">
+              <div className="pb-2">
+                <LanguageSwitcher />
+              </div>
               {SITE_NAV.map(renderMobileEntry)}
             </div>
 
             <div className="space-y-3 border-t border-border p-5 pt-2">
               <h3 className="text-sm font-bold uppercase tracking-wide text-fg">Quick actions</h3>
               <div className="grid grid-cols-1 gap-3">
-                <Button href="/partners" variant="primary" size="md" className="w-full" onClick={closeMenu}>
+                <Button href={localizedHref('/partners', locale)} variant="primary" size="md" className="w-full" onClick={closeMenu}>
                   Become a Partner
                 </Button>
-                <Button href="/cellar-door#book" variant="accent" size="md" className="w-full" onClick={closeMenu}>
+                <Button href={localizedHref('/cellar-door#book', locale)} variant="accent" size="md" className="w-full" onClick={closeMenu}>
                   Book Wine Tasting
                 </Button>
                 <Button
-                  href={`${SSD_LANDING.overview}#register`}
+                  href={localizedHref(`${SSD_LANDING.overview}#register`, locale)}
                   variant="outline"
                   size="md"
                   className="w-full"
@@ -334,7 +356,7 @@ export function Header() {
                 >
                   Backyard Small Second Home
                 </Button>
-                <Button href={SSD_LANDING.feasibility} variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                <Button href={localizedHref(SSD_LANDING.feasibility, locale)} variant="outline" size="md" className="w-full" onClick={closeMenu}>
                   Feasibility check
                 </Button>
                 <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>

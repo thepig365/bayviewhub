@@ -12,7 +12,15 @@ import { SITE_CONFIG } from '@/lib/constants'
 import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
+  editorialBodyForLocale,
   editorialContextLinks,
+  editorialHasChinesePageContent,
+  editorialSeoDescriptionForLocale,
+  editorialSeoTitleForLocale,
+  editorialShowNotesForLocale,
+  editorialSummaryForLocale,
+  editorialTitleForLocale,
+  editorialTranscriptForLocale,
   editorialTypeAdminLabel,
   formatEditorialDate,
   getPublishedEditorialEntryBySlug,
@@ -48,7 +56,12 @@ function bodyExcerpt(body: string, max = 220): string {
 
 function articleDescription(entry: Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>) {
   if (!entry) return 'Mendpress at Bayview Hub'
-  return entry.seoDescription || entry.summary || bodyExcerpt(entry.bodyMarkdown) || 'Mendpress at Bayview Hub'
+  return (
+    editorialSeoDescriptionForLocale(entry, 'en') ||
+    editorialSummaryForLocale(entry, 'en') ||
+    bodyExcerpt(editorialBodyForLocale(entry, 'en')) ||
+    'Mendpress at Bayview Hub'
+  )
 }
 
 function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
@@ -59,9 +72,9 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
 }
 
 function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  const summary = entry.summary.trim()
+  const summary = editorialSummaryForLocale(entry, 'en').trim()
   if (summary.length >= 90 && summary.length <= 260) return summary
-  return bodyExcerpt(entry.bodyMarkdown, 260) || summary || entry.title
+  return bodyExcerpt(editorialBodyForLocale(entry, 'en'), 260) || summary || editorialTitleForLocale(entry, 'en')
 }
 
 function formatDuration(value: number | null): string | null {
@@ -91,7 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const title = entry.seoTitle || entry.title
+  const title = editorialSeoTitleForLocale(entry, 'en') || editorialTitleForLocale(entry, 'en')
   const description = articleDescription(entry)
   const url = editorialAbsoluteUrl(entry.slug)
   const ogImage = articleOgImage(entry)
@@ -99,14 +112,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: editorialHasChinesePageContent(entry)
+      ? {
+          canonical: url,
+          languages: {
+            'en-AU': url,
+            'zh-CN': `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`,
+            'x-default': url,
+          },
+        }
+      : { canonical: url },
     openGraph: {
       type: 'article',
       url,
       title,
       description,
       siteName: SITE_CONFIG.name,
-      images: [{ url: ogImage, alt: entry.title }],
+      images: [{ url: ogImage, alt: editorialTitleForLocale(entry, 'en') }],
       publishedTime: entry.publishedAt || undefined,
     },
     twitter: {
@@ -129,13 +151,16 @@ export default async function MendpressEntryPage({ params }: Props) {
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
   const description = articleDescription(entry)
   const pullQuote = articlePullQuote(entry)
+  const body = editorialBodyForLocale(entry, 'en')
+  const transcript = editorialTranscriptForLocale(entry, 'en')
+  const showNotes = editorialShowNotesForLocale(entry, 'en')
   const durationLabel = formatDuration(entry.audioDurationSeconds)
   const entryTypeLabel = editorialTypeAdminLabel(entry.editorialType)
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': entry.audioUrl && isAudioFirstEditorialType(entry.editorialType) ? 'PodcastEpisode' : 'Article',
-    headline: entry.title,
+    headline: editorialTitleForLocale(entry, 'en'),
     description,
     datePublished: entry.publishedAt || undefined,
     author: {
@@ -174,11 +199,11 @@ export default async function MendpressEntryPage({ params }: Props) {
                 <span>Mendpress</span>
               </div>
               <h1 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.1]">
-                {entry.title}
+                {editorialTitleForLocale(entry, 'en')}
               </h1>
-              {entry.summary ? (
+              {editorialSummaryForLocale(entry, 'en') ? (
                 <p className="mx-auto mt-6 max-w-3xl text-pretty text-xl leading-9 text-muted md:text-2xl md:leading-10">
-                  {entry.summary}
+                  {editorialSummaryForLocale(entry, 'en')}
                 </p>
               ) : null}
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-muted">
@@ -187,7 +212,7 @@ export default async function MendpressEntryPage({ params }: Props) {
               <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted">
                 {entry.byline ? <span>By {entry.byline}</span> : null}
                 {entry.byline ? <span aria-hidden>·</span> : null}
-                <span>{formatEditorialDate(entry.publishedAt)}</span>
+                <span>{formatEditorialDate(entry.publishedAt, 'en')}</span>
                 {entry.readingTimeMinutes ? (
                   <>
                     <span aria-hidden>·</span>
@@ -209,7 +234,7 @@ export default async function MendpressEntryPage({ params }: Props) {
               </div>
               <ShareStrip
                 url={absoluteUrl}
-                mailtoSubject={`${entry.title} | Mendpress`}
+                mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                 mailtoIntro={`${description}\n\nRead it here:`}
                 shortShareBlurb={description}
                 bordered={false}
@@ -225,7 +250,7 @@ export default async function MendpressEntryPage({ params }: Props) {
 
             {entry.heroImage ? (
               <div className="mx-auto mt-8 max-w-5xl overflow-hidden rounded-[1.75rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
-                <img src={entry.heroImage} alt={entry.title} className="h-auto w-full object-cover" />
+                <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
               </div>
             ) : null}
 
@@ -248,22 +273,22 @@ export default async function MendpressEntryPage({ params }: Props) {
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             <div>
-              <EditorialPullQuote quote={pullQuote} articleTitle={entry.title} articleUrl={absoluteUrl} />
-              {entry.bodyMarkdown ? <EditorialBody body={entry.bodyMarkdown} /> : null}
+              <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'en')} articleUrl={absoluteUrl} />
+              {body ? <EditorialBody body={body} locale="en" /> : null}
 
-              {entry.showNotesMarkdown ? (
+              {showNotes ? (
                 <section className="mt-10">
                   <p className="eyebrow text-accent">Show notes</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
-                  <EditorialBody body={entry.showNotesMarkdown} className="mt-5" />
+                  <EditorialBody body={showNotes} className="mt-5" locale="en" />
                 </section>
               ) : null}
 
-              {entry.transcriptMarkdown ? (
+              {transcript ? (
                 <section className="mt-10">
                   <p className="eyebrow text-accent">Transcript</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
-                  <EditorialBody body={entry.transcriptMarkdown} className="mt-5" />
+                  <EditorialBody body={transcript} className="mt-5" locale="en" />
                 </section>
               ) : null}
 
@@ -284,7 +309,7 @@ export default async function MendpressEntryPage({ params }: Props) {
                 </div>
                 <ShareStrip
                   url={absoluteUrl}
-                  mailtoSubject={`${entry.title} | Mendpress`}
+                  mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                   mailtoIntro={`${description}\n\nRead it here:`}
                   shortShareBlurb={description}
                   label="Share this piece"

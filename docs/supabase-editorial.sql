@@ -28,14 +28,21 @@ create table if not exists public.editorial_entries (
   primary_cta_label text,
   primary_cta_href text,
   seo_title text,
+  title_zh text,
+  summary_zh text,
+  body_markdown_zh text,
+  seo_title_zh text,
   seo_description text,
+  seo_description_zh text,
   tags text[] not null default '{}',
   byline text,
   pinned boolean not null default false,
   audio_url text,
   audio_duration_seconds integer,
   transcript_markdown text,
+  transcript_markdown_zh text,
   show_notes_markdown text,
+  show_notes_markdown_zh text,
   speakers text[] not null default '{}'
 );
 
@@ -46,10 +53,31 @@ alter table public.editorial_entries
   add column if not exists audio_duration_seconds integer;
 
 alter table public.editorial_entries
+  add column if not exists title_zh text;
+
+alter table public.editorial_entries
+  add column if not exists summary_zh text;
+
+alter table public.editorial_entries
+  add column if not exists body_markdown_zh text;
+
+alter table public.editorial_entries
+  add column if not exists seo_title_zh text;
+
+alter table public.editorial_entries
+  add column if not exists seo_description_zh text;
+
+alter table public.editorial_entries
   add column if not exists transcript_markdown text;
 
 alter table public.editorial_entries
+  add column if not exists transcript_markdown_zh text;
+
+alter table public.editorial_entries
   add column if not exists show_notes_markdown text;
+
+alter table public.editorial_entries
+  add column if not exists show_notes_markdown_zh text;
 
 alter table public.editorial_entries
   add column if not exists speakers text[] not null default '{}';

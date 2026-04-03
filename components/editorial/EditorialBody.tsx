@@ -1,11 +1,13 @@
 import React from 'react'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialImageFigure } from '@/components/editorial/EditorialImageFigure'
+import { localizedHref, type SiteLocale } from '@/lib/language-routing'
 import { cn } from '@/lib/utils'
 
 type Props = {
   body: string
   className?: string
+  locale?: SiteLocale
 }
 
 function safeHref(value: string): string | null {
@@ -96,7 +98,7 @@ function parseAudioSyntax(line: string): {
   }
 }
 
-function renderInline(content: string): React.ReactNode[] {
+function renderInline(content: string, locale: SiteLocale): React.ReactNode[] {
   const nodes: React.ReactNode[] = []
   const regex = /\[([^\]]+)\]\(([^)]+)\)/g
   let lastIndex = 0
@@ -109,12 +111,13 @@ function renderInline(content: string): React.ReactNode[] {
 
     const href = safeHref(match[2].trim())
     if (href) {
+      const localized = href.startsWith('/') ? localizedHref(href, locale) : href
       nodes.push(
         <a
           key={`${match.index}-${href}`}
-          href={href}
-          target={href.startsWith('http') ? '_blank' : undefined}
-          rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          href={localized}
+          target={localized.startsWith('http') ? '_blank' : undefined}
+          rel={localized.startsWith('http') ? 'noopener noreferrer' : undefined}
           className="text-fg underline underline-offset-4 hover:text-accent"
         >
           {match[1]}
@@ -134,7 +137,7 @@ function renderInline(content: string): React.ReactNode[] {
   return nodes
 }
 
-export function EditorialBody({ body, className }: Props) {
+export function EditorialBody({ body, className, locale = 'en' }: Props) {
   const sections = body
     .trim()
     .split(/\n{2,}/)
@@ -156,7 +159,7 @@ export function EditorialBody({ body, className }: Props) {
               src={imageBlock.src}
               fullSrc={imageBlock.fullSrc}
               alt={imageBlock.alt}
-              caption={caption ? renderInline(caption) : null}
+              caption={caption ? renderInline(caption, locale) : null}
             />
           )
         }
@@ -171,7 +174,7 @@ export function EditorialBody({ body, className }: Props) {
               src={audioBlock.src}
               speakers={audioBlock.speakers}
               durationLabel={formatDuration(audioBlock.durationSeconds)}
-              note={note ? renderInline(note) : null}
+              note={note ? renderInline(note, locale) : null}
             />
           )
         }
@@ -196,7 +199,7 @@ export function EditorialBody({ body, className }: Props) {
           return (
             <ul key={index} className="mt-6 list-disc space-y-2 pl-6 text-base leading-8 text-muted">
               {lines.map((line, lineIndex) => (
-                <li key={lineIndex}>{renderInline(line.slice(2))}</li>
+                <li key={lineIndex}>{renderInline(line.slice(2), locale)}</li>
               ))}
             </ul>
           )
@@ -206,7 +209,7 @@ export function EditorialBody({ body, className }: Props) {
           return (
             <ol key={index} className="mt-6 list-decimal space-y-2 pl-6 text-base leading-8 text-muted">
               {lines.map((line, lineIndex) => (
-                <li key={lineIndex}>{renderInline(line.replace(/^\d+\.\s/, ''))}</li>
+                <li key={lineIndex}>{renderInline(line.replace(/^\d+\.\s/, ''), locale)}</li>
               ))}
             </ol>
           )
@@ -220,7 +223,7 @@ export function EditorialBody({ body, className }: Props) {
             >
               {lines.map((line, lineIndex) => (
                 <p key={lineIndex} className={lineIndex === 0 ? '' : 'mt-3'}>
-                  {renderInline(line.slice(2))}
+                  {renderInline(line.slice(2), locale)}
                 </p>
               ))}
             </blockquote>
@@ -232,7 +235,7 @@ export function EditorialBody({ body, className }: Props) {
             {lines.map((line, lineIndex) => (
               <React.Fragment key={lineIndex}>
                 {lineIndex > 0 ? <br /> : null}
-                {renderInline(line)}
+                {renderInline(line, locale)}
               </React.Fragment>
             ))}
           </p>

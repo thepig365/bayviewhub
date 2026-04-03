@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { localizedAlternates } from '@/lib/language-routing'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -30,7 +31,10 @@ export function generateMetadata(page: {
   path?: string
 }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me'
-  const fullUrl = `${baseUrl}${page.path || ''}`
+  const resolvedPath = page.path || ''
+  const alternateMeta = localizedAlternates(resolvedPath || '/')
+  const canonicalUrl = `${baseUrl}${alternateMeta.canonicalPath}`
+  const fullUrl = `${baseUrl}${resolvedPath}`
   const ogImage = page.image || `${baseUrl}/og-image.png`
 
   return {
@@ -49,7 +53,7 @@ export function generateMetadata(page: {
           alt: page.title,
         },
       ],
-      locale: 'en_AU',
+      locale: alternateMeta.locale === 'zh' ? 'zh_CN' : 'en_AU',
       type: 'website',
     },
     twitter: {
@@ -59,7 +63,8 @@ export function generateMetadata(page: {
       images: [ogImage],
     },
     alternates: {
-      canonical: fullUrl,
+      canonical: canonicalUrl,
+      languages: alternateMeta.languages,
     },
   }
 }

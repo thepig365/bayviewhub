@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react'
 import {
   GALLERY_EXTERNAL,
@@ -10,10 +13,14 @@ import {
   SSD_LANDING,
   SSD_QUICK_LINKS,
 } from '@/lib/constants'
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
+import { localizedHref, localeFromPathname } from '@/lib/language-routing'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const pathname = usePathname() || '/'
+  const locale = localeFromPathname(pathname)
 
   const socialPlatforms = [
     { name: 'Facebook', icon: Facebook, url: SOCIAL_LINKS.facebook },
@@ -50,12 +57,12 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 mb-8">
               <li>
-                <Link href="/cellar-door" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/cellar-door', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Cellar Door
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/events', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Events
                 </Link>
               </li>
@@ -89,12 +96,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/workshops" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/workshops', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Workshops
                 </Link>
               </li>
               <li>
-                <Link href="/edible-gardens" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/edible-gardens', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Edible Gardens
                 </Link>
               </li>
@@ -131,17 +138,17 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 mb-6">
               <li>
-                <Link href="/partners" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Founding Partners
                 </Link>
               </li>
               <li>
-                <Link href={SSD_LANDING.overview} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref(SSD_LANDING.overview, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Backyard Small Second Home
                 </Link>
               </li>
               <li>
-                <Link href="/invest" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/invest', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   Invest
                 </Link>
               </li>
@@ -153,7 +160,7 @@ export function Footer() {
             <ul className="space-y-2 mb-8">
               {SSD_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-shell-footer-muted hover:text-accent transition-colors">
+                  <Link href={localizedHref(item.href, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                     {item.label}
                   </Link>
                 </li>
@@ -200,14 +207,12 @@ export function Footer() {
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-base">
             {/* Language */}
             <div className="flex items-center gap-2">
-              <span className="text-shell-footer-muted/70">Language:</span>
-              <Link href="/" className="text-shell-footer-muted hover:text-accent transition-colors">
-                EN
-              </Link>
-              <span className="text-shell-footer-muted/50">/</span>
-              <Link href="/zh" className="text-shell-footer-muted hover:text-accent transition-colors">
-                中文
-              </Link>
+              <LanguageSwitcher
+                labelClassName="text-shell-footer-muted/70"
+                linkClassName="text-shell-footer-muted hover:text-accent"
+                activeClassName="text-[#f5ede0]"
+                separatorClassName="text-shell-footer-muted/50"
+              />
             </div>
             {/* Theme */}
             <div className="flex items-center gap-2">
@@ -222,13 +227,13 @@ export function Footer() {
       <div className="border-t border-shell-footer-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base">
-            <Link href="/partners" className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
+            <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
               Partners
             </Link>
-            <Link href="/visit" className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
+            <Link href={localizedHref('/visit', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
               Visit
             </Link>
-            <Link href="/site-map" className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
+            <Link href={localizedHref('/site-map', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
               Site Map
             </Link>
             <a href={`mailto:${SITE_CONFIG.email}`} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
@@ -265,11 +270,11 @@ export function Footer() {
             <div className="flex flex-wrap justify-center gap-4 text-base text-shell-footer-muted">
               <span>© {currentYear} {SITE_CONFIG.name}. All rights reserved.</span>
               <span className="hidden md:inline">|</span>
-              <Link href="/privacy" className="hover:text-accent transition-colors">
+              <Link href={localizedHref('/privacy', locale)} className="hover:text-accent transition-colors">
                 Privacy Policy
               </Link>
               <span className="hidden md:inline">|</span>
-              <Link href="/terms" className="hover:text-accent transition-colors">
+              <Link href={localizedHref('/terms', locale)} className="hover:text-accent transition-colors">
                 Terms of Service
               </Link>
             </div>

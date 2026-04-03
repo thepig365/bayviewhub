@@ -6,12 +6,13 @@ import Image from 'next/image'
 
 interface LogoProps {
   className?: string
+  href?: string
 }
 
-export function Logo({ className = '' }: LogoProps) {
+export function Logo({ className = '', href = '/' }: LogoProps) {
   return (
     <Link
-      href="/"
+      href={href}
       className={`flex items-center space-x-3 no-underline outline-none ${className}`}
     >
       <Image

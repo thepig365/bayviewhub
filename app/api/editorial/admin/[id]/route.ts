@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { buildEditorialWritePayload } from '@/lib/editorial'
+import { buildEditorialWritePayload, editorialMissingAudioWriteColumnError } from '@/lib/editorial'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -63,8 +63,8 @@ export async function PATCH(request: Request, { params }: Props) {
           error:
             error?.code === '23505'
               ? 'That slug is already in use.'
-              : error?.code === '42703' || String(error?.message || '').includes('audio_')
-                ? 'Editorial audio fields are not available yet. Run the latest docs/supabase-editorial.sql migration first.'
+              : editorialMissingAudioWriteColumnError(error)
+                ? 'Editorial bilingual/audio fields are not available yet. Run the latest docs/supabase-editorial.sql migration first.'
                 : error?.code === '23514'
                   ? 'This editorial type is not available in the current database schema yet. Run the latest docs/supabase-editorial.sql migration first.'
                   : 'Failed to update piece.',
