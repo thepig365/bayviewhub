@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import React, { useMemo, useRef, useState } from 'react'
+import { upload } from '@vercel/blob/client'
 import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import type { EditorialEntry, EditorialMode, EditorialStatus, EditorialType } from '@/lib/editorial'
 import {
@@ -114,6 +115,26 @@ function buildUploadedAudioSnippet({
       ? `{duration=${Math.round(durationSeconds)}}`
       : ''
   return `!audio[${safeTitle}](${src}${notePart})${speakerPart}${durationPart}`
+}
+
+function extensionForAudioFile(file: File): string {
+  const fromName = file.name.split('.').pop()?.trim().toLowerCase()
+  if (fromName && /^[a-z0-9]+$/.test(fromName)) return fromName
+
+  switch (file.type) {
+    case 'audio/mp4':
+    case 'audio/x-m4a':
+      return 'm4a'
+    case 'audio/wav':
+    case 'audio/x-wav':
+      return 'wav'
+    case 'audio/ogg':
+      return 'ogg'
+    case 'audio/webm':
+      return 'webm'
+    default:
+      return 'mp3'
+  }
 }
 
 async function loadImage(file: File): Promise<HTMLImageElement> {
@@ -566,21 +587,14 @@ export function EditorialEditorClient({
   }
 
   const uploadAudioAsset = async (file: File) => {
-    const formData = new FormData()
-    formData.set('file', file)
-    formData.set('slug', publicSlug || 'draft')
-
-    const res = await fetch('/api/editorial/upload-audio', {
-      method: 'POST',
-      body: formData,
+    const extension = extensionForAudioFile(file)
+    const pathname = `mendpress/audio/${publicSlug || 'drafts'}/${Date.now()}-${baseFilename(file.name)}.${extension}`
+    const blob = await upload(pathname, file, {
+      access: 'public',
+      handleUploadUrl: '/api/editorial/upload-audio',
     })
 
-    const data = await res.json().catch(() => ({}))
-    if (!res.ok || !data.ok || typeof data.url !== 'string') {
-      throw new Error(data.error || 'Audio upload failed.')
-    }
-
-    return data.url as string
+    return blob.url
   }
 
   const startPrimaryAudioUpload = async (file: File) => {
