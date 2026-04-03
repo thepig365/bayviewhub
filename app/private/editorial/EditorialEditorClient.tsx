@@ -393,6 +393,13 @@ export function EditorialEditorClient({
     }
   }
 
+  const canChoosePrimaryAudio = audioUploadEnabled && audioUploadState !== 'loading'
+
+  const openPrimaryAudioPicker = () => {
+    if (!canChoosePrimaryAudio) return
+    audioUploadInputRef.current?.click()
+  }
+
   const runAudioAssistWorkflow = async ({
     file,
     duration,
@@ -674,7 +681,7 @@ export function EditorialEditorClient({
     }
   }
 
-  const handleAudioDrop = async (event: React.DragEvent<HTMLLabelElement>) => {
+  const handleAudioDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     setAudioDragActive(false)
     const file = event.dataTransfer.files?.[0]
@@ -825,16 +832,27 @@ export function EditorialEditorClient({
                 className="hidden"
               />
 
-              <label
+              <div
+                role={canChoosePrimaryAudio ? 'button' : undefined}
+                tabIndex={canChoosePrimaryAudio ? 0 : -1}
+                aria-disabled={!canChoosePrimaryAudio}
+                onClick={openPrimaryAudioPicker}
+                onKeyDown={(event) => {
+                  if (!canChoosePrimaryAudio) return
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    openPrimaryAudioPicker()
+                  }
+                }}
                 onDragOver={(event) => {
                   event.preventDefault()
-                  if (audioUploadEnabled) setAudioDragActive(true)
+                  if (canChoosePrimaryAudio) setAudioDragActive(true)
                 }}
                 onDragLeave={() => setAudioDragActive(false)}
                 onDrop={handleAudioDrop}
                 className={`mt-5 block rounded-3xl border border-dashed px-6 py-10 text-center transition-colors ${
                   audioDragActive ? 'border-accent bg-accent/5' : 'border-border bg-natural-50 dark:bg-surface'
-                } ${audioUploadEnabled ? 'cursor-pointer hover:border-accent/60' : 'cursor-default opacity-80'}`}
+                } ${canChoosePrimaryAudio ? 'cursor-pointer hover:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40' : 'cursor-default opacity-80'}`}
               >
                 <div className="mx-auto max-w-2xl">
                   <p className="text-xl font-serif font-semibold text-fg">
@@ -846,21 +864,29 @@ export function EditorialEditorClient({
                       : 'Choose the recording first. The system will detect duration and prepare transcript, show-notes, and companion-text drafts.'}
                   </p>
                   <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{SUPPORTED_AUDIO_COPY}</p>
-                  <span className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
-                    audioUploadEnabled
-                      ? 'bg-accent font-medium text-white'
-                      : 'border border-border text-fg'
-                  }`}>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      openPrimaryAudioPicker()
+                    }}
+                    disabled={!canChoosePrimaryAudio}
+                    className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
+                      canChoosePrimaryAudio
+                        ? 'bg-accent font-medium text-white'
+                        : 'border border-border text-fg'
+                    }`}
+                  >
                     {audioUploadState === 'loading'
                       ? 'Uploading…'
                       : audioReady
-                        ? 'Replace audio'
+                        ? 'Choose replacement file'
                         : audioUploadEnabled
                           ? 'Choose audio file'
                           : 'Audio uploads unavailable'}
-                  </span>
+                  </button>
                 </div>
-              </label>
+              </div>
 
               {audioUrl ? (
                 <div className="mt-5 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-surface">
