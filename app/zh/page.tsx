@@ -1,8 +1,8 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
+import { ChineseHomeHero } from '@/components/ui/ChineseHomeHero'
 import { NewsletterForm } from '@/components/ui/NewsletterForm'
 import { SITE_CONFIG } from '@/lib/constants'
 import { localizedHref } from '@/lib/language-routing'
@@ -17,68 +17,7 @@ export const metadata = genMeta({
 export default function ChineseHomePage() {
   return (
     <div className="min-h-screen dark:bg-bg">
-      {/* Hero Section */}
-      <section className="relative flex flex-col md:min-h-[80vh] md:flex-row">
-        <div className="relative order-1 h-[45vh] md:absolute md:right-0 md:top-0 md:bottom-0 md:order-2 md:h-auto md:w-[60%]">
-          <Image
-            src="/images/stay.jpg"
-            alt="Bayview Hub 中文首页主视觉"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/15 md:hidden" />
-        </div>
-
-        <div className="relative z-10 order-2 flex items-center bg-accent md:order-1 md:w-[40%]">
-          <div className="px-6 py-10 md:px-12 md:py-16 lg:px-16">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-white/85 md:mb-4 md:text-base">
-              Mornington Peninsula 文化庄园
-            </p>
-            <h1 className="mb-4 font-serif text-3xl font-bold leading-tight text-white md:mb-6 md:text-5xl lg:text-6xl">
-              吃、住、连接、创造、修复
-            </h1>
-            <p className="mb-6 max-w-md text-base leading-relaxed text-white/92 md:mb-8 md:text-lg">
-              Bayview Hub 是一个真实的场所: 庄园餐饮、现场音乐、艺术空间、工作坊、可食花园与 Mendpress，
-              在同一个生活节奏里彼此连接。
-            </p>
-            <div className="flex flex-col flex-wrap gap-3 sm:flex-row">
-              <Link
-                href={localizedHref('/experiences', 'zh')}
-                className="inline-flex items-center justify-center border-2 border-white px-6 py-3 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-accent md:px-8 md:py-4"
-              >
-                浏览体验
-              </Link>
-              <Link
-                href={localizedHref('/mendpress', 'zh')}
-                className="inline-flex items-center justify-center border border-white/55 px-6 py-3 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white/10 md:px-8 md:py-4"
-              >
-                进入 Mendpress
-              </Link>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/88">
-              <Link href={localizedHref('/visit', 'zh')} className="underline underline-offset-4 hover:text-white">
-                规划到访
-              </Link>
-              <Link href={localizedHref('/workshops', 'zh')} className="underline underline-offset-4 hover:text-white">
-                工作坊
-              </Link>
-              <Link href={localizedHref('/edible-gardens', 'zh')} className="underline underline-offset-4 hover:text-white">
-                可食花园
-              </Link>
-              <Link
-                href={localizedHref('/backyard-small-second-home', 'zh')}
-                className="underline underline-offset-4 hover:text-white"
-              >
-                后院第二小住宅
-              </Link>
-              <Link href={localizedHref('/partners/founding', 'zh')} className="underline underline-offset-4 hover:text-white">
-                创始合作
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ChineseHomeHero />
 
       {/* Proof Bar */}
       <section className="bg-white py-12 border-y border-border dark:bg-bg dark:border-border">
