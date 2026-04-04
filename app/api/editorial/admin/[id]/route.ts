@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
-import { buildEditorialWritePayload, editorialMissingAudioWriteColumnError } from '@/lib/editorial'
+import { buildEditorialWritePayload, editorialMissingAudioWriteColumnError, editorialUrl } from '@/lib/editorial'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -96,13 +96,15 @@ export async function DELETE(_request: Request, { params }: Props) {
       .from('editorial_entries')
       .delete()
       .eq('id', id)
-      .select('id,slug,path')
-      .single<{ id: string; slug: string; path: string }>()
+      .select('id,slug')
+      .single<{ id: string; slug: string }>()
 
     if (error || !data) {
       console.error('[Editorial Admin] delete failed', error)
       return NextResponse.json({ ok: false, error: 'Failed to delete piece.' }, { status: 500 })
     }
+
+    const articlePath = editorialUrl(data.slug)
 
     const pathsToRevalidate = [
       '/mendpress',
@@ -115,8 +117,8 @@ export async function DELETE(_request: Request, { params }: Props) {
       '/zh/mendpress/dialogue',
       '/zh/mendpress/visual-narrative',
       '/zh/mendpress/reports',
-      data.path,
-      `/zh${data.path}`,
+      articlePath,
+      `/zh${articlePath}`,
     ]
 
     for (const path of pathsToRevalidate) {
