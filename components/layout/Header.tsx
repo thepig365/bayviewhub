@@ -262,7 +262,7 @@ export function Header() {
   const dropdownItemClass =
     'block px-4 py-2.5 text-sm text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors'
   const publicationLinkClass =
-    'text-sm tracking-[0.14em] uppercase text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
+    'text-[12px] tracking-[0.16em] uppercase text-gray-900/75 hover:text-accent dark:text-gray-100/80 dark:hover:text-accent transition-colors whitespace-nowrap'
 
   const renderDesktopEntry = (entry: SiteNavEntry) => {
     const localizedEntryHref = entry.external ? entry.href : localizedHref(entry.href, locale)
@@ -427,9 +427,10 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden border-t border-border/70 py-3 md:block dark:border-border/70">
+        <div className="hidden md:flex items-center justify-between pt-1 pb-4">
+          <div className="w-[280px] shrink-0" aria-hidden />
           <nav
-            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+            className="flex flex-1 flex-wrap items-center justify-start gap-x-6 gap-y-2"
             aria-label={locale === 'zh' ? 'Mendpress 导航' : 'Mendpress navigation'}
           >
             {MENDPRESS_NAV.map(renderPublicationEntry)}
@@ -476,7 +477,7 @@ export function Header() {
               </div>
               <div className="pt-2">
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted">{mendpressSectionHeading}</p>
-                <div className="space-y-2 rounded-lg border border-border bg-surface/50 p-3 dark:bg-bg/40">
+                <div className="space-y-2 rounded-lg bg-surface/50 p-3 dark:bg-bg/40">
                   {MENDPRESS_NAV.map((item) => (
                     <MobileNavRow
                       key={item.href}
