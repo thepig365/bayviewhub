@@ -738,6 +738,54 @@ export function editorialMissingAudioWriteColumnError(error: unknown): boolean {
   )
 }
 
+const EDITORIAL_BILINGUAL_WRITE_COLUMNS = [
+  'title_zh',
+  'summary_zh',
+  'body_markdown_zh',
+  'seo_title_zh',
+  'seo_description_zh',
+  'transcript_markdown_zh',
+  'show_notes_markdown_zh',
+] as const
+
+const EDITORIAL_AUDIO_WRITE_COLUMNS = [
+  'audio_url',
+  'audio_duration_seconds',
+  'transcript_markdown',
+  'show_notes_markdown',
+  'speakers',
+] as const
+
+function omitEditorialWriteColumns(
+  payload: Record<string, unknown>,
+  keys: readonly string[]
+): Record<string, unknown> {
+  const next = { ...payload }
+  for (const key of keys) {
+    delete next[key]
+  }
+  return next
+}
+
+export function editorialWritePayloadFallbacks(payload: Record<string, unknown>): Record<string, unknown>[] {
+  const variants = [
+    payload,
+    omitEditorialWriteColumns(payload, EDITORIAL_BILINGUAL_WRITE_COLUMNS),
+    omitEditorialWriteColumns(payload, EDITORIAL_AUDIO_WRITE_COLUMNS),
+    omitEditorialWriteColumns(payload, [...EDITORIAL_BILINGUAL_WRITE_COLUMNS, ...EDITORIAL_AUDIO_WRITE_COLUMNS]),
+  ]
+
+  const unique = new Map<string, Record<string, unknown>>()
+  for (const variant of variants) {
+    const key = JSON.stringify(variant)
+    if (!unique.has(key)) {
+      unique.set(key, variant)
+    }
+  }
+
+  return Array.from(unique.values())
+}
+
 export async function listPublishedEditorialEntries(options?: {
   type?: EditorialType
   types?: EditorialType[]

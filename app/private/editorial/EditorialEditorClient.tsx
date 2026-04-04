@@ -32,6 +32,17 @@ type AiMetadataSuggestions = {
   seoKeywords: string[]
 }
 
+type BodyInsertNotice =
+  | {
+      kind: 'image'
+      label: string
+      previewUrl: string
+    }
+  | {
+      kind: 'audio'
+      label: string
+    }
+
 const INLINE_MAX_DIMENSION = 1800
 const SUPPORTED_AUDIO_COPY = 'MP3, M4A, WAV, OGG, or WebM up to 150 MB'
 const FIELD_BASE_CLASS = `${CONTRAST_FORM_CONTROL_CLASS} text-base`
@@ -318,6 +329,7 @@ export function EditorialEditorClient({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [deleteState, setDeleteState] = useState<'idle' | 'loading' | 'error'>('idle')
   const [deleteMessage, setDeleteMessage] = useState('')
+  const [bodyInsertNotice, setBodyInsertNotice] = useState<BodyInsertNotice | null>(null)
   const [aiMetadataSuggestions, setAiMetadataSuggestions] = useState<AiMetadataSuggestions>({
     title: '',
     slugSuggestion: '',
@@ -637,9 +649,10 @@ export function EditorialEditorClient({
     setBodyMarkdown(nextValue)
 
     window.requestAnimationFrame(() => {
-      const nextPos = before.length + insert.length
+      const snippetStart = before.length + (needsLeadingBreak ? 2 : 0)
+      const snippetEnd = snippetStart + snippet.length
       textarea.focus()
-      textarea.setSelectionRange(nextPos, nextPos)
+      textarea.setSelectionRange(snippetStart, snippetEnd)
     })
   }
 
@@ -726,9 +739,14 @@ export function EditorialEditorClient({
           fullSrc: fullUrl,
         })
       )
+      setBodyInsertNotice({
+        kind: 'image',
+        label: alt || file.name,
+        previewUrl: inlineUrl,
+      })
 
       setImageUploadState('success')
-      setImageUploadMessage('Image uploaded and inserted. Click-to-enlarge will use the full-resolution source.')
+      setImageUploadMessage('Image inserted into the body at the current cursor position. Save or publish to update the live page.')
     } catch (error) {
       setImageUploadState('error')
       setImageUploadMessage(
@@ -767,8 +785,12 @@ export function EditorialEditorClient({
           durationSeconds: duration,
         })
       )
+      setBodyInsertNotice({
+        kind: 'audio',
+        label: clipTitle,
+      })
       setBodyAudioUploadState('success')
-      setBodyAudioUploadMessage('Audio block inserted into the body flow.')
+      setBodyAudioUploadMessage('Audio block inserted into the body at the current cursor position.')
     } catch (error) {
       setBodyAudioUploadState('error')
       setBodyAudioUploadMessage(
@@ -1186,12 +1208,41 @@ export function EditorialEditorClient({
                   value={bodyMarkdown}
                   onChange={(e) => {
                     setBodyMarkdown(e.target.value)
+                    setBodyInsertNotice(null)
                     if (editorialMode === 'audio' && e.target.value.trim()) {
                       setAssistStatus((current) => ({ ...current, companion: 'ready' }))
                     }
                   }}
                   className={WRITING_TEXTAREA_CLASS}
                 />
+                {bodyInsertNotice ? (
+                  <div className="mt-3 rounded-2xl border border-border bg-natural-100 p-4 dark:border-border dark:bg-surface">
+                    <div className="flex flex-wrap items-center gap-4">
+                      {bodyInsertNotice.kind === 'image' ? (
+                        <img
+                          src={bodyInsertNotice.previewUrl}
+                          alt={bodyInsertNotice.label}
+                          className="h-16 w-16 rounded-xl object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-natural-200 text-xs uppercase tracking-[0.14em] text-fg/82 dark:bg-neutral-800 dark:text-white/82">
+                          Audio
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-fg">
+                          {bodyInsertNotice.kind === 'image' ? 'Latest inserted image' : 'Latest inserted audio block'}
+                        </p>
+                        <p className="mt-1 text-sm text-fg/84 dark:text-white/84">
+                          {bodyInsertNotice.label}
+                        </p>
+                        <p className="mt-1 text-xs leading-6 text-fg/72 dark:text-white/72">
+                          Inserted into the body at the current cursor position. Save or publish when you are happy with the placement.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
                 {imageUploadMessage ? (
                   <p className={`mt-2 text-sm ${imageUploadState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
                     {imageUploadMessage}

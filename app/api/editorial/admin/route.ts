@@ -1,6 +1,10 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { buildEditorialWritePayload, editorialMissingAudioWriteColumnError } from '@/lib/editorial'
+import {
+  buildEditorialWritePayload,
+  editorialMissingAudioWriteColumnError,
+  editorialWritePayloadFallbacks,
+} from '@/lib/editorial'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -43,11 +47,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: 'Database not configured.' }, { status: 500 })
     }
 
-    const { data, error } = await supabase
-      .from('editorial_entries')
-      .insert(payload)
-      .select('id,slug')
-      .single<{ id: string; slug: string }>()
+    let data: { id: string; slug: string } | null = null
+    let error: { code?: string } | null = null
+
+    for (const candidate of editorialWritePayloadFallbacks(payload)) {
+      const result = await supabase
+        .from('editorial_entries')
+        .insert(candidate)
+        .select('id,slug')
+        .single<{ id: string; slug: string }>()
+
+      data = result.data
+      error = result.error
+
+      if (!error && data) {
+        break
+      }
+
+      if (!editorialMissingAudioWriteColumnError(error)) {
+        break
+      }
+    }
 
     if (error || !data) {
       console.error('[Editorial Admin] create failed', error)
