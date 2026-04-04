@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { GALLERY_EXTERNAL, SITE_NAV, type SiteNavChild, type SiteNavEntry, SSD_LANDING } from '@/lib/constants'
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
+import { GALLERY_EXTERNAL, SITE_CONFIG, SITE_NAV, type SiteNavChild, type SiteNavEntry, SSD_LANDING } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { localizedHref, localeFromPathname } from '@/lib/language-routing'
@@ -28,6 +27,16 @@ function zhNavLabel(label: string): string {
       return '关于我们'
     case 'Mendpress':
       return 'Mendpress'
+    case 'Editorial':
+      return '评论'
+    case 'Dialogue':
+      return '对话'
+    case 'Visual Narrative':
+      return '视觉叙事'
+    case 'Programme':
+      return '项目发布'
+    case 'Bayview Hub':
+      return 'Bayview Hub'
     case 'Food/Wine':
       return '餐饮与葡萄酒'
     case 'Backyard Small Second Home':
@@ -88,6 +97,23 @@ function zhNavLabel(label: string): string {
 function t(label: string, locale: 'en' | 'zh') {
   return locale === 'zh' ? zhNavLabel(label) : label
 }
+
+const BAYVIEW_TOP_NAV_ORDER = [
+  "What's On",
+  'Gallery',
+  'Backyard Small Second Home',
+  'Edible Gardens',
+  'Visit Us',
+  'About',
+] as const
+
+const MENDPRESS_NAV = [
+  { label: 'Mendpress', href: '/mendpress' },
+  { label: 'Editorial', href: '/mendpress/editorial' },
+  { label: 'Dialogue', href: '/mendpress/dialogue' },
+  { label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
+  { label: 'Programme', href: '/mendpress/reports' },
+] as const
 
 function DesktopNavLink({
   href,
@@ -168,6 +194,11 @@ export function Header() {
   const siteMenuAria = locale === 'zh' ? '站点导航菜单' : 'Site navigation menu'
   const navigationHeading = locale === 'zh' ? '导航' : 'Navigation'
   const quickActionsHeading = locale === 'zh' ? '快捷操作' : 'Quick actions'
+  const bayviewSectionHeading = locale === 'zh' ? 'Bayview Hub' : 'Bayview Hub'
+  const mendpressSectionHeading = locale === 'zh' ? 'Mendpress' : 'Mendpress'
+  const bayviewNav = BAYVIEW_TOP_NAV_ORDER
+    .map((label) => SITE_NAV.find((entry) => entry.label === label))
+    .filter((entry): entry is SiteNavEntry => Boolean(entry))
 
   useEffect(() => {
     const handleScroll = () => {
@@ -227,9 +258,11 @@ export function Header() {
   }, [isMenuOpen])
 
   const topLinkClass =
-    'text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
+    'text-[13px] font-medium uppercase tracking-[0.16em] text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
   const dropdownItemClass =
     'block px-4 py-2.5 text-sm text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors'
+  const publicationLinkClass =
+    'text-sm tracking-[0.14em] uppercase text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
 
   const renderDesktopEntry = (entry: SiteNavEntry) => {
     const localizedEntryHref = entry.external ? entry.href : localizedHref(entry.href, locale)
@@ -341,6 +374,24 @@ export function Header() {
     )
   }
 
+  const renderPublicationEntry = (item: (typeof MENDPRESS_NAV)[number]) => {
+    const href = localizedHref(item.href, locale)
+    const isRoot = item.label === 'Mendpress'
+
+    return (
+      <Link
+        key={item.href}
+        href={href}
+        className={cn(
+          publicationLinkClass,
+          isRoot ? 'font-serif text-xl normal-case tracking-[0.04em] text-fg dark:text-fg' : ''
+        )}
+      >
+        {t(item.label, locale)}
+      </Link>
+    )
+  }
+
   return (
     <header
       className={cn(
@@ -351,19 +402,15 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-28 md:h-32">
+        <div className="flex items-center justify-between py-5 md:py-6">
           <Logo href={localizedHref('/', locale)} locale={locale} />
 
           <nav
-            className="hidden md:flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-5 text-base lg:text-lg"
+            className="hidden md:flex flex-wrap items-center justify-end gap-x-5 gap-y-2 lg:gap-x-6"
             aria-label={navAriaLabel}
           >
-            {SITE_NAV.map(renderDesktopEntry)}
+            {bayviewNav.map(renderDesktopEntry)}
           </nav>
-
-          <div className="hidden md:flex items-center gap-5">
-            <LanguageSwitcher compact />
-          </div>
 
           <div className="flex items-center md:hidden">
             <button
@@ -378,6 +425,15 @@ export function Header() {
               <Menu size={24} />
             </button>
           </div>
+        </div>
+
+        <div className="hidden border-t border-border/70 py-3 md:block dark:border-border/70">
+          <nav
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+            aria-label={locale === 'zh' ? 'Mendpress 导航' : 'Mendpress navigation'}
+          >
+            {MENDPRESS_NAV.map(renderPublicationEntry)}
+          </nav>
         </div>
       </div>
 
@@ -413,11 +469,24 @@ export function Header() {
               </button>
             </div>
 
-            <div className="space-y-3 p-5">
-              <div className="pb-2">
-                <LanguageSwitcher />
+            <div className="space-y-4 p-5">
+              <div>
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted">{bayviewSectionHeading}</p>
+                <div className="space-y-3">{bayviewNav.map(renderMobileEntry)}</div>
               </div>
-              {SITE_NAV.map(renderMobileEntry)}
+              <div className="pt-2">
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted">{mendpressSectionHeading}</p>
+                <div className="space-y-2 rounded-lg border border-border bg-surface/50 p-3 dark:bg-bg/40">
+                  {MENDPRESS_NAV.map((item) => (
+                    <MobileNavRow
+                      key={item.href}
+                      item={{ label: t(item.label, locale), href: localizedHref(item.href, locale) }}
+                      onNavigate={closeMenu}
+                      className={item.label === 'Mendpress' ? 'font-serif text-lg' : 'font-medium'}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="space-y-3 border-t border-border p-5 pt-2">
@@ -443,6 +512,9 @@ export function Header() {
                 </Button>
                 <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
                   {t('Browse gallery', locale)}
+                </Button>
+                <Button href={SITE_CONFIG.pigAndWhistleUrl} external variant="outline" size="md" className="w-full" onClick={closeMenu}>
+                  {t('Food/Wine', locale)}
                 </Button>
               </div>
             </div>
