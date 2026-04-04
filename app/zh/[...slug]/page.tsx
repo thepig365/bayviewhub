@@ -85,7 +85,7 @@ export default async function ChineseFallbackPage({ params }: Props) {
             ) : null}
           </div>
 
-          <div className="mt-8 rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-bg/70">
+          <div className="mt-8 rounded-2xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/70">
             <p className="text-[15px] font-medium leading-6 text-fg md:text-sm">当前路径</p>
             <p className="mt-2 break-all text-[15px] leading-7 text-fg/85 dark:text-white/85 md:text-sm">{zhPath}</p>
             <p className="mt-3 text-[15px] font-medium leading-6 text-fg md:text-sm">英文原页</p>
@@ -93,7 +93,7 @@ export default async function ChineseFallbackPage({ params }: Props) {
           </div>
 
           {mendpressEntry ? (
-            <section className="mt-8 rounded-2xl border border-border bg-white p-6 dark:border-border dark:bg-bg/70">
+            <section className="mt-8 rounded-2xl border border-border bg-natural-200 p-6 shadow-sm dark:border-border dark:bg-bg/70">
               <p className="eyebrow text-accent">Mendpress</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{mendpressEntry.title}</h2>
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">

@@ -407,7 +407,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 <Link href="/zh/mendpress" className="text-fg underline underline-offset-4 hover:text-accent">
                   返回 Mendpress
                 </Link>
-                <Link href={englishUrl} className="text-muted underline underline-offset-4 hover:text-fg">
+                <Link href={englishUrl} className="text-fg/82 underline underline-offset-4 hover:text-fg dark:text-white/82 dark:hover:text-white">
                   打开英文原页
                 </Link>
               </div>
@@ -480,14 +480,14 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 ) : null}
               </div>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface md:p-8">
+              <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
                   <div>
                     <p className="eyebrow text-accent">继续阅读 Mendpress</p>
                     <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
                       更多来自 {sectionLabel}
                     </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                       从这篇内容继续进入同一栏目，或回到 Mendpress 的公开发布流中继续阅读。
                     </p>
                     {relatedEntries.length ? (
@@ -497,8 +497,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                         ))}
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
-                        <p className="text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                      <div className="mt-8 rounded-3xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/60">
+                        <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                           下一篇相关内容尚未形成足够清晰的关联推荐。你可以先返回 Mendpress 主流继续阅读。
                         </p>
                         <div className="mt-4">
@@ -534,10 +534,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-100 p-6 shadow-sm dark:border-border dark:bg-surface">
+              <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
                 <p className="eyebrow text-accent">下一步</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">从这篇内容继续</h2>
-                <p className="mt-3 text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                   每一篇 Mendpress 内容都应通向某个真正有用的下一步: 订阅、到访、交流或继续阅读。
                 </p>
                 <div className="mt-6">

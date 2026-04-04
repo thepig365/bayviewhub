@@ -25,9 +25,9 @@ export function EditorialPullQuote({ quote, articleTitle, articleUrl, locale = '
   }
 
   return (
-    <section className="my-12 rounded-[2rem] border border-border bg-white px-6 py-8 shadow-sm dark:border-border dark:bg-surface md:px-10 md:py-10">
+    <section className="my-12 rounded-[2rem] border border-border bg-natural-100 px-6 py-8 shadow-md dark:border-border dark:bg-surface md:px-10 md:py-10">
       <p className="eyebrow text-accent">{locale === 'zh' ? '摘引' : 'Pull quote'}</p>
-      <blockquote className="mt-5 max-w-3xl text-pretty font-serif text-[1.9rem] leading-[1.65] text-fg md:text-[2.35rem]">
+      <blockquote className="mt-5 max-w-3xl text-pretty font-serif text-[1.9rem] leading-[1.65] text-fg/92 dark:text-white/92 md:text-[2.35rem]">
         {quote}
       </blockquote>
       <div className="mt-5 flex flex-wrap items-center gap-4 text-[15px] leading-6 md:text-sm md:leading-5">

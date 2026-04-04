@@ -35,8 +35,8 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
   const hasChineseCard = editorialHasChineseCardContent(entry)
   const isLead = layout === 'lead'
   const isStream = layout === 'stream'
-  const metaClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
-  const summaryClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
+  const metaClass = locale === 'zh' ? 'text-fg/86 dark:text-white/86' : 'text-fg/84 dark:text-white/84'
+  const summaryClass = locale === 'zh' ? 'text-fg/92 dark:text-white/92' : 'text-fg/90 dark:text-white/90'
   const duration = formatDuration(entry.audioDurationSeconds)
   const actionLabel = isAudioFirstEditorialType(entry.editorialType)
     ? locale === 'zh'
@@ -52,7 +52,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
         className={cn(
           'relative',
           isLead
-            ? 'overflow-hidden rounded-[2rem] border border-border bg-white shadow-md dark:border-border dark:bg-surface'
+            ? 'overflow-hidden rounded-[2rem] border border-border bg-natural-100 shadow-lg dark:border-border dark:bg-surface'
             : 'border-t border-border py-8 first:border-t-0 first:pt-0 dark:border-border'
         )}
       >
@@ -61,7 +61,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
             <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 md:text-sm md:leading-5', metaClass)}>
               {locale === 'zh' && !hasChineseCard ? (
                 <>
-                  <span className="rounded-full bg-natural-200 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80 md:text-[11px]">
+                  <span className="rounded-full bg-natural-300 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/85 dark:bg-neutral-800 dark:text-white/84 md:text-[11px]">
                     当前仍为英文原文
                   </span>
                   <span aria-hidden>·</span>
@@ -123,7 +123,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
               <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
                 {actionLabel}
               </Link>
-              <Link href={categoryHref} className="text-fg/72 transition-colors hover:text-fg dark:text-white/72 dark:hover:text-white">
+              <Link href={categoryHref} className="text-fg/82 transition-colors hover:text-fg dark:text-white/82 dark:hover:text-white">
                 {locale === 'zh' ? '更多来自 ' : 'More from '}
                 {mendpressSectionLabelForLocale(entry.editorialType, locale)}
               </Link>
@@ -163,7 +163,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
   return (
     <article
       className={cn(
-        'overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-colors hover:border-accent dark:border-border dark:bg-surface',
+        'overflow-hidden rounded-3xl border border-border bg-natural-100 shadow-md transition-colors hover:border-accent dark:border-border dark:bg-surface',
       )}
     >
       {entry.heroImage ? (
@@ -180,7 +180,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
         <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 md:text-sm md:leading-5', metaClass)}>
           {locale === 'zh' && !hasChineseCard ? (
             <>
-              <span className="rounded-full bg-natural-200 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80 md:text-[11px]">
+              <span className="rounded-full bg-natural-300 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/85 dark:bg-neutral-800 dark:text-white/84 md:text-[11px]">
                 当前仍为英文原文
               </span>
               <span aria-hidden>·</span>
@@ -230,7 +230,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
           <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
             {actionLabel}
           </Link>
-          <Link href={categoryHref} className="text-fg/72 hover:text-fg transition-colors dark:text-white/72 dark:hover:text-white">
+          <Link href={categoryHref} className="text-fg/82 hover:text-fg transition-colors dark:text-white/82 dark:hover:text-white">
             {locale === 'zh' ? '更多来自 ' : 'More from '}
             {mendpressSectionLabelForLocale(entry.editorialType, locale)}
           </Link>

@@ -41,7 +41,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption, locale = 'en'
           className="group block w-full text-left"
           aria-label={locale === 'zh' ? `打开图片：${alt}` : `Open image: ${alt}`}
         >
-          <div className="overflow-hidden rounded-3xl border border-border bg-natural-100 dark:border-border dark:bg-surface">
+          <div className="overflow-hidden rounded-3xl border border-border bg-natural-200 shadow-sm dark:border-border dark:bg-surface">
             <img
               src={src}
               alt={alt}
@@ -52,7 +52,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption, locale = 'en'
           </div>
         </button>
         {caption ? (
-          <figcaption className="mt-4 max-w-3xl text-sm leading-7 text-fg/72 dark:text-white/72">
+          <figcaption className="mt-4 max-w-3xl text-sm leading-7 text-fg/80 dark:text-white/80">
             {caption}
           </figcaption>
         ) : null}

@@ -323,14 +323,14 @@ export default async function MendpressEntryPage({ params }: Props) {
                 ) : null}
               </div>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface md:p-8">
+              <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
                   <div>
                     <p className="eyebrow text-accent">Continue with Mendpress</p>
                     <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
                       More from {sectionLabel}
                     </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                       Continue from this piece into the same editorial current, or step back out into the wider Mendpress publication.
                     </p>
                     {relatedEntries.length ? (
@@ -340,8 +340,8 @@ export default async function MendpressEntryPage({ params }: Props) {
                         ))}
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
-                        <p className="text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                      <div className="mt-8 rounded-3xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/60">
+                        <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                           The next related piece has not been published yet. Continue through the main Mendpress stream instead.
                         </p>
                         <div className="mt-4">
@@ -373,12 +373,12 @@ export default async function MendpressEntryPage({ params }: Props) {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-100 p-6 shadow-sm dark:border-border dark:bg-surface">
+              <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
                 <p className="eyebrow text-accent">Next step</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
                   Continue from this piece
                 </h2>
-                <p className="mt-3 text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
+                <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
                   Each Mendpress piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
                 </p>
                 <div className="mt-6">

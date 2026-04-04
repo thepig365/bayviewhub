@@ -57,9 +57,9 @@ export async function JournalCollectionPage({
     strictRecency: true,
   })
   const entries = rawEntries
-  const introClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
-  const sectionDescriptionClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
-  const emptyBodyClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
+  const introClass = locale === 'zh' ? 'text-fg/90 dark:text-white/90' : 'text-fg/88 dark:text-white/88'
+  const sectionDescriptionClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
+  const emptyBodyClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
   const [featured, ...rest] = entries
   const categoryLinks = chips || MENDPRESS_CATEGORY_LINKS.map((item) => ({ ...item, href: localizedHref(item.href, locale) }))
   const leadEyebrow = locale === 'zh' ? '最新发布' : 'Latest story'
@@ -128,7 +128,7 @@ export async function JournalCollectionPage({
                     </h2>
                   </div>
                   {featured.publishedAt ? (
-                    <p className="text-[15px] leading-6 text-muted md:text-sm md:leading-5">
+                    <p className="text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
                       {locale === 'zh' ? '按发布时间排序' : 'Ordered by publication date'}
                     </p>
                   ) : null}
@@ -156,7 +156,7 @@ export async function JournalCollectionPage({
               ) : null}
 
               {!activeSection && sectionRail.length ? (
-                <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface/95 md:p-8">
+                <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface/95 md:p-8">
                   <p className="eyebrow text-accent">{locale === 'zh' ? 'Mendpress 栏目' : 'Mendpress sections'}</p>
                   <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">{sectionRailTitle}</h2>
                   <p className={cn('mt-3 max-w-3xl text-base leading-8', sectionDescriptionClass)}>
@@ -164,7 +164,7 @@ export async function JournalCollectionPage({
                   </p>
                   <div className="mt-8 grid gap-5 md:grid-cols-2">
                     {sectionRail.map((section) => (
-                      <article key={section.id} className="rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
+                      <article key={section.id} className="rounded-3xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/60">
                         <p className="eyebrow text-accent">{locale === 'zh' ? '栏目入口' : 'Section'}</p>
                         <h3 className="mt-2 text-2xl font-serif font-semibold text-fg">{section.label}</h3>
                         <p className={cn('mt-3 text-[15px] leading-7 md:text-sm', sectionDescriptionClass)}>{section.description}</p>
@@ -180,7 +180,7 @@ export async function JournalCollectionPage({
               ) : null}
             </>
           ) : (
-            <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-50 px-6 py-16 text-center dark:border-border dark:bg-surface">
+            <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-100 px-6 py-16 text-center shadow-sm dark:border-border dark:bg-surface">
               <h2 className="text-3xl font-serif font-semibold text-fg">
                 {emptyTitle || (activeSection ? (locale === 'zh' ? `${title} 栏目尚未发布内容。` : `${title} is not published yet.`) : locale === 'zh' ? 'Mendpress 正在持续发布中。' : 'Mendpress is opening.')}
               </h2>
