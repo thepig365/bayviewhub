@@ -7,9 +7,10 @@ import Image from 'next/image'
 interface LogoProps {
   className?: string
   href?: string
+  locale?: 'en' | 'zh'
 }
 
-export function Logo({ className = '', href = '/' }: LogoProps) {
+export function Logo({ className = '', href = '/', locale = 'en' }: LogoProps) {
   return (
     <Link
       href={href}
@@ -17,7 +18,7 @@ export function Logo({ className = '', href = '/' }: LogoProps) {
     >
       <Image
         src="/images/bayview-estate-logo.jpg"
-        alt="Bayview Estate"
+        alt={locale === 'zh' ? 'Bayview Hub 标识' : 'Bayview Hub logo'}
         width={200}
         height={60}
         className="h-16 w-auto md:h-20"
@@ -28,7 +29,7 @@ export function Logo({ className = '', href = '/' }: LogoProps) {
           Bayview Hub
         </span>
         <span className="text-sm tracking-widest uppercase text-black dark:text-fg">
-          Est. Victoria
+          {locale === 'zh' ? '来自维州' : 'Est. Victoria'}
         </span>
       </div>
     </Link>

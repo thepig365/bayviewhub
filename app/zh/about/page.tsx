@@ -20,7 +20,7 @@ export default function ChineseAboutPage() {
           <h1 className="text-4xl font-serif font-bold leading-tight text-fg md:text-5xl lg:text-6xl">
             为什么 Bayview Hub 要存在
           </h1>
-          <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-muted md:text-lg">
+          <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-fg/80 dark:text-white/80 md:text-lg">
             <p>
               Bayview Hub 的起点，并不是再做一个更快、更满、更喧闹的生活方式项目，而是回应当代生活中越来越稀薄的东西：
               注意力、场所感、真实相遇、共同经验，以及人与美、人与土地、人与彼此之间重新连接的可能。

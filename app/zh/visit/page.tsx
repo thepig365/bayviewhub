@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { MapPin, Clock, Phone, Mail, Car, Train } from 'lucide-react'
-import { SITE_CONFIG, SITE_HOURS } from '@/lib/constants'
+import { SITE_CONFIG } from '@/lib/constants'
 import { localizedHref } from '@/lib/language-routing'
 import { generateMetadata as genMeta } from '@/lib/utils'
+
+const VISIT_SCHEDULE = [
+  { days: '周一至周二', hours: '休息' },
+  { days: '周三', hours: '上午 11:00 - 下午 4:00' },
+  { days: '周四至周日', hours: '上午 11:00 - 夜间' },
+]
 
 export const metadata: Metadata = genMeta({
   title: '到访信息',
@@ -65,10 +71,10 @@ export default function ChineseVisitPage() {
               <h2 className="text-3xl font-serif font-bold text-fg">开放时间</h2>
               <div className="mt-6 rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface/50">
                 <div className="space-y-4">
-                  {SITE_HOURS.schedule.map((item, index) => (
+                  {VISIT_SCHEDULE.map((item, index) => (
                     <div
                       key={item.days}
-                      className={`flex items-center justify-between py-2 ${index < SITE_HOURS.schedule.length - 1 ? 'border-b border-border' : ''}`}
+                      className={`flex items-center justify-between py-2 ${index < VISIT_SCHEDULE.length - 1 ? 'border-b border-border' : ''}`}
                     >
                       <span className="font-medium text-fg">{item.days}</span>
                       <span className="text-muted">{item.hours}</span>
@@ -78,7 +84,7 @@ export default function ChineseVisitPage() {
                 <div className="mt-6 border-t border-border pt-6">
                   <p className="flex items-start text-base text-muted">
                     <Clock className="mr-2 mt-0.5 h-4 w-4 flex-shrink-0" />
-                    {SITE_HOURS.note}
+                    各体验项目的开放时间可能略有不同，出发前请以具体页面或外部预订页信息为准。
                   </p>
                 </div>
               </div>
@@ -143,7 +149,7 @@ export default function ChineseVisitPage() {
                 导航到 Bayview Hub
               </Button>
               <Button href={localizedHref('/cellar-door', 'zh')} variant="outline" size="lg">
-                查看 Cellar Door
+                查看酒窖品鉴
               </Button>
             </div>
           </div>

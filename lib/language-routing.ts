@@ -17,15 +17,22 @@ const EXCLUDED_PREFIXES = ['/api', '/private', '/_next', '/cdn-cgi']
 const EXACT_ROUTE_MAP_EN_TO_ZH: Record<string, string> = {
   '/': '/zh',
   '/about': '/zh/about',
+  '/experiences': '/zh/experiences',
   '/visit': '/zh/visit',
   '/workshops': '/zh/workshops',
   '/edible-gardens': '/zh/edible-gardens',
   '/backyard-small-second-home': '/zh/backyard-small-second-home',
+  '/newsletter': '/zh/newsletter',
   '/mendpress': '/zh/mendpress',
   '/mendpress/editorial': '/zh/mendpress/editorial',
   '/mendpress/dialogue': '/zh/mendpress/dialogue',
   '/mendpress/visual-narrative': '/zh/mendpress/visual-narrative',
   '/mendpress/reports': '/zh/mendpress/reports',
+  '/partners': '/zh/partners',
+  '/partners/founding': '/zh/partners/founding',
+  '/privacy': '/zh/privacy',
+  '/terms': '/zh/terms',
+  '/invest': '/zh/invest',
 }
 
 function trimTrailingSlash(path: string): string {
@@ -183,12 +190,16 @@ export function routeLabelForChineseFallback(pathname: string): string {
   if (englishPath === '/mendpress') return 'Mendpress'
   if (englishPath.startsWith('/mendpress/')) return 'Mendpress 页面'
   if (englishPath === '/newsletter') return '通讯页'
-  if (englishPath.startsWith('/backyard-small-second-home')) return 'Backyard Small Second Home'
+  if (englishPath === '/experiences') return '体验'
+  if (englishPath.startsWith('/backyard-small-second-home')) return '后院第二小住宅'
   if (englishPath === '/about') return '关于我们'
   if (englishPath === '/visit') return '到访信息'
   if (englishPath === '/events') return '活动'
   if (englishPath.startsWith('/partners')) return '合作方'
   if (englishPath === '/workshops') return '工作坊'
   if (englishPath === '/edible-gardens') return '可食花园'
+  if (englishPath === '/privacy') return '隐私政策'
+  if (englishPath === '/terms') return '服务条款'
+  if (englishPath === '/invest') return '投资信息'
   return englishPath
 }

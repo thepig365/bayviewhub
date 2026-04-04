@@ -25,7 +25,7 @@ export default function ChineseWorkshopsPage() {
           <div className="mx-auto max-w-3xl">
             <p className="eyebrow text-accent">工作坊</p>
             <h1 className="mt-4 text-4xl font-serif font-bold text-fg md:text-5xl">艺术与修复性工作坊</h1>
-            <p className="mt-8 text-xl leading-relaxed text-muted">
+            <p className="mt-8 text-xl leading-relaxed text-fg/80 dark:text-white/80">
               这不是临床治疗服务，而是在 Bayview Hub 提供的一种更安静、更有支持性的创作时间。
               我们把表达性艺术、材料经验与场所感结合起来，让人重新慢下来、重新连接、重新感受。
             </p>
@@ -37,7 +37,7 @@ export default function ChineseWorkshopsPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-serif font-bold text-fg">为什么要有这类工作坊</h2>
-            <p className="mt-6 leading-8 text-muted">
+            <p className="mt-6 leading-8 text-fg/80 dark:text-white/80">
               创作可以是修复性的，不是把艺术当成表现压力，也不是把每一次参与都变成成果导向。
               在 Bayview Hub，我们更关心的是：人是否能在一个安全、安静、不被催促的环境里，重新与材料、身体、土地和他人发生关系。
             </p>
@@ -53,7 +53,7 @@ export default function ChineseWorkshopsPage() {
               {workshopItems.map(([title, description]) => (
                 <div key={title} className="rounded-xl bg-natural-50 p-6 dark:bg-surface/50">
                   <h3 className="font-bold text-fg">{title}</h3>
-                  <p className="mt-2 text-muted">{description}</p>
+                  <p className="mt-2 text-fg/80 dark:text-white/80">{description}</p>
                 </div>
               ))}
             </div>
@@ -65,7 +65,7 @@ export default function ChineseWorkshopsPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-serif font-bold text-fg">适合谁</h2>
-            <ul className="mt-8 space-y-4 text-muted">
+            <ul className="mt-8 space-y-4 text-fg/80 dark:text-white/80">
               <li>适合想要有创作出口，但不想承受“表现”压力的人。</li>
               <li>适合希望慢下来、动手、重新校准节奏的人。</li>
               <li>适合家庭或照护者与孩子一起拥有共享创作时间。</li>

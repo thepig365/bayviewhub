@@ -49,10 +49,12 @@ function zhFooterLabel(label: string): string {
       return '项目'
     case 'Founding Partners':
       return '创始合作伙伴'
+    case 'Backyard Small Second Home':
+      return '后院第二小住宅'
     case 'Invest':
       return '投资'
     case 'Small Second Home paths':
-      return 'Small Second Home 路径'
+      return '第二小住宅路径'
     case 'Overview':
       return '总览'
     case 'Why this pathway':
@@ -122,7 +124,7 @@ export function Footer() {
             </h3>
             <p className="text-shell-footer-muted leading-relaxed mb-4">
               {locale === 'zh'
-                ? '在维州 30 英亩庄园中提供庄园餐饮、现场音乐与农舍住宿。Backyard Small Second Home 咨询现已开放，更多创意项目持续发展中。'
+                ? '在维州 30 英亩庄园中提供庄园餐饮、现场音乐与农舍住宿。后院第二小住宅咨询现已开放，更多创意项目持续发展中。'
                 : 'Estate dining, live music, and farmhouse accommodation on a 30-acre Victoria estate. Backyard Small Second Home enquiries now open. Creative programs in development.'}
             </p>
             <p className="text-shell-footer-muted leading-relaxed mb-2">
@@ -221,13 +223,13 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 mb-6">
               <li>
-                <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/partners/founding', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
                   {t('Founding Partners', locale)}
                 </Link>
               </li>
               <li>
                 <Link href={localizedHref(SSD_LANDING.overview, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Backyard Small Second Home
+                  {t('Backyard Small Second Home', locale)}
                 </Link>
               </li>
               <li>
@@ -300,7 +302,7 @@ export function Footer() {
             {/* Theme */}
             <div className="flex items-center gap-2">
               <span className="text-shell-footer-muted/70">{t('Theme:', locale)}</span>
-              <SimpleThemeToggle />
+              <SimpleThemeToggle locale={locale} />
             </div>
           </div>
         </div>

@@ -30,23 +30,25 @@ export function LanguageSwitcher({
   const englishHref = currentLocale === 'en' ? pathname : targetPath
   const chineseHref = currentLocale === 'zh' ? pathname : targetPath
   const languageLabel = currentLocale === 'zh' ? '语言:' : 'Language:'
+  const englishLabel = currentLocale === 'zh' ? '英文' : 'EN'
+  const chineseLabel = '中文'
 
   return (
     <div className={cn('flex items-center gap-2 text-sm', className)}>
       {!compact ? <span className={cn('text-muted', labelClassName)}>{languageLabel}</span> : null}
       {currentLocale === 'en' ? (
-        <span className={cn('font-medium text-fg', activeClassName)}>EN</span>
+        <span className={cn('font-medium text-fg', activeClassName)}>{englishLabel}</span>
       ) : (
         <Link href={englishHref} className={cn('text-muted hover:text-fg transition-colors', linkClassName)}>
-          EN
+          {englishLabel}
         </Link>
       )}
       <span className={cn('text-muted/60', separatorClassName)}>/</span>
       {currentLocale === 'zh' ? (
-        <span className={cn('font-medium text-fg', activeClassName)}>中文</span>
+        <span className={cn('font-medium text-fg', activeClassName)}>{chineseLabel}</span>
       ) : (
         <Link href={chineseHref} className={cn('text-muted hover:text-fg transition-colors', linkClassName)}>
-          中文
+          {chineseLabel}
         </Link>
       )}
     </div>

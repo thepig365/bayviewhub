@@ -26,8 +26,12 @@ function zhNavLabel(label: string): string {
       return '酒窖品鉴'
     case 'About':
       return '关于我们'
+    case 'Mendpress':
+      return 'Mendpress'
     case 'Food/Wine':
       return '餐饮与葡萄酒'
+    case 'Backyard Small Second Home':
+      return '后院第二小住宅'
     case 'Gallery':
       return '画廊'
     case 'Collection':
@@ -348,7 +352,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-28 md:h-32">
-          <Logo href={localizedHref('/', locale)} />
+          <Logo href={localizedHref('/', locale)} locale={locale} />
 
           <nav
             className="hidden md:flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-5 text-base lg:text-lg"

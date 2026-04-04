@@ -33,6 +33,8 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
   const entryTitle = editorialTitleForLocale(entry, locale)
   const entrySummary = editorialSummaryForLocale(entry, locale)
   const hasChineseCard = editorialHasChineseCardContent(entry)
+  const metaClass = locale === 'zh' ? 'text-fg/70 dark:text-white/70' : 'text-muted'
+  const summaryClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
   return (
     <article
       className={cn(
@@ -54,10 +56,10 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
       ) : null}
 
       <div className={cn('p-6 md:p-8', featured ? 'flex flex-col justify-center' : '')}>
-        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+        <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm', metaClass)}>
           {locale === 'zh' && !hasChineseCard ? (
             <>
-              <span className="rounded-full bg-natural-100 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-muted dark:bg-surface">
+              <span className="rounded-full bg-natural-200 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80">
                 当前仍为英文原文
               </span>
               <span aria-hidden>·</span>
@@ -95,7 +97,7 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           </Link>
         </h2>
 
-        <p className="mt-4 text-base leading-7 text-muted">{entrySummary}</p>
+        <p className={cn('mt-4 text-base leading-7', summaryClass)}>{entrySummary}</p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
           <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">

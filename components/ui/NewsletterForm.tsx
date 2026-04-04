@@ -70,7 +70,7 @@ export function NewsletterForm({ locale = 'en' }: { locale?: SiteLocale }) {
           onChange={(e) => setEmail(e.target.value)}
           required
           className={`${CONTRAST_FORM_CONTROL_CLASS} text-base focus:border-transparent`}
-          placeholder={locale === 'zh' ? 'your@email.com' : 'your@email.com'}
+          placeholder={locale === 'zh' ? 'name@example.com' : 'your@email.com'}
         />
       </div>
 

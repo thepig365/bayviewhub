@@ -12,7 +12,6 @@ import { SITE_CONFIG } from '@/lib/constants'
 import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
-  editorialBodyForLocale,
   editorialContextLinks,
   editorialHasChinesePageContent,
   editorialSeoDescriptionForLocale,
@@ -55,12 +54,20 @@ function bodyExcerpt(body: string, max = 220): string {
   return clean.length > max ? `${clean.slice(0, max - 1).trimEnd()}…` : clean
 }
 
+function chineseReadingExcerpt(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>, max = 220): string {
+  return (
+    bodyExcerpt(entry.bodyMarkdownZh || '', max) ||
+    bodyExcerpt(entry.showNotesMarkdownZh || '', max) ||
+    bodyExcerpt(entry.transcriptMarkdownZh || '', max)
+  )
+}
+
 function articleDescription(entry: Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>) {
   if (!entry) return 'Mendpress 中文阅读'
   return (
     editorialSeoDescriptionForLocale(entry, 'zh') ||
     editorialSummaryForLocale(entry, 'zh') ||
-    bodyExcerpt(editorialBodyForLocale(entry, 'zh')) ||
+    chineseReadingExcerpt(entry) ||
     'Mendpress 中文阅读'
   )
 }
@@ -75,7 +82,7 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
 function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
   const summary = editorialSummaryForLocale(entry, 'zh').trim()
   if (summary.length >= 50 && summary.length <= 180) return summary
-  return bodyExcerpt(editorialBodyForLocale(entry, 'zh'), 180) || summary || editorialTitleForLocale(entry, 'zh')
+  return chineseReadingExcerpt(entry, 180) || summary || editorialTitleForLocale(entry, 'zh')
 }
 
 function formatDuration(value: number | null): string | null {
@@ -101,6 +108,8 @@ function translateLinkLabel(label: string): string {
       return 'Mendpress'
     case 'Subscribe':
       return '订阅'
+    case 'Subscribe to Bayview Notes':
+      return '订阅 Bayview Notes'
     case 'Dialogue':
       return '对话'
     case 'Gallery':
@@ -111,12 +120,26 @@ function translateLinkLabel(label: string): string {
       return '私人观看'
     case 'Editorial':
       return '评论'
+    case 'Read Mendpress':
+      return '阅读 Mendpress'
     case 'Newsletter':
       return '通讯页'
     case 'Visit':
       return '到访信息'
     case 'Visit Bayview Hub':
       return '到访 Bayview Hub'
+    case 'Request Private Viewing':
+      return '申请私人观看'
+    case 'Start a Conversation':
+      return '开始交流'
+    case 'Listen on Mendpress':
+      return '在 Mendpress 收听'
+    case 'Plan Your Visit':
+      return '规划到访'
+    case 'See What Is On':
+      return '查看近期安排'
+    case 'Start Feasibility Check':
+      return '开始可行性检查'
     case 'Feasibility':
       return '可行性评估'
     default:
@@ -129,6 +152,7 @@ function localizedPrimaryCta(entry: NonNullable<Awaited<ReturnType<typeof getPub
   if (entry.primaryCtaLabel) {
     return {
       ...base,
+      label: translateLinkLabel(base.label),
       href: base.external ? base.href : localizedHref(base.href, 'zh'),
     }
   }
@@ -235,12 +259,12 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
     return (
       <main className="min-h-screen bg-bg py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <section className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-white/85 px-6 py-10 shadow-sm dark:border-border dark:bg-surface/95 md:px-10">
+          <section className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-white px-6 py-10 shadow-sm dark:border-border dark:bg-surface md:px-10">
             <p className="eyebrow text-accent">Mendpress 中文入口</p>
             <h1 className="mt-4 text-balance font-serif text-4xl font-semibold text-fg md:text-5xl">
               该文章的完整中文版尚未发布
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-fg/80 dark:text-white/80">
               这条 Mendpress 路由已经支持中英切换，但这篇文章目前仍以英文为主版本发布。我们不会把仅有中文外壳的页面伪装成完整翻译稿。
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -252,10 +276,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               </Button>
             </div>
 
-            <section className="mt-8 rounded-2xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-bg/60">
+            <section className="mt-8 rounded-2xl border border-border bg-natural-100 p-6 dark:border-border dark:bg-bg/60">
               <p className="eyebrow text-accent">当前英文原文</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{entry.title}</h2>
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fg/70 dark:text-white/70">
                 <span>{mendpressSectionLabelForLocale(entry.editorialType, 'zh')}</span>
                 <span aria-hidden>·</span>
                 <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
@@ -266,7 +290,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   </>
                 ) : null}
               </div>
-              {entry.summary ? <p className="mt-4 text-base leading-8 text-muted">{entry.summary}</p> : null}
+              {entry.summary ? <p className="mt-4 text-base leading-8 text-fg/80 dark:text-white/80">{entry.summary}</p> : null}
             </section>
           </section>
         </div>
@@ -285,9 +309,13 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const chineseUrl = `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`
   const description = articleDescription(entry)
   const pullQuote = articlePullQuote(entry)
-  const body = editorialBodyForLocale(entry, 'zh')
+  const body = entry.bodyMarkdownZh || ''
   const transcript = editorialTranscriptForLocale(entry, 'zh')
   const showNotes = editorialShowNotesForLocale(entry, 'zh')
+  const readingLayerNotice =
+    !body && (showNotes || transcript)
+      ? '这篇条目目前已提供中文导读或中文稿本，便于中文阅读；英文原正文仍保留在英文页中。'
+      : null
   const durationLabel = formatDuration(entry.audioDurationSeconds)
   const entryTypeLabel = editorialTypeLabelForLocale(entry.editorialType, 'zh')
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : '收听这篇内容'
@@ -413,6 +441,11 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             <div>
               <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'zh')} articleUrl={chineseUrl} locale="zh" />
+              {readingLayerNotice ? (
+                <section className="mt-6 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
+                  <p className="text-sm leading-7 text-fg/80 dark:text-white/80">{readingLayerNotice}</p>
+                </section>
+              ) : null}
               {body ? <EditorialBody body={body} className="mt-6" locale="zh" /> : null}
 
               {showNotes ? (

@@ -58,6 +58,9 @@ export async function JournalCollectionPage({
     locale === 'zh'
       ? [...rawEntries].sort((a, b) => Number(editorialHasChineseCardContent(b)) - Number(editorialHasChineseCardContent(a)))
       : rawEntries
+  const introClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
+  const sectionDescriptionClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
+  const emptyBodyClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
   const [featured, ...rest] = entries
   const sections = !activeSection ? groupEditorialEntries(rest, locale) : []
   const categoryLinks = chips || MENDPRESS_CATEGORY_LINKS.map((item) => ({ ...item, href: localizedHref(item.href, locale) }))
@@ -71,7 +74,7 @@ export async function JournalCollectionPage({
             <h1 className="mt-4 text-balance text-4xl font-serif font-semibold text-fg md:text-6xl">
               {title}
             </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-muted">{intro}</p>
+            <p className={cn('mx-auto mt-5 max-w-3xl text-lg leading-8', introClass)}>{intro}</p>
           </div>
 
           <div className="mt-10">
@@ -121,7 +124,7 @@ export async function JournalCollectionPage({
                           <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
                             {section.label}
                           </h2>
-                          <p className="mt-2 max-w-2xl text-sm leading-7 text-muted">
+                          <p className={cn('mt-2 max-w-2xl text-sm leading-7', sectionDescriptionClass)}>
                             {section.description}
                           </p>
                           <div className="mt-3">
@@ -146,7 +149,7 @@ export async function JournalCollectionPage({
               <h2 className="text-3xl font-serif font-semibold text-fg">
                 {emptyTitle || (activeSection ? (locale === 'zh' ? `${title} 栏目尚未发布内容。` : `${title} is not published yet.`) : locale === 'zh' ? 'Mendpress 正在持续发布中。' : 'Mendpress is opening.')}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted">
+              <p className={cn('mx-auto mt-4 max-w-2xl text-base leading-7', emptyBodyClass)}>
                 {emptyBody ||
                   (activeSection
                     ? locale === 'zh'
