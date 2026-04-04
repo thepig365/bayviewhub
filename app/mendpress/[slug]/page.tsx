@@ -142,6 +142,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function MendpressEntryPage({ params }: Props) {
+  // Shared live article template for the public Mendpress reading surface.
   const { slug } = await params
   const entry = await getPublishedEditorialEntryBySlug(slug)
   if (!entry) notFound()
