@@ -13,8 +13,46 @@ export const metadata: Metadata = genMeta({
 })
 
 export default function VisitPage() {
+  const visitSchema = {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "TouristAttraction"],
+    "name": "Bayview Hub",
+    "description": "Cultural estate on the Mornington Peninsula — art, music, hospitality, edible gardens, and workshops at 365 Purves Road, Main Ridge, Victoria.",
+    "url": "https://www.bayviewhub.me/visit",
+    "telephone": "0499666688",
+    "email": "leonzh@bayviewestate.com.au",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "365 Purves Road",
+      "addressLocality": "Main Ridge",
+      "addressRegion": "VIC",
+      "postalCode": "3928",
+      "addressCountry": "AU"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "11:00",
+        "closes": "23:59"
+      }
+    ],
+    "hasMap": "https://maps.google.com/?q=365+Purves+Road+Main+Ridge+VIC+3928",
+    "touristType": ["Cultural tourists", "Art enthusiasts", "Food and wine visitors"],
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Art Gallery", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Restaurant", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Accommodation", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Workshop Space", "value": true }
+    ]
+  }
+
   return (
     <div className="min-h-screen dark:bg-bg">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(visitSchema) }}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-50 to-natural-50 py-20 dark:from-primary-900 dark:to-primary-800">
         <div className="container mx-auto px-4">
