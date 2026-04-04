@@ -8,7 +8,7 @@ const MENDPRESS_DESCRIPTION =
   'Mendpress is the editorial publication of Bayview Hub. Essays, conversations, and visual narratives on art, attention, repair, and the life of a real place. Published from the Mornington Peninsula.'
 
 export const metadata: Metadata = {
-  title: 'Mendpress — Essays, Dialogue & Visual Narrative | Bayview Hub',
+  title: { absolute: 'Mendpress — Essays, Dialogue & Visual Narrative | Bayview Hub' },
   description: MENDPRESS_DESCRIPTION,
   alternates: {
     canonical: `${SITE_CONFIG.url}/mendpress`,

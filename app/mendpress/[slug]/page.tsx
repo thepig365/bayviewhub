@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = articleOgImage(entry)
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: editorialHasChinesePageContent(entry)
       ? {
