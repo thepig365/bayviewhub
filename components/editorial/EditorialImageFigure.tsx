@@ -34,7 +34,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption, locale = 'en'
 
   return (
     <>
-      <figure className="mt-8 first:mt-0">
+      <figure className="mt-10 first:mt-0">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -52,7 +52,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption, locale = 'en'
           </div>
         </button>
         {caption ? (
-          <figcaption className="mt-3 text-sm leading-7 text-muted">
+          <figcaption className="mt-4 max-w-3xl text-sm leading-7 text-fg/72 dark:text-white/72">
             {caption}
           </figcaption>
         ) : null}

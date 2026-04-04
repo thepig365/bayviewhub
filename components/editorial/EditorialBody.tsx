@@ -146,9 +146,23 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
     .split(/\n{2,}/)
     .map((section) => section.trim())
     .filter(Boolean)
+  const openingParagraphIndex = sections.findIndex((section) => {
+    const lines = section.split('\n').map((line) => line.trim()).filter(Boolean)
+    if (!lines.length) return false
+    const firstLine = lines[0]
+    return !(
+      firstLine.startsWith('## ') ||
+      firstLine.startsWith('### ') ||
+      firstLine.startsWith('![') ||
+      firstLine.startsWith('!audio[') ||
+      firstLine.startsWith('> ') ||
+      firstLine.startsWith('- ') ||
+      /^\d+\.\s/.test(firstLine)
+    )
+  })
 
   return (
-    <div className={cn('reading text-fg', className)}>
+    <div className={cn('reading max-w-none text-fg', className)}>
       {sections.map((section, index) => {
         const lines = section.split('\n').map((line) => line.trim()).filter(Boolean)
         if (!lines.length) return null
@@ -186,7 +200,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
 
         if (lines.length === 1 && lines[0].startsWith('## ')) {
           return (
-            <h2 key={index} className="mt-10 text-3xl font-serif font-semibold text-fg first:mt-0">
+            <h2 key={index} className="mt-14 text-3xl font-serif font-semibold text-fg first:mt-0 md:text-[2.2rem]">
               {lines[0].slice(3)}
             </h2>
           )
@@ -194,7 +208,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
 
         if (lines.length === 1 && lines[0].startsWith('### ')) {
           return (
-            <h3 key={index} className="mt-8 text-2xl font-serif font-semibold text-fg first:mt-0">
+            <h3 key={index} className="mt-10 text-2xl font-serif font-semibold text-fg first:mt-0 md:text-[1.7rem]">
               {lines[0].slice(4)}
             </h3>
           )
@@ -202,7 +216,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
 
         if (lines.every((line) => line.startsWith('- '))) {
           return (
-            <ul key={index} className="mt-6 list-disc space-y-2 pl-6 text-base leading-8 text-muted">
+            <ul key={index} className="mt-8 list-disc space-y-3 pl-6 text-[1.02rem] leading-8 text-fg/82 dark:text-white/82">
               {lines.map((line, lineIndex) => (
                 <li key={lineIndex}>{renderInline(line.slice(2), locale)}</li>
               ))}
@@ -212,7 +226,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
 
         if (lines.every((line) => /^\d+\.\s/.test(line))) {
           return (
-            <ol key={index} className="mt-6 list-decimal space-y-2 pl-6 text-base leading-8 text-muted">
+            <ol key={index} className="mt-8 list-decimal space-y-3 pl-6 text-[1.02rem] leading-8 text-fg/82 dark:text-white/82">
               {lines.map((line, lineIndex) => (
                 <li key={lineIndex}>{renderInline(line.replace(/^\d+\.\s/, ''), locale)}</li>
               ))}
@@ -224,7 +238,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
           return (
             <blockquote
               key={index}
-              className="mt-6 border-l-2 border-accent pl-5 text-lg leading-8 text-muted italic"
+              className="mt-10 border-l border-accent/70 pl-6 font-serif text-[1.4rem] leading-[1.8] text-fg/88 italic dark:text-white/88"
             >
               {lines.map((line, lineIndex) => (
                 <p key={lineIndex} className={lineIndex === 0 ? '' : 'mt-3'}>
@@ -236,7 +250,13 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
         }
 
         return (
-          <p key={index} className="mt-6 text-base leading-8 text-muted first:mt-0">
+          <p
+            key={index}
+            className={cn(
+              'mt-7 text-[1.05rem] leading-[1.95] text-fg/82 first:mt-0 dark:text-white/82 md:text-[1.12rem]',
+              index === openingParagraphIndex ? 'text-[1.22rem] leading-[1.95] text-fg dark:text-white md:text-[1.35rem]' : ''
+            )}
+          >
             {lines.map((line, lineIndex) => (
               <React.Fragment key={lineIndex}>
                 {lineIndex > 0 ? <br /> : null}

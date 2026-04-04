@@ -743,16 +743,19 @@ export async function listPublishedEditorialEntries(options?: {
   types?: EditorialType[]
   limit?: number
   excludeSlug?: string
+  strictRecency?: boolean
 }): Promise<EditorialEntry[]> {
   const supabase = getSupabaseServer()
   if (!supabase) return []
 
   const runQuery = async (level: 'bilingual' | 'audio' | 'base') => {
-    let query = editorialQuery(supabase, level)
-      .eq('status', 'published')
-      .order('pinned', { ascending: false })
-      .order('published_at', { ascending: false })
-      .order('created_at', { ascending: false })
+    let query = editorialQuery(supabase, level).eq('status', 'published')
+
+    if (!options?.strictRecency) {
+      query = query.order('pinned', { ascending: false })
+    }
+
+    query = query.order('published_at', { ascending: false }).order('created_at', { ascending: false })
 
     const normalizedTypes = Array.isArray(options?.types)
       ? Array.from(new Set(options.types.map((type) => sanitizeEditorialType(type))))
