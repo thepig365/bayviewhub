@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
 import { LAST_UPDATED } from '@/lib/seo'
 import { generateMetadata as genMeta } from '@/lib/utils'
@@ -121,6 +122,23 @@ export default function BackyardSmallSecondHomePage() {
                 lastUpdated={LAST_UPDATED}
               />
               <SsdPageShare path="/backyard-small-second-home" className="mt-8" />
+              <p className="mt-5 text-sm leading-relaxed text-muted">
+                <Link href="/backyard-small-second-home/feasibility-check" className="font-medium text-accent underline-offset-4 hover:underline">
+                  Run the feasibility check
+                </Link>
+                <span className="mx-2 text-border" aria-hidden>
+                  ·
+                </span>
+                <Link href="/backyard-small-second-home" className="underline-offset-4 hover:underline">
+                  See the full SSD overview
+                </Link>
+                <span className="mx-2 text-border" aria-hidden>
+                  ·
+                </span>
+                <Link href="/visit" className="underline-offset-4 hover:underline">
+                  Visit the estate
+                </Link>
+              </p>
             </div>
           </div>
         </div>

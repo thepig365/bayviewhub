@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
 import { JournalCard } from '@/components/editorial/JournalCard'
+import { MendpressInlineNewsletterCta } from '@/components/editorial/MendpressInlineNewsletterCta'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { Button } from '@/components/ui/Button'
@@ -312,6 +313,8 @@ export default async function MendpressEntryPage({ params }: Props) {
                     <EditorialBody body={transcript} className="mt-6" locale="en" />
                   </section>
                 ) : null}
+
+                <MendpressInlineNewsletterCta className="mt-14" />
               </div>
 
               <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">

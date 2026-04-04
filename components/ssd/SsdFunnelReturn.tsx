@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { SSD_LANDING } from '@/lib/constants'
 
@@ -37,6 +38,23 @@ export function SsdFunnelReturn({
               {secondaryLabel}
             </Button>
           </div>
+          <p className="mt-5 text-sm leading-relaxed text-muted">
+            <Link href={SSD_LANDING.feasibility} className="font-medium text-accent underline-offset-4 hover:underline">
+              {primaryLabel}
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href={SSD_LANDING.overview} className="underline-offset-4 hover:underline">
+              {secondaryLabel}
+            </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href="/visit" className="underline-offset-4 hover:underline">
+              Visit the estate
+            </Link>
+          </p>
         </div>
       </div>
     </section>

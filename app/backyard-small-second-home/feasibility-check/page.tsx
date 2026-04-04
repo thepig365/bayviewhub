@@ -992,6 +992,12 @@ export default function FeasibilityChecklistPage() {
             <Link href="/backyard-small-second-home/cost-rent-roi" className="underline-offset-4 hover:underline">
               Explore likely costs
             </Link>
+            <span className="mx-2 text-border" aria-hidden>
+              ·
+            </span>
+            <Link href="/visit" className="underline-offset-4 hover:underline">
+              Visit the estate
+            </Link>
           </p>
         </div>
       </section>
