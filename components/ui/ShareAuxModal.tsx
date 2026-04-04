@@ -72,7 +72,7 @@ export function ShareAuxModal({
   const body = locale === 'zh' ? cfg.bodyZh : cfg.body
 
   const btnClass = cn(
-    'rounded-lg px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    'rounded-lg px-4 py-2.5 text-[15px] leading-6 font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm sm:leading-5',
     isDarkSurface
       ? 'bg-white/10 text-white hover:bg-white/15 focus-visible:ring-white/40 focus-visible:ring-offset-neutral-900'
       : 'bg-natural-100 text-fg hover:bg-natural-200 focus-visible:ring-accent/40 focus-visible:ring-offset-white dark:bg-white/10 dark:text-white dark:hover:bg-white/15 dark:focus-visible:ring-offset-neutral-900'
@@ -99,7 +99,7 @@ export function ShareAuxModal({
         <h3 id="share-aux-title" className="font-serif text-lg font-semibold">
           {title}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted dark:text-white/70">{body}</p>
+        <p className="mt-3 text-[15px] leading-7 text-muted dark:text-white/70 sm:text-sm sm:leading-relaxed">{body}</p>
         {cfg.showQr ? (
           <div className="mt-4 flex justify-center rounded-lg border border-border bg-white p-3 dark:border-white/10 dark:bg-white">
             {/* eslint-disable-next-line @next/next/no-img-element -- external QR API, no next/image remote config */}

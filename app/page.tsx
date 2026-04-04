@@ -181,7 +181,7 @@ export default function HomePage() {
         <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
           <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
             {/* Category Label */}
-            <p className="text-white/80 text-sm md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
+            <p className="text-white/80 text-[15px] leading-6 md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
               {slide.category}
             </p>
 
@@ -191,7 +191,7 @@ export default function HomePage() {
             </h1>
 
             {/* Description */}
-            <p className="text-base md:text-lg text-white/90 mb-6 md:mb-8 leading-relaxed max-w-md">
+            <p className="text-[1.06rem] md:text-lg text-white/90 mb-6 md:mb-8 leading-8 md:leading-relaxed max-w-md">
               {slide.description}
             </p>
 
@@ -254,7 +254,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-fg mb-6 leading-tight">
               Why Bayview Hub exists
             </h2>
-            <div className="max-w-3xl space-y-5 text-base md:text-lg leading-8 text-muted reading">
+            <div className="max-w-3xl space-y-5 text-[1.05rem] md:text-lg leading-8 md:leading-8 text-muted reading">
               <p>
                 Bayview Hub exists because contemporary life has become increasingly efficient, connected, and accelerated
                 {' '}yet often thinner in attention, place, beauty, and shared experience.
@@ -305,7 +305,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
               <h3 className="text-xl font-serif font-bold text-fg mb-2">Backyard Small Second Home</h3>
-              <p className="text-muted text-sm leading-relaxed mb-5">
+              <p className="text-muted text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
                 For homeowners across Victoria — feasibility, rules, indicative costs, and registration.
               </p>
               <ul className="space-y-2 mb-6">
@@ -326,7 +326,7 @@ export default function HomePage() {
             </div>
             <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
               <h3 className="text-xl font-serif font-bold text-fg mb-2">Gallery &amp; Private Viewing</h3>
-              <p className="text-muted text-sm leading-relaxed mb-5">
+              <p className="text-muted text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
                 For collectors and invited viewers, artists, and hosts — collection online; viewing by arrangement.
               </p>
               <ul className="space-y-2 mb-6">
@@ -381,8 +381,8 @@ export default function HomePage() {
               {/* Column 1: Location & Contact */}
               <div>
                 <h3 className="eyebrow text-fg mb-4">Bayview Hub</h3>
-                <p className="text-muted leading-relaxed mb-1">365 Purves Road,</p>
-                <p className="text-muted leading-relaxed mb-6">Main Ridge, Victoria 3928</p>
+                <p className="text-[15px] leading-7 text-muted mb-1 md:text-base md:leading-relaxed">365 Purves Road,</p>
+                <p className="text-[15px] leading-7 text-muted mb-6 md:text-base md:leading-relaxed">Main Ridge, Victoria 3928</p>
                 
                 {/* Contact Icons */}
                 <div className="flex gap-4">
@@ -415,7 +415,7 @@ export default function HomePage() {
               {/* Column 2: Know Before You Go */}
               <div>
                 <h3 className="eyebrow text-fg mb-4">Know Before You Go</h3>
-                <p className="text-muted leading-relaxed reading mb-4">
+                <p className="text-[1.02rem] leading-8 text-muted reading mb-4 md:text-base md:leading-relaxed">
                   Opening hours, wine tasting bookings, and tips for planning your day.
                 </p>
                 <Link href="/visit" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline">
@@ -426,7 +426,7 @@ export default function HomePage() {
               {/* Column 3: Experiences */}
               <div>
                 <h3 className="eyebrow text-fg mb-4">Experiences</h3>
-                <p className="text-muted leading-relaxed reading mb-4">
+                <p className="text-[1.02rem] leading-8 text-muted reading mb-4 md:text-base md:leading-relaxed">
                   Wine, dining, art, workshops, live music, and gardens—all on 30 stunning acres.
                 </p>
                 <Link href="/experiences" className="text-accent font-semibold text-base tracking-widest uppercase hover:underline block mb-2">
@@ -515,10 +515,10 @@ export default function HomePage() {
                   <h2 className="text-3xl md:text-4xl font-serif font-bold text-fg leading-tight mb-4">
                     Stay In Touch
                   </h2>
-                  <p className="text-muted leading-relaxed reading">
+                  <p className="text-[1.02rem] leading-8 text-muted reading md:text-base md:leading-relaxed">
                     Get the latest on exhibitions, events, wine releases, and special offers.
                   </p>
-                  <p className="mt-3 text-sm text-muted">
+                  <p className="mt-3 text-[15px] leading-7 text-muted md:text-sm md:leading-6">
                     Prefer a full signup page?{' '}
                     <Link href="/newsletter" className="text-accent hover:underline">
                       Open the newsletter page
@@ -561,10 +561,10 @@ export default function HomePage() {
                       </button>
                     </div>
                     {newsletterStatus === 'success' && (
-                      <p className="text-sm text-muted">Thanks — you&apos;re on the list.</p>
+                      <p className="text-[15px] leading-7 text-muted md:text-sm md:leading-6">Thanks — you&apos;re on the list.</p>
                     )}
                     {newsletterStatus === 'error' && (
-                      <p className="text-sm text-red-600 dark:text-red-400">
+                      <p className="text-[15px] leading-7 text-red-600 dark:text-red-400 md:text-sm md:leading-6">
                         Something went wrong. Try again or email {SITE_CONFIG.email}.
                       </p>
                     )}

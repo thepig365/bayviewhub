@@ -30,14 +30,14 @@ export function JournalSubscribePanel({
       <h2 className={`mt-3 font-serif font-semibold text-fg ${compact ? 'text-2xl' : 'text-3xl'}`}>
         {title}
       </h2>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-muted">
+      <p className="mt-3 max-w-2xl text-[1.02rem] leading-8 text-muted md:text-base md:leading-7">
         {body}
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <Button href={localizedHref('/newsletter', locale)} variant="accent">
           {ctaLabel}
         </Button>
-        <Link href={localizedHref('/mendpress', locale)} className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+        <Link href={localizedHref('/mendpress', locale)} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
           {secondaryLabel}
         </Link>
       </div>

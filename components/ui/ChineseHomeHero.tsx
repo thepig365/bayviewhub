@@ -140,7 +140,7 @@ export function ChineseHomeHero() {
 
       <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
         <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
-          <p className="text-white/80 text-sm md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
+          <p className="text-white/80 text-[15px] leading-6 md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
             {slide.category}
           </p>
 
@@ -148,7 +148,7 @@ export function ChineseHomeHero() {
             {slide.title}
           </h1>
 
-          <p className="text-base md:text-lg text-white/90 mb-6 md:mb-8 leading-relaxed max-w-md">
+          <p className="text-[1.06rem] md:text-lg text-white/90 mb-6 md:mb-8 leading-8 md:leading-relaxed max-w-md">
             {slide.description}
           </p>
 

@@ -104,7 +104,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const title = editorialSeoTitleForLocale(entry, 'en') || editorialTitleForLocale(entry, 'en')
+  const articleTitle = editorialTitleForLocale(entry, 'en')
+  const title = `${articleTitle} | Mendpress — Bayview Hub`
   const description = articleDescription(entry)
   const url = editorialAbsoluteUrl(entry.slug)
   const ogImage = articleOgImage(entry)
@@ -125,15 +126,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       type: 'article',
       url,
-      title,
+      title: `${articleTitle} | Mendpress`,
       description,
       siteName: SITE_CONFIG.name,
-      images: [{ url: ogImage, alt: editorialTitleForLocale(entry, 'en') }],
+      images: [{ url: ogImage, alt: articleTitle }],
       publishedTime: entry.publishedAt || undefined,
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: `${articleTitle} | Mendpress`,
       description,
       images: [ogImage],
     },
@@ -156,12 +157,24 @@ export default async function MendpressEntryPage({ params }: Props) {
   const showNotes = editorialShowNotesForLocale(entry, 'en')
   const durationLabel = formatDuration(entry.audioDurationSeconds)
   const entryTypeLabel = editorialTypeAdminLabel(entry.editorialType)
+  const sectionLabel = mendpressSectionLabel(entry.editorialType)
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
+  const audioFirst = isAudioFirstEditorialType(entry.editorialType)
+  const keywordString = entry.tags.length
+    ? entry.tags.join(', ')
+    : 'art, attention, repair, presence, Mornington Peninsula, Bayview Hub, Mendpress'
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': entry.audioUrl && isAudioFirstEditorialType(entry.editorialType) ? 'PodcastEpisode' : 'Article',
     headline: editorialTitleForLocale(entry, 'en'),
     description,
+    inLanguage: 'en',
+    isPartOf: {
+      '@type': 'Periodical',
+      name: 'Mendpress',
+      url: 'https://www.bayviewhub.me/mendpress',
+    },
+    keywords: keywordString,
     datePublished: entry.publishedAt || undefined,
     author: {
       '@type': 'Person',
@@ -171,6 +184,10 @@ export default async function MendpressEntryPage({ params }: Props) {
       '@type': 'Organization',
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.bayviewhub.me/og-image.png',
+      },
     },
     image: [articleOgImage(entry)],
     articleSection: mendpressSectionLabel(entry.editorialType),
@@ -188,29 +205,26 @@ export default async function MendpressEntryPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-bg py-16 md:py-20">
       <div className="container mx-auto px-4">
-        <article className="mx-auto max-w-5xl">
+        <article className="mx-auto max-w-6xl">
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          <header className="rounded-[2rem] border border-border bg-white/80 px-6 py-8 shadow-sm dark:border-border dark:bg-surface/95 md:px-10 md:py-10">
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
-                <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">{mendpressSectionLabel(entry.editorialType)}</span>
+          <header className="rounded-[2.25rem] border border-border bg-white/85 px-6 py-8 shadow-sm dark:border-border dark:bg-surface/95 md:px-10 md:py-12">
+            <div className="mx-auto max-w-4xl">
+              <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
+                <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">{sectionLabel}</span>
                 <span>{entryTypeLabel}</span>
                 <span>Mendpress</span>
               </div>
-              <h1 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.1]">
+              <h1 className="mt-5 max-w-5xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
                 {editorialTitleForLocale(entry, 'en')}
               </h1>
               {editorialSummaryForLocale(entry, 'en') ? (
-                <p className="mx-auto mt-6 max-w-3xl text-pretty text-xl leading-9 text-muted md:text-2xl md:leading-10">
+                <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/82 dark:text-white/82 md:text-[1.8rem] md:leading-[1.6]">
                   {editorialSummaryForLocale(entry, 'en')}
                 </p>
               ) : null}
-              <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-muted">
-                {mendpressSectionDescription(entry.editorialType)}
-              </p>
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted">
-                {entry.byline ? <span>By {entry.byline}</span> : null}
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/70 dark:text-white/70 md:text-sm md:leading-5">
+                {entry.byline ? <span className="font-medium text-fg dark:text-white">By {entry.byline}</span> : null}
                 {entry.byline ? <span aria-hidden>·</span> : null}
                 <span>{formatEditorialDate(entry.publishedAt, 'en')}</span>
                 {entry.readingTimeMinutes ? (
@@ -238,24 +252,18 @@ export default async function MendpressEntryPage({ params }: Props) {
                 mailtoIntro={`${description}\n\nRead it here:`}
                 shortShareBlurb={description}
                 bordered={false}
-                label="Share"
-                className="mx-auto mt-7 max-w-3xl"
+                label="Share this article"
+                className="mt-7 max-w-4xl"
               />
-              <div className="mt-4">
-                <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
+              <div className="mt-5">
+                <Link href="/mendpress" className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
                   Back to Mendpress
                 </Link>
               </div>
             </div>
 
-            {entry.heroImage ? (
-              <div className="mx-auto mt-8 max-w-5xl overflow-hidden rounded-[1.75rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
-                <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
-              </div>
-            ) : null}
-
-            {entry.audioUrl ? (
-              <div className="mx-auto mt-8 max-w-4xl">
+            <div className="mx-auto mt-10 max-w-5xl space-y-6">
+              {entry.audioUrl && audioFirst ? (
                 <EditorialAudioPlayer
                   title={audioLeadTitle}
                   src={entry.audioUrl}
@@ -267,61 +275,99 @@ export default async function MendpressEntryPage({ params }: Props) {
                       : 'A playable audio version sits alongside the written piece.'
                   }
                 />
-              </div>
-            ) : null}
+              ) : null}
+
+              {entry.heroImage ? (
+                <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
+                  <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
+                </div>
+              ) : null}
+
+              {entry.audioUrl && !audioFirst ? (
+                <EditorialAudioPlayer
+                  title={audioLeadTitle}
+                  src={entry.audioUrl}
+                  speakers={entry.speakers}
+                  durationLabel={durationLabel}
+                  note={
+                    isAudioFirstEditorialType(entry.editorialType)
+                      ? 'This piece is published for listening first, with companion editorial material below.'
+                      : 'A playable audio version sits alongside the written piece.'
+                  }
+                />
+              ) : null}
+            </div>
           </header>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-            <div>
+          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
+            <div className="min-w-0">
               <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'en')} articleUrl={absoluteUrl} />
-              {body ? <EditorialBody body={body} locale="en" /> : null}
+              <div className="mx-auto max-w-[46rem]">
+                {body ? <EditorialBody body={body} className="mt-8" locale="en" /> : null}
 
-              {showNotes ? (
-                <section className="mt-10">
-                  <p className="eyebrow text-accent">Show notes</p>
-                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
-                  <EditorialBody body={showNotes} className="mt-5" locale="en" />
-                </section>
-              ) : null}
-
-              {transcript ? (
-                <section className="mt-10">
-                  <p className="eyebrow text-accent">Transcript</p>
-                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
-                  <EditorialBody body={transcript} className="mt-5" locale="en" />
-                </section>
-              ) : null}
-
-              <section className="mt-12 rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <p className="eyebrow text-accent">Share this piece</p>
-                    <h2 className="mt-2 text-2xl font-serif font-semibold text-fg">
-                      Continue reading from Mendpress
-                    </h2>
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
-                      Pass it on, or continue deeper into the editorial archive.
-                    </p>
-                  </div>
-                  <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-                    Explore Mendpress
-                  </Link>
-                </div>
-                <ShareStrip
-                  url={absoluteUrl}
-                  mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
-                  mailtoIntro={`${description}\n\nRead it here:`}
-                  shortShareBlurb={description}
-                  label="Share this piece"
-                  className="mt-6"
-                />
-                {relatedEntries.length ? (
-                  <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {relatedEntries.map((relatedEntry) => (
-                      <JournalCard key={relatedEntry.id} entry={relatedEntry} />
-                    ))}
-                  </div>
+                {showNotes ? (
+                  <section className="mt-14">
+                    <p className="eyebrow text-accent">Show notes</p>
+                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
+                    <EditorialBody body={showNotes} className="mt-6" locale="en" />
+                  </section>
                 ) : null}
+
+                {transcript ? (
+                  <section className="mt-14">
+                    <p className="eyebrow text-accent">Transcript</p>
+                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
+                    <EditorialBody body={transcript} className="mt-6" locale="en" />
+                  </section>
+                ) : null}
+              </div>
+
+              <section className="mt-16 rounded-[2rem] border border-border bg-white/80 p-6 dark:border-border dark:bg-surface/90 md:p-8">
+                <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+                  <div>
+                    <p className="eyebrow text-accent">Continue with Mendpress</p>
+                    <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
+                      More from {sectionLabel}
+                    </h2>
+                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted md:text-sm">
+                      Continue from this piece into the same editorial current, or step back out into the wider Mendpress publication.
+                    </p>
+                    {relatedEntries.length ? (
+                      <div className="mt-8 space-y-0">
+                        {relatedEntries.map((relatedEntry) => (
+                          <JournalCard key={relatedEntry.id} entry={relatedEntry} layout="stream" />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="mt-8 rounded-3xl border border-border bg-natural-50 p-5 dark:border-border dark:bg-bg/50">
+                        <p className="text-[15px] leading-7 text-muted md:text-sm">
+                          The next related piece has not been published yet. Continue through the main Mendpress stream instead.
+                        </p>
+                        <div className="mt-4">
+                          <Link href="/mendpress" className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                            Explore Mendpress
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-6">
+                    <ShareStrip
+                      url={absoluteUrl}
+                      mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
+                      mailtoIntro={`${description}\n\nRead it here:`}
+                      shortShareBlurb={description}
+                      label="Share this piece"
+                    />
+                    <JournalSubscribePanel
+                      compact
+                      body="Receive selected Mendpress pieces, invitations, and estate notes when there is something worth sharing."
+                      ctaLabel="Go to Newsletter"
+                      secondaryLabel="Explore Mendpress"
+                    />
+                  </div>
+                </div>
               </section>
             </div>
 
@@ -331,7 +377,7 @@ export default async function MendpressEntryPage({ params }: Props) {
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
                   Continue from this piece
                 </h2>
-                <p className="mt-3 text-sm leading-7 text-muted">
+                <p className="mt-3 text-[15px] leading-7 text-muted md:text-sm">
                   Each Mendpress piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
                 </p>
                 <div className="mt-6">
@@ -339,7 +385,7 @@ export default async function MendpressEntryPage({ params }: Props) {
                     {primaryCta.label}
                   </Button>
                 </div>
-                <div className="mt-4 flex flex-col gap-3 text-sm">
+                <div className="mt-4 flex flex-col gap-3 text-[15px] leading-6 md:text-sm md:leading-5">
                   {contextualLinks.map((link) => (
                     <Link
                       key={`${link.href}-${link.label}`}
@@ -353,22 +399,8 @@ export default async function MendpressEntryPage({ params }: Props) {
                   ))}
                 </div>
               </section>
-
-              <JournalSubscribePanel compact />
             </aside>
           </div>
-
-          {relatedEntries.length ? null : (
-            <section className="mt-14 rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
-              <p className="eyebrow text-accent">Continue reading</p>
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
-                <h2 className="text-2xl font-serif font-semibold text-fg">More from Mendpress</h2>
-                <Link href="/mendpress" className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-                  Back to Mendpress
-                </Link>
-              </div>
-            </section>
-          )}
         </article>
       </div>
     </main>

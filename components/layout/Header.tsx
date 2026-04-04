@@ -155,7 +155,7 @@ function MobileNavRow({
   className?: string
 }) {
   const rowClass = cn(
-    'block rounded-lg px-3 py-2 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors',
+    'block rounded-lg px-3 py-2.5 text-[15px] leading-6 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors',
     className
   )
   if (item.external) {
@@ -258,11 +258,11 @@ export function Header() {
   }, [isMenuOpen])
 
   const topLinkClass =
-    'text-[13px] font-medium uppercase tracking-[0.16em] text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap'
+    'text-[14px] leading-6 font-medium uppercase tracking-[0.16em] text-gray-900 hover:text-accent dark:text-gray-100 dark:hover:text-accent transition-colors whitespace-nowrap md:text-[13px]'
   const dropdownItemClass =
-    'block px-4 py-2.5 text-sm text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors'
+    'block px-4 py-2.5 text-[15px] leading-6 text-fg hover:bg-natural-100 dark:hover:bg-bg transition-colors md:text-sm md:leading-5'
   const publicationLinkClass =
-    'text-[12px] tracking-[0.16em] uppercase text-gray-900/75 hover:text-accent dark:text-gray-100/80 dark:hover:text-accent transition-colors whitespace-nowrap'
+    'text-[13px] leading-6 tracking-[0.16em] uppercase text-gray-900/75 hover:text-accent dark:text-gray-100/80 dark:hover:text-accent transition-colors whitespace-nowrap md:text-[12px]'
 
   const renderDesktopEntry = (entry: SiteNavEntry) => {
     const localizedEntryHref = entry.external ? entry.href : localizedHref(entry.href, locale)
@@ -474,18 +474,18 @@ export function Header() {
 
             <div className="space-y-4 p-5">
               <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted">{bayviewSectionHeading}</p>
+                <p className="mb-3 text-[13px] font-bold uppercase tracking-[0.18em] text-muted md:text-xs">{bayviewSectionHeading}</p>
                 <div className="space-y-3">{bayviewNav.map(renderMobileEntry)}</div>
               </div>
               <div className="pt-2">
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted">{mendpressSectionHeading}</p>
+                <p className="mb-3 text-[13px] font-bold uppercase tracking-[0.18em] text-muted md:text-xs">{mendpressSectionHeading}</p>
                 <div className="space-y-2 rounded-lg bg-surface/50 p-3 dark:bg-bg/40">
                   {MENDPRESS_NAV.map((item) => (
                     <MobileNavRow
                       key={item.href}
                       item={{ label: t(item.label, locale), href: localizedHref(item.href, locale) }}
                       onNavigate={closeMenu}
-                      className={item.label === 'Mendpress' ? 'font-serif text-lg' : 'font-medium'}
+                      className={item.label === 'Mendpress' ? 'font-serif text-xl leading-7' : 'font-medium'}
                     />
                   ))}
                 </div>
@@ -493,7 +493,7 @@ export function Header() {
             </div>
 
             <div className="space-y-3 border-t border-border p-5 pt-2">
-              <h3 className="text-sm font-bold uppercase tracking-wide text-fg">{quickActionsHeading}</h3>
+              <h3 className="text-[15px] font-bold uppercase tracking-wide text-fg md:text-sm">{quickActionsHeading}</h3>
               <div className="grid grid-cols-1 gap-3">
                 <Button href={localizedHref('/partners', locale)} variant="primary" size="md" className="w-full" onClick={closeMenu}>
                   {t('Become a Partner', locale)}

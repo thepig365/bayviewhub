@@ -122,48 +122,48 @@ export function Footer() {
             <h3 className="text-2xl font-serif font-bold mb-4">
               {SITE_CONFIG.name}
             </h3>
-            <p className="text-shell-footer-muted leading-relaxed mb-4">
+            <p className="text-[1.02rem] leading-8 text-shell-footer-muted mb-4 md:text-base md:leading-relaxed">
               {locale === 'zh'
                 ? '在维州 30 英亩庄园中提供庄园餐饮、现场音乐与农舍住宿。后院第二小住宅咨询现已开放，更多创意项目持续发展中。'
                 : 'Estate dining, live music, and farmhouse accommodation on a 30-acre Victoria estate. Backyard Small Second Home enquiries now open. Creative programs in development.'}
             </p>
-            <p className="text-shell-footer-muted leading-relaxed mb-2">
+            <p className="text-[15px] leading-7 text-shell-footer-muted mb-2 md:text-base md:leading-relaxed">
               365 Purves Road,
             </p>
-            <p className="text-shell-footer-muted leading-relaxed">
+            <p className="text-[15px] leading-7 text-shell-footer-muted md:text-base md:leading-relaxed">
               Main Ridge, Victoria 3928
             </p>
           </div>
 
           {/* Column 2: Tickets & Hours */}
           <div>
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-5 md:text-sm">
               {t('Visit', locale)}
             </h4>
             <ul className="space-y-2 mb-8">
               <li>
-                <Link href={localizedHref('/cellar-door', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/cellar-door', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Cellar Door', locale)}
                 </Link>
               </li>
               <li>
-                <Link href={localizedHref('/events', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/events', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Events', locale)}
                 </Link>
               </li>
               <li>
-                <a href={SITE_CONFIG.pigAndWhistleUrl} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={SITE_CONFIG.pigAndWhistleUrl} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Restaurant', locale)}
                 </a>
               </li>
             </ul>
 
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-4 md:text-sm">
               {t('Hours', locale)}
             </h4>
-            <div className="text-shell-footer-muted text-base space-y-1">
+            <div className="text-shell-footer-muted text-[15px] leading-7 space-y-1 md:text-base">
               <p>{locale === 'zh' ? '周三至周日 | 上午 11 点至深夜' : SITE_HOURS.summary}</p>
-              <p className="italic text-shell-footer-muted/80 mt-2">
+              <p className="italic text-shell-footer-muted/80 mt-2 text-[15px] leading-7 md:text-base">
                 {locale === 'zh' ? '圣诞节当天休息' : 'Closed Christmas Day'}
               </p>
             </div>
@@ -171,32 +171,32 @@ export function Footer() {
 
           {/* Column 3: Experiences */}
           <div>
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-5 md:text-sm">
               {t('Experiences', locale)}
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href={GALLERY_EXTERNAL.base} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_EXTERNAL.base} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Arts Gallery — Online', locale)}
                 </a>
               </li>
               <li>
-                <Link href={localizedHref('/workshops', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/workshops', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Workshops', locale)}
                 </Link>
               </li>
               <li>
-                <Link href={localizedHref('/edible-gardens', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/edible-gardens', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Edible Gardens', locale)}
                 </Link>
               </li>
               <li>
-                <a href="https://www.thepigandwhistle.com.au/what-s-on" target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href="https://www.thepigandwhistle.com.au/what-s-on" target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('The Shed Music', locale)}
                 </a>
               </li>
               <li>
-                <a href="https://www.thepigandwhistle.com.au/accommodation" target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href="https://www.thepigandwhistle.com.au/accommodation" target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Accommodation', locale)}
                 </a>
               </li>
@@ -204,12 +204,12 @@ export function Footer() {
 
             <ul className="mt-5 space-y-2 border-t border-shell-footer-border pt-4">
               <li>
-                <Link href="/private/editorial/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
+                <Link href="/private/editorial/login" className="text-[15px] leading-7 text-shell-footer-muted/75 hover:text-accent transition-colors md:text-base">
                   {t('Editorial Login', locale)}
                 </Link>
               </li>
               <li>
-                <Link href="/private/newsletter/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
+                <Link href="/private/newsletter/login" className="text-[15px] leading-7 text-shell-footer-muted/75 hover:text-accent transition-colors md:text-base">
                   {t('Newsletter Login', locale)}
                 </Link>
               </li>
@@ -218,66 +218,66 @@ export function Footer() {
 
           {/* Column 4: Programs */}
           <div>
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-5 md:text-sm">
               {t('Programs', locale)}
             </h4>
             <ul className="space-y-2 mb-6">
               <li>
-                <Link href={localizedHref('/partners/founding', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/partners/founding', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Founding Partners', locale)}
                 </Link>
               </li>
               <li>
-                <Link href={localizedHref(SSD_LANDING.overview, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref(SSD_LANDING.overview, locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Backyard Small Second Home', locale)}
                 </Link>
               </li>
               <li>
-                <Link href={localizedHref('/invest', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <Link href={localizedHref('/invest', locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Invest', locale)}
                 </Link>
               </li>
             </ul>
 
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-3">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-3 md:text-sm">
               {t('Small Second Home paths', locale)}
             </h4>
             <ul className="space-y-2 mb-8">
               {SSD_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
-                  <Link href={localizedHref(item.href, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
+                  <Link href={localizedHref(item.href, locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                     {t(item.label, locale)}
                   </Link>
                 </li>
               ))}
             </ul>
 
-            <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
+            <h4 className="text-[13px] font-bold tracking-widest uppercase mb-4 md:text-sm">
               {t('Gallery', locale)}
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Private Viewing', locale)}
                 </a>
               </li>
               <li>
-                <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Open Your Wall — register a work', locale)}
                 </a>
               </li>
               <li>
-                <a href={GALLERY_VIEWING_REQUEST_MAILTO} className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_VIEWING_REQUEST_MAILTO} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Request private viewing access', locale)}
                 </a>
               </li>
               <li>
-                <a href={GALLERY_EXTERNAL.archive} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_EXTERNAL.archive} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Browse collection', locale)}
                 </a>
               </li>
               <li>
-                <a href={GALLERY_EXTERNAL.submit} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
+                <a href={GALLERY_EXTERNAL.submit} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Submit artwork', locale)}
                 </a>
               </li>
@@ -301,7 +301,7 @@ export function Footer() {
             </div>
             {/* Theme */}
             <div className="flex items-center gap-2">
-              <span className="text-shell-footer-muted/70">{t('Theme:', locale)}</span>
+              <span className="text-[15px] leading-6 text-shell-footer-muted/70 md:text-base">{t('Theme:', locale)}</span>
               <SimpleThemeToggle locale={locale} />
             </div>
           </div>
@@ -367,7 +367,7 @@ export function Footer() {
 
           {/* Acknowledgement */}
           <div className="mt-6 pt-6 border-t border-shell-footer-border">
-            <p className="text-sm text-shell-footer-muted/85 text-center leading-relaxed max-w-3xl mx-auto">
+            <p className="text-[15px] leading-7 text-shell-footer-muted/85 text-center max-w-3xl mx-auto md:text-sm md:leading-relaxed">
               {locale === 'zh'
                 ? 'Bayview Hub 向 Kulin Nation 的 Bunurong / Boon Wurrung 人民致意，承认他们是 Mornington Peninsula 土地与水域的传统守护者，并向过去与现在的长者表达敬意。'
                 : 'Bayview Hub acknowledges the Bunurong / Boon Wurrung people of the Kulin Nation as the Traditional Custodians of the lands and waters of the Mornington Peninsula, and pays respect to Elders past and present.'}

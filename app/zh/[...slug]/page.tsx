@@ -66,7 +66,7 @@ export default async function ChineseFallbackPage({ params }: Props) {
           <h1 className="mt-4 text-balance font-serif text-4xl font-semibold text-fg md:text-5xl">
             {routeLabel}
           </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-fg/80 dark:text-white/80">
+          <p className="mt-5 max-w-3xl text-[1.08rem] leading-8 text-fg/80 dark:text-white/80 md:text-lg">
             这个页面已经接入全站中英切换，但当前路径的正式中文正文还未上线。你可以保留当前位置，
             也可以一键回到对应的英文原页继续阅读。
           </p>
@@ -86,17 +86,17 @@ export default async function ChineseFallbackPage({ params }: Props) {
           </div>
 
           <div className="mt-8 rounded-2xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
-            <p className="text-sm font-medium text-fg">当前路径</p>
-            <p className="mt-2 break-all text-sm text-fg/75 dark:text-white/75">{zhPath}</p>
-            <p className="mt-3 text-sm font-medium text-fg">英文原页</p>
-            <p className="mt-2 break-all text-sm text-fg/75 dark:text-white/75">{englishPath}</p>
+            <p className="text-[15px] font-medium leading-6 text-fg md:text-sm">当前路径</p>
+            <p className="mt-2 break-all text-[15px] leading-7 text-fg/75 dark:text-white/75 md:text-sm">{zhPath}</p>
+            <p className="mt-3 text-[15px] font-medium leading-6 text-fg md:text-sm">英文原页</p>
+            <p className="mt-2 break-all text-[15px] leading-7 text-fg/75 dark:text-white/75 md:text-sm">{englishPath}</p>
           </div>
 
           {mendpressEntry ? (
             <section className="mt-8 rounded-2xl border border-border bg-natural-100 p-6 dark:border-border dark:bg-bg/60">
               <p className="eyebrow text-accent">Mendpress</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{mendpressEntry.title}</h2>
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fg/70 dark:text-white/70">
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/70 dark:text-white/70 md:text-sm md:leading-5">
                 <span>{mendpressSectionLabelForLocale(mendpressEntry.editorialType, 'zh')}</span>
                 <span aria-hidden>·</span>
                 <span>{formatEditorialDate(mendpressEntry.publishedAt, 'zh')}</span>
@@ -110,7 +110,7 @@ export default async function ChineseFallbackPage({ params }: Props) {
               {editorialSummaryForLocale(mendpressEntry, 'zh') ? (
                 <p className="mt-4 text-base leading-8 text-fg/80 dark:text-white/80">{editorialSummaryForLocale(mendpressEntry, 'zh')}</p>
               ) : null}
-              <p className="mt-4 text-sm leading-7 text-fg/75 dark:text-white/75">
+              <p className="mt-4 text-[15px] leading-7 text-fg/75 dark:text-white/75 md:text-sm">
                 这篇 Mendpress 文章目前仍以英文发布。中文路由已经保留到该条目级别，方便访客在不中断上下文的情况下切换语言。
               </p>
             </section>

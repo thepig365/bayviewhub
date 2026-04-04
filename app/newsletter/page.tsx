@@ -18,7 +18,7 @@ export default function NewsletterPage() {
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg text-center mb-4">
             Bayview Notes
           </h1>
-          <p className="text-lg text-muted text-center mb-10">
+          <p className="text-[1.06rem] leading-8 text-muted text-center mb-10 md:text-lg">
             Selected Mendpress pieces, invitations, and estate updates when there is something worth sharing.
           </p>
 
@@ -26,7 +26,7 @@ export default function NewsletterPage() {
             <NewsletterForm />
           </div>
 
-          <div className="mt-8 text-center text-sm text-muted space-y-2">
+          <div className="mt-8 text-center text-[15px] leading-7 text-muted space-y-2 md:text-sm md:leading-6">
             <p>
               We only send updates when there is something worth sharing. You can unsubscribe from any newsletter email.
             </p>

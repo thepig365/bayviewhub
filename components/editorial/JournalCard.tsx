@@ -23,23 +23,147 @@ function formatDuration(value: number | null): string | null {
 
 type Props = {
   entry: EditorialEntry
-  featured?: boolean
   locale?: SiteLocale
+  layout?: 'card' | 'lead' | 'stream'
 }
 
-export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
+export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
   const entryHref = localizedHref(entry.path, locale)
   const categoryHref = localizedHref(entry.categoryPath, locale)
   const entryTitle = editorialTitleForLocale(entry, locale)
   const entrySummary = editorialSummaryForLocale(entry, locale)
   const hasChineseCard = editorialHasChineseCardContent(entry)
+  const isLead = layout === 'lead'
+  const isStream = layout === 'stream'
   const metaClass = locale === 'zh' ? 'text-fg/70 dark:text-white/70' : 'text-muted'
   const summaryClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
+  const duration = formatDuration(entry.audioDurationSeconds)
+  const actionLabel = isAudioFirstEditorialType(entry.editorialType)
+    ? locale === 'zh'
+      ? '打开内容'
+      : 'Open piece'
+    : locale === 'zh'
+      ? '阅读文章'
+      : 'Read piece'
+
+  if (isLead || isStream) {
+    return (
+      <article
+        className={cn(
+          'relative',
+          isLead
+            ? 'overflow-hidden rounded-[2rem] border border-border bg-white shadow-sm dark:border-border dark:bg-surface'
+            : 'border-t border-border py-8 first:border-t-0 first:pt-0 dark:border-border'
+        )}
+      >
+        <div className={cn(isLead ? 'grid gap-6 p-6 md:grid-cols-[minmax(0,1.15fr)_340px] md:p-8' : 'grid gap-6 md:grid-cols-[minmax(0,1fr)_260px] md:items-start')}>
+          <div className={cn('min-w-0', isLead ? 'flex flex-col justify-center' : '')}>
+            <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 md:text-sm md:leading-5', metaClass)}>
+              {locale === 'zh' && !hasChineseCard ? (
+                <>
+                  <span className="rounded-full bg-natural-200 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80 md:text-[11px]">
+                    当前仍为英文原文
+                  </span>
+                  <span aria-hidden>·</span>
+                </>
+              ) : null}
+              {isLead ? (
+                <>
+                  <span className="rounded-full bg-accent/15 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-accent md:text-[11px]">
+                    {locale === 'zh' ? '最新发布' : 'Latest story'}
+                  </span>
+                  <span aria-hidden>·</span>
+                </>
+              ) : null}
+              {entry.pinned && !isLead ? (
+                <>
+                  <span className="rounded-full bg-accent/10 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-accent md:text-[11px]">
+                    {locale === 'zh' ? '置顶' : 'Pinned'}
+                  </span>
+                  <span aria-hidden>·</span>
+                </>
+              ) : null}
+              <span className="eyebrow text-accent">{mendpressSectionLabelForLocale(entry.editorialType, locale)}</span>
+              <span aria-hidden>·</span>
+              <span>{editorialTypeLabelForLocale(entry.editorialType, locale)}</span>
+              <span aria-hidden>·</span>
+              <span>{formatEditorialDate(entry.publishedAt, locale)}</span>
+              {entry.byline ? (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>{locale === 'zh' ? entry.byline : `By ${entry.byline}`}</span>
+                </>
+              ) : null}
+              {isAudioFirstEditorialType(entry.editorialType) && duration ? (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>{duration} {locale === 'zh' ? '音频' : 'audio'}</span>
+                </>
+              ) : entry.readingTimeMinutes ? (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>{locale === 'zh' ? `约 ${entry.readingTimeMinutes} 分钟阅读` : `${entry.readingTimeMinutes} min read`}</span>
+                </>
+              ) : null}
+            </div>
+
+            <h2 className={cn('font-serif font-semibold text-fg text-balance', isLead ? 'text-4xl leading-[1.12] md:text-5xl' : 'text-[1.95rem] leading-tight md:text-[2.3rem]')}>
+              <Link href={entryHref} className="transition-colors hover:text-accent">
+                {entryTitle}
+              </Link>
+            </h2>
+
+            {entrySummary ? (
+              <p className={cn('mt-4 max-w-3xl text-pretty', isLead ? 'text-lg leading-8 md:text-xl md:leading-9' : 'text-base leading-8', summaryClass)}>
+                {entrySummary}
+              </p>
+            ) : null}
+
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-[15px] leading-6 md:text-sm md:leading-5">
+              <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
+                {actionLabel}
+              </Link>
+              <Link href={categoryHref} className="text-muted transition-colors hover:text-fg">
+                {locale === 'zh' ? '更多来自 ' : 'More from '}
+                {mendpressSectionLabelForLocale(entry.editorialType, locale)}
+              </Link>
+            </div>
+          </div>
+
+          {entry.heroImage ? (
+            <Link
+              href={entryHref}
+              className={cn(
+                'block overflow-hidden rounded-[1.5rem] border border-border bg-natural-100 dark:border-border dark:bg-neutral-900',
+                isLead ? 'self-stretch' : 'md:self-start'
+              )}
+            >
+              <img
+                src={entry.heroImage}
+                alt={entryTitle}
+                className={cn(
+                  'h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]',
+                  isLead ? 'aspect-[4/5] min-h-[280px] md:min-h-[360px]' : 'aspect-[4/3]'
+                )}
+              />
+            </Link>
+          ) : (
+            <div
+              className={cn(
+                'rounded-[1.5rem] border border-border bg-natural-100 dark:border-border dark:bg-neutral-900',
+                isLead ? 'min-h-[280px] md:min-h-[360px]' : 'aspect-[4/3]'
+              )}
+            />
+          )}
+        </div>
+      </article>
+    )
+  }
+
   return (
     <article
       className={cn(
         'overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-colors hover:border-accent dark:border-border dark:bg-surface',
-        featured ? 'lg:grid lg:grid-cols-[1.25fr_minmax(0,1fr)]' : ''
       )}
     >
       {entry.heroImage ? (
@@ -47,28 +171,25 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           <img
             src={entry.heroImage}
             alt={entryTitle}
-            className={cn(
-              'h-full w-full object-cover',
-              featured ? 'min-h-[320px] lg:min-h-[420px]' : 'aspect-[16/10]'
-            )}
+            className="aspect-[16/10] h-full w-full object-cover"
           />
         </Link>
       ) : null}
 
-      <div className={cn('p-6 md:p-8', featured ? 'flex flex-col justify-center' : '')}>
-        <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm', metaClass)}>
+      <div className="p-6 md:p-8">
+        <div className={cn('mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 md:text-sm md:leading-5', metaClass)}>
           {locale === 'zh' && !hasChineseCard ? (
             <>
-              <span className="rounded-full bg-natural-200 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80">
+              <span className="rounded-full bg-natural-200 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-fg/75 dark:bg-neutral-800 dark:text-white/80 md:text-[11px]">
                 当前仍为英文原文
               </span>
               <span aria-hidden>·</span>
             </>
           ) : null}
-          {featured || entry.pinned ? (
+          {entry.pinned ? (
             <>
-              <span className="rounded-full bg-accent/15 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-accent">
-                {featured ? (locale === 'zh' ? '精选' : 'Featured') : locale === 'zh' ? '置顶' : 'Pinned'}
+              <span className="rounded-full bg-accent/15 px-2 py-1 text-[12px] uppercase tracking-[0.14em] text-accent md:text-[11px]">
+                {locale === 'zh' ? '置顶' : 'Pinned'}
               </span>
               <span aria-hidden>·</span>
             </>
@@ -78,10 +199,16 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           <span>{editorialTypeLabelForLocale(entry.editorialType, locale)}</span>
           <span aria-hidden>·</span>
           <span>{formatEditorialDate(entry.publishedAt, locale)}</span>
-          {isAudioFirstEditorialType(entry.editorialType) && formatDuration(entry.audioDurationSeconds) ? (
+          {entry.byline ? (
             <>
               <span aria-hidden>·</span>
-              <span>{formatDuration(entry.audioDurationSeconds)} {locale === 'zh' ? '音频' : 'audio'}</span>
+              <span>{locale === 'zh' ? entry.byline : `By ${entry.byline}`}</span>
+            </>
+          ) : null}
+          {isAudioFirstEditorialType(entry.editorialType) && duration ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>{duration} {locale === 'zh' ? '音频' : 'audio'}</span>
             </>
           ) : entry.readingTimeMinutes ? (
             <>
@@ -91,23 +218,17 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           ) : null}
         </div>
 
-        <h2 className={cn('font-serif font-semibold text-fg', featured ? 'text-4xl' : 'text-2xl')}>
+        <h2 className="font-serif text-2xl font-semibold text-fg">
           <Link href={entryHref} className="hover:text-accent transition-colors">
             {entryTitle}
           </Link>
         </h2>
 
-        <p className={cn('mt-4 text-base leading-7', summaryClass)}>{entrySummary}</p>
+        <p className={cn('mt-4 text-[1.02rem] leading-8 md:text-base md:leading-7', summaryClass)}>{entrySummary}</p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
+        <div className="mt-6 flex flex-wrap items-center gap-3 text-[15px] leading-6 md:text-sm md:leading-5">
           <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
-            {isAudioFirstEditorialType(entry.editorialType)
-              ? locale === 'zh'
-                ? '打开内容'
-                : 'Open piece'
-              : locale === 'zh'
-                ? '阅读文章'
-                : 'Read piece'}
+            {actionLabel}
           </Link>
           <Link href={categoryHref} className="text-muted hover:text-fg transition-colors">
             {locale === 'zh' ? '更多来自 ' : 'More from '}

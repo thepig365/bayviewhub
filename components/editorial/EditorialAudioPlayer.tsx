@@ -36,7 +36,7 @@ export function EditorialAudioPlayer({
           ) : null}
         </div>
         {(speakers.length || durationLabel) ? (
-          <div className="text-right text-xs uppercase tracking-[0.14em] text-muted">
+          <div className="text-right text-[13px] uppercase tracking-[0.14em] text-muted md:text-xs">
             {speakers.length ? <p>{speakers.join(', ')}</p> : null}
             {durationLabel ? <p className={speakers.length ? 'mt-1' : ''}>{durationLabel}</p> : null}
           </div>
@@ -46,7 +46,7 @@ export function EditorialAudioPlayer({
       <audio controls preload="none" src={src} className="mt-4 w-full" />
 
       {note ? (
-        <div className={`text-muted ${compact ? 'mt-3 text-sm leading-7' : 'mt-4 text-base leading-8'}`}>{note}</div>
+        <div className={`text-muted ${compact ? 'mt-3 text-[15px] leading-7 md:text-sm' : 'mt-4 text-[1.02rem] leading-8 md:text-base'}`}>{note}</div>
       ) : null}
     </section>
   )

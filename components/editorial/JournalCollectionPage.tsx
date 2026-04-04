@@ -3,8 +3,9 @@ import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import {
   editorialHasChineseCardContent,
-  groupEditorialEntries,
   MENDPRESS_CATEGORY_LINKS,
+  MENDPRESS_SECTION_IDS,
+  MENDPRESS_SECTION_META,
   listPublishedEditorialEntries,
   type EditorialType,
   type MendpressSectionId,
@@ -53,28 +54,44 @@ export async function JournalCollectionPage({
     types,
     type: types?.length === 1 ? types[0] : undefined,
     limit: 24,
+    strictRecency: true,
   })
-  const entries =
-    locale === 'zh'
-      ? [...rawEntries].sort((a, b) => Number(editorialHasChineseCardContent(b)) - Number(editorialHasChineseCardContent(a)))
-      : rawEntries
+  const entries = rawEntries
   const introClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
   const sectionDescriptionClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
   const emptyBodyClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
   const [featured, ...rest] = entries
-  const sections = !activeSection ? groupEditorialEntries(rest, locale) : []
   const categoryLinks = chips || MENDPRESS_CATEGORY_LINKS.map((item) => ({ ...item, href: localizedHref(item.href, locale) }))
+  const leadEyebrow = locale === 'zh' ? '最新发布' : 'Latest story'
+  const streamTitle = locale === 'zh' ? '近期发布' : 'Recent stories'
+  const streamBody =
+    locale === 'zh'
+      ? '按发布时间倒序浏览 Mendpress，沿着最近的编辑节奏继续向下阅读。'
+      : 'Read Mendpress in descending publication order, with the newest piece leading the editorial flow.'
+  const sectionRailTitle = locale === 'zh' ? '继续进入栏目' : 'Continue by section'
+  const sectionRailBody =
+    locale === 'zh'
+      ? '如果你想按栏目继续阅读，可以从这里进入 Mendpress 的四个公开分区。'
+      : 'If you want to keep reading by editorial mode, continue into one of the four Mendpress sections.'
+  const sectionRail = !activeSection
+    ? MENDPRESS_SECTION_IDS.map((id) => ({
+        id,
+        label: locale === 'zh' ? MENDPRESS_SECTION_META[id].zhLabel : MENDPRESS_SECTION_META[id].label,
+        description: locale === 'zh' ? MENDPRESS_SECTION_META[id].zhDescription : MENDPRESS_SECTION_META[id].description,
+        href: localizedHref(MENDPRESS_SECTION_META[id].path, locale),
+      }))
+    : []
 
   return (
     <main className="min-h-screen bg-bg py-16 md:py-20">
       <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <p className="eyebrow text-accent">{eyebrow}</p>
             <h1 className="mt-4 text-balance text-4xl font-serif font-semibold text-fg md:text-6xl">
               {title}
             </h1>
-            <p className={cn('mx-auto mt-5 max-w-3xl text-lg leading-8', introClass)}>{intro}</p>
+            <p className={cn('mx-auto mt-5 max-w-3xl text-[1.06rem] leading-8 md:text-lg', introClass)}>{intro}</p>
           </div>
 
           <div className="mt-10">
@@ -87,7 +104,7 @@ export async function JournalCollectionPage({
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'rounded-full px-5 py-2 text-sm transition-colors',
+                      'rounded-full px-5 py-2.5 text-[15px] leading-6 transition-colors md:py-2 md:text-sm md:leading-5',
                       active
                         ? 'bg-primary-700 text-white'
                         : 'border border-border bg-white text-fg hover:border-accent dark:border-border dark:bg-surface'
@@ -102,46 +119,64 @@ export async function JournalCollectionPage({
 
           {featured ? (
             <>
-              <div className="mt-12">
-                <JournalCard entry={featured} featured locale={locale} />
+              <div className="mt-14">
+                <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="eyebrow text-accent">{leadEyebrow}</p>
+                    <h2 className="mt-2 text-3xl font-serif font-semibold text-fg md:text-4xl">
+                      {activeSection ? title : locale === 'zh' ? 'Mendpress 最新文章' : 'The current lead from Mendpress'}
+                    </h2>
+                  </div>
+                  {featured.publishedAt ? (
+                    <p className="text-[15px] leading-6 text-muted md:text-sm md:leading-5">
+                      {locale === 'zh' ? '按发布时间排序' : 'Ordered by publication date'}
+                    </p>
+                  ) : null}
+                </div>
+                <JournalCard entry={featured} layout="lead" locale={locale} />
               </div>
 
-              {activeSection && rest.length ? (
-                <div className="mt-10 grid gap-6 md:grid-cols-2">
-                  {rest.map((entry) => (
-                    <JournalCard key={entry.id} entry={entry} locale={locale} />
-                  ))}
-                </div>
+              {rest.length ? (
+                <section className="mt-16">
+                  <div className="mb-6">
+                    <p className="eyebrow text-accent">{sectionEyebrow}</p>
+                    <h2 className="mt-2 text-3xl font-serif font-semibold text-fg md:text-4xl">
+                      {streamTitle}
+                    </h2>
+                    <p className={cn('mt-3 max-w-3xl text-[1.02rem] leading-8 md:text-base', sectionDescriptionClass)}>
+                      {streamBody}
+                    </p>
+                  </div>
+                  <div className="space-y-0">
+                    {rest.map((entry) => (
+                      <JournalCard key={entry.id} entry={entry} layout="stream" locale={locale} />
+                    ))}
+                  </div>
+                </section>
               ) : null}
 
-              {!activeSection && sections.length ? (
-                <div className="mt-14 space-y-14">
-                  {sections.map((section) => (
-                    <section key={section.id}>
-                      <div className="mb-6">
-                        <div>
-                          <p className="eyebrow text-accent">{sectionEyebrow}</p>
-                          <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
-                            {section.label}
-                          </h2>
-                          <p className={cn('mt-2 max-w-2xl text-sm leading-7', sectionDescriptionClass)}>
-                            {section.description}
-                          </p>
-                          <div className="mt-3">
-                            <Link href={localizedHref(section.path, locale)} className="text-sm text-fg underline underline-offset-4 hover:text-accent">
-                              {viewSectionLabel}
-                            </Link>
-                          </div>
+              {!activeSection && sectionRail.length ? (
+                <section className="mt-16 rounded-[2rem] border border-border bg-white/70 p-6 dark:border-border dark:bg-surface/80 md:p-8">
+                  <p className="eyebrow text-accent">{locale === 'zh' ? 'Mendpress 栏目' : 'Mendpress sections'}</p>
+                  <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">{sectionRailTitle}</h2>
+                  <p className={cn('mt-3 max-w-3xl text-base leading-8', sectionDescriptionClass)}>
+                    {sectionRailBody}
+                  </p>
+                  <div className="mt-8 grid gap-5 md:grid-cols-2">
+                    {sectionRail.map((section) => (
+                      <article key={section.id} className="rounded-3xl border border-border bg-natural-50 p-5 dark:border-border dark:bg-bg/50">
+                        <p className="eyebrow text-accent">{locale === 'zh' ? '栏目入口' : 'Section'}</p>
+                        <h3 className="mt-2 text-2xl font-serif font-semibold text-fg">{section.label}</h3>
+                        <p className={cn('mt-3 text-[15px] leading-7 md:text-sm', sectionDescriptionClass)}>{section.description}</p>
+                        <div className="mt-4">
+                          <Link href={section.href} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                            {viewSectionLabel}
+                          </Link>
                         </div>
-                      </div>
-                      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                        {section.entries.slice(0, 3).map((entry) => (
-                          <JournalCard key={entry.id} entry={entry} locale={locale} />
-                        ))}
-                      </div>
-                    </section>
-                  ))}
-                </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
               ) : null}
             </>
           ) : (
@@ -149,7 +184,7 @@ export async function JournalCollectionPage({
               <h2 className="text-3xl font-serif font-semibold text-fg">
                 {emptyTitle || (activeSection ? (locale === 'zh' ? `${title} 栏目尚未发布内容。` : `${title} is not published yet.`) : locale === 'zh' ? 'Mendpress 正在持续发布中。' : 'Mendpress is opening.')}
               </h2>
-              <p className={cn('mx-auto mt-4 max-w-2xl text-base leading-7', emptyBodyClass)}>
+              <p className={cn('mx-auto mt-4 max-w-2xl text-[1.02rem] leading-8 md:text-base md:leading-7', emptyBodyClass)}>
                 {emptyBody ||
                   (activeSection
                     ? locale === 'zh'

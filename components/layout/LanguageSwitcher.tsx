@@ -34,7 +34,7 @@ export function LanguageSwitcher({
   const chineseLabel = '中文'
 
   return (
-    <div className={cn('flex items-center gap-2 text-sm', className)}>
+    <div className={cn('flex items-center gap-2 text-[15px] leading-6 md:text-sm', className)}>
       {!compact ? <span className={cn('text-muted', labelClassName)}>{languageLabel}</span> : null}
       {currentLocale === 'en' ? (
         <span className={cn('font-medium text-fg', activeClassName)}>{englishLabel}</span>

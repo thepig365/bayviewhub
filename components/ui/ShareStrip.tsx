@@ -89,21 +89,21 @@ export function ShareStrip({
   const liveCopyText = copied ? (locale === 'zh' ? '页面链接已复制到剪贴板' : 'Page link copied to clipboard') : ''
 
   const linkClass = cn(
-    'inline-flex min-h-[44px] min-w-0 items-center text-sm transition-colors underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm px-0.5 py-2 sm:min-h-0 sm:py-0',
+    'inline-flex min-h-[44px] min-w-0 items-center text-[15px] leading-6 transition-colors underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm px-0.5 py-2 sm:min-h-0 sm:py-0 sm:text-sm sm:leading-5',
     isDark
       ? 'text-white/60 hover:text-white focus-visible:ring-white/40 focus-visible:ring-offset-family-navy'
       : 'text-muted hover:text-accent focus-visible:ring-accent/40 focus-visible:ring-offset-natural-50 dark:focus-visible:ring-offset-neutral-900'
   )
 
   const labelClass = cn(
-    'mb-3 text-[11px] font-medium uppercase tracking-[0.2em]',
+    'mb-3 text-[12px] font-medium uppercase tracking-[0.2em] md:text-[11px]',
     isDark ? 'text-white/40' : 'text-muted'
   )
 
   const sepClass = cn('hidden select-none px-1 text-sm sm:inline', isDark ? 'text-white/25' : 'text-border')
 
   const menuItemClass = cn(
-    'flex w-full min-h-[44px] items-center px-4 py-3 text-left text-sm transition-colors focus:outline-none focus-visible:bg-natural-100 dark:focus-visible:bg-white/10',
+    'flex w-full min-h-[44px] items-center px-4 py-3 text-left text-[15px] leading-6 transition-colors focus:outline-none focus-visible:bg-natural-100 dark:focus-visible:bg-white/10 sm:text-sm sm:leading-5',
     isDark ? 'text-white/90 hover:bg-white/10' : 'text-fg hover:bg-natural-50 dark:text-white dark:hover:bg-white/10'
   )
 

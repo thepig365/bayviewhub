@@ -28,7 +28,7 @@ export function Logo({ className = '', href = '/', locale = 'en' }: LogoProps) {
         <span className="text-2xl md:text-3xl font-serif font-bold leading-tight text-black dark:text-fg">
           Bayview Hub
         </span>
-        <span className="text-sm tracking-widest uppercase text-black dark:text-fg">
+        <span className="text-[13px] tracking-widest uppercase text-black dark:text-fg md:text-sm">
           {locale === 'zh' ? '来自维州' : 'Est. Victoria'}
         </span>
       </div>
