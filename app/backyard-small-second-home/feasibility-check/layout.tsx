@@ -10,7 +10,9 @@ const SSD_FEASIBILITY_PATH = "/backyard-small-second-home/feasibility-check" as 
 const feasibilityCanonical = `${SITE_CONFIG.url}${SSD_FEASIBILITY_PATH}`;
 
 export const metadata: Metadata = {
-  title: "SSD feasibility check | Victorian pathway tool | Bayview Hub",
+  title: {
+    absolute: "SSD Feasibility Check | Victorian Pathway Tool | Bayview Hub",
+  },
   description:
     "Interactive Victorian Small Second Dwelling check: see whether your answers suggest Green Lane, VicSmart, or standard planning — optional written response.",
   alternates: {

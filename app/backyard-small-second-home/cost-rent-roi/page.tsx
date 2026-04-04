@@ -9,12 +9,17 @@ import { SsdFunnelReturn } from '@/components/ssd/SsdFunnelReturn'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
-export const metadata = genMeta({
-  title: `SSD Cost, Rent & ROI | Backyard Small Second Home | ${SITE_CONFIG.name}`,
-  description:
-    'Indicative Victorian SSD build cost bands and what moves the price. Rental demand context without investment hype.',
-  path: '/backyard-small-second-home/cost-rent-roi',
-})
+export const metadata = {
+  ...genMeta({
+    title: `SSD Cost, Rent & ROI | Backyard Small Second Home | ${SITE_CONFIG.name}`,
+    description:
+      'Indicative Victorian SSD build cost bands and what moves the price. Rental demand context without investment hype.',
+    path: '/backyard-small-second-home/cost-rent-roi',
+  }),
+  title: {
+    absolute: 'SSD Cost, Rent & ROI | Backyard Small Second Home | Bayview Hub',
+  },
+}
 
 export default function CostRentRoiPage() {
   const baseUrl = SITE_CONFIG.url

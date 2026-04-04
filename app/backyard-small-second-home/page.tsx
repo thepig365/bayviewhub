@@ -12,13 +12,18 @@ import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { SsdHubCampaignAnalytics } from '@/components/ssd/SsdHubCampaignAnalytics'
 import { SSD_HUB_FAQ } from '@/lib/ssd-hub-faq'
 
-export const metadata = genMeta({
-  title: `Backyard Small Second Home (Victorian SSD) | Rules, Feasibility & Next Steps | ${SITE_CONFIG.name}`,
-  description:
-    'Victorian SSD (Small Second Dwelling): up to 60 sqm GFA, same title, behind front wall, all-electric. Planning permit may be omitted only when fully Deemed-to-Comply; overlays often change that. Building permit still required. Rules, cost context, checklist.',
-  path: '/backyard-small-second-home',
-  image: `${SITE_CONFIG.url}/og-second-home.png`,
-})
+export const metadata = {
+  ...genMeta({
+    title: `Backyard Small Second Home (Victorian SSD) | Rules, Feasibility & Next Steps | ${SITE_CONFIG.name}`,
+    description:
+      'Victorian SSD (Small Second Dwelling): up to 60 sqm GFA, same title, behind front wall, all-electric. Planning permit may be omitted only when fully Deemed-to-Comply; overlays often change that. Building permit still required. Rules, cost context, checklist.',
+    path: '/backyard-small-second-home',
+    image: `${SITE_CONFIG.url}/og-second-home.png`,
+  }),
+  title: {
+    absolute: 'Backyard Small Second Home | Bayview Hub',
+  },
+}
 
 const ssdExpertJsonLd = {
   '@context': 'https://schema.org',

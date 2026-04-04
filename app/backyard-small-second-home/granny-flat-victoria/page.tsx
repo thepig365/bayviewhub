@@ -9,12 +9,17 @@ import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { Button } from '@/components/ui/Button'
 
-export const metadata = genMeta({
-  title: `Granny Flat Victoria | Small Second Dwelling Builder | Mornington Peninsula | ${SITE_CONFIG.name}`,
-  description:
-    'If you searched “granny flat Victoria”: it is the same planning idea as a Small Second Dwelling (SSD) — 60 sqm, same title, all-electric. When you qualify, you may skip a planning permit.',
-  path: '/backyard-small-second-home/granny-flat-victoria',
-})
+export const metadata = {
+  ...genMeta({
+    title: `Granny Flat Victoria | Small Second Dwelling Builder | Mornington Peninsula | ${SITE_CONFIG.name}`,
+    description:
+      'If you searched “granny flat Victoria”: it is the same planning idea as a Small Second Dwelling (SSD) — 60 sqm, same title, all-electric. When you qualify, you may skip a planning permit.',
+    path: '/backyard-small-second-home/granny-flat-victoria',
+  }),
+  title: {
+    absolute: 'Granny Flat Victoria | Small Second Dwelling | Bayview Hub',
+  },
+}
 
 const faqSchema = {
   '@context': 'https://schema.org',

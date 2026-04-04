@@ -9,12 +9,17 @@ import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { Button } from '@/components/ui/Button'
 
-export const metadata = genMeta({
-  title: `Second Home Builder Mornington Peninsula | Granny Flat Main Ridge | ${SITE_CONFIG.name}`,
-  description:
-    'Small second dwellings on the Mornington Peninsula: overlays, Green Wedge, bushfire, and coastal context. Bayview Hub is based in Main Ridge.',
-  path: '/backyard-small-second-home/mornington-peninsula',
-})
+export const metadata = {
+  ...genMeta({
+    title: `Second Home Builder Mornington Peninsula | Granny Flat Main Ridge | ${SITE_CONFIG.name}`,
+    description:
+      'Small second dwellings on the Mornington Peninsula: overlays, Green Wedge, bushfire, and coastal context. Bayview Hub is based in Main Ridge.',
+    path: '/backyard-small-second-home/mornington-peninsula',
+  }),
+  title: {
+    absolute: 'Second Home Builder Mornington Peninsula | Granny Flat Main Ridge | Bayview Hub',
+  },
+}
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',

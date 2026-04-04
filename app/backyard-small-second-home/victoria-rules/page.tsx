@@ -9,12 +9,17 @@ import { SsdMidCta } from '@/components/ssd/SsdMidCta'
 import { SsdPageHero } from '@/components/ssd/SsdPageHero'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 
-export const metadata = genMeta({
-  title: `Victoria SSD Rules (VC253/VC282) | Backyard Small Second Home | ${SITE_CONFIG.name}`,
-  description:
-    'Victorian Small Second Dwelling hard constraints in plain English: 60 sqm, siting, all-electric, same title. Official sources to verify on your title.',
-  path: '/backyard-small-second-home/victoria-rules',
-})
+export const metadata = {
+  ...genMeta({
+    title: `Victoria SSD Rules (VC253/VC282) | Backyard Small Second Home | ${SITE_CONFIG.name}`,
+    description:
+      'Victorian Small Second Dwelling hard constraints in plain English: 60 sqm, siting, all-electric, same title. Official sources to verify on your title.',
+    path: '/backyard-small-second-home/victoria-rules',
+  }),
+  title: {
+    absolute: 'Victoria SSD Rules (VC253/VC282) | Backyard Small Second Home | Bayview Hub',
+  },
+}
 
 export default function VictoriaRulesPage() {
   const baseUrl = SITE_CONFIG.url
