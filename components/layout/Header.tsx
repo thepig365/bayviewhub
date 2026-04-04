@@ -402,17 +402,9 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between py-5 md:py-6">
+        <div className="flex items-center justify-between py-5 md:hidden">
           <Logo href={localizedHref('/', locale)} locale={locale} />
-
-          <nav
-            className="hidden md:flex flex-wrap items-center justify-end gap-x-5 gap-y-2 lg:gap-x-6"
-            aria-label={navAriaLabel}
-          >
-            {bayviewNav.map(renderDesktopEntry)}
-          </nav>
-
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center">
             <button
               ref={triggerBtnRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -427,10 +419,20 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center justify-between pt-1 pb-4">
-          <div className="w-[280px] shrink-0" aria-hidden />
+        <div className="hidden md:grid md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-8 lg:gap-x-10 md:py-5">
+          <div className="row-span-2 self-center">
+            <Logo href={localizedHref('/', locale)} locale={locale} />
+          </div>
+
           <nav
-            className="flex flex-1 flex-wrap items-center justify-start gap-x-6 gap-y-2"
+            className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 lg:gap-x-6"
+            aria-label={navAriaLabel}
+          >
+            {bayviewNav.map(renderDesktopEntry)}
+          </nav>
+
+          <nav
+            className="mt-3 flex flex-wrap items-center justify-end gap-x-5 gap-y-2"
             aria-label={locale === 'zh' ? 'Mendpress 导航' : 'Mendpress navigation'}
           >
             {MENDPRESS_NAV.map(renderPublicationEntry)}

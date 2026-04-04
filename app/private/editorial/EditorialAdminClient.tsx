@@ -22,14 +22,18 @@ type Props = {
 }
 
 export function EditorialAdminClient({ entries }: Props) {
+  const [items, setItems] = useState(entries)
   const [typeFilter, setTypeFilter] = useState<EditorialType | 'all'>('all')
   const [statusFilter, setStatusFilter] = useState<EditorialStatusFilter>('all')
   const [query, setQuery] = useState('')
   const [copiedPath, setCopiedPath] = useState('')
+  const [confirmDeleteId, setConfirmDeleteId] = useState('')
+  const [deleteState, setDeleteState] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [deleteMessage, setDeleteMessage] = useState('')
 
   const filteredEntries = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return entries.filter((entry) => {
+    return items.filter((entry) => {
       if (!editorialTypeMatches(entry, typeFilter)) return false
       if (!editorialStatusMatches(entry, statusFilter)) return false
       if (!q) return true
@@ -39,16 +43,16 @@ export function EditorialAdminClient({ entries }: Props) {
         entry.summary.toLowerCase().includes(q)
       )
     })
-  }, [entries, query, statusFilter, typeFilter])
+  }, [items, query, statusFilter, typeFilter])
 
   const counts = useMemo(
     () => ({
-      total: entries.length,
-      published: entries.filter((entry) => entry.status === 'published').length,
-      draft: entries.filter((entry) => entry.status === 'draft').length,
-      pinned: entries.filter((entry) => entry.pinned).length,
+      total: items.length,
+      published: items.filter((entry) => entry.status === 'published').length,
+      draft: items.filter((entry) => entry.status === 'draft').length,
+      pinned: items.filter((entry) => entry.pinned).length,
     }),
-    [entries]
+    [items]
   )
 
   const copyUrl = async (path: string) => {
@@ -58,6 +62,30 @@ export function EditorialAdminClient({ entries }: Props) {
       window.setTimeout(() => setCopiedPath(''), 2000)
     } catch {
       setCopiedPath('')
+    }
+  }
+
+  const deleteEntry = async (id: string) => {
+    setDeleteState('loading')
+    setDeleteMessage('')
+
+    try {
+      const response = await fetch(`/api/editorial/admin/${id}`, { method: 'DELETE' })
+      const data = await response.json().catch(() => ({}))
+
+      if (!response.ok || !data.ok) {
+        setDeleteState('error')
+        setDeleteMessage(data.error || 'Failed to delete piece.')
+        return
+      }
+
+      setItems((prev) => prev.filter((entry) => entry.id !== id))
+      setConfirmDeleteId('')
+      setDeleteState('idle')
+      setDeleteMessage('')
+    } catch {
+      setDeleteState('error')
+      setDeleteMessage('Failed to delete piece.')
     }
   }
 
@@ -191,8 +219,54 @@ export function EditorialAdminClient({ entries }: Props) {
                         </button>
                       </>
                     ) : null}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setConfirmDeleteId((current) => (current === entry.id ? '' : entry.id))
+                        setDeleteState('idle')
+                        setDeleteMessage('')
+                      }}
+                      className="text-red-700 underline underline-offset-4 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
+                {confirmDeleteId === entry.id ? (
+                  <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 md:col-span-5 dark:border-red-900/60 dark:bg-red-950/30">
+                    <p className="text-sm font-medium text-red-900 dark:text-red-100">
+                      Delete this piece permanently?
+                    </p>
+                    <p className="mt-2 text-sm leading-7 text-red-800/90 dark:text-red-200/85">
+                      This permanently removes the piece from the editorial system and public Mendpress listings. Use this for unsuitable or test content only.
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        onClick={() => deleteEntry(entry.id)}
+                        disabled={deleteState === 'loading'}
+                        className="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 disabled:opacity-60"
+                      >
+                        {deleteState === 'loading' ? 'Deleting…' : 'Delete permanently'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setConfirmDeleteId('')
+                          setDeleteState('idle')
+                          setDeleteMessage('')
+                        }}
+                        disabled={deleteState === 'loading'}
+                        className="rounded-lg border border-border px-4 py-2 text-sm text-fg transition-colors hover:border-accent disabled:opacity-60 dark:border-border"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    {deleteMessage ? (
+                      <p className="mt-3 text-sm text-red-700 dark:text-red-300">{deleteMessage}</p>
+                    ) : null}
+                  </div>
+                ) : null}
                 {entry.status === 'published' ? (
                   <details className="mt-4 rounded-2xl border border-border bg-natural-50 p-4 dark:border-border dark:bg-neutral-900/40 md:col-span-5">
                     <summary className="cursor-pointer text-sm font-medium text-fg">

@@ -315,6 +315,9 @@ export function EditorialEditorClient({
   const [assistMessage, setAssistMessage] = useState('')
   const [audioUrlCopied, setAudioUrlCopied] = useState(false)
   const [showAudioUrlField, setShowAudioUrlField] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleteState, setDeleteState] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [deleteMessage, setDeleteMessage] = useState('')
   const [aiMetadataSuggestions, setAiMetadataSuggestions] = useState<AiMetadataSuggestions>({
     title: '',
     slugSuggestion: '',
@@ -590,6 +593,28 @@ export function EditorialEditorClient({
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
       setCopied(false)
+    }
+  }
+
+  const deleteExistingEntry = async () => {
+    if (!entry?.id) return
+    setDeleteState('loading')
+    setDeleteMessage('')
+
+    try {
+      const response = await fetch(`/api/editorial/admin/${entry.id}`, { method: 'DELETE' })
+      const data = await response.json().catch(() => ({}))
+
+      if (!response.ok || !data.ok) {
+        setDeleteState('error')
+        setDeleteMessage(data.error || 'Failed to delete piece.')
+        return
+      }
+
+      window.location.href = '/private/editorial'
+    } catch {
+      setDeleteState('error')
+      setDeleteMessage('Failed to delete piece.')
     }
   }
 
@@ -1454,6 +1479,56 @@ export function EditorialEditorClient({
             <p className={`mt-4 text-sm ${status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
               {message}
             </p>
+          ) : null}
+          {entry?.id ? (
+            <div className="mt-6 border-t border-border pt-5 dark:border-border">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDeleteConfirm((value) => !value)
+                  setDeleteState('idle')
+                  setDeleteMessage('')
+                }}
+                className="text-sm font-medium text-red-700 underline underline-offset-4 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+              >
+                Delete piece
+              </button>
+              {showDeleteConfirm ? (
+                <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 dark:border-red-900/60 dark:bg-red-950/30">
+                  <p className="text-sm font-medium text-red-900 dark:text-red-100">
+                    Delete this piece permanently?
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-red-800/90 dark:text-red-200/85">
+                    This permanently removes the piece from the editorial system and from public Mendpress listings. Use it for unsuitable, duplicate, or test content.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={deleteExistingEntry}
+                      disabled={deleteState === 'loading'}
+                      className="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 disabled:opacity-60"
+                    >
+                      {deleteState === 'loading' ? 'Deleting…' : 'Delete permanently'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowDeleteConfirm(false)
+                        setDeleteState('idle')
+                        setDeleteMessage('')
+                      }}
+                      disabled={deleteState === 'loading'}
+                      className="rounded-lg border border-border px-4 py-2 text-sm text-fg transition-colors hover:border-accent disabled:opacity-60 dark:border-border"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  {deleteMessage ? (
+                    <p className="mt-3 text-sm text-red-700 dark:text-red-300">{deleteMessage}</p>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
           ) : null}
         </section>
 
