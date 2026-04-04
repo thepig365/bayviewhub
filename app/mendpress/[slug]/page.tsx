@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
-import { EditorialPullQuote } from '@/components/editorial/EditorialPullQuote'
 import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { ShareStrip } from '@/components/ui/ShareStrip'
@@ -69,12 +68,6 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
     return entry.heroImage.startsWith('http') ? entry.heroImage : `${SITE_CONFIG.url}${entry.heroImage}`
   }
   return `${SITE_CONFIG.url}/og-image.png`
-}
-
-function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  const summary = editorialSummaryForLocale(entry, 'en').trim()
-  if (summary.length >= 90 && summary.length <= 260) return summary
-  return bodyExcerpt(editorialBodyForLocale(entry, 'en'), 260) || summary || editorialTitleForLocale(entry, 'en')
 }
 
 function formatDuration(value: number | null): string | null {
@@ -152,7 +145,6 @@ export default async function MendpressEntryPage({ params }: Props) {
   const contextualLinks = editorialContextLinks(entry)
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
   const description = articleDescription(entry)
-  const pullQuote = articlePullQuote(entry)
   const body = editorialBodyForLocale(entry, 'en')
   const transcript = editorialTranscriptForLocale(entry, 'en')
   const showNotes = editorialShowNotesForLocale(entry, 'en')
@@ -302,9 +294,8 @@ export default async function MendpressEntryPage({ params }: Props) {
 
           <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
             <div className="min-w-0">
-              <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'en')} articleUrl={absoluteUrl} />
               <div className="mx-auto max-w-[46rem]">
-                {body ? <EditorialBody body={body} className="mt-8" locale="en" /> : null}
+                {body ? <EditorialBody body={body} className="mt-2 md:mt-4" locale="en" /> : null}
 
                 {showNotes ? (
                   <section className="mt-14">

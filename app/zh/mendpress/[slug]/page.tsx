@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
-import { EditorialPullQuote } from '@/components/editorial/EditorialPullQuote'
 import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { Button } from '@/components/ui/Button'
@@ -77,12 +76,6 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
     return entry.heroImage.startsWith('http') ? entry.heroImage : `${SITE_CONFIG.url}${entry.heroImage}`
   }
   return `${SITE_CONFIG.url}/og-image.png`
-}
-
-function articlePullQuote(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  const summary = editorialSummaryForLocale(entry, 'zh').trim()
-  if (summary.length >= 50 && summary.length <= 180) return summary
-  return chineseReadingExcerpt(entry, 180) || summary || editorialTitleForLocale(entry, 'zh')
 }
 
 function formatDuration(value: number | null): string | null {
@@ -308,7 +301,6 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const englishUrl = editorialAbsoluteUrl(entry.slug)
   const chineseUrl = `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`
   const description = articleDescription(entry)
-  const pullQuote = articlePullQuote(entry)
   const body = entry.bodyMarkdownZh || ''
   const transcript = editorialTranscriptForLocale(entry, 'zh')
   const showNotes = editorialShowNotesForLocale(entry, 'zh')
@@ -454,14 +446,13 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
           <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
             <div className="min-w-0">
-              <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'zh')} articleUrl={chineseUrl} locale="zh" />
               <div className="mx-auto max-w-[46rem]">
                 {readingLayerNotice ? (
                   <section className="mt-8 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
                     <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
                   </section>
                 ) : null}
-                {body ? <EditorialBody body={body} className="mt-8" locale="zh" /> : null}
+                {body ? <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" /> : null}
 
                 {showNotes ? (
                   <section className="mt-14">

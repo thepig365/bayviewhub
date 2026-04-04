@@ -56,6 +56,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/backyard-small-second-home/tiny-house-victoria',
+        destination: '/backyard-small-second-home/granny-flat-victoria',
+        permanent: true,
+      },
+      {
         source: '/backyard-second-home/feasibility-checklist',
         destination: '/backyard-small-second-home/feasibility-check',
         permanent: true,

@@ -7,13 +7,16 @@ import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import Script from 'next/script'
 
+const HOME_DESCRIPTION =
+  'Bayview Hub is a place-based cultural estate on the Mornington Peninsula. Art, music, hospitality, workshops, edible gardens, and slow life — held together as one human ecology. Home of the Mendpress editorial publication and the Bayview Arts Gallery. Backyard second dwelling consultancy available across Victoria.'
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
   title: {
-    default: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
+    default: 'Bayview Hub | Cultural Estate, Mornington Peninsula — Art, Music, Hospitality & Mendpress',
     template: `%s | ${SITE_CONFIG.name}`,
   },
-  description: SITE_CONFIG.description,
+  description: HOME_DESCRIPTION,
   keywords: [
     'winery',
     'restaurant',
@@ -32,8 +35,8 @@ export const metadata: Metadata = {
     locale: 'en_AU',
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
-    title: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
+    title: 'Bayview Hub — Cultural Estate on the Mornington Peninsula',
+    description: HOME_DESCRIPTION,
     images: [
       {
         url: '/og-image.png',
@@ -45,8 +48,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
+    title: 'Bayview Hub — Cultural Estate on the Mornington Peninsula',
+    description:
+      'Bayview Hub is a place-based cultural estate on the Mornington Peninsula. Art, music, hospitality, workshops, edible gardens, and slow life — held together as one human ecology. Home of the Mendpress editorial publication and the Bayview Arts Gallery.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -94,13 +98,14 @@ export default function RootLayout({
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
   const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+  const structuredSameAs = Object.values(SOCIAL_LINKS).filter((url) => url !== 'https://www.linkedin.com/')
 
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: SITE_CONFIG.name,
-      description: SITE_CONFIG.description,
+      description: HOME_DESCRIPTION,
       url: SITE_CONFIG.url,
       telephone: SITE_CONFIG.phone,
       email: SITE_CONFIG.email,
@@ -111,21 +116,21 @@ export default function RootLayout({
         addressRegion: 'VIC',
         addressCountry: 'AU',
       },
-      sameAs: Object.values(SOCIAL_LINKS),
+      sameAs: structuredSameAs,
     },
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
-      description: SITE_CONFIG.description,
+      description: HOME_DESCRIPTION,
       publisher: { '@type': 'Organization', name: SITE_CONFIG.name, url: SITE_CONFIG.url },
     },
     {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
       name: SITE_CONFIG.name,
-      description: SITE_CONFIG.description,
+      description: HOME_DESCRIPTION,
       url: SITE_CONFIG.url,
       telephone: SITE_CONFIG.phone,
       email: SITE_CONFIG.email,
@@ -136,7 +141,7 @@ export default function RootLayout({
         addressRegion: 'VIC',
         addressCountry: 'AU',
       },
-      sameAs: Object.values(SOCIAL_LINKS),
+      sameAs: structuredSameAs,
     },
   ]
 
