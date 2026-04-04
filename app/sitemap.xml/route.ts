@@ -52,7 +52,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/tools/utm', priority: 0.6, changeFreq: 'yearly' },
   { path: '/invest', priority: 0.8, changeFreq: 'monthly' },
   { path: '/visit', priority: 0.8, changeFreq: 'monthly' },
-  { path: '/workshops', priority: 0.8, changeFreq: 'monthly' },
+  { path: '/workshops', priority: 0.7, changeFreq: 'monthly' },
   { path: '/privacy', priority: 0.5, changeFreq: 'yearly' },
   { path: '/terms', priority: 0.5, changeFreq: 'yearly' },
   { path: '/evidence/visitor-traffic', priority: 0.6, changeFreq: 'monthly' },

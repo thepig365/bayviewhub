@@ -1,175 +1,152 @@
-import React from 'react'
 import type { Metadata } from 'next'
-import { Button } from '@/components/ui/Button'
+import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
-import { generateMetadata as genMeta } from '@/lib/utils'
+import { WorkshopsEnquiryForm } from './WorkshopsEnquiryForm'
 
-export const metadata: Metadata = genMeta({
-  title: `Therapeutic Arts Workshops | ${SITE_CONFIG.name}`,
+export const metadata: Metadata = {
+  title: {
+    absolute: 'Art Workshops Mornington Peninsula | Bayview Hub',
+  },
   description:
-    'Restorative creative workshops (non-clinical) at Bayview Hub. Explore expressive arts in a calm, supportive environment.',
-  path: '/workshops',
-})
+    'Non-clinical, place-based art workshops at Bayview Hub, Mornington Peninsula. Creative sessions in a working garden and studio environment at Main Ridge, Victoria.',
+  openGraph: {
+    title: 'Art Workshops Mornington Peninsula | Bayview Hub',
+    description: 'Non-clinical, place-based art workshops at Bayview Hub, Mornington Peninsula.',
+    url: 'https://www.bayviewhub.me/workshops',
+  },
+  alternates: {
+    canonical: 'https://www.bayviewhub.me/workshops',
+  },
+}
 
-const workshops = [
-  {
-    title: 'Expressive Painting',
-    description: 'Explore color, texture, and intuitive mark-making in a supportive group setting.',
-  },
-  {
-    title: 'Clay & Presence',
-    description: 'Tactile clay work combined with mindfulness practices.',
-  },
-  {
-    title: 'Nature Journaling',
-    description: 'Drawing and writing exercises inspired by the gardens and landscape.',
-  },
-]
-
-const programs = [
-  {
-    title: '6-Week Adult Program',
-    description: 'A sustained exploration of expressive arts for personal growth and creative expression.',
-    details: ['Small group format', 'All materials included', 'Take-home practices'],
-  },
-  {
-    title: '6-Week Parent & Child',
-    description: 'Creative connection time for parents/carers and children aged 5–12.',
-    details: ['Bonding through art', 'Age-appropriate activities', 'Family toolkit'],
-  },
-]
+const workshopsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Are the art workshops at Bayview Hub clinical art therapy?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Bayview Hub workshops are non-clinical, place-based creative sessions. They are not a substitute for professional therapeutic care.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Where are the workshops held?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Workshops take place at Bayview Hub, 365 Purves Road, Main Ridge, Mornington Peninsula, Victoria 3928.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need art experience to attend?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No prior art experience is required.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I register for a workshop?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Submit an enquiry via the form on this page. We will respond within 5 business days with programme details and availability.',
+      },
+    },
+  ],
+}
 
 export default function WorkshopsPage() {
   return (
-    <main className="min-h-screen bg-bg">
-      {/* Hero */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-fg mb-8">
-              Therapeutic Arts Workshops
-            </h1>
-            <p className="text-xl text-muted leading-relaxed">
-              Restorative creative workshops (non-clinical) at Bayview Hub. A space for expressive arts, creative exploration, and quiet restoration.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main className="min-h-screen bg-bg py-16 md:py-20">
+      <div className="container mx-auto px-4">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(workshopsSchema) }}
+        />
 
-      {/* Why */}
-      <section className="py-16 bg-natural-50 dark:bg-surface/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-fg mb-8">
-              Why this exists
-            </h2>
-            <p className="text-muted leading-relaxed">
-              Creative practice can be restorative — not as treatment, but as a way of slowing down, reconnecting, and making something with your hands. These workshops offer guided time to explore expressive arts in a calm, supportive environment within the estate.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What happens */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-fg mb-8">
-              What happens
-            </h2>
-            <div className="space-y-6">
-              {workshops.map((workshop) => (
-                <div key={workshop.title} className="p-6 bg-natural-50 rounded-xl dark:bg-surface/50">
-                  <h3 className="font-bold text-fg mb-2">{workshop.title}</h3>
-                  <p className="text-muted">{workshop.description}</p>
-                </div>
-              ))}
+        <article className="mx-auto max-w-5xl">
+          <header className="rounded-[2.25rem] border border-border bg-natural-100 px-6 py-8 shadow-md dark:border-border dark:bg-surface md:px-10 md:py-12">
+            <div className="max-w-4xl">
+              <p className="eyebrow text-accent">Bayview Hub</p>
+              <h1 className="mt-4 text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
+                Art Workshops — Mornington Peninsula
+              </h1>
+              <p className="mt-6 max-w-3xl text-[1.05rem] leading-8 text-fg/90 dark:text-white/90 md:text-[1.12rem]">
+                Bayview Hub runs art-based workshops at the estate in Main Ridge. These are not clinical sessions. They are
+                structured creative experiences in a specific physical environment — a working garden, a studio, and open land
+                on the Mornington Peninsula.
+              </p>
+              <p className="mt-5 max-w-3xl text-[1.05rem] leading-8 text-fg/88 dark:text-white/88 md:text-[1.12rem]">
+                The question at the centre of this programme is practical: what happens when people slow down, make something
+                by hand, and pay genuine attention to a place?
+              </p>
             </div>
-          </div>
-        </div>
-      </section>
+          </header>
 
-      {/* Programs */}
-      <section className="py-16 bg-natural-50 dark:bg-surface/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-fg mb-8">
-              Longer programs
-            </h2>
+          <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
             <div className="space-y-8">
-              {programs.map((program) => (
-                <div key={program.title} className="bg-white rounded-xl p-8 dark:bg-surface dark:border dark:border-border">
-                  <h3 className="text-xl font-serif font-bold text-natural-900 mb-3 dark:text-fg">{program.title}</h3>
-                  <p className="text-muted mb-4">{program.description}</p>
-                  <ul className="space-y-2 text-muted">
-                    {program.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-accent mt-1.5 text-xs">•</span>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <section className="rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
+                <h2 className="text-3xl font-serif font-semibold text-fg">The setting</h2>
+                <p className="mt-4 text-[1.05rem] leading-8 text-fg/88 dark:text-white/88 md:text-[1.08rem]">
+                  365 Purves Road, Main Ridge, Victoria. The estate includes a working edible garden, a studio, and open land.
+                  Workshops take place in these environments. The setting is part of the work.
+                </p>
+              </section>
+
+              <section className="rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
+                <h2 className="text-3xl font-serif font-semibold text-fg">Programme</h2>
+                <p className="mt-4 text-[1.05rem] leading-8 text-fg/88 dark:text-white/88 md:text-[1.08rem]">
+                  The current programme is in development. Submit an enquiry below to register interest or join the waitlist.
+                </p>
+              </section>
+
+              <section className="rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
+                <h2 className="text-3xl font-serif font-semibold text-fg">These workshops are not</h2>
+                <p className="mt-4 text-[1.05rem] leading-8 text-fg/88 dark:text-white/88 md:text-[1.08rem]">
+                  These sessions are not clinical art therapy and are not a substitute for professional therapeutic or mental
+                  health support. They are non-clinical, place-based creative experiences.
+                </p>
+              </section>
+            </div>
+
+            <aside className="lg:sticky lg:top-24">
+              <div className="rounded-[2rem] border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
+                <p className="eyebrow text-accent">Send an enquiry</p>
+                <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Register interest</h2>
+                <p className="mt-4 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
+                  Use the form to register interest in current or upcoming workshops at Bayview Hub.
+                </p>
+                <div className="mt-6">
+                  <WorkshopsEnquiryForm />
                 </div>
-              ))}
+              </div>
+            </aside>
+          </div>
+
+          <footer className="mt-12 border-t border-border pt-8">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
+              <Link href="/visit" className="underline underline-offset-4 hover:text-accent">
+                Visit Us
+              </Link>
+              <span aria-hidden>·</span>
+              <Link href="/events" className="underline underline-offset-4 hover:text-accent">
+                What&apos;s On
+              </Link>
+              <span aria-hidden>·</span>
+              <Link href="/mendpress" className="underline underline-offset-4 hover:text-accent">
+                Mendpress
+              </Link>
+              <span aria-hidden>·</span>
+              <a href={`mailto:${SITE_CONFIG.email}`} className="underline underline-offset-4 hover:text-accent">
+                Contact
+              </a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Who it's for */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-fg mb-8">
-              Who this is for
-            </h2>
-            <ul className="space-y-4 text-muted">
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5 text-xs">•</span>
-                <span>People looking for a creative outlet without performance pressure.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5 text-xs">•</span>
-                <span>Anyone wanting to slow down and work with their hands.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5 text-xs">•</span>
-                <span>Families seeking shared creative time together.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Disclaimer */}
-      <section className="py-8 bg-natural-50 dark:bg-surface/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-base text-subtle">
-              Therapeutic Arts Workshops are restorative creative workshops and are not clinical therapy or medical services. If you are experiencing a mental health crisis, please contact Lifeline (13 11 14), Beyond Blue (1300 22 4636), or emergency services (000).
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xl text-muted mb-8">
-              Workshops are offered seasonally. Explore the estate to see what's forming.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button href="/experiences" variant="primary" size="lg">
-                Explore Experiences
-              </Button>
-              <Button href="/visit" variant="outline" size="lg">
-                Plan a Visit
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+          </footer>
+        </article>
+      </div>
     </main>
   )
 }

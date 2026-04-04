@@ -27,6 +27,11 @@ export function resolveEdibleGardensEoiOwnerEmail(): string {
   return envTrim('EOI_EDIBLE_GARDENS_NOTIFY_EMAIL') || DEFAULT_BUSINESS_INBOX
 }
 
+/** Workshops enquiry: explicit env → default inbox (never silent). */
+export function resolveWorkshopsNotifyEmail(): string {
+  return envTrim('WORKSHOPS_NOTIFY_EMAIL') || DEFAULT_BUSINESS_INBOX
+}
+
 /**
  * `/api/partners` owner alert list. Same default recipient as SSD campaign digests/alerts
  * (`SSD_CAMPAIGN_OWNER_EMAIL` via `campaignOwnerEmail()`).
