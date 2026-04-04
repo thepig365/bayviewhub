@@ -1,15 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { type SiteLocale } from '@/lib/language-routing'
 
 type Props = {
   alt: string
   src: string
   fullSrc?: string | null
   caption?: React.ReactNode
+  locale?: SiteLocale
 }
 
-export function EditorialImageFigure({ alt, src, fullSrc, caption }: Props) {
+export function EditorialImageFigure({ alt, src, fullSrc, caption, locale = 'en' }: Props) {
   const [open, setOpen] = useState(false)
   const expandedSrc = fullSrc || src
 
@@ -37,7 +39,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption }: Props) {
           type="button"
           onClick={() => setOpen(true)}
           className="group block w-full text-left"
-          aria-label={`Open image: ${alt}`}
+          aria-label={locale === 'zh' ? `打开图片：${alt}` : `Open image: ${alt}`}
         >
           <div className="overflow-hidden rounded-3xl border border-border bg-natural-100 dark:border-border dark:bg-surface">
             <img
@@ -74,7 +76,7 @@ export function EditorialImageFigure({ alt, src, fullSrc, caption }: Props) {
               onClick={() => setOpen(false)}
               className="absolute right-3 top-3 z-10 rounded-full bg-black/65 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-black/80"
             >
-              Close
+              {locale === 'zh' ? '关闭' : 'Close'}
             </button>
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black">
               <img

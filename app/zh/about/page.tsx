@@ -5,7 +5,7 @@ import { localizedHref } from '@/lib/language-routing'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: `About | ${SITE_CONFIG.name} 中文`,
+  title: `关于我们 | ${SITE_CONFIG.name}`,
   description:
     'Bayview Hub 为什么存在：在 Mornington Peninsula 建立一个让艺术、音乐、花园、款待与慢生活重新彼此相连的真实场所。',
   path: '/zh/about',

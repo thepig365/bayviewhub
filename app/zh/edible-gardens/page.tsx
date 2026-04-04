@@ -6,7 +6,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: `Edible Gardens 中文 | ${SITE_CONFIG.name}`,
+  title: `可食花园 | ${SITE_CONFIG.name}`,
   description:
     'Bayview Hub 可食花园中文页：介绍正在筹备中的订阅式花园项目、家庭参与方式，以及如何通过中文入口留下关注。',
   path: '/zh/edible-gardens',
@@ -55,7 +55,7 @@ export default function ChineseEdibleGardensPage() {
               <p className="mt-4 text-muted">如果你想在项目开放时第一时间收到消息，可以通过这里进入 Bayview Notes。</p>
             </div>
             <div className="rounded-2xl bg-white p-8 dark:border dark:border-border dark:bg-surface">
-              <NewsletterForm />
+              <NewsletterForm locale="zh" />
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button href={localizedHref('/partners/edible-gardens', 'zh')} variant="primary" size="lg">

@@ -6,7 +6,7 @@ import { localizedHref } from '@/lib/language-routing'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: 'Visit 中文',
+  title: '到访信息',
   description:
     '规划你前往 Bayview Hub 的行程：地址、开放时间、交通方式、附近目的地，以及庄园访问的实用信息。',
   path: '/zh/visit',

@@ -17,6 +17,87 @@ import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
 import { localizedHref, localeFromPathname } from '@/lib/language-routing'
 
+function zhFooterLabel(label: string): string {
+  switch (label) {
+    case 'Visit':
+      return '到访'
+    case 'Cellar Door':
+      return '酒窖品鉴'
+    case 'Events':
+      return '活动'
+    case 'Restaurant':
+      return '餐厅'
+    case 'Hours':
+      return '营业时间'
+    case 'Experiences':
+      return '体验'
+    case 'Arts Gallery — Online':
+      return '线上艺术画廊'
+    case 'Workshops':
+      return '工作坊'
+    case 'Edible Gardens':
+      return '可食花园'
+    case 'The Shed Music':
+      return 'The Shed 音乐'
+    case 'Accommodation':
+      return '住宿'
+    case 'Editorial Login':
+      return '编辑后台登录'
+    case 'Newsletter Login':
+      return '通讯后台登录'
+    case 'Programs':
+      return '项目'
+    case 'Founding Partners':
+      return '创始合作伙伴'
+    case 'Invest':
+      return '投资'
+    case 'Small Second Home paths':
+      return 'Small Second Home 路径'
+    case 'Overview':
+      return '总览'
+    case 'Why this pathway':
+      return '为何选择这一路径'
+    case 'Is this for you?':
+      return '是否适合你'
+    case 'Feasibility check':
+      return '可行性评估'
+    case 'Cost, rent & ROI':
+      return '成本、租金与回报'
+    case 'Victoria rules':
+      return '维州规则'
+    case 'Gallery':
+      return '画廊'
+    case 'Private Viewing':
+      return '私人观看'
+    case 'Open Your Wall — register a work':
+      return 'Open Your Wall - 登记作品'
+    case 'Request private viewing access':
+      return '申请私人观看通道'
+    case 'Browse collection':
+      return '浏览作品收藏'
+    case 'Submit artwork':
+      return '提交作品'
+    case 'Theme:':
+      return '主题:'
+    case 'Partners':
+      return '合作方'
+    case 'Site Map':
+      return '网站地图'
+    case 'Contact':
+      return '联系'
+    case 'Privacy Policy':
+      return '隐私政策'
+    case 'Terms of Service':
+      return '服务条款'
+    default:
+      return label
+  }
+}
+
+function t(label: string, locale: 'en' | 'zh') {
+  return locale === 'zh' ? zhFooterLabel(label) : label
+}
+
 export function Footer() {
   const currentYear = new Date().getFullYear()
   const pathname = usePathname() || '/'
@@ -40,7 +121,9 @@ export function Footer() {
               {SITE_CONFIG.name}
             </h3>
             <p className="text-shell-footer-muted leading-relaxed mb-4">
-              Estate dining, live music, and farmhouse accommodation on a 30-acre Victoria estate. Backyard Small Second Home enquiries now open. Creative programs in development.
+              {locale === 'zh'
+                ? '在维州 30 英亩庄园中提供庄园餐饮、现场音乐与农舍住宿。Backyard Small Second Home 咨询现已开放，更多创意项目持续发展中。'
+                : 'Estate dining, live music, and farmhouse accommodation on a 30-acre Victoria estate. Backyard Small Second Home enquiries now open. Creative programs in development.'}
             </p>
             <p className="text-shell-footer-muted leading-relaxed mb-2">
               365 Purves Road,
@@ -53,33 +136,33 @@ export function Footer() {
           {/* Column 2: Tickets & Hours */}
           <div>
             <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
-              Visit
+              {t('Visit', locale)}
             </h4>
             <ul className="space-y-2 mb-8">
               <li>
                 <Link href={localizedHref('/cellar-door', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Cellar Door
+                  {t('Cellar Door', locale)}
                 </Link>
               </li>
               <li>
                 <Link href={localizedHref('/events', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Events
+                  {t('Events', locale)}
                 </Link>
               </li>
               <li>
                 <a href={SITE_CONFIG.pigAndWhistleUrl} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Restaurant
+                  {t('Restaurant', locale)}
                 </a>
               </li>
             </ul>
 
             <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
-              Hours
+              {t('Hours', locale)}
             </h4>
             <div className="text-shell-footer-muted text-base space-y-1">
-              <p>{SITE_HOURS.summary}</p>
+              <p>{locale === 'zh' ? '周三至周日 | 上午 11 点至深夜' : SITE_HOURS.summary}</p>
               <p className="italic text-shell-footer-muted/80 mt-2">
-                Closed Christmas Day
+                {locale === 'zh' ? '圣诞节当天休息' : 'Closed Christmas Day'}
               </p>
             </div>
           </div>
@@ -87,32 +170,32 @@ export function Footer() {
           {/* Column 3: Experiences */}
           <div>
             <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
-              Experiences
+              {t('Experiences', locale)}
             </h4>
             <ul className="space-y-2">
               <li>
                 <a href={GALLERY_EXTERNAL.base} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Arts Gallery — Online
+                  {t('Arts Gallery — Online', locale)}
                 </a>
               </li>
               <li>
                 <Link href={localizedHref('/workshops', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Workshops
+                  {t('Workshops', locale)}
                 </Link>
               </li>
               <li>
                 <Link href={localizedHref('/edible-gardens', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Edible Gardens
+                  {t('Edible Gardens', locale)}
                 </Link>
               </li>
               <li>
                 <a href="https://www.thepigandwhistle.com.au/what-s-on" target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  The Shed Music
+                  {t('The Shed Music', locale)}
                 </a>
               </li>
               <li>
                 <a href="https://www.thepigandwhistle.com.au/accommodation" target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Accommodation
+                  {t('Accommodation', locale)}
                 </a>
               </li>
             </ul>
@@ -120,12 +203,12 @@ export function Footer() {
             <ul className="mt-5 space-y-2 border-t border-shell-footer-border pt-4">
               <li>
                 <Link href="/private/editorial/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
-                  Editorial Login
+                  {t('Editorial Login', locale)}
                 </Link>
               </li>
               <li>
                 <Link href="/private/newsletter/login" className="text-shell-footer-muted/75 hover:text-accent transition-colors">
-                  Newsletter Login
+                  {t('Newsletter Login', locale)}
                 </Link>
               </li>
             </ul>
@@ -134,12 +217,12 @@ export function Footer() {
           {/* Column 4: Programs */}
           <div>
             <h4 className="text-sm font-bold tracking-widest uppercase mb-5">
-              Programs
+              {t('Programs', locale)}
             </h4>
             <ul className="space-y-2 mb-6">
               <li>
                 <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Founding Partners
+                  {t('Founding Partners', locale)}
                 </Link>
               </li>
               <li>
@@ -149,51 +232,51 @@ export function Footer() {
               </li>
               <li>
                 <Link href={localizedHref('/invest', locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Invest
+                  {t('Invest', locale)}
                 </Link>
               </li>
             </ul>
 
             <h4 className="text-sm font-bold tracking-widest uppercase mb-3">
-              Small Second Home paths
+              {t('Small Second Home paths', locale)}
             </h4>
             <ul className="space-y-2 mb-8">
               {SSD_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link href={localizedHref(item.href, locale)} className="text-shell-footer-muted hover:text-accent transition-colors">
-                    {item.label}
+                    {t(item.label, locale)}
                   </Link>
                 </li>
               ))}
             </ul>
 
             <h4 className="text-sm font-bold tracking-widest uppercase mb-4">
-              Gallery
+              {t('Gallery', locale)}
             </h4>
             <ul className="space-y-2">
               <li>
                 <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Private Viewing
+                  {t('Private Viewing', locale)}
                 </a>
               </li>
               <li>
                 <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Open Your Wall — register a work
+                  {t('Open Your Wall — register a work', locale)}
                 </a>
               </li>
               <li>
                 <a href={GALLERY_VIEWING_REQUEST_MAILTO} className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Request private viewing access
+                  {t('Request private viewing access', locale)}
                 </a>
               </li>
               <li>
                 <a href={GALLERY_EXTERNAL.archive} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Browse collection
+                  {t('Browse collection', locale)}
                 </a>
               </li>
               <li>
                 <a href={GALLERY_EXTERNAL.submit} target="_blank" rel="noopener noreferrer" className="text-shell-footer-muted hover:text-accent transition-colors">
-                  Submit artwork
+                  {t('Submit artwork', locale)}
                 </a>
               </li>
             </ul>
@@ -216,7 +299,7 @@ export function Footer() {
             </div>
             {/* Theme */}
             <div className="flex items-center gap-2">
-              <span className="text-shell-footer-muted/70">Theme:</span>
+              <span className="text-shell-footer-muted/70">{t('Theme:', locale)}</span>
               <SimpleThemeToggle />
             </div>
           </div>
@@ -228,16 +311,16 @@ export function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base">
             <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
-              Partners
+              {t('Partners', locale)}
             </Link>
             <Link href={localizedHref('/visit', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
-              Visit
+              {t('Visit', locale)}
             </Link>
             <Link href={localizedHref('/site-map', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
-              Site Map
+              {t('Site Map', locale)}
             </Link>
             <a href={`mailto:${SITE_CONFIG.email}`} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
-              Contact
+              {t('Contact', locale)}
             </a>
           </div>
         </div>
@@ -268,14 +351,14 @@ export function Footer() {
 
             {/* Copyright & Legal */}
             <div className="flex flex-wrap justify-center gap-4 text-base text-shell-footer-muted">
-              <span>© {currentYear} {SITE_CONFIG.name}. All rights reserved.</span>
+              <span>© {currentYear} {SITE_CONFIG.name}. {locale === 'zh' ? '保留所有权利。' : 'All rights reserved.'}</span>
               <span className="hidden md:inline">|</span>
               <Link href={localizedHref('/privacy', locale)} className="hover:text-accent transition-colors">
-                Privacy Policy
+                {t('Privacy Policy', locale)}
               </Link>
               <span className="hidden md:inline">|</span>
               <Link href={localizedHref('/terms', locale)} className="hover:text-accent transition-colors">
-                Terms of Service
+                {t('Terms of Service', locale)}
               </Link>
             </div>
           </div>
@@ -283,7 +366,9 @@ export function Footer() {
           {/* Acknowledgement */}
           <div className="mt-6 pt-6 border-t border-shell-footer-border">
             <p className="text-sm text-shell-footer-muted/85 text-center leading-relaxed max-w-3xl mx-auto">
-              Bayview Hub acknowledges the Bunurong / Boon Wurrung people of the Kulin Nation as the Traditional Custodians of the lands and waters of the Mornington Peninsula, and pays respect to Elders past and present.
+              {locale === 'zh'
+                ? 'Bayview Hub 向 Kulin Nation 的 Bunurong / Boon Wurrung 人民致意，承认他们是 Mornington Peninsula 土地与水域的传统守护者，并向过去与现在的长者表达敬意。'
+                : 'Bayview Hub acknowledges the Bunurong / Boon Wurrung people of the Kulin Nation as the Traditional Custodians of the lands and waters of the Mornington Peninsula, and pays respect to Elders past and present.'}
             </p>
           </div>
         </div>

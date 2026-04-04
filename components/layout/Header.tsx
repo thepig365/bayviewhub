@@ -12,6 +12,79 @@ import { Logo } from '@/components/ui/Logo'
 import { localizedHref, localeFromPathname } from '@/lib/language-routing'
 import { cn } from '@/lib/utils'
 
+function zhNavLabel(label: string): string {
+  switch (label) {
+    case "What's On":
+      return '近期活动'
+    case 'Workshops':
+      return '工作坊'
+    case 'Events':
+      return '活动'
+    case 'Live Music':
+      return '现场音乐'
+    case 'Cellar Door':
+      return '酒窖品鉴'
+    case 'About':
+      return '关于我们'
+    case 'Food/Wine':
+      return '餐饮与葡萄酒'
+    case 'Gallery':
+      return '画廊'
+    case 'Collection':
+      return '作品收藏'
+    case 'Private Viewing':
+      return '私人观看'
+    case 'Open Your Wall — Register a Work':
+      return 'Open Your Wall - 登记作品'
+    case 'Submit Artwork':
+      return '提交作品'
+    case 'Assessment Protocol':
+      return '评估流程'
+    case 'Rights & Licensing':
+      return '权利与授权'
+    case 'Edible Gardens':
+      return '可食花园'
+    case 'Visit Us':
+      return '到访信息'
+    case 'Plan your visit':
+      return '规划到访'
+    case 'Hours & contact':
+      return '营业时间与联系'
+    case 'Directions':
+      return '路线指引'
+    case 'Map':
+      return '地图'
+    case 'Surrounding destinations':
+      return '周边去处'
+    case 'Cellar Door tastings':
+      return '酒窖品鉴'
+    case 'Overview':
+      return '总览'
+    case 'Why this pathway':
+      return '为何选择这一路径'
+    case 'Is this for you?':
+      return '是否适合你'
+    case 'Feasibility check':
+      return '可行性评估'
+    case 'Cost, rent & ROI':
+      return '成本、租金与回报'
+    case 'Victoria rules':
+      return '维州规则'
+    case 'Become a Partner':
+      return '成为合作伙伴'
+    case 'Book Wine Tasting':
+      return '预约葡萄酒品鉴'
+    case 'Browse gallery':
+      return '浏览画廊'
+    default:
+      return label
+  }
+}
+
+function t(label: string, locale: 'en' | 'zh') {
+  return locale === 'zh' ? zhNavLabel(label) : label
+}
+
 function DesktopNavLink({
   href,
   external,
@@ -86,6 +159,11 @@ export function Header() {
   const locale = localeFromPathname(pathname)
   const iconColor = resolvedTheme === 'dark' ? '#f5ede0' : '#111827'
   const closeMenu = () => setIsMenuOpen(false)
+  const navAriaLabel = locale === 'zh' ? '主导航' : 'Primary'
+  const openMenuAria = locale === 'zh' ? '打开导航菜单' : 'Open navigation menu'
+  const siteMenuAria = locale === 'zh' ? '站点导航菜单' : 'Site navigation menu'
+  const navigationHeading = locale === 'zh' ? '导航' : 'Navigation'
+  const quickActionsHeading = locale === 'zh' ? '快捷操作' : 'Quick actions'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +237,7 @@ export function Header() {
           external={entry.external}
           className={topLinkClass}
         >
-          {entry.label}
+          {t(entry.label, locale)}
         </DesktopNavLink>
       )
     }
@@ -171,13 +249,13 @@ export function Header() {
           external={entry.external}
           className={cn(topLinkClass, 'inline-flex items-center gap-1')}
         >
-          {entry.label}
+          {t(entry.label, locale)}
           <ChevronDown className="h-3.5 w-3.5 opacity-70 shrink-0" aria-hidden />
         </DesktopNavLink>
         <div
           className="absolute left-0 top-full z-50 hidden min-w-[15rem] pt-2 group-hover:block"
           role="menu"
-          aria-label={entry.label}
+          aria-label={t(entry.label, locale)}
         >
           <div className="rounded-lg border border-border bg-white py-1 shadow-lg dark:bg-surface dark:border-border">
             {entry.children.map((child) => (
@@ -187,7 +265,7 @@ export function Header() {
                 external={child.external}
                 className={dropdownItemClass}
               >
-                {child.label}
+                {t(child.label, locale)}
               </DesktopNavLink>
             ))}
           </div>
@@ -205,19 +283,19 @@ export function Header() {
           className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-fg font-medium">
-            <span>{entry.label}</span>
+            <span>{t(entry.label, locale)}</span>
             <ChevronDown className="h-4 w-4 shrink-0" />
           </summary>
           <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
             <MobileNavRow
-              item={{ label: `All ${entry.label}`, href: localizedEntryHref, external: entry.external }}
+              item={{ label: locale === 'zh' ? `查看全部 ${t(entry.label, locale)}` : `All ${entry.label}`, href: localizedEntryHref, external: entry.external }}
               onNavigate={closeMenu}
               className="text-muted font-medium"
             />
             {entry.children.map((child) => (
               <MobileNavRow
                 key={`${entry.label}-${child.href}`}
-                item={{ ...child, href: child.external ? child.href : localizedHref(child.href, locale) }}
+                item={{ ...child, label: t(child.label, locale), href: child.external ? child.href : localizedHref(child.href, locale) }}
                 onNavigate={closeMenu}
               />
             ))}
@@ -233,14 +311,14 @@ export function Header() {
           className="rounded-lg border border-border bg-surface/50 dark:bg-bg/40"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-fg font-medium">
-            <span>{entry.label}</span>
+            <span>{t(entry.label, locale)}</span>
             <ChevronDown className="h-4 w-4 shrink-0" />
           </summary>
           <div className="space-y-1 border-t border-border px-4 pb-4 pt-3">
             {entry.mobileSublinks.map((child) => (
               <MobileNavRow
                 key={child.href}
-                item={{ ...child, href: child.external ? child.href : localizedHref(child.href, locale) }}
+                item={{ ...child, label: t(child.label, locale), href: child.external ? child.href : localizedHref(child.href, locale) }}
                 onNavigate={closeMenu}
               />
             ))}
@@ -252,7 +330,7 @@ export function Header() {
     return (
       <MobileNavRow
         key={entry.label}
-        item={{ label: entry.label, href: localizedEntryHref, external: entry.external }}
+        item={{ label: t(entry.label, locale), href: localizedEntryHref, external: entry.external }}
         onNavigate={closeMenu}
         className="font-medium"
       />
@@ -274,7 +352,7 @@ export function Header() {
 
           <nav
             className="hidden md:flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-5 text-base lg:text-lg"
-            aria-label="Primary"
+            aria-label={navAriaLabel}
           >
             {SITE_NAV.map(renderDesktopEntry)}
           </nav>
@@ -289,7 +367,7 @@ export function Header() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-3"
               style={{ color: iconColor }}
-              aria-label="Open navigation menu"
+              aria-label={openMenuAria}
               aria-expanded={isMenuOpen}
               aria-controls="site-menu-dialog"
             >
@@ -311,7 +389,7 @@ export function Header() {
             ref={modalRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Site navigation menu"
+            aria-label={siteMenuAria}
             className="fixed top-0 right-0 h-[100dvh] w-[88vw] max-w-[420px] overflow-y-auto overscroll-contain border-l border-border bg-white dark:bg-surface shadow-2xl"
             style={{
               paddingTop: 'env(safe-area-inset-top)',
@@ -319,13 +397,13 @@ export function Header() {
             }}
           >
             <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-white/95 px-5 py-4 backdrop-blur dark:bg-surface/95">
-              <h2 className="text-lg font-semibold text-fg">Navigation</h2>
+              <h2 className="text-lg font-semibold text-fg">{navigationHeading}</h2>
               <button
                 ref={closeBtnRef}
                 onClick={closeMenu}
                 className="rounded-md p-2 hover:bg-natural-100 dark:hover:bg-bg"
                 style={{ color: iconColor }}
-                aria-label="Close navigation menu"
+                aria-label={locale === 'zh' ? '关闭导航菜单' : 'Close navigation menu'}
               >
                 <X size={22} />
               </button>
@@ -339,13 +417,13 @@ export function Header() {
             </div>
 
             <div className="space-y-3 border-t border-border p-5 pt-2">
-              <h3 className="text-sm font-bold uppercase tracking-wide text-fg">Quick actions</h3>
+              <h3 className="text-sm font-bold uppercase tracking-wide text-fg">{quickActionsHeading}</h3>
               <div className="grid grid-cols-1 gap-3">
                 <Button href={localizedHref('/partners', locale)} variant="primary" size="md" className="w-full" onClick={closeMenu}>
-                  Become a Partner
+                  {t('Become a Partner', locale)}
                 </Button>
                 <Button href={localizedHref('/cellar-door#book', locale)} variant="accent" size="md" className="w-full" onClick={closeMenu}>
-                  Book Wine Tasting
+                  {t('Book Wine Tasting', locale)}
                 </Button>
                 <Button
                   href={localizedHref(`${SSD_LANDING.overview}#register`, locale)}
@@ -354,13 +432,13 @@ export function Header() {
                   className="w-full"
                   onClick={closeMenu}
                 >
-                  Backyard Small Second Home
+                  {t('Backyard Small Second Home', locale)}
                 </Button>
                 <Button href={localizedHref(SSD_LANDING.feasibility, locale)} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                  Feasibility check
+                  {t('Feasibility check', locale)}
                 </Button>
                 <Button href={GALLERY_EXTERNAL.archive} variant="outline" size="md" className="w-full" onClick={closeMenu}>
-                  Browse gallery
+                  {t('Browse gallery', locale)}
                 </Button>
               </div>
             </div>

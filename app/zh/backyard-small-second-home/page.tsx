@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: `Backyard Small Second Home 中文 | ${SITE_CONFIG.name}`,
+  title: `Backyard Small Second Home | ${SITE_CONFIG.name} 中文版`,
   description:
     'Bayview Hub 后院 Small Second Home 中文页：解释这一路径是什么、为什么有意义、适合什么样的物业，以及下一步该如何判断可行性。',
   path: '/zh/backyard-small-second-home',

@@ -8,6 +8,7 @@ import {
   twitterIntentShareUrl,
   whatsappShareUrl,
 } from '@/lib/share-links'
+import { type SiteLocale } from '@/lib/language-routing'
 import { ShareAuxModal, type ShareAuxModalVariant } from '@/components/ui/ShareAuxModal'
 import { cn } from '@/lib/utils'
 
@@ -27,6 +28,7 @@ export interface ShareStripProps {
   bordered?: boolean
   /** When set, adds data-ssd-share-channel on controls for SSD hub campaign capture */
   ssdCampaignShare?: boolean
+  locale?: SiteLocale
 }
 
 export function ShareStrip({
@@ -39,6 +41,7 @@ export function ShareStrip({
   label = 'Share',
   bordered = true,
   ssdCampaignShare = false,
+  locale = 'en',
 }: ShareStripProps) {
   const [copied, setCopied] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
@@ -78,6 +81,12 @@ export function ShareStrip({
 
   const mailtoHref = buildShareMailto({ subject: mailtoSubject, intro: mailtoIntro, url })
   const isDark = variant === 'dark'
+  const copyLinkLabel = copied && !auxModal ? (locale === 'zh' ? '链接已复制' : 'Link copied') : locale === 'zh' ? '复制链接' : 'Copy link'
+  const emailLabel = locale === 'zh' ? '邮件' : 'Email'
+  const moreLabel = locale === 'zh' ? '更多' : 'More'
+  const shareGroupLabel = locale === 'zh' ? '分享此页面' : 'Share this page'
+  const moreShareLabel = locale === 'zh' ? '更多分享选项' : 'More share options'
+  const liveCopyText = copied ? (locale === 'zh' ? '页面链接已复制到剪贴板' : 'Page link copied to clipboard') : ''
 
   const linkClass = cn(
     'inline-flex min-h-[44px] min-w-0 items-center text-sm transition-colors underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm px-0.5 py-2 sm:min-h-0 sm:py-0',
@@ -117,14 +126,14 @@ export function ShareStrip({
       )}
     >
       <p className={labelClass}>{label}</p>
-      <div className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2" role="group" aria-label="Share this page">
+      <div className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2" role="group" aria-label={shareGroupLabel}>
         <button
           type="button"
           onClick={copyLink}
           className={linkClass}
           {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'copy_link' } : {})}
         >
-          {copied && !auxModal ? 'Link copied' : 'Copy link'}
+          {copyLinkLabel}
         </button>
         <span className={sepClass} aria-hidden>
           ·
@@ -134,7 +143,7 @@ export function ShareStrip({
           className={linkClass}
           {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'email' } : {})}
         >
-          Email
+          {emailLabel}
         </a>
         <span className={sepClass} aria-hidden>
           ·
@@ -183,10 +192,10 @@ export function ShareStrip({
             aria-haspopup="menu"
             onClick={() => setMoreOpen((o) => !o)}
           >
-            More
+            {moreLabel}
           </button>
           {moreOpen ? (
-            <div className={menuWrap} role="menu" aria-label="More share options">
+            <div className={menuWrap} role="menu" aria-label={moreShareLabel}>
               <a
                 role="menuitem"
                 className={menuItemClass}
@@ -230,7 +239,7 @@ export function ShareStrip({
         </div>
       </div>
       <p className="sr-only" aria-live="polite">
-        {copied ? 'Page link copied to clipboard' : ''}
+        {liveCopyText}
       </p>
 
       <ShareAuxModal
@@ -241,6 +250,7 @@ export function ShareStrip({
         onCopyLink={copyLink}
         copied={copied}
         isDarkSurface={isDark}
+        locale={locale}
       />
     </div>
   )

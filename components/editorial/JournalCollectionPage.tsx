@@ -39,8 +39,8 @@ export async function JournalCollectionPage({
   activeSection,
   locale = 'en',
   chips,
-  sectionEyebrow = 'Mendpress',
-  viewSectionLabel = 'View section',
+  sectionEyebrow = locale === 'zh' ? 'Mendpress 栏目' : 'Mendpress',
+  viewSectionLabel = locale === 'zh' ? '进入栏目' : 'View section',
   emptyTitle,
   emptyBody,
   subscribeEyebrow,
@@ -144,13 +144,17 @@ export async function JournalCollectionPage({
           ) : (
             <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-50 px-6 py-16 text-center dark:border-border dark:bg-surface">
               <h2 className="text-3xl font-serif font-semibold text-fg">
-                {emptyTitle || (activeSection ? `${title} is not published yet.` : 'Mendpress is opening.')}
+                {emptyTitle || (activeSection ? (locale === 'zh' ? `${title} 栏目尚未发布内容。` : `${title} is not published yet.`) : locale === 'zh' ? 'Mendpress 正在持续发布中。' : 'Mendpress is opening.')}
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted">
                 {emptyBody ||
                   (activeSection
-                    ? `Publish the first piece for ${title.toLowerCase()} and it will appear here.`
-                    : 'Publish the first piece from the private editorial workspace and it will appear here.')}
+                    ? locale === 'zh'
+                      ? `当 ${title} 的第一篇内容发布后，它会出现在这里。`
+                      : `Publish the first piece for ${title.toLowerCase()} and it will appear here.`
+                    : locale === 'zh'
+                      ? '当第一篇内容从私有编辑后台发布后，它会出现在这里。'
+                      : 'Publish the first piece from the private editorial workspace and it will appear here.')}
               </p>
             </section>
           )}

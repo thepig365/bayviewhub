@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: `Therapeutic Arts Workshops 中文 | ${SITE_CONFIG.name}`,
+  title: `艺术与修复性工作坊 | ${SITE_CONFIG.name}`,
   description:
     'Bayview Hub 的艺术与修复性工作坊中文页：说明它为何存在、会发生什么、适合谁，以及如何进一步了解庄园体验。',
   path: '/zh/workshops',

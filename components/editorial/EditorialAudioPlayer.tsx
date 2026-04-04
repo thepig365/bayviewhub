@@ -1,4 +1,5 @@
 import React from 'react'
+import { type SiteLocale } from '@/lib/language-routing'
 
 type Props = {
   title?: string | null
@@ -7,6 +8,7 @@ type Props = {
   speakers?: string[]
   durationLabel?: string | null
   compact?: boolean
+  locale?: SiteLocale
 }
 
 export function EditorialAudioPlayer({
@@ -16,6 +18,7 @@ export function EditorialAudioPlayer({
   speakers = [],
   durationLabel,
   compact = false,
+  locale = 'en',
 }: Props) {
   return (
     <section
@@ -25,7 +28,7 @@ export function EditorialAudioPlayer({
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="eyebrow text-accent">Listen</p>
+          <p className="eyebrow text-accent">{locale === 'zh' ? '收听' : 'Listen'}</p>
           {title ? (
             <h2 className={`mt-2 font-serif font-semibold text-fg ${compact ? 'text-xl' : 'text-2xl'}`}>
               {title}

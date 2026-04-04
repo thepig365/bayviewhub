@@ -102,11 +102,23 @@ function translateLinkLabel(label: string): string {
     case 'Subscribe':
       return '订阅'
     case 'Dialogue':
-      return 'Dialogue'
+      return '对话'
     case 'Gallery':
       return '画廊'
     case 'Partners':
       return '合作方'
+    case 'Private Viewing':
+      return '私人观看'
+    case 'Editorial':
+      return '评论'
+    case 'Newsletter':
+      return '通讯页'
+    case 'Visit':
+      return '到访信息'
+    case 'Visit Bayview Hub':
+      return '到访 Bayview Hub'
+    case 'Feasibility':
+      return '可行性评估'
     default:
       return label
   }
@@ -241,12 +253,12 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
             </div>
 
             <section className="mt-8 rounded-2xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-bg/60">
-              <p className="eyebrow text-accent">English original</p>
+              <p className="eyebrow text-accent">当前英文原文</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{entry.title}</h2>
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
-                <span>{mendpressSectionLabelForLocale(entry.editorialType, 'en')}</span>
+                <span>{mendpressSectionLabelForLocale(entry.editorialType, 'zh')}</span>
                 <span aria-hidden>·</span>
-                <span>{formatEditorialDate(entry.publishedAt, 'en')}</span>
+                <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
                 {entry.byline ? (
                   <>
                     <span aria-hidden>·</span>
@@ -362,6 +374,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 bordered={false}
                 label="分享"
                 className="mx-auto mt-7 max-w-3xl"
+                locale="zh"
               />
               <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
                 <Link href="/zh/mendpress" className="text-fg underline underline-offset-4 hover:text-accent">
@@ -386,6 +399,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   src={entry.audioUrl}
                   speakers={entry.speakers}
                   durationLabel={durationLabel}
+                  locale="zh"
                   note={
                     isAudioFirstEditorialType(entry.editorialType)
                       ? '音频文件保持原始语言发布，但下方的正文、导读与 transcript/script 已切换为中文阅读模式。'
@@ -398,12 +412,12 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             <div>
-              <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'zh')} articleUrl={chineseUrl} />
+              <EditorialPullQuote quote={pullQuote} articleTitle={editorialTitleForLocale(entry, 'zh')} articleUrl={chineseUrl} locale="zh" />
               {body ? <EditorialBody body={body} className="mt-6" locale="zh" /> : null}
 
               {showNotes ? (
                 <section className="mt-10">
-                  <p className="eyebrow text-accent">Show notes</p>
+                  <p className="eyebrow text-accent">导读说明</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文导读与说明</h2>
                   <EditorialBody body={showNotes} className="mt-5" locale="zh" />
                 </section>
@@ -411,7 +425,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
               {transcript ? (
                 <section className="mt-10">
-                  <p className="eyebrow text-accent">Transcript / Script</p>
+                  <p className="eyebrow text-accent">中文稿本</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文稿本</h2>
                   <EditorialBody body={transcript} className="mt-5" locale="zh" />
                 </section>
@@ -437,6 +451,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   shortShareBlurb={description}
                   label="分享这篇内容"
                   className="mt-6"
+                  locale="zh"
                 />
                 {relatedEntries.length ? (
                   <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -480,8 +495,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 locale="zh"
                 eyebrow="Bayview Notes"
                 title="订阅 Bayview Notes"
-                body="接收 Mendpress 精选文章、programme 更新与 Bayview Hub 的公开动向。"
-                ctaLabel="进入 Newsletter"
+                body="接收 Mendpress 精选文章、项目更新与 Bayview Hub 的公开动向。"
+                ctaLabel="进入通讯页"
                 secondaryLabel="浏览 Mendpress"
               />
             </aside>

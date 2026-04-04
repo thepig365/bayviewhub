@@ -2,21 +2,22 @@
 
 import React, { useState } from 'react'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
+import { type SiteLocale } from '@/lib/language-routing'
 import { Button } from './Button'
 
-export function NewsletterForm() {
+export function NewsletterForm({ locale = 'en' }: { locale?: SiteLocale }) {
   const [email, setEmail] = useState('')
   const [interests, setInterests] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [honeypot, setHoneypot] = useState('')
 
   const interestOptions = [
-    { id: 'music', label: 'The Shed Music (Live Music)' },
-    { id: 'dining', label: 'Winery Restaurant (Pig & Whistle)' },
-    { id: 'cellar', label: 'Wine Cellar / Cellar Door Tastings' },
-    { id: 'gardens', label: 'Edible Gardens Subscriptions' },
-    { id: 'workshops', label: 'Art Workshops & Art Therapy' },
-    { id: 'gallery', label: 'Bayview Arts Gallery' },
+    { id: 'music', label: locale === 'zh' ? 'The Shed 音乐（现场音乐）' : 'The Shed Music (Live Music)' },
+    { id: 'dining', label: locale === 'zh' ? '酒庄餐厅（Pig & Whistle）' : 'Winery Restaurant (Pig & Whistle)' },
+    { id: 'cellar', label: locale === 'zh' ? '酒窖 / 酒窖品鉴' : 'Wine Cellar / Cellar Door Tastings' },
+    { id: 'gardens', label: locale === 'zh' ? '可食花园订阅' : 'Edible Gardens Subscriptions' },
+    { id: 'workshops', label: locale === 'zh' ? '艺术工作坊与艺术疗愈' : 'Art Workshops & Art Therapy' },
+    { id: 'gallery', label: locale === 'zh' ? 'Bayview 艺术画廊' : 'Bayview Arts Gallery' },
   ]
 
   const handleInterestToggle = (id: string) => {
@@ -60,7 +61,7 @@ export function NewsletterForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="email" className="block text-base font-medium text-fg mb-2">
-          Email Address
+          {locale === 'zh' ? '邮箱地址' : 'Email Address'}
         </label>
         <input
           type="email"
@@ -69,13 +70,13 @@ export function NewsletterForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className={`${CONTRAST_FORM_CONTROL_CLASS} text-base focus:border-transparent`}
-          placeholder="your@email.com"
+          placeholder={locale === 'zh' ? 'your@email.com' : 'your@email.com'}
         />
       </div>
 
       <div>
         <p className="block text-base font-medium text-fg mb-3">
-          I'm interested in: (select all that apply)
+          {locale === 'zh' ? '我感兴趣的是：（可多选）' : "I'm interested in: (select all that apply)"}
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {interestOptions.map((option) => (
@@ -113,17 +114,17 @@ export function NewsletterForm() {
         className="w-full"
         disabled={status === 'loading'}
       >
-        {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+        {status === 'loading' ? (locale === 'zh' ? '订阅中...' : 'Subscribing...') : locale === 'zh' ? '订阅' : 'Subscribe'}
       </Button>
 
       {status === 'success' && (
         <p className="text-base text-accent text-center">
-          ✓ Successfully subscribed.
+          {locale === 'zh' ? '✓ 已成功订阅。' : '✓ Successfully subscribed.'}
         </p>
       )}
       {status === 'error' && (
         <p className="text-base text-red-600 text-center">
-          Something went wrong. Please try again.
+          {locale === 'zh' ? '出了点问题，请再试一次。' : 'Something went wrong. Please try again.'}
         </p>
       )}
     </form>

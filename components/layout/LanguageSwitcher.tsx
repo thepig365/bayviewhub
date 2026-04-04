@@ -29,10 +29,11 @@ export function LanguageSwitcher({
   const { targetPath } = languageSwitchTarget(pathname)
   const englishHref = currentLocale === 'en' ? pathname : targetPath
   const chineseHref = currentLocale === 'zh' ? pathname : targetPath
+  const languageLabel = currentLocale === 'zh' ? '语言:' : 'Language:'
 
   return (
     <div className={cn('flex items-center gap-2 text-sm', className)}>
-      {!compact ? <span className={cn('text-muted', labelClassName)}>Language:</span> : null}
+      {!compact ? <span className={cn('text-muted', labelClassName)}>{languageLabel}</span> : null}
       {currentLocale === 'en' ? (
         <span className={cn('font-medium text-fg', activeClassName)}>EN</span>
       ) : (

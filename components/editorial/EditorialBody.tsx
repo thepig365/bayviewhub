@@ -42,14 +42,17 @@ function formatDuration(value: number | null): string | null {
   return `${minutes}:${`${seconds}`.padStart(2, '0')}`
 }
 
-function parseImageSyntax(line: string): { alt: string; src: string; fullSrc: string | null; caption: string | null } | null {
+function parseImageSyntax(
+  line: string,
+  locale: SiteLocale
+): { alt: string; src: string; fullSrc: string | null; caption: string | null } | null {
   const match = line.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]+)")?\)(?:\{zoom=([^}]+)\})?$/)
   if (!match) return null
   const src = safeImageSrc(match[2].trim())
   if (!src) return null
   const fullSrc = match[4] ? safeImageSrc(match[4].trim()) : null
   return {
-    alt: match[1].trim() || 'Editorial image',
+    alt: match[1].trim() || (locale === 'zh' ? '文章图片' : 'Editorial image'),
     src,
     fullSrc,
     caption: match[3]?.trim() || null,
@@ -150,7 +153,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
         const lines = section.split('\n').map((line) => line.trim()).filter(Boolean)
         if (!lines.length) return null
 
-        const imageBlock = parseImageSyntax(lines[0])
+        const imageBlock = parseImageSyntax(lines[0], locale)
         if (imageBlock) {
           const caption = imageBlock.caption || lines.slice(1).join(' ').trim() || null
           return (
@@ -160,6 +163,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
               fullSrc={imageBlock.fullSrc}
               alt={imageBlock.alt}
               caption={caption ? renderInline(caption, locale) : null}
+              locale={locale}
             />
           )
         }
@@ -175,6 +179,7 @@ export function EditorialBody({ body, className, locale = 'en' }: Props) {
               speakers={audioBlock.speakers}
               durationLabel={formatDuration(audioBlock.durationSeconds)}
               note={note ? renderInline(note, locale) : null}
+              locale={locale}
             />
           )
         }

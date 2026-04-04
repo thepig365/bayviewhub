@@ -15,11 +15,14 @@ type Props = {
 export function JournalSubscribePanel({
   compact = false,
   locale = 'en',
-  eyebrow = 'Bayview Notes',
-  title = 'Subscribe to Bayview Notes',
-  body = 'Receive selected Mendpress pieces, invitations, and estate notes when there is something worth sharing.',
-  ctaLabel = 'Go to Newsletter',
-  secondaryLabel = 'Explore Mendpress',
+  eyebrow = locale === 'zh' ? 'Bayview Notes' : 'Bayview Notes',
+  title = locale === 'zh' ? '订阅 Bayview Notes' : 'Subscribe to Bayview Notes',
+  body =
+    locale === 'zh'
+      ? '接收精选 Mendpress 文章、邀请函与庄园更新。有真正值得分享的内容时，我们才发送。'
+      : 'Receive selected Mendpress pieces, invitations, and estate notes when there is something worth sharing.',
+  ctaLabel = locale === 'zh' ? '进入通讯页' : 'Go to Newsletter',
+  secondaryLabel = locale === 'zh' ? '浏览 Mendpress' : 'Explore Mendpress',
 }: Props) {
   return (
     <section className="rounded-3xl border border-border bg-natural-50 p-6 md:p-8 dark:border-border dark:bg-surface">

@@ -58,7 +58,7 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           {locale === 'zh' && !hasChineseCard ? (
             <>
               <span className="rounded-full bg-natural-100 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-muted dark:bg-surface">
-                English original
+                当前仍为英文原文
               </span>
               <span aria-hidden>·</span>
             </>
@@ -66,7 +66,7 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           {featured || entry.pinned ? (
             <>
               <span className="rounded-full bg-accent/15 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-accent">
-                {featured ? (locale === 'zh' ? '重点' : 'Featured') : locale === 'zh' ? '置顶' : 'Pinned'}
+                {featured ? (locale === 'zh' ? '精选' : 'Featured') : locale === 'zh' ? '置顶' : 'Pinned'}
               </span>
               <span aria-hidden>·</span>
             </>
@@ -101,7 +101,7 @@ export function JournalCard({ entry, featured = false, locale = 'en' }: Props) {
           <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
             {isAudioFirstEditorialType(entry.editorialType)
               ? locale === 'zh'
-                ? '打开文章'
+                ? '打开内容'
                 : 'Open piece'
               : locale === 'zh'
                 ? '阅读文章'

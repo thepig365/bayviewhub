@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
 import {
+  editorialSummaryForLocale,
   formatEditorialDate,
   getPublishedEditorialEntryBySlug,
-  mendpressSectionLabel,
+  mendpressSectionLabelForLocale,
 } from '@/lib/editorial'
 import {
   routeLabelForChineseFallback,
@@ -96,9 +97,9 @@ export default async function ChineseFallbackPage({ params }: Props) {
               <p className="eyebrow text-accent">Mendpress</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{mendpressEntry.title}</h2>
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
-                <span>{mendpressSectionLabel(mendpressEntry.editorialType)}</span>
+                <span>{mendpressSectionLabelForLocale(mendpressEntry.editorialType, 'zh')}</span>
                 <span aria-hidden>·</span>
-                <span>{formatEditorialDate(mendpressEntry.publishedAt)}</span>
+                <span>{formatEditorialDate(mendpressEntry.publishedAt, 'zh')}</span>
                 {mendpressEntry.byline ? (
                   <>
                     <span aria-hidden>·</span>
@@ -106,8 +107,8 @@ export default async function ChineseFallbackPage({ params }: Props) {
                   </>
                 ) : null}
               </div>
-              {mendpressEntry.summary ? (
-                <p className="mt-4 text-base leading-8 text-muted">{mendpressEntry.summary}</p>
+              {editorialSummaryForLocale(mendpressEntry, 'zh') ? (
+                <p className="mt-4 text-base leading-8 text-muted">{editorialSummaryForLocale(mendpressEntry, 'zh')}</p>
               ) : null}
               <p className="mt-4 text-sm leading-7 text-muted">
                 这篇 Mendpress 文章目前仍以英文发布。中文路由已经保留到该条目级别，方便访客在不中断上下文的情况下切换语言。

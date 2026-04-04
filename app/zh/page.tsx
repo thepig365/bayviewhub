@@ -246,7 +246,7 @@ export default function ChineseHomePage() {
               </p>
             </div>
             <div className="bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
-              <NewsletterForm />
+              <NewsletterForm locale="zh" />
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function ChineseHomePage() {
       <section className="py-8 bg-natural-100 dark:bg-bg">
         <div className="container mx-auto px-4 text-center">
           <Link href="/" className="text-primary-700 hover:text-primary-800 font-medium dark:text-primary-200 dark:hover:text-primary-100">
-            ← Switch to English
+            ← 切换到英文版
           </Link>
         </div>
       </section>

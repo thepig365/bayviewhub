@@ -65,7 +65,7 @@ type EditorialTypeMeta = {
 export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   editorial: {
     label: 'Editorial',
-    zhLabel: '主编稿',
+    zhLabel: '评论',
     pluralLabel: 'Editorial',
     zhPluralLabel: '主编稿',
     categoryPath: '/mendpress/editorial',
@@ -83,7 +83,7 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   },
   conversation: {
     label: 'Conversation',
-    zhLabel: '对话',
+    zhLabel: '对谈',
     pluralLabel: 'Conversations',
     zhPluralLabel: '对话',
     categoryPath: '/mendpress/dialogue',
@@ -101,7 +101,7 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   },
   audio_essay: {
     label: 'Audio Essay',
-    zhLabel: '音频随笔',
+    zhLabel: '音频评论',
     pluralLabel: 'Audio Essays',
     zhPluralLabel: '音频随笔',
     categoryPath: '/mendpress/editorial',
@@ -119,7 +119,7 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   },
   field_note: {
     label: 'Field Note',
-    zhLabel: '现场笔记',
+    zhLabel: '田野笔记',
     pluralLabel: 'Field Notes',
     zhPluralLabel: '现场笔记',
     categoryPath: '/mendpress/visual-narrative',
@@ -128,7 +128,7 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
   },
   profile: {
     label: 'Profile',
-    zhLabel: '人物稿',
+    zhLabel: '人物特写',
     pluralLabel: 'Profiles',
     zhPluralLabel: '人物稿',
     categoryPath: '/mendpress/dialogue',
@@ -271,30 +271,30 @@ type MendpressSectionMeta = {
 export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSectionMeta> = {
   editorial: {
     label: 'Editorial',
-    zhLabel: 'Editorial',
+    zhLabel: '评论',
     description: 'Interpretive pieces, essays, and longer-form editorial framing from Bayview Hub.',
-    zhDescription: '围绕 Bayview Hub 的主编式判断、essay 与更长篇的 editorial framing。',
+    zhDescription: '围绕 Bayview Hub 的评论文章、随笔与更长篇的编辑性写作。',
     path: '/mendpress/editorial',
   },
   dialogue: {
     label: 'Dialogue',
-    zhLabel: 'Dialogue',
+    zhLabel: '对话',
     description: 'Profiles, conversations, and people-centred pieces with a clearer human voice.',
-    zhDescription: '以人物、对话、访谈与更明确的人声为中心的栏目。',
+    zhDescription: '以人物、对谈、访谈与更鲜明的人声为中心的栏目。',
     path: '/mendpress/dialogue',
   },
   visual_narrative: {
     label: 'Visual Narrative',
-    zhLabel: 'Visual Narrative',
+    zhLabel: '视觉叙事',
     description: 'Place-based and image-led writing shaped by atmosphere, weather, objects, and lived time.',
-    zhDescription: '以场所、图像、天气、物件与 lived time 为线索的视觉叙事写作。',
+    zhDescription: '以场所、图像、天气、物件与日常时间感为线索的视觉叙事写作。',
     path: '/mendpress/visual-narrative',
   },
   reports: {
     label: 'Programme',
-    zhLabel: 'Programme',
+    zhLabel: '项目发布',
     description: 'Dispatches, invitations, briefs, and contextual publication material gathered for Mendpress.',
-    zhDescription: '围绕 Mendpress 的 dispatch、invitation、brief 与 programme 语境材料。',
+    zhDescription: '围绕 Mendpress 的发布札记、邀请函、项目简报与相关语境材料。',
     path: '/mendpress/reports',
   },
 }
