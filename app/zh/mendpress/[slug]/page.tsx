@@ -259,12 +259,12 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
     return (
       <main className="min-h-screen bg-bg py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <section className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-white px-6 py-10 shadow-sm dark:border-border dark:bg-surface md:px-10">
+          <section className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-natural-100 px-6 py-10 shadow-md dark:border-border dark:bg-surface md:px-10">
             <p className="eyebrow text-accent">Mendpress 中文入口</p>
             <h1 className="mt-4 text-balance font-serif text-4xl font-semibold text-fg md:text-5xl">
               该文章的完整中文版尚未发布
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-fg/80 dark:text-white/80">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-fg/90 dark:text-white/90">
               这条 Mendpress 路由已经支持中英切换，但这篇文章目前仍以英文为主版本发布。我们不会把仅有中文外壳的页面伪装成完整翻译稿。
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -276,10 +276,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               </Button>
             </div>
 
-            <section className="mt-8 rounded-2xl border border-border bg-natural-100 p-6 dark:border-border dark:bg-bg/60">
+            <section className="mt-8 rounded-2xl border border-border bg-white p-6 dark:border-border dark:bg-bg/70">
               <p className="eyebrow text-accent">当前英文原文</p>
               <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{entry.title}</h2>
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fg/70 dark:text-white/70">
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fg/82 dark:text-white/82">
                 <span>{mendpressSectionLabelForLocale(entry.editorialType, 'zh')}</span>
                 <span aria-hidden>·</span>
                 <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
@@ -290,7 +290,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   </>
                 ) : null}
               </div>
-              {entry.summary ? <p className="mt-4 text-base leading-8 text-fg/80 dark:text-white/80">{entry.summary}</p> : null}
+              {entry.summary ? <p className="mt-4 text-base leading-8 text-fg/90 dark:text-white/90">{entry.summary}</p> : null}
             </section>
           </section>
         </div>
@@ -355,22 +355,22 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
         <article className="mx-auto max-w-6xl">
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          <header className="rounded-[2.25rem] border border-border bg-white/85 px-6 py-8 shadow-sm dark:border-border dark:bg-surface/95 md:px-10 md:py-12">
+          <header className="rounded-[2.25rem] border border-border bg-natural-100 px-6 py-8 shadow-md dark:border-border dark:bg-surface md:px-10 md:py-12">
             <div className="mx-auto max-w-4xl">
-              <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
+              <div className="flex flex-wrap items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-fg/72 dark:text-white/72">
                 <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
                   {sectionLabel}
                 </span>
-                <span>{entryTypeLabel}</span>
-                <span>Mendpress</span>
+                <span className="text-fg/78 dark:text-white/78">{entryTypeLabel}</span>
+                <span className="text-fg/72 dark:text-white/72">Mendpress</span>
               </div>
               <h1 className="mt-5 max-w-5xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
                 {editorialTitleForLocale(entry, 'zh')}
               </h1>
-              <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/82 dark:text-white/82 md:text-[1.8rem] md:leading-[1.6]">
+              <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/90 dark:text-white/90 md:text-[1.8rem] md:leading-[1.6]">
                 {editorialSummaryForLocale(entry, 'zh')}
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/70 dark:text-white/70 md:text-sm md:leading-5">
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
                 {entry.byline ? <span className="font-medium text-fg dark:text-white">{entry.byline}</span> : null}
                 {entry.byline ? <span aria-hidden>·</span> : null}
                 <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
@@ -430,7 +430,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               ) : null}
 
               {entry.heroImage ? (
-                <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
+                <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-200 dark:border-border dark:bg-surface">
                   <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'zh')} className="h-auto w-full object-cover" />
                 </div>
               ) : null}
@@ -458,7 +458,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               <div className="mx-auto max-w-[46rem]">
                 {readingLayerNotice ? (
                   <section className="mt-8 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
-                    <p className="text-[15px] leading-7 text-fg/80 dark:text-white/80 md:text-sm">{readingLayerNotice}</p>
+                    <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
                   </section>
                 ) : null}
                 {body ? <EditorialBody body={body} className="mt-8" locale="zh" /> : null}
@@ -480,14 +480,14 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 ) : null}
               </div>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-white/80 p-6 dark:border-border dark:bg-surface/90 md:p-8">
+              <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface md:p-8">
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
                   <div>
                     <p className="eyebrow text-accent">继续阅读 Mendpress</p>
                     <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
                       更多来自 {sectionLabel}
                     </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted md:text-sm">
+                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                       从这篇内容继续进入同一栏目，或回到 Mendpress 的公开发布流中继续阅读。
                     </p>
                     {relatedEntries.length ? (
@@ -497,8 +497,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                         ))}
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-50 p-5 dark:border-border dark:bg-bg/50">
-                        <p className="text-[15px] leading-7 text-muted md:text-sm">
+                      <div className="mt-8 rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
+                        <p className="text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                           下一篇相关内容尚未形成足够清晰的关联推荐。你可以先返回 Mendpress 主流继续阅读。
                         </p>
                         <div className="mt-4">
@@ -534,10 +534,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
+              <section className="rounded-3xl border border-border bg-natural-100 p-6 shadow-sm dark:border-border dark:bg-surface">
                 <p className="eyebrow text-accent">下一步</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">从这篇内容继续</h2>
-                <p className="mt-3 text-[15px] leading-7 text-muted md:text-sm">
+                <p className="mt-3 text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                   每一篇 Mendpress 内容都应通向某个真正有用的下一步: 订阅、到访、交流或继续阅读。
                 </p>
                 <div className="mt-6">

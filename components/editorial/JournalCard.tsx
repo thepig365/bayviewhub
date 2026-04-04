@@ -35,8 +35,8 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
   const hasChineseCard = editorialHasChineseCardContent(entry)
   const isLead = layout === 'lead'
   const isStream = layout === 'stream'
-  const metaClass = locale === 'zh' ? 'text-fg/70 dark:text-white/70' : 'text-muted'
-  const summaryClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
+  const metaClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
+  const summaryClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
   const duration = formatDuration(entry.audioDurationSeconds)
   const actionLabel = isAudioFirstEditorialType(entry.editorialType)
     ? locale === 'zh'
@@ -52,7 +52,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
         className={cn(
           'relative',
           isLead
-            ? 'overflow-hidden rounded-[2rem] border border-border bg-white shadow-sm dark:border-border dark:bg-surface'
+            ? 'overflow-hidden rounded-[2rem] border border-border bg-white shadow-md dark:border-border dark:bg-surface'
             : 'border-t border-border py-8 first:border-t-0 first:pt-0 dark:border-border'
         )}
       >
@@ -123,7 +123,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
               <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
                 {actionLabel}
               </Link>
-              <Link href={categoryHref} className="text-muted transition-colors hover:text-fg">
+              <Link href={categoryHref} className="text-fg/72 transition-colors hover:text-fg dark:text-white/72 dark:hover:text-white">
                 {locale === 'zh' ? '更多来自 ' : 'More from '}
                 {mendpressSectionLabelForLocale(entry.editorialType, locale)}
               </Link>
@@ -134,7 +134,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
             <Link
               href={entryHref}
               className={cn(
-                'block overflow-hidden rounded-[1.5rem] border border-border bg-natural-100 dark:border-border dark:bg-neutral-900',
+                'block overflow-hidden rounded-[1.5rem] border border-border bg-natural-200 dark:border-border dark:bg-neutral-900',
                 isLead ? 'self-stretch' : 'md:self-start'
               )}
             >
@@ -150,7 +150,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
           ) : (
             <div
               className={cn(
-                'rounded-[1.5rem] border border-border bg-natural-100 dark:border-border dark:bg-neutral-900',
+                'rounded-[1.5rem] border border-border bg-natural-200 dark:border-border dark:bg-neutral-900',
                 isLead ? 'min-h-[280px] md:min-h-[360px]' : 'aspect-[4/3]'
               )}
             />
@@ -230,7 +230,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
           <Link href={entryHref} className="font-medium text-fg underline underline-offset-4 hover:text-accent">
             {actionLabel}
           </Link>
-          <Link href={categoryHref} className="text-muted hover:text-fg transition-colors">
+          <Link href={categoryHref} className="text-fg/72 hover:text-fg transition-colors dark:text-white/72 dark:hover:text-white">
             {locale === 'zh' ? '更多来自 ' : 'More from '}
             {mendpressSectionLabelForLocale(entry.editorialType, locale)}
           </Link>

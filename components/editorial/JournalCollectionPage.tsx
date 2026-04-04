@@ -57,9 +57,9 @@ export async function JournalCollectionPage({
     strictRecency: true,
   })
   const entries = rawEntries
-  const introClass = locale === 'zh' ? 'text-fg/80 dark:text-white/80' : 'text-muted'
-  const sectionDescriptionClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
-  const emptyBodyClass = locale === 'zh' ? 'text-fg/75 dark:text-white/75' : 'text-muted'
+  const introClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
+  const sectionDescriptionClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
+  const emptyBodyClass = locale === 'zh' ? 'text-fg/82 dark:text-white/82' : 'text-fg/78 dark:text-white/78'
   const [featured, ...rest] = entries
   const categoryLinks = chips || MENDPRESS_CATEGORY_LINKS.map((item) => ({ ...item, href: localizedHref(item.href, locale) }))
   const leadEyebrow = locale === 'zh' ? '最新发布' : 'Latest story'
@@ -156,7 +156,7 @@ export async function JournalCollectionPage({
               ) : null}
 
               {!activeSection && sectionRail.length ? (
-                <section className="mt-16 rounded-[2rem] border border-border bg-white/70 p-6 dark:border-border dark:bg-surface/80 md:p-8">
+                <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface/95 md:p-8">
                   <p className="eyebrow text-accent">{locale === 'zh' ? 'Mendpress 栏目' : 'Mendpress sections'}</p>
                   <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">{sectionRailTitle}</h2>
                   <p className={cn('mt-3 max-w-3xl text-base leading-8', sectionDescriptionClass)}>
@@ -164,7 +164,7 @@ export async function JournalCollectionPage({
                   </p>
                   <div className="mt-8 grid gap-5 md:grid-cols-2">
                     {sectionRail.map((section) => (
-                      <article key={section.id} className="rounded-3xl border border-border bg-natural-50 p-5 dark:border-border dark:bg-bg/50">
+                      <article key={section.id} className="rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
                         <p className="eyebrow text-accent">{locale === 'zh' ? '栏目入口' : 'Section'}</p>
                         <h3 className="mt-2 text-2xl font-serif font-semibold text-fg">{section.label}</h3>
                         <p className={cn('mt-3 text-[15px] leading-7 md:text-sm', sectionDescriptionClass)}>{section.description}</p>

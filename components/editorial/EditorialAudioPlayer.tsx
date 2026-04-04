@@ -22,7 +22,7 @@ export function EditorialAudioPlayer({
 }: Props) {
   return (
     <section
-      className={`rounded-3xl border border-border bg-natural-50 dark:border-border dark:bg-surface ${
+      className={`rounded-3xl border border-border bg-natural-100 shadow-sm dark:border-border dark:bg-surface ${
         compact ? 'p-5' : 'p-6 md:p-7'
       }`}
     >
@@ -36,7 +36,7 @@ export function EditorialAudioPlayer({
           ) : null}
         </div>
         {(speakers.length || durationLabel) ? (
-          <div className="text-right text-[13px] uppercase tracking-[0.14em] text-muted md:text-xs">
+          <div className="text-right text-[13px] uppercase tracking-[0.14em] text-fg/72 dark:text-white/72 md:text-xs">
             {speakers.length ? <p>{speakers.join(', ')}</p> : null}
             {durationLabel ? <p className={speakers.length ? 'mt-1' : ''}>{durationLabel}</p> : null}
           </div>
@@ -46,7 +46,7 @@ export function EditorialAudioPlayer({
       <audio controls preload="none" src={src} className="mt-4 w-full" />
 
       {note ? (
-        <div className={`text-muted ${compact ? 'mt-3 text-[15px] leading-7 md:text-sm' : 'mt-4 text-[1.02rem] leading-8 md:text-base'}`}>{note}</div>
+        <div className={`text-fg/84 dark:text-white/84 ${compact ? 'mt-3 text-[15px] leading-7 md:text-sm' : 'mt-4 text-[1.02rem] leading-8 md:text-base'}`}>{note}</div>
       ) : null}
     </section>
   )

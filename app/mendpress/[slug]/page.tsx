@@ -208,22 +208,22 @@ export default async function MendpressEntryPage({ params }: Props) {
         <article className="mx-auto max-w-6xl">
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          <header className="rounded-[2.25rem] border border-border bg-white/85 px-6 py-8 shadow-sm dark:border-border dark:bg-surface/95 md:px-10 md:py-12">
+          <header className="rounded-[2.25rem] border border-border bg-natural-100 px-6 py-8 shadow-md dark:border-border dark:bg-surface md:px-10 md:py-12">
             <div className="mx-auto max-w-4xl">
-              <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted">
-                <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">{sectionLabel}</span>
-                <span>{entryTypeLabel}</span>
-                <span>Mendpress</span>
+              <div className="flex flex-wrap items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-fg/72 dark:text-white/72">
+                <span className="rounded-full bg-accent/15 px-3 py-1 text-accent">{sectionLabel}</span>
+                <span className="text-fg/78 dark:text-white/78">{entryTypeLabel}</span>
+                <span className="text-fg/72 dark:text-white/72">Mendpress</span>
               </div>
               <h1 className="mt-5 max-w-5xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
                 {editorialTitleForLocale(entry, 'en')}
               </h1>
               {editorialSummaryForLocale(entry, 'en') ? (
-                <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/82 dark:text-white/82 md:text-[1.8rem] md:leading-[1.6]">
+                <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/90 dark:text-white/90 md:text-[1.8rem] md:leading-[1.6]">
                   {editorialSummaryForLocale(entry, 'en')}
                 </p>
               ) : null}
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/70 dark:text-white/70 md:text-sm md:leading-5">
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
                 {entry.byline ? <span className="font-medium text-fg dark:text-white">By {entry.byline}</span> : null}
                 {entry.byline ? <span aria-hidden>·</span> : null}
                 <span>{formatEditorialDate(entry.publishedAt, 'en')}</span>
@@ -278,7 +278,7 @@ export default async function MendpressEntryPage({ params }: Props) {
               ) : null}
 
               {entry.heroImage ? (
-                <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-100 dark:border-border dark:bg-surface">
+                <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-200 dark:border-border dark:bg-surface">
                   <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
                 </div>
               ) : null}
@@ -322,14 +322,14 @@ export default async function MendpressEntryPage({ params }: Props) {
                 ) : null}
               </div>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-white/80 p-6 dark:border-border dark:bg-surface/90 md:p-8">
+              <section className="mt-16 rounded-[2rem] border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-surface md:p-8">
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
                   <div>
                     <p className="eyebrow text-accent">Continue with Mendpress</p>
                     <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
                       More from {sectionLabel}
                     </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted md:text-sm">
+                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                       Continue from this piece into the same editorial current, or step back out into the wider Mendpress publication.
                     </p>
                     {relatedEntries.length ? (
@@ -339,8 +339,8 @@ export default async function MendpressEntryPage({ params }: Props) {
                         ))}
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-50 p-5 dark:border-border dark:bg-bg/50">
-                        <p className="text-[15px] leading-7 text-muted md:text-sm">
+                      <div className="mt-8 rounded-3xl border border-border bg-natural-100 p-5 dark:border-border dark:bg-bg/60">
+                        <p className="text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                           The next related piece has not been published yet. Continue through the main Mendpress stream instead.
                         </p>
                         <div className="mt-4">
@@ -372,12 +372,12 @@ export default async function MendpressEntryPage({ params }: Props) {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-50 p-6 dark:border-border dark:bg-surface">
+              <section className="rounded-3xl border border-border bg-natural-100 p-6 shadow-sm dark:border-border dark:bg-surface">
                 <p className="eyebrow text-accent">Next step</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
                   Continue from this piece
                 </h2>
-                <p className="mt-3 text-[15px] leading-7 text-muted md:text-sm">
+                <p className="mt-3 text-[15px] leading-7 text-fg/82 dark:text-white/82 md:text-sm">
                   Each Mendpress piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
                 </p>
                 <div className="mt-6">

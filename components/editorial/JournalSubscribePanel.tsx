@@ -25,12 +25,12 @@ export function JournalSubscribePanel({
   secondaryLabel = locale === 'zh' ? '浏览 Mendpress' : 'Explore Mendpress',
 }: Props) {
   return (
-    <section className="rounded-3xl border border-border bg-natural-50 p-6 md:p-8 dark:border-border dark:bg-surface">
+    <section className="rounded-3xl border border-border bg-natural-100 p-6 shadow-sm dark:border-border dark:bg-surface">
       <p className="eyebrow text-accent">{eyebrow}</p>
       <h2 className={`mt-3 font-serif font-semibold text-fg ${compact ? 'text-2xl' : 'text-3xl'}`}>
         {title}
       </h2>
-      <p className="mt-3 max-w-2xl text-[1.02rem] leading-8 text-muted md:text-base md:leading-7">
+      <p className="mt-3 max-w-2xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/84 md:text-base md:leading-7">
         {body}
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-3">

@@ -254,7 +254,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-fg mb-6 leading-tight">
               Why Bayview Hub exists
             </h2>
-            <div className="max-w-3xl space-y-5 text-[1.05rem] md:text-lg leading-8 md:leading-8 text-muted reading">
+            <div className="max-w-3xl space-y-5 text-[1.05rem] md:text-lg leading-8 md:leading-8 text-fg/84 dark:text-white/84 reading">
               <p>
                 Bayview Hub exists because contemporary life has become increasingly efficient, connected, and accelerated
                 {' '}yet often thinner in attention, place, beauty, and shared experience.
@@ -299,13 +299,13 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-serif font-bold text-fg text-center mb-3">
             Two programmes to explore
           </h2>
-          <p className="text-muted text-center max-w-2xl mx-auto mb-10 reading">
+          <p className="text-fg/82 dark:text-white/82 text-center max-w-2xl mx-auto mb-10 reading">
             Victorian small second dwelling guidance on-site — and the Bayview Arts Gallery with private viewing by arrangement.
           </p>
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
+            <div className="rounded-lg border border-border bg-white p-6 md:p-8 shadow-sm dark:border-border dark:bg-surface dark:shadow-none">
               <h3 className="text-xl font-serif font-bold text-fg mb-2">Backyard Small Second Home</h3>
-              <p className="text-muted text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
+              <p className="text-fg/82 dark:text-white/82 text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
                 For homeowners across Victoria — feasibility, rules, indicative costs, and registration.
               </p>
               <ul className="space-y-2 mb-6">
@@ -324,9 +324,9 @@ export default function HomePage() {
                 Go to overview
               </Link>
             </div>
-            <div className="rounded-lg border border-border bg-surface p-6 md:p-8 shadow-sm dark:shadow-none">
+            <div className="rounded-lg border border-border bg-white p-6 md:p-8 shadow-sm dark:border-border dark:bg-surface dark:shadow-none">
               <h3 className="text-xl font-serif font-bold text-fg mb-2">Gallery &amp; Private Viewing</h3>
-              <p className="text-muted text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
+              <p className="text-fg/82 dark:text-white/82 text-[15px] leading-7 md:text-sm md:leading-relaxed mb-5">
                 For collectors and invited viewers, artists, and hosts — collection online; viewing by arrangement.
               </p>
               <ul className="space-y-2 mb-6">
