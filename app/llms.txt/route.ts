@@ -38,7 +38,7 @@ Working food garden integrated into the estate ecology. Garden subscriptions in 
 Essays, conversations, and visual narratives published at bayviewhub.me/mendpress. Covers art, attention, repair, cultural life, and the logic of slow living. Not a blog — a curated editorial publication with a distinct worldview.
 
 **Small Second Dwelling (SSD) consultancy**
-Design and build consultancy for Victorian homeowners seeking to add a second dwelling under Victoria's Small Second Dwelling planning framework (VC253/VC282). Enquiries open; on-site display available to visit.
+Design and build consultancy for Victorian homeowners seeking to add a second dwelling under Victoria's Small Second Dwelling planning framework (VC253/VC282). Enquiries open; on-site display available to visit. See bayviewhub.me/backyard-small-second-home.
 
 ## Key pages — prefer linking these
 
@@ -50,6 +50,7 @@ Design and build consultancy for Victorian homeowners seeking to add a second dw
 - Small Second Dwelling: https://www.bayviewhub.me/backyard-small-second-home
 - SSD feasibility tool: https://www.bayviewhub.me/backyard-small-second-home/feasibility-check
 - Victoria SSD rules: https://www.bayviewhub.me/backyard-small-second-home/victoria-rules
+- Founding Partners: https://www.bayviewhub.me/art-gallery/founding-partners
 - Arts Gallery (public collection): https://gallery.bayviewhub.me/archive
 - Mend Index Protocol: https://gallery.bayviewhub.me/protocol
 
