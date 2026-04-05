@@ -1,9 +1,12 @@
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 import {
   buildEditorialWritePayload,
   editorialMissingAudioWriteColumnError,
+  editorialUrl,
   editorialWritePayloadFallbacks,
+  mendpressSectionPath,
 } from '@/lib/editorial'
 import {
   NEWSLETTER_ADMIN_COOKIE,
@@ -85,6 +88,29 @@ export async function POST(request: Request) {
         },
         { status: error?.code === '23505' ? 409 : error?.code === '23514' ? 400 : 500 }
       )
+    }
+
+    const sectionPath = mendpressSectionPath(String(payload.editorial_type) as never)
+    const articlePath = editorialUrl(data.slug)
+    const pathsToRevalidate = [
+      '/mendpress',
+      '/mendpress/editorial',
+      '/mendpress/dialogue',
+      '/mendpress/visual-narrative',
+      '/mendpress/reports',
+      '/zh/mendpress',
+      '/zh/mendpress/editorial',
+      '/zh/mendpress/dialogue',
+      '/zh/mendpress/visual-narrative',
+      '/zh/mendpress/reports',
+      sectionPath,
+      `/zh${sectionPath}`,
+      articlePath,
+      `/zh${articlePath}`,
+    ]
+
+    for (const path of pathsToRevalidate) {
+      revalidatePath(path)
     }
 
     return NextResponse.json({ ok: true, id: data.id, slug: data.slug })
