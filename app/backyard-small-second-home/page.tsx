@@ -11,7 +11,6 @@ import { SsdHubHouseArchetypes } from '@/components/ssd/SsdHubHouseArchetypes'
 import { SsdProgrammeMap } from '@/components/ssd/SsdProgrammeMap'
 import { SsdPageShare } from '@/components/ssd/SsdPageShare'
 import { SsdHubCampaignAnalytics } from '@/components/ssd/SsdHubCampaignAnalytics'
-import { SSD_HUB_FAQ } from '@/lib/ssd-hub-faq'
 
 export const metadata = {
   ...genMeta({
@@ -69,14 +68,48 @@ const ssdExpertJsonLd = {
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: SSD_HUB_FAQ.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.a,
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is a Small Second Dwelling (SSD) in Victoria?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A Small Second Dwelling (SSD) is a second home built on an existing residential title in Victoria under the State SSD planning framework. It has a capped footprint of 60sqm GFA, must be all-electric, sit behind the front wall of the primary dwelling, and cannot be sold as a separate title.',
+      },
     },
-  })),
+    {
+      '@type': 'Question',
+      name: 'Do I need a planning permit to build an SSD in Victoria?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A planning permit may be omitted only if every relevant Deemed-to-Comply requirement is met for your specific land. Overlays, bushfire zones, and other site-specific conditions often require a planning permit regardless. A building permit is always required.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What planning rules apply to SSDs in Victoria?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The key instruments are VC253 and VC282, which introduced and refined the Small Second Dwelling Deemed-to-Comply pathway under the Victorian Planning Provisions. These set the 60sqm cap, siting rules, energy requirements, and the Green Lane fast-track process for compliant applications.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I build an SSD on the Mornington Peninsula?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, subject to your specific land conditions, overlays, and council requirements. The Mornington Peninsula Shire applies the State SSD framework, but Heritage overlays, Vegetation Protection overlays, and Bushfire Management overlays may affect eligibility. A feasibility check is the correct first step.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does it cost to build an SSD in Victoria?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Typical SSD build costs in Victoria range from approximately $180,000 (Tier 1 compact/compliant) to $350,000+ (Tier 3 architectural). Rental yields on a 60sqm SSD typically range from $350–$550 per week depending on location and specification.',
+      },
+    },
+  ],
 }
 
 export default function BackyardSmallSecondHomePage() {

@@ -3,16 +3,72 @@ import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
-export const metadata: Metadata = genMeta({
-  title: `About | ${SITE_CONFIG.name}`,
-  description:
-    'Why Bayview Hub exists: a living cultural place for art, music, hospitality, gardens, workshops, and a slower, more grounded way of being together.',
-  path: '/about',
-})
+export const metadata: Metadata = {
+  ...genMeta({
+    title: `About | ${SITE_CONFIG.name}`,
+    description:
+      'Bayview Hub is a place-based cultural ecosystem at Main Ridge, Mornington Peninsula. It combines art, music, hospitality, edible gardens, workshops, and the Mendpress editorial publication under one coherent structure. Not a wellness brand — a serious cultural place.',
+    path: '/about',
+  }),
+  title: {
+    absolute: 'About | Bayview Hub',
+  },
+}
 
 export default function AboutPage() {
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Bayview Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub is a place-based cultural ecosystem at 365 Purves Road, Main Ridge, Mornington Peninsula, Victoria. It combines art, music, hospitality, edible gardens, workshops, and editorial publishing as one connected ecology. It is home to the Mendpress editorial publication and the Bayview Arts Gallery."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Bayview Hub located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub is located at 365 Purves Road, Main Ridge, Victoria 3928, on the Mornington Peninsula, approximately 90 minutes from Melbourne CBD. Open Wednesday to Sunday, 11am to late."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Mend, Mendpress, and Bayview Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Mend is the deeper inquiry into emotional life, meaning, repair, and reconciliation. Mendpress is the editorial publication that gives that inquiry language — essays, dialogues, and visual narratives. Bayview Hub is the physical place where the inquiry is lived through art, workshops, music, gardens, and hospitality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Bayview Hub a wellness retreat?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Bayview Hub is not a wellness brand, retreat centre, or therapeutic facility. It is a cultural estate — a serious place for art, editorial work, hospitality, and community. Its workshops are non-clinical creative experiences, not therapeutic treatment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I visit Bayview Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub is open Wednesday to Sunday, 11am to late, at 365 Purves Road, Main Ridge, Victoria 3928. See bayviewhub.me/visit for directions, opening hours, and visitor information."
+        }
+      }
+    ]
+  }
+
   return (
     <main className="min-h-screen bg-bg py-16 md:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-4xl">
           <p className="eyebrow mb-3 text-accent">About Us</p>

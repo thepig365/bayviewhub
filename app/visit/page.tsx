@@ -8,7 +8,7 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 export const metadata: Metadata = genMeta({
   title: 'Visit',
   description:
-    'Plan your visit to Bayview Hub with directions, opening hours, nearby attractions, and practical travel information.',
+    'Visit Bayview Hub at 365 Purves Road, Main Ridge, Mornington Peninsula, Victoria 3928. Open Wednesday to Sunday, 11am to late. Art, food, wine, live music, accommodation, and art workshops. 90 minutes from Melbourne.',
   path: '/visit',
 })
 
@@ -46,12 +46,54 @@ export default function VisitPage() {
       { "@type": "LocationFeatureSpecification", "name": "Workshop Space", "value": true }
     ]
   }
+  const visitFAQSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I get to Bayview Hub on the Mornington Peninsula?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub is at 365 Purves Road, Main Ridge, Victoria 3928. It is approximately 90 minutes from Melbourne CBD. Nearest town is Red Hill. Use Google Maps: search '365 Purves Road Main Ridge VIC 3928'."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are Bayview Hub's opening hours?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub is open Wednesday to Sunday, 11am to late. Closed Monday and Tuesday."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What can I do at Bayview Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bayview Hub offers food and wine at the cellar door and restaurant, live music at The Shed, farmhouse accommodation, art gallery visits, non-clinical art workshops, and access to the working edible gardens."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there accommodation at Bayview Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Farmhouse accommodation is available at the estate. Enquire via the contact form on the main site."
+        }
+      }
+    ]
+  }
 
   return (
     <div className="min-h-screen dark:bg-bg">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(visitSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(visitFAQSchema) }}
       />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-50 to-natural-50 py-20 dark:from-primary-900 dark:to-primary-800">
