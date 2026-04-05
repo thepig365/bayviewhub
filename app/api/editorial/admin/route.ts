@@ -80,7 +80,7 @@ export async function POST(request: Request) {
               : editorialMissingAudioWriteColumnError(error)
                 ? 'Editorial bilingual/audio fields are not available yet. Run the latest docs/supabase-editorial.sql migration first.'
                 : error?.code === '23514'
-                  ? 'This editorial type is not available in the current database schema yet. Run the latest docs/supabase-editorial.sql migration first.'
+                  ? `The current database schema rejected editorial_type "${String(payload.editorial_type)}". Run the latest docs/supabase-editorial.sql migration so audio types and current checks are available.`
               : 'Editorial table is missing or unavailable. Run docs/supabase-editorial.sql first.',
         },
         { status: error?.code === '23505' ? 409 : error?.code === '23514' ? 400 : 500 }

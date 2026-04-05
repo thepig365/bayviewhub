@@ -37,6 +37,19 @@ type AiMetadataSuggestions = {
   seoKeywords: string[]
 }
 
+type AudioProcessingStepReport = {
+  state: 'success' | 'failed' | 'skipped'
+  message: string
+}
+
+type AudioProcessingReport = {
+  transcript: AudioProcessingStepReport
+  showNotes: AudioProcessingStepReport
+  companion: AudioProcessingStepReport
+  metadata: AudioProcessingStepReport
+  persistence: AudioProcessingStepReport
+}
+
 type BodyInsertNotice =
   | {
       kind: 'image'
@@ -339,6 +352,7 @@ export function EditorialEditorClient({
     slugSuggestion: '',
     seoKeywords: [],
   })
+  const [processingReport, setProcessingReport] = useState<AudioProcessingReport | null>(null)
   const [assistStatus, setAssistStatus] = useState<{
     transcript: AssistStatus
     showNotes: AssistStatus
@@ -431,6 +445,7 @@ export function EditorialEditorClient({
       slugSuggestion: '',
       seoKeywords: [],
     })
+    setProcessingReport(null)
     setAssistStatus({
       transcript: 'loading',
       showNotes: 'loading',
@@ -441,11 +456,19 @@ export function EditorialEditorClient({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        entryId: entry?.id,
         audioUrl,
+        audioDurationSeconds,
         title,
         summary,
         editorialType,
         speakers,
+        transcriptMarkdown,
+        transcriptMarkdownZh,
+        showNotesMarkdown,
+        showNotesMarkdownZh,
+        companionMarkdown: bodyMarkdown,
+        bodyMarkdownZh,
       }),
     })
 
@@ -485,6 +508,8 @@ export function EditorialEditorClient({
       setBodyMarkdownZh(data.companionMarkdownZh)
     }
     const metadata = typeof data.metadata === 'object' && data.metadata ? data.metadata : {}
+    const nextProcessingReport =
+      data && typeof data.processing === 'object' && data.processing ? (data.processing as AudioProcessingReport) : null
     const nextTitle = typeof metadata.title === 'string' ? metadata.title.trim() : ''
     const nextTitleZh = typeof metadata.titleZh === 'string' ? metadata.titleZh.trim() : ''
     const nextSummary = typeof metadata.summary === 'string' ? metadata.summary.trim() : ''
@@ -519,6 +544,7 @@ export function EditorialEditorClient({
       slugSuggestion: nextSlugSuggestion,
       seoKeywords: nextSeoKeywords,
     })
+    setProcessingReport(nextProcessingReport)
     setAssistMessage(warning)
 
     setAssistStatus({
@@ -884,6 +910,16 @@ export function EditorialEditorClient({
     return null
   }
 
+  const processingSteps = processingReport
+    ? [
+        { key: 'transcript', label: 'Transcript', report: processingReport.transcript },
+        { key: 'showNotes', label: 'Show notes', report: processingReport.showNotes },
+        { key: 'companion', label: 'Companion text', report: processingReport.companion },
+        { key: 'metadata', label: 'Metadata', report: processingReport.metadata },
+        { key: 'persistence', label: 'DB persistence', report: processingReport.persistence },
+      ]
+    : []
+
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_360px]">
       <section className="rounded-2xl bg-natural-50 p-8 dark:border dark:border-border dark:bg-surface">
@@ -1156,6 +1192,29 @@ export function EditorialEditorClient({
                       {audioUploadState === 'loading' ? 'Processing…' : 'Retry processing'}
                     </button>
                   </div>
+                  {processingSteps.length ? (
+                    <div className="mt-4 rounded-2xl bg-natural-50 px-4 py-3 text-sm dark:bg-surface">
+                      <p className="font-medium text-fg">Processing audit</p>
+                      <div className="mt-3 space-y-2">
+                        {processingSteps.map((step) => (
+                          <div key={step.key} className="flex flex-wrap items-start justify-between gap-3">
+                            <p className="font-medium text-fg">{step.label}</p>
+                            <p
+                              className={
+                                step.report.state === 'success'
+                                  ? 'text-accent'
+                                  : step.report.state === 'failed'
+                                    ? 'text-red-600 dark:text-red-400'
+                                    : 'text-muted'
+                              }
+                            >
+                              {step.report.message}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </section>

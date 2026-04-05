@@ -994,6 +994,15 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
     return { payload: null, error: 'Audio file or URL is required for audio-first pieces.' }
   }
 
+  if (status === 'published' && isAudioFirstEditorialType(editorialType)) {
+    if (!transcriptMarkdown) {
+      return { payload: null, error: 'Audio-first pieces need a transcript before publishing.' }
+    }
+    if (!showNotesMarkdown && !bodyMarkdown) {
+      return { payload: null, error: 'Audio-first pieces need show notes or companion text before publishing.' }
+    }
+  }
+
   if (status === 'published' && editorialMode === 'hybrid' && !audioUrl && !bodyContainsAudioBlock(bodyMarkdown)) {
     return { payload: null, error: 'Hybrid pieces need a main audio file or at least one embedded audio block before publishing.' }
   }

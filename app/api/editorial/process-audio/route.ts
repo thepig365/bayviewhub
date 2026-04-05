@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import {
   editorialUrl,
+  getEditorialEntryByIdForAdmin,
   sanitizeEditorialBody,
   sanitizeEditorialSlug,
   sanitizeEditorialSpeakers,
@@ -17,12 +18,15 @@ import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
 } from '@/lib/newsletter-admin'
+import { getSupabaseServer } from '@/lib/ssd-campaign-server'
 
 export const runtime = 'nodejs'
 export const maxDuration = 300
 
 const OPENAI_TRANSCRIPTION_MODEL = 'whisper-1'
 const OPENAI_DRAFT_MODEL = 'gpt-4o-mini'
+const PROCESSING_BUDGET_MS = 255_000
+const PROCESSING_BUFFER_MS = 20_000
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError'
@@ -38,11 +42,21 @@ async function rejectIfUnauthorized() {
 }
 
 type AudioDraftRequest = {
+  entryId?: string
   audioUrl?: string
+  audioDurationSeconds?: number | string
   title?: string
   summary?: string
   editorialType?: string
   speakers?: string[] | string
+  transcriptMarkdown?: string
+  showNotesMarkdown?: string
+  companionMarkdown?: string
+  titleZh?: string
+  summaryZh?: string
+  bodyMarkdownZh?: string
+  showNotesMarkdownZh?: string
+  transcriptMarkdownZh?: string
 }
 
 type AudioMetadataDrafts = {
@@ -59,6 +73,19 @@ type AudioMetadataDrafts = {
   speakers?: string[]
 }
 
+type ProcessingStepState = 'success' | 'failed' | 'skipped'
+type ProcessingStepReport = {
+  state: ProcessingStepState
+  message: string
+}
+type ProcessingReport = {
+  transcript: ProcessingStepReport
+  showNotes: ProcessingStepReport
+  companion: ProcessingStepReport
+  metadata: ProcessingStepReport
+  persistence: ProcessingStepReport
+}
+
 function sanitizeAudioUrl(value: unknown): string {
   if (typeof value !== 'string') return ''
   const trimmed = value.trim()
@@ -72,10 +99,150 @@ function sanitizeAudioUrl(value: unknown): string {
   }
 }
 
-async function transcribeAudioFromUrl(audioUrl: string, apiKey: string): Promise<string> {
+function sanitizeEntryId(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  const trimmed = value.trim()
+  return /^[0-9a-f-]{36}$/i.test(trimmed) ? trimmed : ''
+}
+
+function sanitizeDurationSeconds(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value) && value > 0) {
+    return Math.max(1, Math.round(value))
+  }
+  if (typeof value === 'string' && value.trim()) {
+    const parsed = Number(value)
+    if (Number.isFinite(parsed) && parsed > 0) {
+      return Math.max(1, Math.round(parsed))
+    }
+  }
+  return null
+}
+
+async function persistProcessingOutputs({
+  entryId,
+  audioUrl,
+  audioDurationSeconds,
+  transcriptMarkdown,
+  showNotesMarkdown,
+  companionMarkdown,
+  transcriptMarkdownZh,
+  showNotesMarkdownZh,
+  companionMarkdownZh,
+  metadata,
+  existing,
+}: {
+  entryId: string
+  audioUrl: string
+  audioDurationSeconds: number | null
+  transcriptMarkdown: string
+  showNotesMarkdown: string
+  companionMarkdown: string
+  transcriptMarkdownZh: string
+  showNotesMarkdownZh: string
+  companionMarkdownZh: string
+  metadata: AudioMetadataDrafts
+  existing: AudioDraftRequest
+}): Promise<ProcessingStepReport> {
+  const supabase = getSupabaseServer()
+  if (!supabase) {
+    return {
+      state: 'failed',
+      message:
+        'Processing completed, but persistence could not run because Supabase server env is missing.',
+    }
+  }
+
+  const entry = await getEditorialEntryByIdForAdmin(entryId)
+  if (!entry) {
+    return {
+      state: 'failed',
+      message: 'Processing completed, but the editorial entry could not be found for persistence.',
+    }
+  }
+
+  const payload: Record<string, unknown> = {
+    audio_url: audioUrl,
+    updated_at: new Date().toISOString(),
+  }
+
+  if (audioDurationSeconds) {
+    payload.audio_duration_seconds = audioDurationSeconds
+  }
+  if (transcriptMarkdown.trim()) {
+    payload.transcript_markdown = transcriptMarkdown
+  }
+  if (!existing.transcriptMarkdownZh?.trim() && !entry.transcriptMarkdownZh && transcriptMarkdownZh.trim()) {
+    payload.transcript_markdown_zh = transcriptMarkdownZh
+  }
+  if (!existing.showNotesMarkdown?.trim() && !entry.showNotesMarkdown && showNotesMarkdown.trim()) {
+    payload.show_notes_markdown = showNotesMarkdown
+  }
+  if (!existing.showNotesMarkdownZh?.trim() && !entry.showNotesMarkdownZh && showNotesMarkdownZh.trim()) {
+    payload.show_notes_markdown_zh = showNotesMarkdownZh
+  }
+  if (!existing.companionMarkdown?.trim() && !entry.bodyMarkdown && companionMarkdown.trim()) {
+    payload.body_markdown = companionMarkdown
+  }
+  if (!existing.bodyMarkdownZh?.trim() && !entry.bodyMarkdownZh && companionMarkdownZh.trim()) {
+    payload.body_markdown_zh = companionMarkdownZh
+  }
+  if (!existing.summary?.trim() && !entry.summary && metadata.summary?.trim()) {
+    payload.summary = metadata.summary.trim()
+  }
+  if (!existing.summaryZh?.trim() && !entry.summaryZh && metadata.summaryZh?.trim()) {
+    payload.summary_zh = metadata.summaryZh.trim()
+  }
+  if ((!entry.tags || !entry.tags.length) && metadata.tags?.length) {
+    payload.tags = metadata.tags
+  }
+  if ((!entry.speakers || !entry.speakers.length) && metadata.speakers?.length) {
+    payload.speakers = metadata.speakers
+  }
+  if (!entry.seoTitle && metadata.seoTitle?.trim()) {
+    payload.seo_title = metadata.seoTitle.trim()
+  }
+  if (!entry.seoTitleZh && metadata.seoTitleZh?.trim()) {
+    payload.seo_title_zh = metadata.seoTitleZh.trim()
+  }
+  if (!entry.seoDescription && metadata.seoDescription?.trim()) {
+    payload.seo_description = metadata.seoDescription.trim()
+  }
+  if (!entry.seoDescriptionZh && metadata.seoDescriptionZh?.trim()) {
+    payload.seo_description_zh = metadata.seoDescriptionZh.trim()
+  }
+
+  const { error } = await supabase.from('editorial_entries').update(payload).eq('id', entryId)
+  if (error) {
+    return {
+      state: 'failed',
+      message: `Processing completed, but persistence failed: ${error.message}`,
+    }
+  }
+
+  return {
+    state: 'success',
+    message: 'Successful outputs were written back to the editorial entry.',
+  }
+}
+
+function remainingProcessingTime(deadlineMs: number): number {
+  return deadlineMs - Date.now()
+}
+
+function timeoutWithinBudget(deadlineMs: number, capMs: number, label: string): number {
+  const remaining = remainingProcessingTime(deadlineMs) - PROCESSING_BUFFER_MS
+  if (remaining <= 5_000) {
+    throw new Error(`${label} was skipped because the server was too close to its execution limit.`)
+  }
+  return Math.min(capMs, remaining)
+}
+
+async function transcribeAudioFromUrl(audioUrl: string, apiKey: string, deadlineMs: number): Promise<string> {
   let audioResponse: Response
   try {
-    audioResponse = await fetch(audioUrl, { signal: AbortSignal.timeout(120_000) })
+    audioResponse = await fetch(audioUrl, {
+      signal: AbortSignal.timeout(timeoutWithinBudget(deadlineMs, 45_000, 'Audio fetch')),
+    })
   } catch (error) {
     throw new Error(
       isAbortError(error)
@@ -113,7 +280,7 @@ async function transcribeAudioFromUrl(audioUrl: string, apiKey: string): Promise
         Authorization: `Bearer ${apiKey}`,
       },
       body: formData,
-      signal: AbortSignal.timeout(180_000),
+      signal: AbortSignal.timeout(timeoutWithinBudget(deadlineMs, 150_000, 'Speech-to-text')),
     })
   } catch (error) {
     throw new Error(
@@ -147,6 +314,7 @@ async function draftEditorialMaterials({
   editorialType,
   transcript,
   speakers,
+  deadlineMs,
 }: {
   apiKey: string
   title: string
@@ -154,6 +322,7 @@ async function draftEditorialMaterials({
   editorialType: string
   transcript: string
   speakers: string[]
+  deadlineMs: number
 }) {
   let response: Response
   try {
@@ -220,7 +389,7 @@ async function draftEditorialMaterials({
           },
         ],
       }),
-      signal: AbortSignal.timeout(180_000),
+      signal: AbortSignal.timeout(timeoutWithinBudget(deadlineMs, 75_000, 'Editorial drafting')),
     })
   } catch (error) {
     throw new Error(
@@ -292,21 +461,53 @@ export async function POST(request: Request) {
 
   try {
     const body = (await request.json()) as AudioDraftRequest
+    const entryId = sanitizeEntryId(body.entryId)
     const audioUrl = sanitizeAudioUrl(body.audioUrl)
+    const audioDurationSeconds = sanitizeDurationSeconds(body.audioDurationSeconds)
     const title = sanitizeEditorialText(body.title, 180)
     const summary = sanitizeEditorialText(body.summary, 600)
     const editorialType = sanitizeEditorialType(body.editorialType)
     const speakers = sanitizeEditorialSpeakers(body.speakers)
+    const deadlineMs = Date.now() + PROCESSING_BUDGET_MS
+    const processing: ProcessingReport = {
+      transcript: { state: 'skipped', message: 'Transcript not started yet.' },
+      showNotes: { state: 'skipped', message: 'Show notes not started yet.' },
+      companion: { state: 'skipped', message: 'Companion text not started yet.' },
+      metadata: { state: 'skipped', message: 'Metadata drafting not started yet.' },
+      persistence: entryId
+        ? { state: 'skipped', message: 'Persistence will run after successful processing.' }
+        : { state: 'skipped', message: 'No editorial entry id provided, so persistence is deferred until save draft.' },
+    }
 
     if (!audioUrl) {
       return NextResponse.json({ ok: false, error: 'Audio URL is required.' }, { status: 400 })
     }
 
-    const transcript = await transcribeAudioFromUrl(audioUrl, apiKey)
+    const transcript = await transcribeAudioFromUrl(audioUrl, apiKey, deadlineMs)
+    processing.transcript = {
+      state: 'success',
+      message: 'Transcript generated successfully.',
+    }
     let drafts:
       | Awaited<ReturnType<typeof draftEditorialMaterials>>
       | null = null
     let warning = ''
+
+    if (entryId) {
+      processing.persistence = await persistProcessingOutputs({
+        entryId,
+        audioUrl,
+        audioDurationSeconds,
+        transcriptMarkdown: sanitizeEditorialBody(transcript, 120000),
+        showNotesMarkdown: '',
+        companionMarkdown: '',
+        transcriptMarkdownZh: '',
+        showNotesMarkdownZh: '',
+        companionMarkdownZh: '',
+        metadata: {},
+        existing: body,
+      })
+    }
 
     try {
       drafts = await draftEditorialMaterials({
@@ -316,8 +517,45 @@ export async function POST(request: Request) {
         editorialType,
         transcript,
         speakers,
+        deadlineMs,
       })
+      processing.showNotes = {
+        state: drafts.showNotesMarkdown.trim() ? 'success' : 'failed',
+        message: drafts.showNotesMarkdown.trim() ? 'Show notes generated successfully.' : 'Show notes came back empty.',
+      }
+      processing.companion = {
+        state: drafts.companionMarkdown.trim() ? 'success' : 'failed',
+        message: drafts.companionMarkdown.trim() ? 'Companion text generated successfully.' : 'Companion text came back empty.',
+      }
+      processing.metadata = {
+        state:
+          drafts.metadata.summary ||
+          drafts.metadata.tags?.length ||
+          drafts.metadata.seoTitle ||
+          drafts.metadata.seoDescription
+            ? 'success'
+            : 'failed',
+        message:
+          drafts.metadata.summary ||
+          drafts.metadata.tags?.length ||
+          drafts.metadata.seoTitle ||
+          drafts.metadata.seoDescription
+            ? 'Metadata suggestions generated successfully.'
+            : 'Metadata suggestions came back empty.',
+      }
     } catch (error) {
+      processing.showNotes = {
+        state: 'failed',
+        message: error instanceof Error ? error.message : 'Show notes generation failed.',
+      }
+      processing.companion = {
+        state: 'failed',
+        message: error instanceof Error ? error.message : 'Companion generation failed.',
+      }
+      processing.metadata = {
+        state: 'failed',
+        message: error instanceof Error ? error.message : 'Metadata generation failed.',
+      }
       warning =
         error instanceof Error
           ? `${error.message} The transcript is ready, and you can retry draft generation without re-uploading the audio.`
@@ -341,6 +579,22 @@ export async function POST(request: Request) {
     const slugSuggestion = sanitizeEditorialSlug('', suggestedTitle)
     const ctaHref = slugSuggestion ? editorialUrl(slugSuggestion) : '/mendpress'
 
+    if (entryId) {
+      processing.persistence = await persistProcessingOutputs({
+        entryId,
+        audioUrl,
+        audioDurationSeconds,
+        transcriptMarkdown: sanitizeEditorialBody(transcript, 120000),
+        showNotesMarkdown: drafts?.showNotesMarkdown || '',
+        companionMarkdown: drafts?.companionMarkdown || '',
+        transcriptMarkdownZh: drafts?.transcriptMarkdownZh || '',
+        showNotesMarkdownZh: drafts?.showNotesMarkdownZh || '',
+        companionMarkdownZh: drafts?.companionMarkdownZh || '',
+        metadata,
+        existing: body,
+      })
+    }
+
     return NextResponse.json({
       ok: true,
       transcriptMarkdown: sanitizeEditorialBody(transcript, 120000),
@@ -350,6 +604,7 @@ export async function POST(request: Request) {
       companionMarkdown: drafts?.companionMarkdown || '',
       companionMarkdownZh: drafts?.companionMarkdownZh || '',
       warning,
+      processing,
       metadata: {
         title: metadata.title,
         titleZh: metadata.titleZh,
@@ -373,6 +628,13 @@ export async function POST(request: Request) {
       {
         ok: false,
         error: error instanceof Error ? error.message : 'Audio processing failed.',
+        processing: {
+          transcript: { state: 'failed', message: error instanceof Error ? error.message : 'Transcript failed.' },
+          showNotes: { state: 'failed', message: 'Show notes did not run.' },
+          companion: { state: 'failed', message: 'Companion text did not run.' },
+          metadata: { state: 'failed', message: 'Metadata drafting did not run.' },
+          persistence: { state: 'skipped', message: 'Persistence did not run because processing failed first.' },
+        },
       },
       { status: 500 }
     )
