@@ -1,10 +1,8 @@
 import { cookies } from 'next/headers'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 import {
   buildEditorialWritePayload,
   editorialMissingAudioWriteColumnError,
-  editorialUrl,
   editorialWritePayloadFallbacks,
 } from '@/lib/editorial'
 import {
@@ -108,45 +106,13 @@ export async function DELETE(_request: Request, { params }: Props) {
 
   try {
     const { id } = await params
-    const supabase = getSupabaseServer()
-    if (!supabase) {
-      return NextResponse.json({ ok: false, error: 'Database not configured.' }, { status: 500 })
-    }
-
-    const { data, error } = await supabase
-      .from('editorial_entries')
-      .delete()
-      .eq('id', id)
-      .select('id,slug')
-      .single<{ id: string; slug: string }>()
-
-    if (error || !data) {
-      console.error('[Editorial Admin] delete failed', error)
-      return NextResponse.json({ ok: false, error: 'Failed to delete piece.' }, { status: 500 })
-    }
-
-    const articlePath = editorialUrl(data.slug)
-
-    const pathsToRevalidate = [
-      '/mendpress',
-      '/mendpress/editorial',
-      '/mendpress/dialogue',
-      '/mendpress/visual-narrative',
-      '/mendpress/reports',
-      '/zh/mendpress',
-      '/zh/mendpress/editorial',
-      '/zh/mendpress/dialogue',
-      '/zh/mendpress/visual-narrative',
-      '/zh/mendpress/reports',
-      articlePath,
-      `/zh${articlePath}`,
-    ]
-
-    for (const path of pathsToRevalidate) {
-      revalidatePath(path)
-    }
-
-    return NextResponse.json({ ok: true, id: data.id, slug: data.slug })
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Permanent deletion is disabled for editorial entries. Entry ${id} was not removed.`,
+      },
+      { status: 405 }
+    )
   } catch (error) {
     console.error('[Editorial Admin] delete route error', error)
     return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 })

@@ -687,6 +687,21 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
   }
 }
 
+function safeNormalizeEntry(row: EditorialDbRow, scope: string): EditorialEntry | null {
+  try {
+    return normalizeEntry(row)
+  } catch (error) {
+    logEditorialReadError(`${scope} normalize entry`, error)
+    return null
+  }
+}
+
+function safeNormalizeEntries(rows: EditorialDbRow[], scope: string): EditorialEntry[] {
+  return rows
+    .map((row) => safeNormalizeEntry(row, scope))
+    .filter((entry): entry is EditorialEntry => Boolean(entry))
+}
+
 function editorialQuery(client: SupabaseClient, level: 'bilingual' | 'audio' | 'base' = 'bilingual') {
   const select =
     level === 'bilingual'
@@ -838,7 +853,7 @@ export async function listPublishedEditorialEntries(options?: {
     return []
   }
 
-  return (data as unknown as EditorialDbRow[]).map(normalizeEntry)
+  return safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list published entries')
 }
 
 export async function getPublishedEditorialEntryBySlug(
@@ -867,7 +882,7 @@ export async function getPublishedEditorialEntryBySlug(
     return null
   }
 
-  return normalizeEntry(data as unknown as EditorialDbRow)
+  return safeNormalizeEntry(data as unknown as EditorialDbRow, `get published slug ${slug}`)
 }
 
 export async function getEditorialEntryByIdForAdmin(id: string): Promise<EditorialEntry | null> {
@@ -887,7 +902,7 @@ export async function getEditorialEntryByIdForAdmin(id: string): Promise<Editori
     return null
   }
 
-  return normalizeEntry(data as unknown as EditorialDbRow)
+  return safeNormalizeEntry(data as unknown as EditorialDbRow, `get admin entry ${id}`)
 }
 
 export async function listEditorialEntriesForAdmin(limit = 24): Promise<EditorialEntry[]> {
@@ -916,7 +931,7 @@ export async function listEditorialEntriesForAdmin(limit = 24): Promise<Editoria
     return []
   }
 
-  return (data as unknown as EditorialDbRow[]).map(normalizeEntry)
+  return safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list admin entries')
 }
 
 export async function listRelatedEditorialEntries(
