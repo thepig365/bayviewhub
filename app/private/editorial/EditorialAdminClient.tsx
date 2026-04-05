@@ -6,12 +6,14 @@ import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import {
   EDITORIAL_TYPES,
   editorialAbsoluteUrlFromPath,
+  inferEditorialMode,
   editorialTypeAdminLabel,
   editorialStatusMatches,
   editorialTypeMatches,
   formatEditorialDate,
   mendpressSectionLabel,
   type EditorialEntry,
+  type EditorialStatus,
   type EditorialStatusFilter,
   type EditorialType,
 } from '@/lib/editorial'
@@ -27,9 +29,9 @@ export function EditorialAdminClient({ entries }: Props) {
   const [statusFilter, setStatusFilter] = useState<EditorialStatusFilter>('all')
   const [query, setQuery] = useState('')
   const [copiedPath, setCopiedPath] = useState('')
-  const [confirmDeleteId, setConfirmDeleteId] = useState('')
-  const [deleteState, setDeleteState] = useState<'idle' | 'loading' | 'error'>('idle')
-  const [deleteMessage, setDeleteMessage] = useState('')
+  const [confirmArchiveId, setConfirmArchiveId] = useState('')
+  const [archiveState, setArchiveState] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [archiveMessage, setArchiveMessage] = useState('')
 
   const filteredEntries = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -50,6 +52,7 @@ export function EditorialAdminClient({ entries }: Props) {
       total: items.length,
       published: items.filter((entry) => entry.status === 'published').length,
       draft: items.filter((entry) => entry.status === 'draft').length,
+      archived: items.filter((entry) => entry.status === 'archived').length,
       pinned: items.filter((entry) => entry.pinned).length,
     }),
     [items]
@@ -65,33 +68,82 @@ export function EditorialAdminClient({ entries }: Props) {
     }
   }
 
-  const deleteEntry = async (id: string) => {
-    setDeleteState('loading')
-    setDeleteMessage('')
+  const buildStatusPayload = (entry: EditorialEntry, nextStatus: EditorialStatus) => ({
+    title: entry.title,
+    titleZh: entry.titleZh || '',
+    slug: entry.slug,
+    summary: entry.summary,
+    summaryZh: entry.summaryZh || '',
+    bodyMarkdown: entry.bodyMarkdown,
+    bodyMarkdownZh: entry.bodyMarkdownZh || '',
+    editorialType: entry.editorialType,
+    editorialMode: inferEditorialMode(entry),
+    status: nextStatus,
+    publishedAt: entry.publishedAt || '',
+    heroImage: entry.heroImage || '',
+    byline: entry.byline || '',
+    tags: entry.tags.join(', '),
+    primaryCtaLabel: entry.primaryCtaLabel || '',
+    primaryCtaHref: entry.primaryCtaHref || '',
+    seoTitle: entry.seoTitle || '',
+    seoTitleZh: entry.seoTitleZh || '',
+    seoDescription: entry.seoDescription || '',
+    seoDescriptionZh: entry.seoDescriptionZh || '',
+    pinned: entry.pinned,
+    audioUrl: entry.audioUrl || '',
+    audioDurationSeconds: entry.audioDurationSeconds,
+    transcriptMarkdown: entry.transcriptMarkdown || '',
+    transcriptMarkdownZh: entry.transcriptMarkdownZh || '',
+    showNotesMarkdown: entry.showNotesMarkdown || '',
+    showNotesMarkdownZh: entry.showNotesMarkdownZh || '',
+    speakers: entry.speakers.join(', '),
+  })
+
+  const updateEntryStatus = async (entry: EditorialEntry, nextStatus: EditorialStatus) => {
+    setArchiveState('loading')
+    setArchiveMessage('')
 
     try {
-      const response = await fetch(`/api/editorial/admin/${id}`, { method: 'DELETE' })
+      const response = await fetch(`/api/editorial/admin/${entry.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildStatusPayload(entry, nextStatus)),
+      })
       const data = await response.json().catch(() => ({}))
 
       if (!response.ok || !data.ok) {
-        setDeleteState('error')
-        setDeleteMessage(data.error || 'Failed to delete piece.')
+        setArchiveState('error')
+        setArchiveMessage(data.error || 'Failed to update piece status.')
         return
       }
 
-      setItems((prev) => prev.filter((entry) => entry.id !== id))
-      setConfirmDeleteId('')
-      setDeleteState('idle')
-      setDeleteMessage('')
+      setItems((prev) =>
+        prev.map((current) =>
+          current.id === entry.id
+            ? {
+                ...current,
+                status: nextStatus,
+                updatedAt: new Date().toISOString(),
+              }
+            : current
+        )
+      )
+      setConfirmArchiveId('')
+      setArchiveState('idle')
+      setArchiveMessage(
+        nextStatus === 'archived'
+          ? 'Piece archived. It is preserved in admin but hidden from public Mendpress.'
+          : 'Piece restored to draft.'
+      )
     } catch {
-      setDeleteState('error')
-      setDeleteMessage('Failed to delete piece.')
+      setArchiveState('error')
+      setArchiveMessage('Failed to update piece status.')
     }
   }
 
   return (
     <div className="space-y-8">
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Pieces</p>
           <p className="mt-2 text-3xl font-serif font-semibold text-fg">{counts.total}</p>
@@ -103,6 +155,10 @@ export function EditorialAdminClient({ entries }: Props) {
         <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Drafts</p>
           <p className="mt-2 text-3xl font-serif font-semibold text-fg">{counts.draft}</p>
+        </div>
+        <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
+          <p className="text-xs uppercase tracking-[0.18em] text-muted">Archived</p>
+          <p className="mt-2 text-3xl font-serif font-semibold text-fg">{counts.archived}</p>
         </div>
         <div className="rounded-2xl border border-border bg-white p-5 dark:border-border dark:bg-surface">
           <p className="text-xs uppercase tracking-[0.18em] text-muted">Pinned</p>
@@ -146,9 +202,15 @@ export function EditorialAdminClient({ entries }: Props) {
               <option value="all">All statuses</option>
               <option value="draft">Draft</option>
               <option value="published">Published</option>
+              <option value="archived">Archived</option>
             </select>
           </div>
         </div>
+        {archiveMessage ? (
+          <p className={`mt-4 text-sm ${archiveState === 'error' ? 'text-red-600 dark:text-red-400' : 'text-accent'}`}>
+            {archiveMessage}
+          </p>
+        ) : null}
       </section>
 
       <section className="overflow-hidden rounded-2xl border border-border bg-white dark:border-border dark:bg-surface">
@@ -191,6 +253,8 @@ export function EditorialAdminClient({ entries }: Props) {
                       className={
                         entry.status === 'published'
                           ? 'rounded-full bg-accent/15 px-2 py-1 text-accent'
+                          : entry.status === 'archived'
+                            ? 'rounded-full bg-amber-100 px-2 py-1 text-amber-800 dark:bg-amber-950/50 dark:text-amber-200'
                           : 'rounded-full bg-neutral-100 px-2 py-1 text-muted dark:bg-neutral-800'
                       }
                     >
@@ -222,48 +286,56 @@ export function EditorialAdminClient({ entries }: Props) {
                     <button
                       type="button"
                       onClick={() => {
-                        setConfirmDeleteId((current) => (current === entry.id ? '' : entry.id))
-                        setDeleteState('idle')
-                        setDeleteMessage('')
+                        setConfirmArchiveId((current) => (current === entry.id ? '' : entry.id))
+                        setArchiveState('idle')
+                        setArchiveMessage('')
                       }}
-                      className="text-red-700 underline underline-offset-4 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                      className="text-amber-800 underline underline-offset-4 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-200"
                     >
-                      Delete
+                      {entry.status === 'archived' ? 'Unarchive' : 'Archive'}
                     </button>
                   </div>
                 </div>
-                {confirmDeleteId === entry.id ? (
-                  <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 md:col-span-5 dark:border-red-900/60 dark:bg-red-950/30">
-                    <p className="text-sm font-medium text-red-900 dark:text-red-100">
-                      Delete this piece permanently?
+                {confirmArchiveId === entry.id ? (
+                  <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 md:col-span-5 dark:border-amber-900/60 dark:bg-amber-950/30">
+                    <p className="text-sm font-medium text-amber-950 dark:text-amber-100">
+                      {entry.status === 'archived' ? 'Restore this piece to draft?' : 'Archive this piece?'}
                     </p>
-                    <p className="mt-2 text-sm leading-7 text-red-800/90 dark:text-red-200/85">
-                      This permanently removes the piece from the editorial system and public Mendpress listings. Use this for unsuitable or test content only.
+                    <p className="mt-2 text-sm leading-7 text-amber-900/90 dark:text-amber-200/85">
+                      {entry.status === 'archived'
+                        ? 'This keeps the piece inside admin and restores it as a draft so it can be reviewed or published again.'
+                        : 'This hides the piece from public Mendpress while keeping the record, slug, and history safely inside admin.'}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-3">
                       <button
                         type="button"
-                        onClick={() => deleteEntry(entry.id)}
-                        disabled={deleteState === 'loading'}
-                        className="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 disabled:opacity-60"
+                        onClick={() => updateEntryStatus(entry, entry.status === 'archived' ? 'draft' : 'archived')}
+                        disabled={archiveState === 'loading'}
+                        className="rounded-lg bg-amber-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-800 disabled:opacity-60"
                       >
-                        {deleteState === 'loading' ? 'Deleting…' : 'Delete permanently'}
+                        {archiveState === 'loading'
+                          ? entry.status === 'archived'
+                            ? 'Restoring…'
+                            : 'Archiving…'
+                          : entry.status === 'archived'
+                            ? 'Restore to draft'
+                            : 'Archive'}
                       </button>
                       <button
                         type="button"
                         onClick={() => {
-                          setConfirmDeleteId('')
-                          setDeleteState('idle')
-                          setDeleteMessage('')
+                          setConfirmArchiveId('')
+                          setArchiveState('idle')
+                          setArchiveMessage('')
                         }}
-                        disabled={deleteState === 'loading'}
+                        disabled={archiveState === 'loading'}
                         className="rounded-lg border border-border px-4 py-2 text-sm text-fg transition-colors hover:border-accent disabled:opacity-60 dark:border-border"
                       >
                         Cancel
                       </button>
                     </div>
-                    {deleteMessage ? (
-                      <p className="mt-3 text-sm text-red-700 dark:text-red-300">{deleteMessage}</p>
+                    {archiveMessage ? (
+                      <p className="mt-3 text-sm text-amber-900 dark:text-amber-200">{archiveMessage}</p>
                     ) : null}
                   </div>
                 ) : null}

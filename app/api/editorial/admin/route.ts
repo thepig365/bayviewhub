@@ -4,10 +4,17 @@ import { NextResponse } from 'next/server'
 import {
   buildEditorialWritePayload,
   editorialMissingAudioWriteColumnError,
-  editorialUrl,
+  editorialPublicPaths,
   editorialWritePayloadFallbacks,
-  mendpressSectionPath,
+  type EditorialStatus,
+  type EditorialType,
 } from '@/lib/editorial'
+import {
+  deriveEditorialAuditActions,
+  editorialChangedFields,
+  verifyExpectedPublishedVisibility,
+  writeEditorialAuditLogs,
+} from '@/lib/editorial-admin'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -90,30 +97,41 @@ export async function POST(request: Request) {
       )
     }
 
-    const sectionPath = mendpressSectionPath(String(payload.editorial_type) as never)
-    const articlePath = editorialUrl(data.slug)
-    const pathsToRevalidate = [
-      '/mendpress',
-      '/mendpress/editorial',
-      '/mendpress/dialogue',
-      '/mendpress/visual-narrative',
-      '/mendpress/reports',
-      '/zh/mendpress',
-      '/zh/mendpress/editorial',
-      '/zh/mendpress/dialogue',
-      '/zh/mendpress/visual-narrative',
-      '/zh/mendpress/reports',
-      sectionPath,
-      `/zh${sectionPath}`,
-      articlePath,
-      `/zh${articlePath}`,
-    ]
+    const nextStatus = payload.status as EditorialStatus
+    const nextType = payload.editorial_type as EditorialType
+    const changedFields = editorialChangedFields(null, payload)
+    const auditActions = deriveEditorialAuditActions({
+      previousStatus: null,
+      nextStatus,
+      isCreate: true,
+      changedFields,
+    })
+    await writeEditorialAuditLogs({
+      entryId: data.id,
+      slug: data.slug,
+      actions: auditActions,
+      changedFields,
+      previousStatus: null,
+      nextStatus,
+      editorialType: nextType,
+    })
+
+    const pathsToRevalidate = editorialPublicPaths(data.slug, nextType)
 
     for (const path of pathsToRevalidate) {
       revalidatePath(path)
     }
 
-    return NextResponse.json({ ok: true, id: data.id, slug: data.slug })
+    const visibility = await verifyExpectedPublishedVisibility(nextStatus, data.slug)
+    if (visibility?.status !== 'published') {
+      console.warn('[Editorial Admin] published visibility check failed after create', visibility)
+    }
+    return NextResponse.json({
+      ok: true,
+      id: data.id,
+      slug: data.slug,
+      visibility,
+    })
   } catch (error) {
     console.error('[Editorial Admin] create route error', error)
     return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 })

@@ -7,7 +7,8 @@
     "prebuild": "node scripts/generate-seo-dates.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "editorial:integrity": "node scripts/editorial-integrity-check.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",

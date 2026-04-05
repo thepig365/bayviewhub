@@ -2,11 +2,10 @@ import Link from 'next/link'
 import { JournalCard } from '@/components/editorial/JournalCard'
 import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import {
-  editorialHasChineseCardContent,
   MENDPRESS_CATEGORY_LINKS,
   MENDPRESS_SECTION_IDS,
   MENDPRESS_SECTION_META,
-  listPublishedEditorialEntries,
+  listPublishedEditorialEntriesWithDiagnostics,
   type EditorialType,
   type MendpressSectionId,
 } from '@/lib/editorial'
@@ -50,13 +49,13 @@ export async function JournalCollectionPage({
   subscribeCtaLabel,
   subscribeSecondaryLabel,
 }: Props) {
-  const rawEntries = await listPublishedEditorialEntries({
+  const publishedResult = await listPublishedEditorialEntriesWithDiagnostics({
     types,
     type: types?.length === 1 ? types[0] : undefined,
     limit: 24,
     strictRecency: true,
   })
-  const entries = rawEntries
+  const entries = publishedResult.entries
   const introClass = locale === 'zh' ? 'text-fg/90 dark:text-white/90' : 'text-fg/88 dark:text-white/88'
   const sectionDescriptionClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
   const emptyBodyClass = locale === 'zh' ? 'text-fg/88 dark:text-white/88' : 'text-fg/84 dark:text-white/84'
@@ -179,6 +178,17 @@ export async function JournalCollectionPage({
                 </section>
               ) : null}
             </>
+          ) : publishedResult.hadQueryError ? (
+            <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-100 px-6 py-16 text-center shadow-sm dark:border-border dark:bg-surface">
+              <h2 className="text-3xl font-serif font-semibold text-fg">
+                {locale === 'zh' ? 'Mendpress 暂时不可读取。' : 'Mendpress is temporarily unavailable.'}
+              </h2>
+              <p className={cn('mx-auto mt-4 max-w-2xl text-[1.02rem] leading-8 md:text-base md:leading-7', emptyBodyClass)}>
+                {locale === 'zh'
+                  ? '公开文章读取发生了异常。这不是“没有文章”的空状态。请稍后再试。'
+                  : 'The public editorial stream could not be read just now. This is not an empty publication state.'}
+              </p>
+            </section>
           ) : (
             <section className="mt-12 rounded-3xl border border-dashed border-border bg-natural-100 px-6 py-16 text-center shadow-sm dark:border-border dark:bg-surface">
               <h2 className="text-3xl font-serif font-semibold text-fg">

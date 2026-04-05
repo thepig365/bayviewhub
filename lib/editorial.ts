@@ -42,7 +42,7 @@ export const WRITTEN_EDITORIAL_TYPES = [
   'profile',
 ] as const
 
-export const EDITORIAL_STATUSES = ['draft', 'published'] as const
+export const EDITORIAL_STATUSES = ['draft', 'published', 'archived'] as const
 
 export type EditorialType = (typeof EDITORIAL_TYPES)[number]
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
@@ -258,6 +258,20 @@ export type EditorialSection = {
   description: string
   path: string
   entries: EditorialEntry[]
+}
+
+export type EditorialCollectionDiagnostics = {
+  entries: EditorialEntry[]
+  hadQueryError: boolean
+  skippedRowCount: number
+  sourceLevel: 'bilingual' | 'audio' | 'base' | 'none'
+}
+
+export type EditorialVisibilityReport = {
+  slug: string
+  status: 'published' | 'not_published' | 'missing'
+  publicPath: string
+  zhPath: string
 }
 
 type MendpressSectionMeta = {
@@ -618,6 +632,27 @@ export function editorialUrl(slug: string): string {
   return `/mendpress/${slug}`
 }
 
+export function editorialPublicPaths(slug: string, type: EditorialType): string[] {
+  const sectionPath = mendpressSectionPath(type)
+  const articlePath = editorialUrl(slug)
+  return [
+    '/mendpress',
+    '/mendpress/editorial',
+    '/mendpress/dialogue',
+    '/mendpress/visual-narrative',
+    '/mendpress/reports',
+    '/zh/mendpress',
+    '/zh/mendpress/editorial',
+    '/zh/mendpress/dialogue',
+    '/zh/mendpress/visual-narrative',
+    '/zh/mendpress/reports',
+    sectionPath,
+    `/zh${sectionPath}`,
+    articlePath,
+    `/zh${articlePath}`,
+  ]
+}
+
 export function editorialAbsoluteUrl(slug: string): string {
   return `${SITE_CONFIG.url}${editorialUrl(slug)}`
 }
@@ -696,10 +731,23 @@ function safeNormalizeEntry(row: EditorialDbRow, scope: string): EditorialEntry 
   }
 }
 
-function safeNormalizeEntries(rows: EditorialDbRow[], scope: string): EditorialEntry[] {
-  return rows
-    .map((row) => safeNormalizeEntry(row, scope))
-    .filter((entry): entry is EditorialEntry => Boolean(entry))
+function safeNormalizeEntries(
+  rows: EditorialDbRow[],
+  scope: string
+): { entries: EditorialEntry[]; skippedRowCount: number } {
+  const entries: EditorialEntry[] = []
+  let skippedRowCount = 0
+
+  for (const row of rows) {
+    const entry = safeNormalizeEntry(row, scope)
+    if (entry) {
+      entries.push(entry)
+    } else {
+      skippedRowCount += 1
+    }
+  }
+
+  return { entries, skippedRowCount }
 }
 
 function editorialQuery(client: SupabaseClient, level: 'bilingual' | 'audio' | 'base' = 'bilingual') {
@@ -801,15 +849,23 @@ export function editorialWritePayloadFallbacks(payload: Record<string, unknown>)
   return Array.from(unique.values())
 }
 
-export async function listPublishedEditorialEntries(options?: {
+export async function listPublishedEditorialEntriesWithDiagnostics(options?: {
   type?: EditorialType
   types?: EditorialType[]
   limit?: number
   excludeSlug?: string
   strictRecency?: boolean
-}): Promise<EditorialEntry[]> {
+}): Promise<EditorialCollectionDiagnostics> {
   const supabase = getSupabaseServer()
-  if (!supabase) return []
+  if (!supabase) {
+    logEditorialReadError('list published entries', 'Supabase server client not configured')
+    return {
+      entries: [],
+      hadQueryError: true,
+      skippedRowCount: 0,
+      sourceLevel: 'none',
+    }
+  }
 
   const runQuery = async (level: 'bilingual' | 'audio' | 'base') => {
     let query = editorialQuery(supabase, level).eq('status', 'published')
@@ -841,19 +897,43 @@ export async function listPublishedEditorialEntries(options?: {
     return query
   }
 
+  let sourceLevel: 'bilingual' | 'audio' | 'base' | 'none' = 'bilingual'
   let { data, error } = await runQuery('bilingual')
   if (error && editorialMissingColumnError(error)) {
+    sourceLevel = 'audio'
     ;({ data, error } = await runQuery('audio'))
   }
   if (error && editorialMissingColumnError(error)) {
+    sourceLevel = 'base'
     ;({ data, error } = await runQuery('base'))
   }
   if (error || !data) {
     logEditorialReadError('list published entries', error)
-    return []
+    return {
+      entries: [],
+      hadQueryError: true,
+      skippedRowCount: 0,
+      sourceLevel,
+    }
   }
 
-  return safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list published entries')
+  const normalized = safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list published entries')
+  return {
+    entries: normalized.entries,
+    hadQueryError: false,
+    skippedRowCount: normalized.skippedRowCount,
+    sourceLevel,
+  }
+}
+
+export async function listPublishedEditorialEntries(options?: {
+  type?: EditorialType
+  types?: EditorialType[]
+  limit?: number
+  excludeSlug?: string
+  strictRecency?: boolean
+}): Promise<EditorialEntry[]> {
+  return (await listPublishedEditorialEntriesWithDiagnostics(options)).entries
 }
 
 export async function getPublishedEditorialEntryBySlug(
@@ -883,6 +963,28 @@ export async function getPublishedEditorialEntryBySlug(
   }
 
   return safeNormalizeEntry(data as unknown as EditorialDbRow, `get published slug ${slug}`)
+}
+
+export async function verifyEditorialPublicVisibility(slug: string): Promise<EditorialVisibilityReport> {
+  const publicPath = editorialUrl(slug)
+  const zhPath = `/zh${publicPath}`
+  const entry = await getPublishedEditorialEntryBySlug(slug)
+
+  if (!entry) {
+    return {
+      slug,
+      status: 'missing',
+      publicPath,
+      zhPath,
+    }
+  }
+
+  return {
+    slug,
+    status: entry.status === 'published' ? 'published' : 'not_published',
+    publicPath,
+    zhPath,
+  }
 }
 
 export async function getEditorialEntryByIdForAdmin(id: string): Promise<EditorialEntry | null> {
@@ -931,7 +1033,7 @@ export async function listEditorialEntriesForAdmin(limit = 24): Promise<Editoria
     return []
   }
 
-  return safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list admin entries')
+  return safeNormalizeEntries(data as unknown as EditorialDbRow[], 'list admin entries').entries
 }
 
 export async function listRelatedEditorialEntries(

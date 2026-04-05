@@ -343,7 +343,7 @@ export function EditorialEditorClient({
   const [assistMessage, setAssistMessage] = useState('')
   const [audioUrlCopied, setAudioUrlCopied] = useState(false)
   const [showAudioUrlField, setShowAudioUrlField] = useState(false)
-  const [deleteMessage, setDeleteMessage] = useState('')
+  const deleteMessage = ''
   const [bodyInsertNotice, setBodyInsertNotice] = useState<BodyInsertNotice | null>(null)
   const [aiMetadataSuggestions, setAiMetadataSuggestions] = useState<AiMetadataSuggestions>({
     title: '',
@@ -621,7 +621,13 @@ export function EditorialEditorClient({
       if (typeof data.slug === 'string' && data.slug.trim()) {
         setSlug(data.slug)
       }
-      setMessage(desiredStatus === 'published' ? 'Piece published.' : 'Draft saved.')
+      setMessage(
+        desiredStatus === 'published'
+          ? 'Piece published.'
+          : desiredStatus === 'archived'
+            ? 'Piece archived.'
+            : 'Draft saved.'
+      )
 
       if (!entry?.id && data.id) {
         window.location.href = `/private/editorial/${data.id}`
@@ -1625,6 +1631,22 @@ export function EditorialEditorClient({
               >
                 {status === 'loading' ? 'Publishing…' : 'Publish'}
               </button>
+              {entry?.id ? (
+                <button
+                  type="button"
+                  onClick={() => submit(entryStatus === 'archived' ? 'draft' : 'archived')}
+                  disabled={status === 'loading'}
+                  className="w-full rounded-lg border border-amber-300 px-4 py-3 font-medium text-amber-900 transition-colors hover:border-amber-500 hover:bg-amber-50 disabled:opacity-60 dark:border-amber-700 dark:text-amber-100 dark:hover:bg-amber-950/30"
+                >
+                  {status === 'loading'
+                    ? entryStatus === 'archived'
+                      ? 'Restoring…'
+                      : 'Archiving…'
+                    : entryStatus === 'archived'
+                      ? 'Restore to Draft'
+                      : 'Archive'}
+                </button>
+              ) : null}
             </div>
           )}
           {message ? (
@@ -1639,7 +1661,7 @@ export function EditorialEditorClient({
                   Permanent delete is disabled.
                 </p>
                 <p className="mt-2 text-sm leading-7 text-amber-900/90 dark:text-amber-200/85">
-                  To prevent accidental loss of published Mendpress work, editorial entries can no longer be removed from this screen.
+                  To prevent accidental loss of published Mendpress work, editorial entries can no longer be removed from this screen. Use archive if you need to hide a piece safely.
                 </p>
                 {deleteMessage ? (
                   <p className="mt-3 text-sm text-amber-900 dark:text-amber-200">{deleteMessage}</p>

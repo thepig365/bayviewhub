@@ -22,7 +22,7 @@ create table if not exists public.editorial_entries (
   body_markdown text not null,
   editorial_type text not null,
   status text not null default 'draft'
-    check (status in ('draft', 'published')),
+    check (status in ('draft', 'published', 'archived')),
   published_at timestamptz,
   hero_image text,
   primary_cta_label text,
@@ -106,7 +106,7 @@ alter table public.editorial_entries
   drop constraint if exists editorial_entries_status_check;
 
 alter table public.editorial_entries
-  add constraint editorial_entries_status_check check (status in ('draft', 'published'));
+  add constraint editorial_entries_status_check check (status in ('draft', 'published', 'archived'));
 
 create index if not exists editorial_entries_status_published_at_idx
   on public.editorial_entries (status, published_at desc);
@@ -127,5 +127,24 @@ create index if not exists editorial_entries_audio_url_idx
 comment on table public.editorial_entries is
   'Mendpress editorial entries for written, audio-first, and hybrid publishing at Bayview Hub.';
 
+create table if not exists public.editorial_audit_log (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  entry_id uuid not null,
+  slug text not null,
+  action_type text not null check (
+    action_type in ('create', 'update', 'publish', 'unpublish', 'archive', 'unarchive')
+  ),
+  changed_fields text[] not null default '{}',
+  metadata jsonb not null default '{}'::jsonb
+);
+
+create index if not exists editorial_audit_log_entry_created_idx
+  on public.editorial_audit_log (entry_id, created_at desc);
+
+create index if not exists editorial_audit_log_slug_created_idx
+  on public.editorial_audit_log (slug, created_at desc);
+
 grant usage on schema public to service_role;
-grant select, insert, update, delete on table public.editorial_entries to service_role;
+grant select, insert, update on table public.editorial_entries to service_role;
+grant select, insert on table public.editorial_audit_log to service_role;
