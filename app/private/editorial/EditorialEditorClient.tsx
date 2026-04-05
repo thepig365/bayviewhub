@@ -16,6 +16,11 @@ import {
   sanitizeEditorialTags,
   sanitizeEditorialSlug,
 } from '@/lib/editorial'
+import {
+  exceedsPrimaryAudioTranscriptionLimit,
+  PRIMARY_AUDIO_UPLOAD_COPY,
+  primaryAudioTranscriptionLimitMessage,
+} from '@/lib/editorial-audio'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 type Props = {
@@ -44,7 +49,6 @@ type BodyInsertNotice =
     }
 
 const INLINE_MAX_DIMENSION = 1800
-const SUPPORTED_AUDIO_COPY = 'MP3, M4A, WAV, OGG, or WebM up to 150 MB'
 const FIELD_BASE_CLASS = `${CONTRAST_FORM_CONTROL_CLASS} text-base`
 const WRITING_TEXTAREA_CLASS = `${CONTRAST_FORM_CONTROL_CLASS} text-base leading-8`
 
@@ -445,9 +449,14 @@ export function EditorialEditorClient({
       }),
     })
 
-    const data = await res.json().catch(() => ({}))
+    const data = await res.json().catch(() => null)
     if (!res.ok || !data.ok) {
-      const errorMessage = data.error || 'Audio processing failed.'
+      const errorMessage =
+        data && typeof data === 'object' && 'error' in data && typeof data.error === 'string'
+          ? data.error
+          : res.status >= 500
+            ? 'Audio processing did not return a complete response. The audio is still attached. Try processing again.'
+            : 'Audio processing failed.'
       setAssistStatus({
         transcript: 'error',
         showNotes: 'error',
@@ -490,6 +499,7 @@ export function EditorialEditorClient({
     const nextPrimaryCtaHref = typeof metadata.primaryCtaHref === 'string' ? metadata.primaryCtaHref.trim() : ''
     const nextSlugSuggestion = typeof metadata.slugSuggestion === 'string' ? sanitizeEditorialSlug(metadata.slugSuggestion) : ''
     const nextSeoKeywords = Array.isArray(metadata.seoKeywords) ? sanitizeEditorialTags(metadata.seoKeywords) : []
+    const warning = typeof data.warning === 'string' ? data.warning.trim() : ''
 
     if (!title.trim() && nextTitle) setTitle(nextTitle)
     if (!titleZh.trim() && nextTitleZh) setTitleZh(nextTitleZh)
@@ -509,12 +519,23 @@ export function EditorialEditorClient({
       slugSuggestion: nextSlugSuggestion,
       seoKeywords: nextSeoKeywords,
     })
+    setAssistMessage(warning)
 
     setAssistStatus({
       transcript: typeof data.transcriptMarkdown === 'string' && data.transcriptMarkdown.trim() ? 'ready' : 'error',
       showNotes: typeof data.showNotesMarkdown === 'string' && data.showNotesMarkdown.trim() ? 'ready' : 'error',
       companion: typeof data.companionMarkdown === 'string' && data.companionMarkdown.trim() ? 'ready' : 'error',
     })
+
+    return {
+      hasWarning: Boolean(warning),
+      transcriptReady: typeof data.transcriptMarkdown === 'string' && Boolean(data.transcriptMarkdown.trim()),
+      draftsReady:
+        typeof data.showNotesMarkdown === 'string' &&
+        Boolean(data.showNotesMarkdown.trim()) &&
+        typeof data.companionMarkdown === 'string' &&
+        Boolean(data.companionMarkdown.trim()),
+    }
   }
 
   const submit = async (desiredStatus: EditorialStatus) => {
@@ -687,6 +708,18 @@ export function EditorialEditorClient({
   }
 
   const startPrimaryAudioUpload = async (file: File) => {
+    if (exceedsPrimaryAudioTranscriptionLimit(file)) {
+      setAudioUploadState('error')
+      setAudioUploadMessage(primaryAudioTranscriptionLimitMessage())
+      setAssistStatus({
+        transcript: 'idle',
+        showNotes: 'idle',
+        companion: 'idle',
+      })
+      setAssistMessage('')
+      return
+    }
+
     setAudioUploadState('loading')
     setAudioUploadMessage('Uploading audio...')
     setAssistMessage('')
@@ -699,15 +732,38 @@ export function EditorialEditorClient({
       setAudioDurationSeconds(duration)
       setAudioUploadState('success')
       setAudioUploadMessage('Audio uploaded. Generating transcript, editorial drafts, and publishing metadata...')
-      await runAudioAssistWorkflow({ audioUrl: url })
+      const workflow = await runAudioAssistWorkflow({ audioUrl: url })
       setAudioUploadState('success')
-      setAudioUploadMessage('Audio uploaded. Transcript, drafts, and metadata suggestions are ready to refine.')
+      setAudioUploadMessage(
+        workflow.hasWarning
+          ? 'Audio uploaded. Transcript is attached, but some AI drafting steps need attention below.'
+          : 'Audio uploaded. Transcript, drafts, and metadata suggestions are ready to refine.'
+      )
     } catch (error) {
       const message = simplifyUploadError(error instanceof Error ? error.message : 'Audio upload failed.', 'audio')
       if (!uploadedUrl) {
         setAudioUploadState('error')
       }
       setAudioUploadMessage(message)
+    }
+  }
+
+  const retryAudioAssist = async () => {
+    if (!audioUrl || audioUploadState === 'loading') return
+    setAudioUploadState('loading')
+    setAudioUploadMessage('Retrying transcript and draft generation...')
+
+    try {
+      const workflow = await runAudioAssistWorkflow({ audioUrl })
+      setAudioUploadState('success')
+      setAudioUploadMessage(
+        workflow.hasWarning
+          ? 'Retry completed, but some AI drafting steps still need attention below.'
+          : 'Transcript, drafts, and metadata suggestions are ready to refine.'
+      )
+    } catch (error) {
+      setAudioUploadState('error')
+      setAudioUploadMessage(error instanceof Error ? error.message : 'Audio processing failed.')
     }
   }
 
@@ -986,7 +1042,7 @@ export function EditorialEditorClient({
                       ? 'You can replace the current file at any time and keep refining the editorial draft.'
                       : 'Choose the recording first. The system will detect duration and prepare transcript, show-notes, and companion-text drafts.'}
                   </p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{SUPPORTED_AUDIO_COPY}</p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted">{PRIMARY_AUDIO_UPLOAD_COPY}</p>
                   <button
                     type="button"
                     onClick={(event) => {
@@ -1090,6 +1146,16 @@ export function EditorialEditorClient({
                       ) : null}
                     </div>
                   ) : null}
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={retryAudioAssist}
+                      disabled={audioUploadState === 'loading'}
+                      className="rounded-full border border-border px-3 py-1 text-sm text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {audioUploadState === 'loading' ? 'Processing…' : 'Retry processing'}
+                    </button>
+                  </div>
                 </div>
               ) : null}
             </section>

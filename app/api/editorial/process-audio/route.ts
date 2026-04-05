@@ -10,15 +10,23 @@ import {
   sanitizeEditorialType,
 } from '@/lib/editorial'
 import {
+  PRIMARY_AUDIO_TRANSCRIPTION_MAX_BYTES,
+  primaryAudioTranscriptionLimitMessage,
+} from '@/lib/editorial-audio'
+import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
 } from '@/lib/newsletter-admin'
 
 export const runtime = 'nodejs'
+export const maxDuration = 300
 
 const OPENAI_TRANSCRIPTION_MODEL = 'whisper-1'
 const OPENAI_DRAFT_MODEL = 'gpt-4o-mini'
-const OPENAI_TRANSCRIPTION_MAX_BYTES = 24 * 1024 * 1024
+
+function isAbortError(error: unknown): boolean {
+  return error instanceof Error && error.name === 'AbortError'
+}
 
 async function rejectIfUnauthorized() {
   const cookieStore = await cookies()
@@ -65,7 +73,16 @@ function sanitizeAudioUrl(value: unknown): string {
 }
 
 async function transcribeAudioFromUrl(audioUrl: string, apiKey: string): Promise<string> {
-  const audioResponse = await fetch(audioUrl)
+  let audioResponse: Response
+  try {
+    audioResponse = await fetch(audioUrl, { signal: AbortSignal.timeout(120_000) })
+  } catch (error) {
+    throw new Error(
+      isAbortError(error)
+        ? 'Fetching the uploaded audio took too long. Try again or upload a shorter recording.'
+        : 'Could not fetch the uploaded audio for transcription.'
+    )
+  }
   if (!audioResponse.ok) {
     throw new Error('Could not fetch the uploaded audio for transcription.')
   }
@@ -75,8 +92,8 @@ async function transcribeAudioFromUrl(audioUrl: string, apiKey: string): Promise
     throw new Error('Uploaded audio was empty.')
   }
 
-  if (audioBlob.size > OPENAI_TRANSCRIPTION_MAX_BYTES) {
-    throw new Error('Audio transcription currently supports uploads up to 24 MB.')
+  if (audioBlob.size > PRIMARY_AUDIO_TRANSCRIPTION_MAX_BYTES) {
+    throw new Error(primaryAudioTranscriptionLimitMessage())
   }
 
   const file = new File([audioBlob], 'mendpress-audio-input', {
@@ -88,13 +105,23 @@ async function transcribeAudioFromUrl(audioUrl: string, apiKey: string): Promise
   formData.set('model', OPENAI_TRANSCRIPTION_MODEL)
   formData.set('response_format', 'text')
 
-  const transcriptionResponse = await fetch('https://api.openai.com/v1/audio/transcriptions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: formData,
-  })
+  let transcriptionResponse: Response
+  try {
+    transcriptionResponse = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: formData,
+      signal: AbortSignal.timeout(180_000),
+    })
+  } catch (error) {
+    throw new Error(
+      isAbortError(error)
+        ? 'Speech-to-text took too long for this recording. Try again or upload a shorter file.'
+        : 'Speech-to-text failed for this audio file.'
+    )
+  }
 
   if (!transcriptionResponse.ok) {
     const errorText = await transcriptionResponse.text().catch(() => '')
@@ -128,70 +155,80 @@ async function draftEditorialMaterials({
   transcript: string
   speakers: string[]
 }) {
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: OPENAI_DRAFT_MODEL,
-      response_format: { type: 'json_object' },
-      messages: [
-        {
-          role: 'system',
-          content:
-            'You are writing for Mendpress at Bayview Hub. Produce restrained, editorial, human-sounding markdown and metadata in both English and Simplified Chinese. Avoid hype, AI-sounding filler, generic marketing language, and keyword stuffing. Return strict JSON only.',
-        },
-        {
-          role: 'user',
-          content: JSON.stringify({
-            title,
-            summary,
-            editorialType,
-            speakers,
-            transcript,
-            instructions: {
-              showNotesMarkdown:
-                'Write concise but polished markdown show notes with a short opening, 3-6 bullet highlights, and a speaker section only if speakers are present.',
-              companionMarkdown:
-                'Write a short editorial companion text in markdown, 2-5 short paragraphs, suitable as the written companion to the audio piece.',
-              transcriptMarkdownZh:
-                'Translate the transcript into clean, readable Simplified Chinese markdown while preserving meaning and speaker structure.',
-              showNotesMarkdownZh:
-                'Write a Simplified Chinese version of the show notes in restrained editorial language.',
-              companionMarkdownZh:
-                'Write a Simplified Chinese version of the companion text in restrained editorial language.',
-              summary:
-                'Write one restrained editorial dek, 1-3 sentences, based on the transcript.',
-              summaryZh:
-                'Write a Simplified Chinese version of the dek.',
-              title:
-                'If the current title is blank or weak, suggest a clean editorial title. Otherwise return the current title.',
-              titleZh:
-                'Write a clean Simplified Chinese title version suitable for public editorial reading.',
-              tags:
-                'Suggest 3-6 specific editorial tags derived from the transcript. Avoid generic filler tags.',
-              seoTitle:
-                'Write a clean SEO title under 70 characters.',
-              seoTitleZh:
-                'Write a clean Simplified Chinese SEO title under 70 characters.',
-              seoDescription:
-                'Write a concise SEO description under 160 characters.',
-              seoDescriptionZh:
-                'Write a concise Simplified Chinese SEO description under 160 characters.',
-              seoKeywords:
-                'Suggest 5-10 topic terms or keyword phrases that actually match the piece.',
-              speakers:
-                'Infer speakers or guests only if the transcript strongly supports it. Otherwise return an empty array.',
-              outputSchema:
-                'Return JSON with keys showNotesMarkdown, companionMarkdown, transcriptMarkdownZh, showNotesMarkdownZh, companionMarkdownZh, title, titleZh, summary, summaryZh, tags, seoTitle, seoTitleZh, seoDescription, seoDescriptionZh, seoKeywords, speakers.',
-            },
-          }),
-        },
-      ],
-    }),
-  })
+  let response: Response
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: OPENAI_DRAFT_MODEL,
+        response_format: { type: 'json_object' },
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You are writing for Mendpress at Bayview Hub. Produce restrained, editorial, human-sounding markdown and metadata in both English and Simplified Chinese. Avoid hype, AI-sounding filler, generic marketing language, and keyword stuffing. Return strict JSON only.',
+          },
+          {
+            role: 'user',
+            content: JSON.stringify({
+              title,
+              summary,
+              editorialType,
+              speakers,
+              transcript,
+              instructions: {
+                showNotesMarkdown:
+                  'Write concise but polished markdown show notes with a short opening, 3-6 bullet highlights, and a speaker section only if speakers are present.',
+                companionMarkdown:
+                  'Write a short editorial companion text in markdown, 2-5 short paragraphs, suitable as the written companion to the audio piece.',
+                transcriptMarkdownZh:
+                  'Translate the transcript into clean, readable Simplified Chinese markdown while preserving meaning and speaker structure.',
+                showNotesMarkdownZh:
+                  'Write a Simplified Chinese version of the show notes in restrained editorial language.',
+                companionMarkdownZh:
+                  'Write a Simplified Chinese version of the companion text in restrained editorial language.',
+                summary:
+                  'Write one restrained editorial dek, 1-3 sentences, based on the transcript.',
+                summaryZh:
+                  'Write a Simplified Chinese version of the dek.',
+                title:
+                  'If the current title is blank or weak, suggest a clean editorial title. Otherwise return the current title.',
+                titleZh:
+                  'Write a clean Simplified Chinese title version suitable for public editorial reading.',
+                tags:
+                  'Suggest 3-6 specific editorial tags derived from the transcript. Avoid generic filler tags.',
+                seoTitle:
+                  'Write a clean SEO title under 70 characters.',
+                seoTitleZh:
+                  'Write a clean Simplified Chinese SEO title under 70 characters.',
+                seoDescription:
+                  'Write a concise SEO description under 160 characters.',
+                seoDescriptionZh:
+                  'Write a concise Simplified Chinese SEO description under 160 characters.',
+                seoKeywords:
+                  'Suggest 5-10 topic terms or keyword phrases that actually match the piece.',
+                speakers:
+                  'Infer speakers or guests only if the transcript strongly supports it. Otherwise return an empty array.',
+                outputSchema:
+                  'Return JSON with keys showNotesMarkdown, companionMarkdown, transcriptMarkdownZh, showNotesMarkdownZh, companionMarkdownZh, title, titleZh, summary, summaryZh, tags, seoTitle, seoTitleZh, seoDescription, seoDescriptionZh, seoKeywords, speakers.',
+              },
+            }),
+          },
+        ],
+      }),
+      signal: AbortSignal.timeout(180_000),
+    })
+  } catch (error) {
+    throw new Error(
+      isAbortError(error)
+        ? 'Editorial draft generation took too long. The transcript can still be kept, then retry draft generation.'
+        : 'Editorial draft generation failed.'
+    )
+  }
 
   if (!response.ok) {
     throw new Error('Editorial draft generation failed.')
@@ -266,38 +303,65 @@ export async function POST(request: Request) {
     }
 
     const transcript = await transcribeAudioFromUrl(audioUrl, apiKey)
-    const drafts = await draftEditorialMaterials({
-      apiKey,
-      title,
-      summary,
-      editorialType,
-      transcript,
-      speakers,
-    })
-    const suggestedTitle = drafts.metadata.title || title || 'Untitled audio piece'
+    let drafts:
+      | Awaited<ReturnType<typeof draftEditorialMaterials>>
+      | null = null
+    let warning = ''
+
+    try {
+      drafts = await draftEditorialMaterials({
+        apiKey,
+        title,
+        summary,
+        editorialType,
+        transcript,
+        speakers,
+      })
+    } catch (error) {
+      warning =
+        error instanceof Error
+          ? `${error.message} The transcript is ready, and you can retry draft generation without re-uploading the audio.`
+          : 'Editorial draft generation failed. The transcript is ready, and you can retry without re-uploading the audio.'
+    }
+
+    const metadata = drafts?.metadata ?? {
+      title: '',
+      titleZh: '',
+      summary: '',
+      summaryZh: '',
+      tags: [],
+      seoTitle: '',
+      seoTitleZh: '',
+      seoDescription: '',
+      seoDescriptionZh: '',
+      seoKeywords: [],
+      speakers: [],
+    }
+    const suggestedTitle = metadata.title || title || 'Untitled audio piece'
     const slugSuggestion = sanitizeEditorialSlug('', suggestedTitle)
     const ctaHref = slugSuggestion ? editorialUrl(slugSuggestion) : '/mendpress'
 
     return NextResponse.json({
       ok: true,
       transcriptMarkdown: sanitizeEditorialBody(transcript, 120000),
-      transcriptMarkdownZh: drafts.transcriptMarkdownZh,
-      showNotesMarkdown: drafts.showNotesMarkdown,
-      showNotesMarkdownZh: drafts.showNotesMarkdownZh,
-      companionMarkdown: drafts.companionMarkdown,
-      companionMarkdownZh: drafts.companionMarkdownZh,
+      transcriptMarkdownZh: drafts?.transcriptMarkdownZh || '',
+      showNotesMarkdown: drafts?.showNotesMarkdown || '',
+      showNotesMarkdownZh: drafts?.showNotesMarkdownZh || '',
+      companionMarkdown: drafts?.companionMarkdown || '',
+      companionMarkdownZh: drafts?.companionMarkdownZh || '',
+      warning,
       metadata: {
-        title: drafts.metadata.title,
-        titleZh: drafts.metadata.titleZh,
-        summary: drafts.metadata.summary,
-        summaryZh: drafts.metadata.summaryZh,
-        tags: drafts.metadata.tags,
-        seoTitle: drafts.metadata.seoTitle,
-        seoTitleZh: drafts.metadata.seoTitleZh,
-        seoDescription: drafts.metadata.seoDescription,
-        seoDescriptionZh: drafts.metadata.seoDescriptionZh,
-        seoKeywords: drafts.metadata.seoKeywords,
-        speakers: drafts.metadata.speakers,
+        title: metadata.title,
+        titleZh: metadata.titleZh,
+        summary: metadata.summary,
+        summaryZh: metadata.summaryZh,
+        tags: metadata.tags,
+        seoTitle: metadata.seoTitle,
+        seoTitleZh: metadata.seoTitleZh,
+        seoDescription: metadata.seoDescription,
+        seoDescriptionZh: metadata.seoDescriptionZh,
+        seoKeywords: metadata.seoKeywords,
+        speakers: metadata.speakers,
         slugSuggestion,
         primaryCtaLabel: editorialType === 'podcast_episode' || editorialType === 'audio_essay' ? 'Listen on Mendpress' : '',
         primaryCtaHref: editorialType === 'podcast_episode' || editorialType === 'audio_essay' ? ctaHref : '',
