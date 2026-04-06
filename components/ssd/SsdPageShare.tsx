@@ -22,6 +22,7 @@ export function SsdPageShare({
         shareSummary={cfg.intro}
         mailtoSubject={cfg.subject}
         mailtoIntro={cfg.intro}
+        showSharingPackPanel
         ssdCampaignShare={ssdCampaignShare}
       />
     </div>
