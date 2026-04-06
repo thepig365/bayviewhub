@@ -1204,6 +1204,13 @@ export function editorialHasChinesePageContent(entry: EditorialEntry): boolean {
 }
 
 export function defaultEditorialPrimaryCta(entry: EditorialEntry): EditorialLink {
+  if (
+    isAudioFirstEditorialType(entry.editorialType) &&
+    entry.primaryCtaLabel === 'Listen on Mendpress'
+  ) {
+    return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
+  }
+
   if (entry.primaryCtaLabel && entry.primaryCtaHref) {
     return {
       label: entry.primaryCtaLabel,
@@ -1222,9 +1229,9 @@ export function defaultEditorialPrimaryCta(entry: EditorialEntry): EditorialLink
     case 'interview':
       return { label: 'Start a Conversation', href: GALLERY_VIEWING_REQUEST_MAILTO, external: true }
     case 'audio_essay':
-      return { label: 'Listen on Mendpress', href: entry.path }
+      return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
     case 'podcast_episode':
-      return { label: 'Listen on Mendpress', href: entry.path }
+      return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
     case 'field_note':
       return { label: 'Plan Your Visit', href: '/visit' }
     case 'profile':

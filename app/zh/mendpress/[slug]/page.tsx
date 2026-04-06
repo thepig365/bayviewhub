@@ -407,18 +407,20 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
             <div className="mx-auto mt-10 max-w-5xl space-y-6">
               {entry.audioUrl && audioFirst ? (
-                <EditorialAudioPlayer
-                  title={audioLeadTitle}
-                  src={entry.audioUrl}
-                  speakers={entry.speakers}
-                  durationLabel={durationLabel}
-                  locale="zh"
-                  note={
-                    isAudioFirstEditorialType(entry.editorialType)
-                      ? '音频文件保持原始语言发布，但下方的正文、导读与 transcript/script 已切换为中文阅读模式。'
-                      : '本页保留原始音频，同时提供中文阅读版本。'
-                  }
-                />
+                <div id="listen">
+                  <EditorialAudioPlayer
+                    title={audioLeadTitle}
+                    src={entry.audioUrl}
+                    speakers={entry.speakers}
+                    durationLabel={durationLabel}
+                    locale="zh"
+                    note={
+                      isAudioFirstEditorialType(entry.editorialType)
+                        ? '音频文件保持原始语言发布，但下方的正文、导读与 transcript/script 已切换为中文阅读模式。'
+                        : '本页保留原始音频，同时提供中文阅读版本。'
+                    }
+                  />
+                </div>
               ) : null}
 
               {entry.heroImage ? (
@@ -428,18 +430,20 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               ) : null}
 
               {entry.audioUrl && !audioFirst ? (
-                <EditorialAudioPlayer
-                  title={audioLeadTitle}
-                  src={entry.audioUrl}
-                  speakers={entry.speakers}
-                  durationLabel={durationLabel}
-                  locale="zh"
-                  note={
-                    isAudioFirstEditorialType(entry.editorialType)
-                      ? '音频文件保持原始语言发布，但下方的正文、导读与 transcript/script 已切换为中文阅读模式。'
-                      : '本页保留原始音频，同时提供中文阅读版本。'
-                  }
-                />
+                <div id="listen">
+                  <EditorialAudioPlayer
+                    title={audioLeadTitle}
+                    src={entry.audioUrl}
+                    speakers={entry.speakers}
+                    durationLabel={durationLabel}
+                    locale="zh"
+                    note={
+                      isAudioFirstEditorialType(entry.editorialType)
+                        ? '音频文件保持原始语言发布，但下方的正文、导读与 transcript/script 已切换为中文阅读模式。'
+                        : '本页保留原始音频，同时提供中文阅读版本。'
+                    }
+                  />
+                </div>
               ) : null}
             </div>
           </header>
@@ -526,10 +530,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
             <aside className="space-y-6 lg:sticky lg:top-24">
               <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">下一步</p>
-                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">从这篇内容继续</h2>
+                <p className="eyebrow text-accent">接下来</p>
+                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">继续阅读 Mendpress</h2>
                 <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  每一篇 Mendpress 内容都应通向某个真正有用的下一步: 订阅、到访、交流或继续阅读。
+                  继续阅读 Dialogue，浏览更多 Mendpress，或订阅接下来的新文章。
                 </p>
                 <div className="mt-6">
                   <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">

@@ -577,7 +577,7 @@ export async function POST(request: Request) {
     }
     const suggestedTitle = metadata.title || title || 'Untitled audio piece'
     const slugSuggestion = sanitizeEditorialSlug('', suggestedTitle)
-    const ctaHref = slugSuggestion ? editorialUrl(slugSuggestion) : '/mendpress'
+    const ctaHref = slugSuggestion ? `${editorialUrl(slugSuggestion)}#listen` : '/mendpress'
 
     if (entryId) {
       processing.persistence = await persistProcessingOutputs({

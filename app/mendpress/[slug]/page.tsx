@@ -258,17 +258,19 @@ export default async function MendpressEntryPage({ params }: Props) {
 
             <div className="mx-auto mt-10 max-w-5xl space-y-6">
               {entry.audioUrl && audioFirst ? (
-                <EditorialAudioPlayer
-                  title={audioLeadTitle}
-                  src={entry.audioUrl}
-                  speakers={entry.speakers}
-                  durationLabel={durationLabel}
-                  note={
-                    isAudioFirstEditorialType(entry.editorialType)
-                      ? 'This piece is published for listening first, with companion editorial material below.'
-                      : 'A playable audio version sits alongside the written piece.'
-                  }
-                />
+                <div id="listen">
+                  <EditorialAudioPlayer
+                    title={audioLeadTitle}
+                    src={entry.audioUrl}
+                    speakers={entry.speakers}
+                    durationLabel={durationLabel}
+                    note={
+                      isAudioFirstEditorialType(entry.editorialType)
+                        ? 'This piece is published for listening first, with companion editorial material below.'
+                        : 'A playable audio version sits alongside the written piece.'
+                    }
+                  />
+                </div>
               ) : null}
 
               {entry.heroImage ? (
@@ -278,17 +280,19 @@ export default async function MendpressEntryPage({ params }: Props) {
               ) : null}
 
               {entry.audioUrl && !audioFirst ? (
-                <EditorialAudioPlayer
-                  title={audioLeadTitle}
-                  src={entry.audioUrl}
-                  speakers={entry.speakers}
-                  durationLabel={durationLabel}
-                  note={
-                    isAudioFirstEditorialType(entry.editorialType)
-                      ? 'This piece is published for listening first, with companion editorial material below.'
-                      : 'A playable audio version sits alongside the written piece.'
-                  }
-                />
+                <div id="listen">
+                  <EditorialAudioPlayer
+                    title={audioLeadTitle}
+                    src={entry.audioUrl}
+                    speakers={entry.speakers}
+                    durationLabel={durationLabel}
+                    note={
+                      isAudioFirstEditorialType(entry.editorialType)
+                        ? 'This piece is published for listening first, with companion editorial material below.'
+                        : 'A playable audio version sits alongside the written piece.'
+                    }
+                  />
+                </div>
               ) : null}
             </div>
           </header>
@@ -368,12 +372,12 @@ export default async function MendpressEntryPage({ params }: Props) {
 
             <aside className="space-y-6 lg:sticky lg:top-24">
               <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">Next step</p>
+                <p className="eyebrow text-accent">WHERE TO NEXT</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
-                  Continue from this piece
+                  Continue with Mendpress
                 </h2>
                 <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  Each Mendpress piece should lead somewhere useful: subscription, visit, enquiry, or deeper reading.
+                  Continue through Dialogue, explore more from Mendpress, or subscribe for future pieces.
                 </p>
                 <div className="mt-6">
                   <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">
