@@ -12,6 +12,36 @@ export const EDITORIAL_AUDIT_ACTIONS = [
 ] as const
 
 export type EditorialAuditAction = (typeof EDITORIAL_AUDIT_ACTIONS)[number]
+type EditorialAuditMetadata = Record<string, unknown>
+
+export type EditorialChineseFieldKey =
+  | 'titleZh'
+  | 'summaryZh'
+  | 'bodyMarkdownZh'
+  | 'transcriptMarkdownZh'
+  | 'showNotesMarkdownZh'
+
+export type EditorialChineseFieldState = 'missing' | 'auto_generated' | 'reviewed' | 'present'
+
+export type EditorialChineseReviewSummary = {
+  overall: 'missing' | 'auto_generated' | 'reviewed' | 'mixed' | 'present'
+  fields: Record<
+    EditorialChineseFieldKey,
+    {
+      state: EditorialChineseFieldState
+      source: string | null
+      updatedAt: string | null
+    }
+  >
+}
+
+const CHINESE_FIELD_COLUMN_MAP: Record<EditorialChineseFieldKey, string> = {
+  titleZh: 'title_zh',
+  summaryZh: 'summary_zh',
+  bodyMarkdownZh: 'body_markdown_zh',
+  transcriptMarkdownZh: 'transcript_markdown_zh',
+  showNotesMarkdownZh: 'show_notes_markdown_zh',
+}
 
 type EditorialComparableRecord = Record<string, unknown>
 
@@ -107,6 +137,7 @@ export async function writeEditorialAuditLogs({
   previousStatus,
   nextStatus,
   editorialType,
+  extraMetadata,
 }: {
   entryId: string
   slug: string
@@ -115,6 +146,7 @@ export async function writeEditorialAuditLogs({
   previousStatus: EditorialStatus | null
   nextStatus: EditorialStatus
   editorialType: EditorialType
+  extraMetadata?: EditorialAuditMetadata
 }): Promise<void> {
   if (!actions.length) return
 
@@ -133,6 +165,7 @@ export async function writeEditorialAuditLogs({
       previous_status: previousStatus,
       next_status: nextStatus,
       editorial_type: editorialType,
+      ...(extraMetadata || {}),
     },
   }))
 
@@ -148,4 +181,67 @@ export async function verifyExpectedPublishedVisibility(
 ): Promise<EditorialVisibilityReport | null> {
   if (status !== 'published') return null
   return verifyEditorialPublicVisibility(slug)
+}
+
+export async function getEditorialChineseReviewSummary(entry: EditorialEntry): Promise<EditorialChineseReviewSummary> {
+  const supabase = getSupabaseServer()
+  const fields: EditorialChineseReviewSummary['fields'] = {
+    titleZh: { state: entry.titleZh?.trim() ? 'present' : 'missing', source: null, updatedAt: null },
+    summaryZh: { state: entry.summaryZh?.trim() ? 'present' : 'missing', source: null, updatedAt: null },
+    bodyMarkdownZh: { state: entry.bodyMarkdownZh?.trim() ? 'present' : 'missing', source: null, updatedAt: null },
+    transcriptMarkdownZh: {
+      state: entry.transcriptMarkdownZh?.trim() ? 'present' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+    showNotesMarkdownZh: {
+      state: entry.showNotesMarkdownZh?.trim() ? 'present' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+  }
+
+  if (!supabase) {
+    return { overall: deriveOverallChineseReviewState(fields), fields }
+  }
+
+  const { data, error } = await supabase
+    .from('editorial_audit_log')
+    .select('created_at, changed_fields, metadata')
+    .eq('entry_id', entry.id)
+    .order('created_at', { ascending: false })
+    .limit(40)
+
+  if (error || !data) {
+    return { overall: deriveOverallChineseReviewState(fields), fields }
+  }
+
+  for (const key of Object.keys(CHINESE_FIELD_COLUMN_MAP) as EditorialChineseFieldKey[]) {
+    const current = fields[key]
+    if (current.state === 'missing') continue
+    const column = CHINESE_FIELD_COLUMN_MAP[key]
+    const match = data.find((row) => Array.isArray(row.changed_fields) && row.changed_fields.includes(column))
+    if (!match) continue
+    const metadata = (match.metadata || {}) as { source?: string }
+    current.source = metadata.source || null
+    current.updatedAt = typeof match.created_at === 'string' ? match.created_at : null
+    current.state =
+      metadata.source === 'manual_admin'
+        ? 'reviewed'
+        : metadata.source === 'auto_translation'
+          ? 'auto_generated'
+          : 'present'
+  }
+
+  return { overall: deriveOverallChineseReviewState(fields), fields }
+}
+
+function deriveOverallChineseReviewState(fields: EditorialChineseReviewSummary['fields']) {
+  const states = Object.values(fields).map((field) => field.state)
+  const presentStates = states.filter((state) => state !== 'missing')
+  if (!presentStates.length) return 'missing'
+  if (presentStates.every((state) => state === 'reviewed')) return 'reviewed'
+  if (presentStates.every((state) => state === 'auto_generated')) return 'auto_generated'
+  if (presentStates.every((state) => state === 'present')) return 'present'
+  return 'mixed'
 }

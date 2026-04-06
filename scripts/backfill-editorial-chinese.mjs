@@ -122,7 +122,7 @@ async function main() {
   const { data, error } = await supabase
     .from('editorial_entries')
     .select(
-      'id,slug,title,summary,body_markdown,transcript_markdown,show_notes_markdown,title_zh,summary_zh,body_markdown_zh,transcript_markdown_zh,show_notes_markdown_zh,status'
+      'id,slug,title,summary,body_markdown,transcript_markdown,show_notes_markdown,title_zh,summary_zh,body_markdown_zh,transcript_markdown_zh,show_notes_markdown_zh,status,editorial_type'
     )
     .in('slug', slugs)
     .eq('status', 'published')
@@ -164,6 +164,22 @@ async function main() {
 
     const { error: updateError } = await supabase.from('editorial_entries').update(payload).eq('id', entry.id)
     if (updateError) throw updateError
+
+    const { error: auditError } = await supabase.from('editorial_audit_log').insert({
+      entry_id: entry.id,
+      slug: entry.slug,
+      action_type: 'update',
+      changed_fields: updatedFields,
+      metadata: {
+        previous_status: entry.status,
+        next_status: entry.status,
+        editorial_type: entry.editorial_type,
+        source: 'auto_translation',
+        locale: 'zh',
+        zh_state: 'auto_generated',
+      },
+    })
+    if (auditError) throw auditError
 
     results.push({ slug: entry.slug, status: 'translated', updatedFields })
   }

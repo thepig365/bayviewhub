@@ -4,6 +4,7 @@ import {
   sanitizeEditorialText,
   type EditorialEntry,
 } from '@/lib/editorial'
+import { writeEditorialAuditLogs } from '@/lib/editorial-admin'
 import { getSupabaseServer } from '@/lib/ssd-campaign-server'
 
 const OPENAI_TRANSLATION_MODEL = 'gpt-4o-mini'
@@ -203,6 +204,21 @@ export async function syncEditorialChineseTranslation(entryId: string): Promise<
       updatedFields: [],
     }
   }
+
+  await writeEditorialAuditLogs({
+    entryId: entry.id,
+    slug: entry.slug,
+    actions: ['update'],
+    changedFields: updatedFields,
+    previousStatus: entry.status,
+    nextStatus: entry.status,
+    editorialType: entry.editorialType,
+    extraMetadata: {
+      source: 'auto_translation',
+      locale: 'zh',
+      zh_state: 'auto_generated',
+    },
+  })
 
   return {
     status: 'translated',

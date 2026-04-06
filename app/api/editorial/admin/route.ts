@@ -102,6 +102,7 @@ export async function POST(request: Request) {
     const nextStatus = payload.status as EditorialStatus
     const nextType = payload.editorial_type as EditorialType
     const changedFields = editorialChangedFields(null, payload)
+    const changedChineseFields = changedFields.filter((field) => field.endsWith('_zh'))
     const auditActions = deriveEditorialAuditActions({
       previousStatus: null,
       nextStatus,
@@ -116,6 +117,13 @@ export async function POST(request: Request) {
       previousStatus: null,
       nextStatus,
       editorialType: nextType,
+      extraMetadata: changedChineseFields.length
+        ? {
+            source: 'manual_admin',
+            locale: 'zh',
+            zh_state: 'reviewed',
+          }
+        : undefined,
     })
 
     const translation = await syncEditorialChineseTranslation(data.id)

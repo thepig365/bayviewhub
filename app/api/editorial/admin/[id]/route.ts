@@ -111,6 +111,7 @@ export async function PATCH(request: Request, { params }: Props) {
     const nextStatus = payload.status as EditorialStatus
     const nextType = payload.editorial_type as EditorialType
     const changedFields = editorialChangedFields(previousEntry, payload)
+    const changedChineseFields = changedFields.filter((field) => field.endsWith('_zh'))
     const auditActions = deriveEditorialAuditActions({
       previousStatus: previousEntry?.status || null,
       nextStatus,
@@ -125,6 +126,13 @@ export async function PATCH(request: Request, { params }: Props) {
       previousStatus: previousEntry?.status || null,
       nextStatus,
       editorialType: nextType,
+      extraMetadata: changedChineseFields.length
+        ? {
+            source: 'manual_admin',
+            locale: 'zh',
+            zh_state: 'reviewed',
+          }
+        : undefined,
     })
 
     const translation = await syncEditorialChineseTranslation(data.id)

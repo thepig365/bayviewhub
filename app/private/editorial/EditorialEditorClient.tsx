@@ -1,10 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { upload } from '@vercel/blob/client'
 import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import type { EditorialEntry, EditorialMode, EditorialStatus, EditorialType } from '@/lib/editorial'
+import type { EditorialChineseFieldKey, EditorialChineseReviewSummary } from '@/lib/editorial-admin'
 import {
   editorialAbsoluteUrlFromPath,
   editorialTypeAdminHint,
@@ -25,6 +26,7 @@ import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 
 type Props = {
   entry?: EditorialEntry | null
+  zhReview?: EditorialChineseReviewSummary | null
   imageUploadEnabled?: boolean
   audioUploadEnabled?: boolean
 }
@@ -315,8 +317,38 @@ function simplifyUploadError(message: string, kind: 'audio' | 'image'): string {
   return message
 }
 
+function chineseReviewBadge(state: 'missing' | 'auto_generated' | 'reviewed' | 'present') {
+  switch (state) {
+    case 'auto_generated':
+      return {
+        label: 'Auto-generated',
+        className: 'border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300',
+      }
+    case 'reviewed':
+      return {
+        label: 'Reviewed',
+        className: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300',
+      }
+    case 'missing':
+      return {
+        label: 'Missing',
+        className: 'border-border bg-white/70 text-muted dark:bg-neutral-900/70',
+      }
+    default:
+      return {
+        label: 'Present',
+        className: 'border-border bg-white/70 text-muted dark:bg-neutral-900/70',
+      }
+  }
+}
+
+function chineseReviewStorageKey(entryId: string) {
+  return `editorial-zh-review:${entryId}`
+}
+
 export function EditorialEditorClient({
   entry,
+  zhReview = null,
   imageUploadEnabled = false,
   audioUploadEnabled = false,
 }: Props) {
@@ -377,6 +409,32 @@ export function EditorialEditorClient({
     seoKeywords: [],
   })
   const [processingReport, setProcessingReport] = useState<AudioProcessingReport | null>(null)
+  const [zhReviewState, setZhReviewState] = useState<EditorialChineseReviewSummary | null>(zhReview)
+  const [savedEnglishSnapshot, setSavedEnglishSnapshot] = useState(() => ({
+    title: entry?.title || '',
+    slug: entry?.slug || '',
+    summary: entry?.summary || '',
+    bodyMarkdown: entry?.bodyMarkdown || '',
+    editorialType: entry?.editorialType || (initialMode === 'audio' ? 'audio_essay' : 'editorial'),
+    editorialMode: initialMode,
+    status: entry?.status || 'draft',
+    publishedAt: toDateTimeLocal(entry?.publishedAt || null),
+    heroImage: entry?.heroImage || '',
+    byline: entry?.byline || '',
+    tags: (entry?.tags || []).join(', '),
+    primaryCtaLabel: entry?.primaryCtaLabel || '',
+    primaryCtaHref: entry?.primaryCtaHref || '',
+    seoTitle: entry?.seoTitle || '',
+    seoTitleZh: entry?.seoTitleZh || '',
+    seoDescription: entry?.seoDescription || '',
+    seoDescriptionZh: entry?.seoDescriptionZh || '',
+    pinned: Boolean(entry?.pinned),
+    audioUrl: entry?.audioUrl || '',
+    audioDurationSeconds: entry?.audioDurationSeconds || null,
+    transcriptMarkdown: entry?.transcriptMarkdown || '',
+    showNotesMarkdown: entry?.showNotesMarkdown || '',
+    speakers: (entry?.speakers || []).join(', '),
+  }))
   const [assistStatus, setAssistStatus] = useState<{
     transcript: AssistStatus
     showNotes: AssistStatus
@@ -389,6 +447,15 @@ export function EditorialEditorClient({
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
   const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
+  const chineseFieldsDirty = useMemo(
+    () =>
+      titleZh !== (entry?.titleZh || '') ||
+      summaryZh !== (entry?.summaryZh || '') ||
+      bodyMarkdownZh !== (entry?.bodyMarkdownZh || '') ||
+      transcriptMarkdownZh !== (entry?.transcriptMarkdownZh || '') ||
+      showNotesMarkdownZh !== (entry?.showNotesMarkdownZh || ''),
+    [bodyMarkdownZh, entry, showNotesMarkdownZh, summaryZh, titleZh, transcriptMarkdownZh]
+  )
   const currentTypeOptions = useMemo(() => {
     const options = new Set<EditorialType>(MODE_TYPE_OPTIONS[editorialMode])
     if (entry?.editorialType) {
@@ -401,6 +468,100 @@ export function EditorialEditorClient({
   const audioReady = Boolean(audioUrl)
   const audioUploadPending = editorialMode === 'audio' && !audioReady
   const revealAudioFields = editorialMode !== 'audio' || audioReady
+
+  const markChineseReviewState = () => {
+    const nextState: EditorialChineseReviewSummary = {
+      overall: 'reviewed',
+      fields: {
+        titleZh: { state: titleZh.trim() ? 'reviewed' : 'missing', source: 'manual_admin', updatedAt: new Date().toISOString() },
+        summaryZh: {
+          state: summaryZh.trim() ? 'reviewed' : 'missing',
+          source: 'manual_admin',
+          updatedAt: new Date().toISOString(),
+        },
+        bodyMarkdownZh: {
+          state: bodyMarkdownZh.trim() ? 'reviewed' : 'missing',
+          source: 'manual_admin',
+          updatedAt: new Date().toISOString(),
+        },
+        transcriptMarkdownZh: {
+          state: transcriptMarkdownZh.trim() ? 'reviewed' : 'missing',
+          source: 'manual_admin',
+          updatedAt: new Date().toISOString(),
+        },
+        showNotesMarkdownZh: {
+          state: showNotesMarkdownZh.trim() ? 'reviewed' : 'missing',
+          source: 'manual_admin',
+          updatedAt: new Date().toISOString(),
+        },
+      },
+    }
+    setZhReviewState(nextState)
+    if (entry?.id && typeof window !== 'undefined') {
+      const reviewedFields = Object.entries(nextState.fields).reduce<Partial<Record<EditorialChineseFieldKey, true>>>((acc, [key, value]) => {
+        if (value.state === 'reviewed') {
+          acc[key as EditorialChineseFieldKey] = true
+        }
+        return acc
+      }, {})
+      window.localStorage.setItem(chineseReviewStorageKey(entry.id), JSON.stringify(reviewedFields))
+    }
+  }
+
+  useEffect(() => {
+    if (!entry?.id || typeof window === 'undefined') return
+    const stored = window.localStorage.getItem(chineseReviewStorageKey(entry.id))
+    if (!stored) return
+
+    try {
+      const reviewed = JSON.parse(stored) as Partial<Record<EditorialChineseFieldKey, true>>
+      setZhReviewState((current) => {
+        const base = current || {
+          overall: 'auto_generated',
+          fields: {
+            titleZh: { state: titleZh.trim() ? 'auto_generated' : 'missing', source: null, updatedAt: null },
+            summaryZh: { state: summaryZh.trim() ? 'auto_generated' : 'missing', source: null, updatedAt: null },
+            bodyMarkdownZh: { state: bodyMarkdownZh.trim() ? 'auto_generated' : 'missing', source: null, updatedAt: null },
+            transcriptMarkdownZh: {
+              state: transcriptMarkdownZh.trim() ? 'auto_generated' : 'missing',
+              source: null,
+              updatedAt: null,
+            },
+            showNotesMarkdownZh: {
+              state: showNotesMarkdownZh.trim() ? 'auto_generated' : 'missing',
+              source: null,
+              updatedAt: null,
+            },
+          },
+        } as EditorialChineseReviewSummary
+
+        const nextFields = { ...base.fields }
+        for (const key of Object.keys(reviewed) as EditorialChineseFieldKey[]) {
+          if (reviewed[key]) {
+            nextFields[key] = {
+              state: 'reviewed',
+              source: 'manual_admin',
+              updatedAt: new Date().toISOString(),
+            }
+          }
+        }
+
+        const reviewStates = Object.values(nextFields).map((field) => field.state)
+        const presentStates = reviewStates.filter((state) => state !== 'missing')
+        return {
+          overall:
+            presentStates.length && presentStates.every((state) => state === 'reviewed')
+              ? 'reviewed'
+              : reviewStates.some((state) => state === 'reviewed')
+                ? 'mixed'
+                : base.overall,
+          fields: nextFields,
+        }
+      })
+    } catch {
+      window.localStorage.removeItem(chineseReviewStorageKey(entry.id))
+    }
+  }, [bodyMarkdownZh, entry?.id, showNotesMarkdownZh, summaryZh, titleZh, transcriptMarkdownZh])
   const linkedInSource = useMemo(
     () => ({
       title: title.trim() || entry?.title || '',
@@ -588,14 +749,17 @@ export function EditorialEditorClient({
     }
   }
 
-  const submit = async (desiredStatus: EditorialStatus) => {
+  const submitRequest = async ({
+    desiredStatus,
+    payload,
+    successMessage,
+  }: {
+    desiredStatus: EditorialStatus
+    payload: Record<string, unknown>
+    successMessage: string
+  }) => {
     setStatus('loading')
     setMessage('')
-    const effectiveSlug = slug.trim() || sanitizeEditorialSlug('', title)
-    if (!slug.trim() && effectiveSlug) {
-      setSlug(effectiveSlug)
-    }
-
     const endpoint = entry?.id ? `/api/editorial/admin/${entry.id}` : '/api/editorial/admin'
     const method = entry?.id ? 'PATCH' : 'POST'
 
@@ -603,43 +767,14 @@ export function EditorialEditorClient({
       const res = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          titleZh,
-          slug: effectiveSlug,
-          summary,
-          summaryZh,
-          bodyMarkdown,
-          bodyMarkdownZh,
-          editorialType,
-          editorialMode,
-          status: desiredStatus,
-          publishedAt,
-          heroImage,
-          byline,
-          tags,
-          primaryCtaLabel,
-          primaryCtaHref,
-          seoTitle,
-          seoTitleZh,
-          seoDescription,
-          seoDescriptionZh,
-          pinned,
-          audioUrl,
-          audioDurationSeconds,
-          transcriptMarkdown,
-          transcriptMarkdownZh,
-          showNotesMarkdown,
-          showNotesMarkdownZh,
-          speakers,
-        }),
+        body: JSON.stringify(payload),
       })
 
       const data = await res.json().catch(() => ({}))
       if (!res.ok || !data.ok) {
         setStatus('error')
         setMessage(data.error || 'Failed to save piece.')
-        return
+        return false
       }
 
       setStatus('success')
@@ -647,21 +782,142 @@ export function EditorialEditorClient({
       if (typeof data.slug === 'string' && data.slug.trim()) {
         setSlug(data.slug)
       }
-      setMessage(
+      setMessage(successMessage)
+
+      if (!entry?.id && data.id) {
+        window.location.href = `/private/editorial/${data.id}`
+        return true
+      }
+      return true
+    } catch {
+      setStatus('error')
+      setMessage('Failed to save piece.')
+      return false
+    }
+  }
+
+  const submit = async (desiredStatus: EditorialStatus) => {
+    const effectiveSlug = slug.trim() || sanitizeEditorialSlug('', title)
+    if (!slug.trim() && effectiveSlug) {
+      setSlug(effectiveSlug)
+    }
+
+    const saved = await submitRequest({
+      desiredStatus,
+      payload: {
+        title,
+        titleZh,
+        slug: effectiveSlug,
+        summary,
+        summaryZh,
+        bodyMarkdown,
+        bodyMarkdownZh,
+        editorialType,
+        editorialMode,
+        status: desiredStatus,
+        publishedAt,
+        heroImage,
+        byline,
+        tags,
+        primaryCtaLabel,
+        primaryCtaHref,
+        seoTitle,
+        seoTitleZh,
+        seoDescription,
+        seoDescriptionZh,
+        pinned,
+        audioUrl,
+        audioDurationSeconds,
+        transcriptMarkdown,
+        transcriptMarkdownZh,
+        showNotesMarkdown,
+        showNotesMarkdownZh,
+        speakers,
+      },
+      successMessage:
         desiredStatus === 'published'
           ? 'Piece published.'
           : desiredStatus === 'archived'
             ? 'Piece archived.'
-            : 'Draft saved.'
-      )
+            : 'Draft saved.',
+    })
 
-      if (!entry?.id && data.id) {
-        window.location.href = `/private/editorial/${data.id}`
-        return
+    if (saved) {
+      setSavedEnglishSnapshot({
+        title,
+        slug: effectiveSlug,
+        summary,
+        bodyMarkdown,
+        editorialType,
+        editorialMode,
+        status: desiredStatus,
+        publishedAt,
+        heroImage,
+        byline,
+        tags,
+        primaryCtaLabel,
+        primaryCtaHref,
+        seoTitle,
+        seoTitleZh,
+        seoDescription,
+        seoDescriptionZh,
+        pinned,
+        audioUrl,
+        audioDurationSeconds,
+        transcriptMarkdown,
+        showNotesMarkdown,
+        speakers,
+      })
+      if (chineseFieldsDirty) {
+        markChineseReviewState()
       }
-    } catch {
+    }
+  }
+
+  const submitChineseReview = async () => {
+    if (!entry?.id) {
       setStatus('error')
-      setMessage('Failed to save piece.')
+      setMessage('Save the English draft first, then review the Chinese version.')
+      return
+    }
+
+    const saved = await submitRequest({
+      desiredStatus: entryStatus,
+      payload: {
+        title: savedEnglishSnapshot.title,
+        titleZh,
+        slug: savedEnglishSnapshot.slug,
+        summary: savedEnglishSnapshot.summary,
+        summaryZh,
+        bodyMarkdown: savedEnglishSnapshot.bodyMarkdown,
+        bodyMarkdownZh,
+        editorialType: savedEnglishSnapshot.editorialType,
+        editorialMode: savedEnglishSnapshot.editorialMode,
+        status: entryStatus,
+        publishedAt: savedEnglishSnapshot.publishedAt,
+        heroImage: savedEnglishSnapshot.heroImage,
+        byline: savedEnglishSnapshot.byline,
+        tags: savedEnglishSnapshot.tags,
+        primaryCtaLabel: savedEnglishSnapshot.primaryCtaLabel,
+        primaryCtaHref: savedEnglishSnapshot.primaryCtaHref,
+        seoTitle: savedEnglishSnapshot.seoTitle,
+        seoTitleZh,
+        seoDescription: savedEnglishSnapshot.seoDescription,
+        seoDescriptionZh,
+        pinned: savedEnglishSnapshot.pinned,
+        audioUrl: savedEnglishSnapshot.audioUrl,
+        audioDurationSeconds: savedEnglishSnapshot.audioDurationSeconds,
+        transcriptMarkdown: savedEnglishSnapshot.transcriptMarkdown,
+        transcriptMarkdownZh,
+        showNotesMarkdown: savedEnglishSnapshot.showNotesMarkdown,
+        showNotesMarkdownZh,
+        speakers: savedEnglishSnapshot.speakers,
+      },
+      successMessage: 'Chinese review saved.',
+    })
+
+    if (saved) {
+      markChineseReviewState()
     }
   }
 
@@ -927,6 +1183,34 @@ export function EditorialEditorClient({
         { key: 'persistence', label: 'DB persistence', report: processingReport.persistence },
       ]
     : []
+  const defaultZhOverallState =
+    titleZh.trim() || summaryZh.trim() || bodyMarkdownZh.trim() || transcriptMarkdownZh.trim() || showNotesMarkdownZh.trim()
+      ? 'auto_generated'
+      : 'missing'
+  const zhOverallBadge = chineseReviewBadge(zhReviewState?.overall === 'mixed' ? 'present' : zhReviewState?.overall || defaultZhOverallState)
+  const zhFieldState = {
+    titleZh: zhReviewState?.fields.titleZh || { state: titleZh.trim() ? 'auto_generated' : 'missing', source: null, updatedAt: null },
+    summaryZh: zhReviewState?.fields.summaryZh || {
+      state: summaryZh.trim() ? 'auto_generated' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+    bodyMarkdownZh: zhReviewState?.fields.bodyMarkdownZh || {
+      state: bodyMarkdownZh.trim() ? 'auto_generated' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+    transcriptMarkdownZh: zhReviewState?.fields.transcriptMarkdownZh || {
+      state: transcriptMarkdownZh.trim() ? 'auto_generated' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+    showNotesMarkdownZh: zhReviewState?.fields.showNotesMarkdownZh || {
+      state: showNotesMarkdownZh.trim() ? 'auto_generated' : 'missing',
+      source: null,
+      updatedAt: null,
+    },
+  }
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_360px]">
@@ -1391,57 +1675,170 @@ export function EditorialEditorClient({
               <section className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
                 <h2 className="text-xl font-serif font-semibold text-fg">Chinese version</h2>
                 <p className="mt-2 text-sm text-muted">
-                  Use these fields when the piece has a real Chinese public version. For audio and interview pieces, the Chinese transcript/script should live here even if the audio file itself remains single-language.
+                  Review the Chinese against the English source here. The left column is read-only reference, and the Chinese review save only writes
+                  Chinese fields so the English source stays protected.
                 </p>
-                <div className="mt-5 grid gap-5 md:grid-cols-2">
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-fg">Chinese title</label>
-                    <input value={titleZh} onChange={(e) => setTitleZh(e.target.value)} className={FIELD_BASE_CLASS} />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-fg">Chinese summary / dek</label>
-                    <textarea
-                      rows={3}
-                      value={summaryZh}
-                      onChange={(e) => setSummaryZh(e.target.value)}
-                      className={WRITING_TEXTAREA_CLASS}
-                    />
-                  </div>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${zhOverallBadge.className}`}>
+                    {zhReviewState?.overall === 'mixed' ? 'Mixed state' : zhOverallBadge.label}
+                  </span>
+                  <span className="text-xs text-muted">
+                    Auto-translation only fills empty Chinese fields. Once you save Chinese edits here, they are treated as reviewed.
+                  </span>
                 </div>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={submitChineseReview}
+                    disabled={!entry?.id || status === 'loading'}
+                    className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {status === 'loading' ? 'Saving…' : 'Save Chinese review'}
+                  </button>
+                  {!entry?.id ? <p className="text-xs text-muted">Create the piece first, then use the Chinese-only review save.</p> : null}
+                </div>
+                <div className="mt-6 grid gap-5">
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <div className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                      <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">English title</label>
+                      <input value={title} readOnly className={`${FIELD_BASE_CLASS} cursor-default opacity-80`} />
+                    </div>
+                    <div className="rounded-2xl border border-border bg-white/70 p-4 dark:bg-neutral-950/50">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted">Chinese title</label>
+                        <span
+                          className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                            chineseReviewBadge(zhFieldState.titleZh.state).className
+                          }`}
+                        >
+                          {chineseReviewBadge(zhFieldState.titleZh.state).label}
+                        </span>
+                      </div>
+                      <input value={titleZh} onChange={(e) => setTitleZh(e.target.value)} className={FIELD_BASE_CLASS} />
+                    </div>
+                  </div>
 
-                {editorialMode === 'audio' ? (
-                  <div className="mt-5 grid gap-5">
-                    <div>
-                      <label className="mb-2 block text-sm font-medium text-fg">Chinese transcript / script</label>
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <div className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                      <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">English summary</label>
+                      <textarea value={summary} readOnly rows={4} className={`${WRITING_TEXTAREA_CLASS} cursor-default opacity-80`} />
+                    </div>
+                    <div className="rounded-2xl border border-border bg-white/70 p-4 dark:bg-neutral-950/50">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted">Chinese summary</label>
+                        <span
+                          className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                            chineseReviewBadge(zhFieldState.summaryZh.state).className
+                          }`}
+                        >
+                          {chineseReviewBadge(zhFieldState.summaryZh.state).label}
+                        </span>
+                      </div>
+                      <textarea rows={4} value={summaryZh} onChange={(e) => setSummaryZh(e.target.value)} className={WRITING_TEXTAREA_CLASS} />
+                    </div>
+                  </div>
+
+                  {editorialMode === 'audio' ? (
+                    <>
+                      <div className="grid gap-5 lg:grid-cols-2">
+                        <div className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                            English transcript / script
+                          </label>
+                          <textarea
+                            rows={12}
+                            value={transcriptMarkdown}
+                            readOnly
+                            className={`${WRITING_TEXTAREA_CLASS} cursor-default opacity-80`}
+                          />
+                        </div>
+                        <div className="rounded-2xl border border-border bg-white/70 p-4 dark:bg-neutral-950/50">
+                          <div className="mb-2 flex items-center justify-between gap-3">
+                            <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                              Chinese transcript / script
+                            </label>
+                            <span
+                              className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                                chineseReviewBadge(zhFieldState.transcriptMarkdownZh.state).className
+                              }`}
+                            >
+                              {chineseReviewBadge(zhFieldState.transcriptMarkdownZh.state).label}
+                            </span>
+                          </div>
+                          <textarea
+                            rows={12}
+                            value={transcriptMarkdownZh}
+                            onChange={(e) => setTranscriptMarkdownZh(e.target.value)}
+                            className={WRITING_TEXTAREA_CLASS}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid gap-5 lg:grid-cols-2">
+                        <div className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">English show notes</label>
+                          <textarea
+                            rows={10}
+                            value={showNotesMarkdown}
+                            readOnly
+                            className={`${WRITING_TEXTAREA_CLASS} cursor-default opacity-80`}
+                          />
+                        </div>
+                        <div className="rounded-2xl border border-border bg-white/70 p-4 dark:bg-neutral-950/50">
+                          <div className="mb-2 flex items-center justify-between gap-3">
+                            <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted">Chinese show notes</label>
+                            <span
+                              className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                                chineseReviewBadge(zhFieldState.showNotesMarkdownZh.state).className
+                              }`}
+                            >
+                              {chineseReviewBadge(zhFieldState.showNotesMarkdownZh.state).label}
+                            </span>
+                          </div>
+                          <textarea
+                            rows={10}
+                            value={showNotesMarkdownZh}
+                            onChange={(e) => setShowNotesMarkdownZh(e.target.value)}
+                            className={WRITING_TEXTAREA_CLASS}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
+
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <div className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                      <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                        {editorialMode === 'audio' ? 'English companion text' : 'English body'}
+                      </label>
                       <textarea
-                        rows={12}
-                        value={transcriptMarkdownZh}
-                        onChange={(e) => setTranscriptMarkdownZh(e.target.value)}
-                        className={WRITING_TEXTAREA_CLASS}
+                        rows={editorialMode === 'audio' ? 12 : 18}
+                        value={bodyMarkdown}
+                        readOnly
+                        className={`${WRITING_TEXTAREA_CLASS} cursor-default opacity-80`}
                       />
                     </div>
-                    <div>
-                      <label className="mb-2 block text-sm font-medium text-fg">Chinese show notes</label>
+                    <div className="rounded-2xl border border-border bg-white/70 p-4 dark:bg-neutral-950/50">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                          {editorialMode === 'audio' ? 'Chinese companion text' : 'Chinese body'}
+                        </label>
+                        <span
+                          className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                            chineseReviewBadge(zhFieldState.bodyMarkdownZh.state).className
+                          }`}
+                        >
+                          {chineseReviewBadge(zhFieldState.bodyMarkdownZh.state).label}
+                        </span>
+                      </div>
                       <textarea
-                        rows={10}
-                        value={showNotesMarkdownZh}
-                        onChange={(e) => setShowNotesMarkdownZh(e.target.value)}
+                        rows={editorialMode === 'audio' ? 12 : 18}
+                        value={bodyMarkdownZh}
+                        onChange={(e) => setBodyMarkdownZh(e.target.value)}
                         className={WRITING_TEXTAREA_CLASS}
                       />
                     </div>
                   </div>
-                ) : null}
-
-                <div className="mt-5">
-                  <label className="mb-2 block text-sm font-medium text-fg">
-                    {editorialMode === 'audio' ? 'Chinese companion text' : 'Chinese body'}
-                  </label>
-                  <textarea
-                    rows={editorialMode === 'audio' ? 12 : 18}
-                    value={bodyMarkdownZh}
-                    onChange={(e) => setBodyMarkdownZh(e.target.value)}
-                    className={WRITING_TEXTAREA_CLASS}
-                  />
                 </div>
               </section>
 

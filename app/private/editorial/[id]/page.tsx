@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 import { EditorialEditorClient } from '@/app/private/editorial/EditorialEditorClient'
 import { getEditorialEntryByIdForAdmin } from '@/lib/editorial'
+import { getEditorialChineseReviewSummary } from '@/lib/editorial-admin'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -32,13 +33,19 @@ export default async function EditorialEntryPage({ params }: Props) {
   const { id } = await params
   const entry = await getEditorialEntryByIdForAdmin(id)
   if (!entry) notFound()
+  const zhReview = await getEditorialChineseReviewSummary(entry)
 
   const blobEnabled = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim())
 
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
-        <EditorialEditorClient entry={entry} imageUploadEnabled={blobEnabled} audioUploadEnabled={blobEnabled} />
+        <EditorialEditorClient
+          entry={entry}
+          zhReview={zhReview}
+          imageUploadEnabled={blobEnabled}
+          audioUploadEnabled={blobEnabled}
+        />
       </div>
     </main>
   )
