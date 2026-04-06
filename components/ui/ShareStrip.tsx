@@ -17,6 +17,8 @@ export type ShareStripVariant = 'surface' | 'dark'
 export interface ShareStripProps {
   /** Absolute URL of the page being shared */
   url: string
+  shareTitle?: string
+  shareSummary?: string
   mailtoSubject: string
   /** Short plain-text lines for the email body (URL is appended automatically) */
   mailtoIntro: string
@@ -35,6 +37,8 @@ const VISIBLE_SHARE_CHANNELS = ['copy_link', 'email', 'linkedin', 'facebook', 'x
 
 export function ShareStrip({
   url,
+  shareTitle,
+  shareSummary,
   mailtoSubject,
   mailtoIntro,
   shortShareBlurb,
@@ -51,7 +55,9 @@ export function ShareStrip({
   const clearRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const moreWrapRef = useRef<HTMLDivElement>(null)
 
-  const blurb = (shortShareBlurb ?? mailtoIntro).trim().slice(0, 220)
+  const titleText = (shareTitle ?? mailtoSubject.split('|')[0] ?? '').trim()
+  const summaryText = (shareSummary ?? shortShareBlurb ?? mailtoIntro).trim()
+  const blurb = summaryText.slice(0, 220)
 
   const copyLink = useCallback(async () => {
     try {
@@ -86,6 +92,9 @@ export function ShareStrip({
   const copyLinkLabel = copied && !auxModal ? (locale === 'zh' ? '链接已复制' : 'Link copied') : locale === 'zh' ? '复制链接' : 'Copy link'
   const emailLabel = locale === 'zh' ? '邮件' : 'Email'
   const moreLabel = locale === 'zh' ? '更多' : 'More'
+  const redNoteLabel = locale === 'zh' ? '小红书 / RedNote' : 'RedNote'
+  const weChatLabel = locale === 'zh' ? '微信 / WeChat' : 'WeChat'
+  const douyinLabel = locale === 'zh' ? '抖音 / Douyin' : 'Douyin'
   const shareGroupLabel = locale === 'zh' ? '分享此页面' : 'Share this page'
   const moreShareLabel = locale === 'zh' ? '更多分享选项' : 'More share options'
   const liveCopyText = copied ? (locale === 'zh' ? '页面链接已复制到剪贴板' : 'Page link copied to clipboard') : ''
@@ -221,25 +230,25 @@ export function ShareStrip({
                 onClick={() => openAux('wechat')}
                 {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'wechat' } : {})}
               >
-                WeChat
+                {weChatLabel}
               </button>
               <button
                 type="button"
                 role="menuitem"
                 className={menuItemClass}
-                onClick={() => openAux('xiaohongshu')}
-                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'xiaohongshu' } : {})}
+                onClick={() => openAux('rednote')}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'rednote' } : {})}
               >
-                Xiaohongshu
+                {redNoteLabel}
               </button>
               <button
                 type="button"
                 role="menuitem"
                 className={menuItemClass}
-                onClick={() => openAux('messenger')}
-                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'messenger' } : {})}
+                onClick={() => openAux('douyin')}
+                {...(ssdCampaignShare ? { 'data-ssd-share-channel': 'douyin' } : {})}
               >
-                Messenger
+                {douyinLabel}
               </button>
             </div>
           ) : null}
@@ -252,6 +261,8 @@ export function ShareStrip({
       <ShareAuxModal
         open={auxModal !== null}
         variant={auxModal}
+        title={titleText}
+        summary={summaryText}
         url={url}
         onClose={() => setAuxModal(null)}
         onCopyLink={copyLink}

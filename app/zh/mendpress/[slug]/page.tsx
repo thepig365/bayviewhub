@@ -410,6 +410,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               </div>
               <ShareStrip
                 url={chineseUrl}
+                shareTitle={editorialTitleForLocale(entry, 'zh')}
+                shareSummary={shareSummary}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                 mailtoIntro={`${description}\n\n阅读链接：`}
                 shortShareBlurb={shareSummary}
@@ -531,6 +533,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   <div className="space-y-6">
                     <ShareStrip
                       url={chineseUrl}
+                      shareTitle={editorialTitleForLocale(entry, 'zh')}
+                      shareSummary={shareSummary}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                       mailtoIntro={`${description}\n\n阅读链接：`}
                       shortShareBlurb={shareSummary}

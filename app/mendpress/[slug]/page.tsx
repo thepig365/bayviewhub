@@ -273,6 +273,8 @@ export default async function MendpressEntryPage({ params }: Props) {
               </div>
               <ShareStrip
                 url={absoluteUrl}
+                shareTitle={editorialTitleForLocale(entry, 'en')}
+                shareSummary={shareSummary}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                 mailtoIntro={`${description}\n\nRead it here:`}
                 shortShareBlurb={shareSummary}
@@ -385,6 +387,8 @@ export default async function MendpressEntryPage({ params }: Props) {
                   <div className="space-y-6">
                     <ShareStrip
                       url={absoluteUrl}
+                      shareTitle={editorialTitleForLocale(entry, 'en')}
+                      shareSummary={shareSummary}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                       mailtoIntro={`${description}\n\nRead it here:`}
                       shortShareBlurb={shareSummary}

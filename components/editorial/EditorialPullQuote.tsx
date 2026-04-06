@@ -41,6 +41,8 @@ export function EditorialPullQuote({ quote, articleTitle, articleUrl, locale = '
       </div>
       <ShareStrip
         url={articleUrl}
+        shareTitle={articleTitle}
+        shareSummary={quote}
         mailtoSubject={`${articleTitle} | Mendpress`}
         mailtoIntro={locale === 'zh' ? `${quote}\n\n阅读全文：` : `${quote}\n\nRead the full piece:`}
         shortShareBlurb={quote}

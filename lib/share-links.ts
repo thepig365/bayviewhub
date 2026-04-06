@@ -29,6 +29,14 @@ export function buildShareMailto(opts: { subject: string; intro: string; url: st
   return `mailto:?subject=${encodeURIComponent(opts.subject)}&body=${encodeURIComponent(body)}`
 }
 
+export function buildPreparedShareText(opts: {
+  title: string
+  summary?: string
+  url: string
+}) {
+  return [opts.title.trim(), opts.summary?.trim(), opts.url].filter(Boolean).join('\n\n')
+}
+
 /**
  * QR image URL for “scan to open this page” helpers (WeChat / phone handoff).
  * Uses a public QR API so we avoid extra npm weight; data is only the page URL.

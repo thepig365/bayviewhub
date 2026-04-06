@@ -18,6 +18,8 @@ export function SsdPageShare({
       <ShareStrip
         className={className}
         url={url}
+        shareTitle={cfg.subject.replace(/\s+—\s+Bayview Hub$/, '')}
+        shareSummary={cfg.intro}
         mailtoSubject={cfg.subject}
         mailtoIntro={cfg.intro}
         ssdCampaignShare={ssdCampaignShare}
