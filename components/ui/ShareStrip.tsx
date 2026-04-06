@@ -130,16 +130,16 @@ export function ShareStrip({
   const shareGroupLabel = locale === 'zh' ? '分享此页面' : 'Share this page'
   const moreShareLabel = locale === 'zh' ? '更多分享选项' : 'More share options'
   const liveCopyText = copied ? (locale === 'zh' ? '页面链接已复制到剪贴板' : 'Page link copied to clipboard') : ''
-  const showSharingPackToggleLabel = locale === 'zh' ? '显示分享文案' : 'Show sharing pack'
-  const hideSharingPackToggleLabel = locale === 'zh' ? '收起分享文案' : 'Hide sharing pack'
-  const sharingPackLabel = locale === 'zh' ? '分享文案' : 'Sharing pack'
+  const showSharingPackToggleLabel = locale === 'zh' ? '展开分享文案' : 'Open share notes'
+  const hideSharingPackToggleLabel = locale === 'zh' ? '收起分享文案' : 'Close share notes'
+  const sharingPackLabel = locale === 'zh' ? '分享摘记' : 'Share notes'
   const sharingPackBody =
     locale === 'zh'
-      ? '用于手动分享到 LinkedIn、RedNote、微信等平台。可直接查看、复制摘要，或复制整套标题、摘要和链接。'
-      : 'Use this when posting manually to LinkedIn, RedNote, WeChat, or similar platforms. Read the current share title and summary, then copy the exact pack you want to paste.'
-  const canonicalLabel = locale === 'zh' ? 'Canonical URL' : 'Canonical URL'
+      ? '这里放的是当前页面可直接带走的标题、摘要与链接，适合手动发布到 LinkedIn、小红书、微信等平台。'
+      : 'A clean title, summary, and link for posting by hand to LinkedIn, RedNote, WeChat, and similar platforms.'
+  const canonicalLabel = locale === 'zh' ? '页面链接' : 'Page link'
   const copySummaryLabel = copiedSummary ? (locale === 'zh' ? '摘要已复制' : 'Summary copied') : locale === 'zh' ? '复制摘要' : 'Copy summary'
-  const copyPackLabel = copiedPack ? (locale === 'zh' ? '分享文案已复制' : 'Sharing pack copied') : locale === 'zh' ? '复制分享文案' : 'Copy share pack'
+  const copyPackLabel = copiedPack ? (locale === 'zh' ? '整套文案已复制' : 'Share notes copied') : locale === 'zh' ? '复制整套文案' : 'Copy share notes'
 
   const linkClass = cn(
     'inline-flex min-h-[44px] min-w-0 items-center text-[15px] leading-6 transition-colors underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm px-0.5 py-2 sm:min-h-0 sm:py-0 sm:text-sm sm:leading-5',
