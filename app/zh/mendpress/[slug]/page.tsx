@@ -83,6 +83,20 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
   })
 }
 
+function articleSharePack(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  return buildSharePack({
+    title: editorialSeoTitleForLocale(entry, 'zh') || editorialTitleForLocale(entry, 'zh'),
+    summary: articleShareSummary(entry),
+    path: `/zh/mendpress/${entry.slug}`,
+    image: articleOgImage(entry),
+    type: 'article',
+    locale: 'zh',
+    eyebrow: `${mendpressSectionLabelForLocale(entry.editorialType, 'zh')} / ${editorialTypeLabelForLocale(entry.editorialType, 'zh')} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
+}
+
 function formatDuration(value: number | null): string | null {
   if (!value || value <= 0) return null
   const hours = Math.floor(value / 3600)
@@ -220,17 +234,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = articleDescription(entry)
   const shareSummary = articleShareSummary(entry)
   const ogImage = articleOgImage(entry)
-  const sharePack = buildSharePack({
-    title,
-    summary: shareSummary,
-    path: `/zh/mendpress/${entry.slug}`,
-    image: ogImage,
-    type: 'article',
-    locale: 'zh',
-    eyebrow: `${mendpressSectionLabelForLocale(entry.editorialType, 'zh')} / ${editorialTypeLabelForLocale(entry.editorialType, 'zh')} / Mendpress`,
-    footer: 'Mendpress',
-    theme: 'mendpress',
-  })
+  const sharePack = articleSharePack(entry)
   const metadata = metadataFromSharePack(sharePack, {
     title,
     description,
@@ -319,9 +323,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   }))
   const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'zh')
   const englishUrl = editorialAbsoluteUrl(entry.slug)
-  const chineseUrl = `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`
+  const sharePack = articleSharePack(entry)
+  const chineseUrl = sharePack.canonicalUrl
   const description = articleDescription(entry)
-  const shareSummary = articleShareSummary(entry)
+  const shareSummary = sharePack.shareSummary
   const body = entry.bodyMarkdownZh || ''
   const transcript = editorialTranscriptForLocale(entry, 'zh')
   const showNotes = editorialShowNotesForLocale(entry, 'zh')
@@ -410,12 +415,13 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
               </div>
               <ShareStrip
                 url={chineseUrl}
-                shareTitle={editorialTitleForLocale(entry, 'zh')}
+                shareTitle={sharePack.shareTitle}
                 shareSummary={shareSummary}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                 mailtoIntro={`${description}\n\n阅读链接：`}
                 shortShareBlurb={shareSummary}
                 bordered={false}
+                showSharingPackPanel
                 label="分享这篇文章"
                 className="mt-7 max-w-4xl"
                 locale="zh"
@@ -533,11 +539,12 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   <div className="space-y-6">
                     <ShareStrip
                       url={chineseUrl}
-                      shareTitle={editorialTitleForLocale(entry, 'zh')}
+                      shareTitle={sharePack.shareTitle}
                       shareSummary={shareSummary}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                       mailtoIntro={`${description}\n\n阅读链接：`}
                       shortShareBlurb={shareSummary}
+                      showSharingPackPanel
                       label="分享这篇内容"
                       locale="zh"
                     />

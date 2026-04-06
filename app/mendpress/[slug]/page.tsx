@@ -87,6 +87,20 @@ function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishe
   })
 }
 
+function articleSharePack(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  const articleTitle = editorialTitleForLocale(entry, 'en')
+  return buildSharePack({
+    title: `${articleTitle} | Mendpress`,
+    summary: articleShareSummary(entry),
+    path: `/mendpress/${entry.slug}`,
+    image: articleOgImage(entry),
+    type: 'article',
+    eyebrow: `${mendpressSectionLabel(entry.editorialType)} / ${editorialTypeAdminLabel(entry.editorialType)} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
+}
+
 function formatDuration(value: number | null): string | null {
   if (!value || value <= 0) return null
   const hours = Math.floor(value / 3600)
@@ -120,16 +134,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const shareSummary = articleShareSummary(entry)
   const url = editorialAbsoluteUrl(entry.slug)
   const ogImage = articleOgImage(entry)
-  const sharePack = buildSharePack({
-    title: `${articleTitle} | Mendpress`,
-    summary: shareSummary,
-    path: `/mendpress/${entry.slug}`,
-    image: ogImage,
-    type: 'article',
-    eyebrow: `${mendpressSectionLabel(entry.editorialType)} / ${editorialTypeAdminLabel(entry.editorialType)} / Mendpress`,
-    footer: 'Mendpress',
-    theme: 'mendpress',
-  })
+  const sharePack = articleSharePack(entry)
   const metadata = metadataFromSharePack(sharePack, {
     title: { absolute: title },
     description,
@@ -172,9 +177,10 @@ export default async function MendpressEntryPage({ params }: Props) {
   const primaryCta = defaultEditorialPrimaryCta(entry, { audioHubReady: audioHubState.isReady })
   const contextualLinks = editorialContextLinks(entry)
   const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'en')
-  const absoluteUrl = editorialAbsoluteUrl(entry.slug)
+  const sharePack = articleSharePack(entry)
+  const absoluteUrl = sharePack.canonicalUrl
   const description = articleDescription(entry)
-  const shareSummary = articleShareSummary(entry)
+  const shareSummary = sharePack.shareSummary
   const body = editorialBodyForLocale(entry, 'en')
   const transcript = editorialTranscriptForLocale(entry, 'en')
   const showNotes = editorialShowNotesForLocale(entry, 'en')
@@ -273,12 +279,13 @@ export default async function MendpressEntryPage({ params }: Props) {
               </div>
               <ShareStrip
                 url={absoluteUrl}
-                shareTitle={editorialTitleForLocale(entry, 'en')}
+                shareTitle={sharePack.shareTitle}
                 shareSummary={shareSummary}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                 mailtoIntro={`${description}\n\nRead it here:`}
                 shortShareBlurb={shareSummary}
                 bordered={false}
+                showSharingPackPanel
                 label="Share this article"
                 className="mt-7 max-w-4xl"
               />
@@ -387,11 +394,12 @@ export default async function MendpressEntryPage({ params }: Props) {
                   <div className="space-y-6">
                     <ShareStrip
                       url={absoluteUrl}
-                      shareTitle={editorialTitleForLocale(entry, 'en')}
+                      shareTitle={sharePack.shareTitle}
                       shareSummary={shareSummary}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                       mailtoIntro={`${description}\n\nRead it here:`}
                       shortShareBlurb={shareSummary}
+                      showSharingPackPanel
                       label="Share this piece"
                     />
                     <JournalSubscribePanel
