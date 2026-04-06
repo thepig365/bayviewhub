@@ -74,6 +74,7 @@ export function ShareAuxModal({
   locale = 'en',
 }: ShareAuxModalProps) {
   const [copiedPack, setCopiedPack] = useState(false)
+  const [copiedSummary, setCopiedSummary] = useState(false)
 
   useEffect(() => {
     if (!open) return
@@ -87,6 +88,7 @@ export function ShareAuxModal({
   useEffect(() => {
     if (!open) {
       setCopiedPack(false)
+      setCopiedSummary(false)
     }
   }, [open])
 
@@ -115,6 +117,17 @@ export function ShareAuxModal({
       window.setTimeout(() => setCopiedPack(false), 2500)
     } catch {
       setCopiedPack(false)
+    }
+  }
+
+  async function copySummaryOnly() {
+    if (!pageSummary) return
+    try {
+      await navigator.clipboard.writeText(pageSummary)
+      setCopiedSummary(true)
+      window.setTimeout(() => setCopiedSummary(false), 2500)
+    } catch {
+      setCopiedSummary(false)
     }
   }
 
@@ -165,10 +178,17 @@ export function ShareAuxModal({
           <p className="mt-3 break-all text-[13px] leading-6 text-fg/82 dark:text-white/72">{url}</p>
         </div>
         {cfg.showQr ? (
-          <div className="mt-4 flex justify-center rounded-lg border border-border bg-white p-3 dark:border-white/10 dark:bg-white">
-            {/* eslint-disable-next-line @next/next/no-img-element -- external QR API, no next/image remote config */}
-            <img src={qrSrc} alt="" width={200} height={200} className="h-[200px] w-[200px]" />
-          </div>
+          <>
+            <div className="mt-4 flex justify-center rounded-lg border border-border bg-white p-3 dark:border-white/10 dark:bg-white">
+              {/* eslint-disable-next-line @next/next/no-img-element -- external QR API, no next/image remote config */}
+              <img src={qrSrc} alt="" width={200} height={200} className="h-[200px] w-[200px]" />
+            </div>
+            <p className="mt-3 text-[13px] leading-6 text-muted dark:text-white/60">
+              {locale === 'zh'
+                ? '建议先用手机扫码打开当前页面，再把链接或准备好的文案带入对应 app。'
+                : 'Best used as a phone-first handoff: scan to open this page on mobile, then bring the link or prepared text into the app.'}
+            </p>
+          </>
         ) : null}
         <p className="sr-only" id="share-aux-url">
           {url}
@@ -186,6 +206,17 @@ export function ShareAuxModal({
                 ? '复制标题+摘要+链接'
                 : 'Copy title + summary + link'}
           </button>
+          {pageSummary ? (
+            <button type="button" className={btnClass} onClick={copySummaryOnly}>
+              {copiedSummary
+                ? locale === 'zh'
+                  ? '摘要已复制'
+                  : 'Summary copied'
+                : locale === 'zh'
+                  ? '只复制摘要'
+                  : 'Copy summary only'}
+            </button>
+          ) : null}
           <button
             type="button"
             className={cn(btnClass, 'border border-border bg-transparent dark:border-white/20')}
