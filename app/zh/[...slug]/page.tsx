@@ -54,7 +54,9 @@ export default async function ChineseFallbackPage({ params }: Props) {
   const isMendpressRoute = englishPath === '/mendpress' || englishPath.startsWith('/mendpress/')
   const mendpressSlug = englishPath.startsWith('/mendpress/') ? englishPath.slice('/mendpress/'.length) : ''
   const mendpressEntry =
-    isMendpressRoute && mendpressSlug && !['editorial', 'dialogue', 'visual-narrative', 'reports'].includes(mendpressSlug)
+    isMendpressRoute &&
+    mendpressSlug &&
+    !['editorial', 'dialogue', 'visual-narrative', 'programme', 'listen'].includes(mendpressSlug)
       ? await getPublishedEditorialEntryBySlug(mendpressSlug)
       : null
 

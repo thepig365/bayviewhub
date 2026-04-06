@@ -7,13 +7,20 @@ const SITE_URL = (process.env.SITE_URL || 'https://www.bayviewhub.me').replace(/
 const EDITORIAL_TYPES = new Set([
   'editorial',
   'essay',
+  'audio_essay',
   'conversation',
   'interview',
-  'audio_essay',
-  'podcast_episode',
-  'field_note',
   'profile',
+  'podcast_episode',
+  'visual_essay',
+  'photo_story',
+  'artwork_reading',
+  'programme_note',
   'invitation',
+  'report',
+  'event_notice',
+  // Legacy aliases kept readable during taxonomy transition.
+  'field_note',
   'project_brief',
   'dispatch',
 ])

@@ -23,10 +23,11 @@ import {
   editorialTranscriptForLocale,
   editorialTypeAdminLabel,
   formatEditorialDate,
+  getMendpressAudioHubState,
   getPublishedEditorialEntryBySlug,
   isAudioFirstEditorialType,
   listRelatedEditorialEntries,
-  mendpressSectionDescription,
+  mendpressNextStepCopy,
   mendpressSectionLabel,
 } from '@/lib/editorial'
 
@@ -141,9 +142,13 @@ export default async function MendpressEntryPage({ params }: Props) {
   const entry = await getPublishedEditorialEntryBySlug(slug)
   if (!entry) notFound()
 
-  const relatedEntries = await listRelatedEditorialEntries(entry, 3)
-  const primaryCta = defaultEditorialPrimaryCta(entry)
+  const [relatedEntries, audioHubState] = await Promise.all([
+    listRelatedEditorialEntries(entry, 3),
+    getMendpressAudioHubState(),
+  ])
+  const primaryCta = defaultEditorialPrimaryCta(entry, { audioHubReady: audioHubState.isReady })
   const contextualLinks = editorialContextLinks(entry)
+  const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'en')
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
   const description = articleDescription(entry)
   const body = editorialBodyForLocale(entry, 'en')
@@ -206,7 +211,9 @@ export default async function MendpressEntryPage({ params }: Props) {
             <div className="mx-auto max-w-4xl">
               <div className="flex flex-wrap items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-fg/72 dark:text-white/72">
                 <span className="rounded-full bg-accent/15 px-3 py-1 text-accent">{sectionLabel}</span>
+                <span className="text-fg/78 dark:text-white/78">/</span>
                 <span className="text-fg/78 dark:text-white/78">{entryTypeLabel}</span>
+                <span className="text-fg/72 dark:text-white/72">/</span>
                 <span className="text-fg/72 dark:text-white/72">Mendpress</span>
               </div>
               <h1 className="mt-5 max-w-5xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
@@ -372,12 +379,12 @@ export default async function MendpressEntryPage({ params }: Props) {
 
             <aside className="space-y-6 lg:sticky lg:top-24">
               <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">WHERE TO NEXT</p>
+                <p className="eyebrow text-accent">{nextStepCopy.eyebrow}</p>
                 <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
-                  Continue with Mendpress
+                  {nextStepCopy.title}
                 </h2>
                 <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  Continue through Dialogue, explore more from Mendpress, or subscribe for future pieces.
+                  {nextStepCopy.body}
                 </p>
                 <div className="mt-6">
                   <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">

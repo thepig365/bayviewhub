@@ -6,7 +6,7 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Dialogue',
-  description: 'Profiles, conversations, interviews, and audio dialogue from Mendpress at Bayview Hub.',
+  description: 'Conversations, interviews, profiles, and podcast episodes from Mendpress at Bayview Hub.',
   path: '/mendpress/dialogue',
 })
 
@@ -15,7 +15,7 @@ export default function MendpressDialoguePage() {
     <JournalCollectionPage
       eyebrow="Mendpress"
       title="Dialogue"
-      intro="Profiles, conversations, interviews, and spoken exchanges with a clearer human voice."
+      intro="Conversations, interviews, profiles, and spoken exchanges carried by voice, method, and listening."
       types={['conversation', 'interview', 'profile', 'podcast_episode']}
       activeSection="dialogue"
     />

@@ -6,7 +6,7 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Visual Narrative',
-  description: 'Place-based and image-led writing from Mendpress at Bayview Hub.',
+  description: 'Visual essays, photo stories, and artwork readings from Mendpress at Bayview Hub.',
   path: '/mendpress/visual-narrative',
 })
 
@@ -15,8 +15,8 @@ export default function MendpressVisualNarrativePage() {
     <JournalCollectionPage
       eyebrow="Mendpress"
       title="Visual Narrative"
-      intro="Place-based and image-led writing shaped by atmosphere, weather, objects, and lived time."
-      types={['field_note']}
+      intro="Visual essays, photo stories, and artwork readings shaped by atmosphere, image sequence, and close looking."
+      types={['visual_essay', 'photo_story', 'artwork_reading']}
       activeSection="visual_narrative"
     />
   )

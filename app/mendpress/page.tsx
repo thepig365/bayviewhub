@@ -5,10 +5,10 @@ import { SITE_CONFIG } from '@/lib/constants'
 export const revalidate = 300
 
 const MENDPRESS_DESCRIPTION =
-  'Mendpress is the editorial publication of Bayview Hub — essays, dialogues, and visual narratives on art, attention, repair, and slow living. Published from the Mornington Peninsula. Not a blog. A curated editorial publication with a distinct worldview.'
+  'Mendpress is the editorial publication of Bayview Hub — Editorial, Dialogue, Visual Narrative, and Programme gathered into one public reading surface. Published from the Mornington Peninsula.'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Mendpress — Essays, Dialogue & Visual Narrative | Bayview Hub' },
+  title: { absolute: 'Mendpress — Editorial, Dialogue, Visual Narrative & Programme | Bayview Hub' },
   description: MENDPRESS_DESCRIPTION,
   alternates: {
     canonical: `${SITE_CONFIG.url}/mendpress`,
@@ -31,8 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Mendpress | Bayview Hub Editorial Publication',
-    description:
-      'Mendpress is the editorial publication of Bayview Hub. Essays, conversations, and visual narratives on art, attention, repair, and the life of a real place.',
+    description: 'Mendpress gathers Editorial, Dialogue, Visual Narrative, and Programme into one public reading surface.',
     images: [`${SITE_CONFIG.url}/og-image.png`],
   },
 }
@@ -47,7 +46,7 @@ export default function MendpressPage() {
         "name": "What is Mendpress?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Mendpress is the editorial publication of Bayview Hub. It publishes essays, dialogues, visual narratives, and field notes on art, attention, repair, and the life of a real place. It is not a blog — it is a curated editorial publication with a distinct worldview, produced from the Mornington Peninsula."
+          "text": "Mendpress is the editorial publication of Bayview Hub. It publishes Editorial, Dialogue, Visual Narrative, and Programme pieces on art, attention, presence, and public life. It is not a blog — it is a curated editorial publication produced from the Mornington Peninsula."
         }
       },
       {
@@ -80,7 +79,7 @@ export default function MendpressPage() {
     "@context": "https://schema.org",
     "@type": "Periodical",
     "name": "Mendpress",
-    "description": "Mendpress is the editorial publication of Bayview Hub. It publishes essays, dialogues, visual narratives, and field notes on art, attention, repair, and place-based living. Published from the Mornington Peninsula, Victoria, Australia.",
+    "description": "Mendpress is the editorial publication of Bayview Hub. It gathers Editorial, Dialogue, Visual Narrative, and Programme pieces on art, attention, presence, and place-based public life.",
     "url": "https://www.bayviewhub.me/mendpress",
     "publisher": {
       "@type": "Organization",
@@ -136,7 +135,7 @@ export default function MendpressPage() {
       <JournalCollectionPage
         eyebrow="Bayview Hub"
         title="Mendpress"
-        intro="Mendpress is Bayview Hub thinking in public — a publishing layer for editorial interpretation, dialogue, visual narrative, programme, and audio-led pieces."
+        intro="Editorial gives the inquiry its thought. Dialogue gives it voices. Visual Narrative gives it eyes. Programme gives it public life."
       />
     </>
   )

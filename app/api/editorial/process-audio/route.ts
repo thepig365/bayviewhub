@@ -577,7 +577,8 @@ export async function POST(request: Request) {
     }
     const suggestedTitle = metadata.title || title || 'Untitled audio piece'
     const slugSuggestion = sanitizeEditorialSlug('', suggestedTitle)
-    const ctaHref = slugSuggestion ? `${editorialUrl(slugSuggestion)}#listen` : '/mendpress'
+    const podcastCtaHref = slugSuggestion ? `${editorialUrl(slugSuggestion)}#listen` : '#listen'
+    const audioEssayCtaHref = '/mendpress/editorial'
 
     if (entryId) {
       processing.persistence = await persistProcessingOutputs({
@@ -618,8 +619,18 @@ export async function POST(request: Request) {
         seoKeywords: metadata.seoKeywords,
         speakers: metadata.speakers,
         slugSuggestion,
-        primaryCtaLabel: editorialType === 'podcast_episode' || editorialType === 'audio_essay' ? 'Listen on Mendpress' : '',
-        primaryCtaHref: editorialType === 'podcast_episode' || editorialType === 'audio_essay' ? ctaHref : '',
+        primaryCtaLabel:
+          editorialType === 'podcast_episode'
+            ? 'Listen now'
+            : editorialType === 'audio_essay'
+              ? 'Continue with Editorial'
+              : '',
+        primaryCtaHref:
+          editorialType === 'podcast_episode'
+            ? podcastCtaHref
+            : editorialType === 'audio_essay'
+              ? audioEssayCtaHref
+              : '',
       },
     })
   } catch (error) {

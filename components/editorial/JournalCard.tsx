@@ -84,8 +84,10 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
                 </>
               ) : null}
               <span className="eyebrow text-accent">{mendpressSectionLabelForLocale(entry.editorialType, locale)}</span>
-              <span aria-hidden>·</span>
+              <span aria-hidden>/</span>
               <span>{editorialTypeLabelForLocale(entry.editorialType, locale)}</span>
+              <span aria-hidden>/</span>
+              <span>Mendpress</span>
               <span aria-hidden>·</span>
               <span>{formatEditorialDate(entry.publishedAt, locale)}</span>
               {entry.byline ? (
@@ -195,8 +197,10 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
             </>
           ) : null}
           <span className="eyebrow text-accent">{mendpressSectionLabelForLocale(entry.editorialType, locale)}</span>
-          <span aria-hidden>·</span>
+          <span aria-hidden>/</span>
           <span>{editorialTypeLabelForLocale(entry.editorialType, locale)}</span>
+          <span aria-hidden>/</span>
+          <span>Mendpress</span>
           <span aria-hidden>·</span>
           <span>{formatEditorialDate(entry.publishedAt, locale)}</span>
           {entry.byline ? (

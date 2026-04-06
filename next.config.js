@@ -107,12 +107,12 @@ const nextConfig = {
       },
       {
         source: '/journal/invitations',
-        destination: '/mendpress/reports',
+        destination: '/mendpress/programme',
         permanent: true,
       },
       {
         source: '/journal/projects',
-        destination: '/mendpress/reports',
+        destination: '/mendpress/programme',
         permanent: true,
       },
       {

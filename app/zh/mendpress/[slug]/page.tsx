@@ -21,10 +21,11 @@ import {
   editorialTranscriptForLocale,
   editorialTypeLabelForLocale,
   formatEditorialDate,
+  getMendpressAudioHubState,
   getPublishedEditorialEntryBySlug,
   isAudioFirstEditorialType,
   listRelatedEditorialEntries,
-  mendpressSectionDescriptionForLocale,
+  mendpressNextStepCopy,
   mendpressSectionLabelForLocale,
 } from '@/lib/editorial'
 import { localizedHref } from '@/lib/language-routing'
@@ -105,6 +106,10 @@ function translateLinkLabel(label: string): string {
       return '订阅 Bayview Notes'
     case 'Dialogue':
       return '对话'
+    case 'Programme':
+      return '项目'
+    case 'Visual Narrative':
+      return '视觉叙事'
     case 'Gallery':
       return '画廊'
     case 'Partners':
@@ -115,6 +120,12 @@ function translateLinkLabel(label: string): string {
       return '评论'
     case 'Read Mendpress':
       return '阅读 Mendpress'
+    case 'Continue with Editorial':
+      return '继续阅读 Editorial'
+    case 'More from Dialogue':
+      return '更多 Dialogue'
+    case 'Explore Visual Narrative':
+      return '浏览 Visual Narrative'
     case 'Newsletter':
       return '通讯页'
     case 'Visit':
@@ -127,9 +138,12 @@ function translateLinkLabel(label: string): string {
       return '开始交流'
     case 'Listen on Mendpress':
       return '在 Mendpress 收听'
+    case 'Listen now':
+      return '立即收听'
     case 'Plan Your Visit':
       return '规划到访'
     case 'See What Is On':
+    case 'See what’s on':
       return '查看近期安排'
     case 'Start Feasibility Check':
       return '开始可行性检查'
@@ -140,38 +154,15 @@ function translateLinkLabel(label: string): string {
   }
 }
 
-function localizedPrimaryCta(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  const base = defaultEditorialPrimaryCta(entry)
-  if (entry.primaryCtaLabel) {
-    return {
-      ...base,
-      label: translateLinkLabel(base.label),
-      href: base.external ? base.href : localizedHref(base.href, 'zh'),
-    }
-  }
-
-  switch (entry.editorialType) {
-    case 'editorial':
-      return { label: '阅读 Mendpress', href: '/zh/mendpress/editorial', external: false }
-    case 'essay':
-      return { label: '申请私人观看', href: base.href, external: base.external }
-    case 'conversation':
-      return { label: '订阅 Bayview Notes', href: '/zh/newsletter', external: false }
-    case 'interview':
-      return { label: '开始交流', href: base.href, external: base.external }
-    case 'audio_essay':
-    case 'podcast_episode':
-      return { label: '在 Mendpress 收听', href: `/zh/mendpress/${entry.slug}`, external: false }
-    case 'field_note':
-      return { label: '计划到访', href: '/zh/visit', external: false }
-    case 'profile':
-      return { label: '开始交流', href: base.href, external: base.external }
-    case 'invitation':
-      return { label: '查看近期安排', href: localizedHref(base.href, 'zh'), external: false }
-    case 'project_brief':
-      return { label: '开始项目沟通', href: base.href, external: base.external }
-    case 'dispatch':
-      return { label: '订阅 Bayview Notes', href: '/zh/newsletter', external: false }
+function localizedPrimaryCta(
+  entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>,
+  audioHubReady: boolean
+) {
+  const base = defaultEditorialPrimaryCta(entry, { audioHubReady })
+  return {
+    ...base,
+    label: translateLinkLabel(base.label),
+    href: base.external || base.href.startsWith('#') ? base.href : localizedHref(base.href, 'zh'),
   }
 }
 
@@ -291,13 +282,17 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
     )
   }
 
-  const relatedEntries = await listRelatedEditorialEntries(entry, 3)
-  const primaryCta = localizedPrimaryCta(entry)
+  const [relatedEntries, audioHubState] = await Promise.all([
+    listRelatedEditorialEntries(entry, 3),
+    getMendpressAudioHubState(),
+  ])
+  const primaryCta = localizedPrimaryCta(entry, audioHubState.isReady)
   const contextualLinks = editorialContextLinks(entry).map((link) => ({
     ...link,
     label: translateLinkLabel(link.label),
     href: link.external ? link.href : localizedHref(link.href, 'zh'),
   }))
+  const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'zh')
   const englishUrl = editorialAbsoluteUrl(entry.slug)
   const chineseUrl = `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`
   const description = articleDescription(entry)
@@ -353,7 +348,9 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
                   {sectionLabel}
                 </span>
+                <span className="text-fg/78 dark:text-white/78">/</span>
                 <span className="text-fg/78 dark:text-white/78">{entryTypeLabel}</span>
+                <span className="text-fg/72 dark:text-white/72">/</span>
                 <span className="text-fg/72 dark:text-white/72">Mendpress</span>
               </div>
               <h1 className="mt-5 max-w-5xl text-balance font-serif text-4xl font-semibold text-fg md:text-6xl md:leading-[1.05]">
@@ -530,10 +527,10 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
             <aside className="space-y-6 lg:sticky lg:top-24">
               <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">接下来</p>
-                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">继续阅读 Mendpress</h2>
+                <p className="eyebrow text-accent">{nextStepCopy.eyebrow}</p>
+                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">{nextStepCopy.title}</h2>
                 <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  继续阅读 Dialogue，浏览更多 Mendpress，或订阅接下来的新文章。
+                  {nextStepCopy.body}
                 </p>
                 <div className="mt-6">
                   <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">

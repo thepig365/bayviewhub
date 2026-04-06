@@ -24,7 +24,7 @@ export default function ChineseMendpressDialoguePage() {
         { id: 'editorial', label: '评论', href: '/zh/mendpress/editorial' },
         { id: 'dialogue', label: '对话', href: '/zh/mendpress/dialogue' },
         { id: 'visual_narrative', label: '视觉叙事', href: '/zh/mendpress/visual-narrative' },
-        { id: 'reports', label: '项目发布', href: '/zh/mendpress/reports' },
+        { id: 'programme', label: '项目', href: '/zh/mendpress/programme' },
       ]}
       emptyTitle="对话栏目尚未发布内容"
       emptyBody="当第一篇对谈、访谈、人物特写或播客单集发布后，这里会显示该栏目的中文阅读入口。"

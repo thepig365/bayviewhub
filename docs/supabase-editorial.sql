@@ -90,13 +90,20 @@ alter table public.editorial_entries
     editorial_type in (
       'editorial',
       'essay',
+      'audio_essay',
       'conversation',
       'interview',
-      'audio_essay',
-      'podcast_episode',
-      'field_note',
       'profile',
+      'podcast_episode',
+      'visual_essay',
+      'photo_story',
+      'artwork_reading',
+      'programme_note',
       'invitation',
+      'report',
+      'event_notice',
+      -- Legacy aliases kept temporarily so older rows remain readable during transition.
+      'field_note',
       'project_brief',
       'dispatch'
     )

@@ -73,24 +73,50 @@ const MODE_OPTIONS: Array<{
   {
     id: 'written',
     label: 'Written piece',
-    hint: 'Editorials, essays, conversations, interviews, field notes, and profiles.',
+    hint: 'Editorial, dialogue, visual narrative, and programme formats built for reading first.',
   },
   {
     id: 'audio',
     label: 'Audio piece',
-    hint: 'Audio essays and podcast-style episodes with transcript and companion text.',
+    hint: 'Audio essays and podcast episodes with transcript, duration, and companion text.',
   },
   {
     id: 'hybrid',
     label: 'Hybrid piece',
-    hint: 'Text-led pieces with a top audio player or embedded audio blocks in the body flow.',
+    hint: 'Reading-led pieces with audio attached at the top or embedded in the body.',
   },
 ]
 
 const MODE_TYPE_OPTIONS: Record<EditorialMode, EditorialType[]> = {
-  written: ['editorial', 'essay', 'conversation', 'interview', 'field_note', 'profile'],
+  written: [
+    'editorial',
+    'essay',
+    'conversation',
+    'interview',
+    'profile',
+    'visual_essay',
+    'photo_story',
+    'artwork_reading',
+    'programme_note',
+    'invitation',
+    'report',
+    'event_notice',
+  ],
   audio: ['audio_essay', 'podcast_episode'],
-  hybrid: ['editorial', 'essay', 'conversation', 'interview', 'field_note', 'profile'],
+  hybrid: [
+    'editorial',
+    'essay',
+    'conversation',
+    'interview',
+    'profile',
+    'visual_essay',
+    'photo_story',
+    'artwork_reading',
+    'programme_note',
+    'invitation',
+    'report',
+    'event_notice',
+  ],
 }
 
 function baseFilename(value: string): string {
@@ -1514,7 +1540,7 @@ export function EditorialEditorClient({
                         value={primaryCtaLabel}
                         onChange={(e) => setPrimaryCtaLabel(e.target.value)}
                         className={FIELD_BASE_CLASS}
-                        placeholder={isAudioFirstEditorialType(editorialType) ? 'Listen on Mendpress' : 'Read on Mendpress'}
+                        placeholder={isAudioFirstEditorialType(editorialType) ? 'Listen now' : 'Continue with Mendpress'}
                       />
                     </div>
                     <div>

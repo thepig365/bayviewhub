@@ -1,35 +1,47 @@
 import { type SupabaseClient } from '@supabase/supabase-js'
 import {
-  GALLERY_EXTERNAL,
-  GALLERY_VIEWING_REQUEST_MAILTO,
   SITE_CONFIG,
-  SSD_LANDING,
 } from '@/lib/constants'
 import { getSupabaseServer } from '@/lib/ssd-campaign-server'
 
 export const EDITORIAL_TYPES = [
   'editorial',
   'essay',
+  'audio_essay',
   'conversation',
   'interview',
-  'audio_essay',
-  'podcast_episode',
-  'field_note',
   'profile',
+  'podcast_episode',
+  'visual_essay',
+  'photo_story',
+  'artwork_reading',
+  'programme_note',
   'invitation',
-  'project_brief',
-  'dispatch',
+  'report',
+  'event_notice',
 ] as const
+
+export const LEGACY_EDITORIAL_TYPE_ALIASES = {
+  field_note: 'visual_essay',
+  project_brief: 'programme_note',
+  dispatch: 'report',
+} as const
 
 export const EDITORIAL_DESK_TYPES = [
   'editorial',
   'essay',
+  'audio_essay',
   'conversation',
   'interview',
-  'audio_essay',
-  'podcast_episode',
-  'field_note',
   'profile',
+  'podcast_episode',
+  'visual_essay',
+  'photo_story',
+  'artwork_reading',
+  'programme_note',
+  'invitation',
+  'report',
+  'event_notice',
 ] as const
 
 export const AUDIO_FIRST_EDITORIAL_TYPES = ['audio_essay', 'podcast_episode'] as const
@@ -38,19 +50,31 @@ export const WRITTEN_EDITORIAL_TYPES = [
   'essay',
   'conversation',
   'interview',
-  'field_note',
   'profile',
+  'visual_essay',
+  'photo_story',
+  'artwork_reading',
+  'programme_note',
+  'invitation',
+  'report',
+  'event_notice',
 ] as const
 
 export const EDITORIAL_STATUSES = ['draft', 'published', 'archived'] as const
 
 export type EditorialType = (typeof EDITORIAL_TYPES)[number]
+export type LegacyEditorialType = keyof typeof LEGACY_EDITORIAL_TYPE_ALIASES
 export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number]
 export type EditorialStatusFilter = EditorialStatus | 'all'
 export type EditorialMode = 'written' | 'audio' | 'hybrid'
 export type EditorialLocale = 'en' | 'zh'
-export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative', 'reports'] as const
+export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative', 'programme'] as const
 export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
+
+export const MENDPRESS_AUDIO_HUB_ROUTE = '/mendpress/listen'
+export const MENDPRESS_AUDIO_HUB_PODCAST_THRESHOLD = 3
+export const MENDPRESS_AUDIO_HUB_TOTAL_THRESHOLD = 5
+export const MENDPRESS_AUDIO_HUB_TYPES = ['podcast_episode', 'audio_essay'] as const
 
 type EditorialTypeMeta = {
   label: string
@@ -117,14 +141,14 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
     description: 'Audio-first episodes, interviews, and spoken conversations published through Mendpress.',
     zhDescription: '通过 Mendpress 发布的音频优先单集、访谈与 spoken conversation。',
   },
-  field_note: {
-    label: 'Field Note',
-    zhLabel: '田野笔记',
-    pluralLabel: 'Field Notes',
-    zhPluralLabel: '现场笔记',
+  visual_essay: {
+    label: 'Visual Essay',
+    zhLabel: '视觉随笔',
+    pluralLabel: 'Visual Essays',
+    zhPluralLabel: '视觉随笔',
     categoryPath: '/mendpress/visual-narrative',
-    description: 'Shorter notes from the estate as a living place.',
-    zhDescription: '从庄园生活现场生长出来的较短篇观察与笔记。',
+    description: 'Image-led essays shaped by atmosphere, sequence, and visual interpretation.',
+    zhDescription: '以图像、氛围、顺序与视觉判断展开的长短篇视觉随笔。',
   },
   profile: {
     label: 'Profile',
@@ -135,32 +159,59 @@ export const EDITORIAL_TYPE_META: Record<EditorialType, EditorialTypeMeta> = {
     description: 'People-centred pieces on artists, partners, hosts, and collaborators.',
     zhDescription: '聚焦艺术家、合作方、主理人与协作者的人物型文章。',
   },
+  photo_story: {
+    label: 'Photo Story',
+    zhLabel: '图像故事',
+    pluralLabel: 'Photo Stories',
+    zhPluralLabel: '图像故事',
+    categoryPath: '/mendpress/visual-narrative',
+    description: 'Photographic sequences and visual stories carried through caption, framing, and pace.',
+    zhDescription: '通过摄影序列、图像编排与简洁文字展开的图像故事。',
+  },
+  artwork_reading: {
+    label: 'Artwork Reading',
+    zhLabel: '作品解读',
+    pluralLabel: 'Artwork Readings',
+    zhPluralLabel: '作品解读',
+    categoryPath: '/mendpress/visual-narrative',
+    description: 'Close readings of artworks, installations, and visual details published through Mendpress.',
+    zhDescription: '围绕作品、装置与视觉细节展开的近距离阅读文本。',
+  },
+  programme_note: {
+    label: 'Programme Note',
+    zhLabel: '项目说明',
+    pluralLabel: 'Programme Notes',
+    zhPluralLabel: '项目说明',
+    categoryPath: '/mendpress/programme',
+    description: 'Context-setting notes that frame Bayview Hub programmes, events, and public invitations.',
+    zhDescription: '为 Bayview Hub 的项目、活动与公开邀请提供语境的项目说明。',
+  },
   invitation: {
     label: 'Invitation',
     zhLabel: '邀请函',
     pluralLabel: 'Invitations',
     zhPluralLabel: '邀请函',
-    categoryPath: '/mendpress/reports',
+    categoryPath: '/mendpress/programme',
     description: 'Elegant, share-ready pages for exhibitions, dinners, events, and viewings.',
     zhDescription: '面向展览、晚宴、活动与 viewing 的公开邀请型页面。',
   },
-  project_brief: {
-    label: 'Project Brief',
-    zhLabel: '项目简报',
-    pluralLabel: 'Projects',
-    zhPluralLabel: '项目简报',
-    categoryPath: '/mendpress/reports',
-    description: 'Commercially serious explainers for projects, opportunities, and participation paths.',
-    zhDescription: '面向项目、机会与参与路径的公开说明文本。',
+  report: {
+    label: 'Report',
+    zhLabel: '项目报告',
+    pluralLabel: 'Reports',
+    zhPluralLabel: '项目报告',
+    categoryPath: '/mendpress/programme',
+    description: 'Reports, summaries, and public records connected to programmes, gatherings, and cultural work.',
+    zhDescription: '围绕项目、聚会与文化工作形成的公开报告、总结与记录。',
   },
-  dispatch: {
-    label: 'Dispatch',
-    zhLabel: '发布札记',
-    pluralLabel: 'Dispatches',
-    zhPluralLabel: '发布札记',
-    categoryPath: '/mendpress/reports',
-    description: 'Shorter editorial notes with a sharper point of view.',
-    zhDescription: '更短、更直接、观点更明确的主编式发布札记。',
+  event_notice: {
+    label: 'Event Notice',
+    zhLabel: '活动告示',
+    pluralLabel: 'Event Notices',
+    zhPluralLabel: '活动告示',
+    categoryPath: '/mendpress/programme',
+    description: 'Direct public notices for upcoming programmes, events, and time-sensitive announcements.',
+    zhDescription: '面向即将发生的 programme、活动与时效性公告的公开告示。',
   },
 }
 
@@ -274,6 +325,21 @@ export type EditorialVisibilityReport = {
   zhPath: string
 }
 
+export type MendpressAudioHubState = {
+  isReady: boolean
+  featured: EditorialEntry | null
+  podcastEpisodes: EditorialEntry[]
+  audioEssays: EditorialEntry[]
+  podcastEpisodeCount: number
+  totalAudioCount: number
+}
+
+export type MendpressNextStepCopy = {
+  eyebrow: string
+  title: string
+  body: string
+}
+
 type MendpressSectionMeta = {
   label: string
   zhLabel: string
@@ -304,12 +370,12 @@ export const MENDPRESS_SECTION_META: Record<MendpressSectionId, MendpressSection
     zhDescription: '以场所、图像、天气、物件与日常时间感为线索的视觉叙事写作。',
     path: '/mendpress/visual-narrative',
   },
-  reports: {
+  programme: {
     label: 'Programme',
-    zhLabel: '项目发布',
-    description: 'Dispatches, invitations, briefs, and contextual publication material gathered for Mendpress.',
-    zhDescription: '围绕 Mendpress 的发布札记、邀请函、项目简报与相关语境材料。',
-    path: '/mendpress/reports',
+    zhLabel: '项目',
+    description: 'Programme notes, invitations, reports, and public-facing notices gathered through Mendpress.',
+    zhDescription: '围绕 Mendpress 的 programme note、邀请函、项目报告与公开告示栏目。',
+    path: '/mendpress/programme',
   },
 }
 
@@ -325,6 +391,30 @@ const EDITORIAL_SELECT_BILINGUAL =
 function trimString(value: unknown, max = 500): string {
   if (typeof value !== 'string') return ''
   return value.trim().replace(/\r\n/g, '\n').slice(0, max)
+}
+
+function canonicalEditorialType(value: unknown): EditorialType | null {
+  const raw = trimString(value, 80)
+  if (!raw) return null
+
+  if (raw in LEGACY_EDITORIAL_TYPE_ALIASES) {
+    return LEGACY_EDITORIAL_TYPE_ALIASES[raw as LegacyEditorialType]
+  }
+
+  return EDITORIAL_TYPES.includes(raw as EditorialType) ? (raw as EditorialType) : null
+}
+
+function editorialDbTypesForQuery(types: EditorialType[]): string[] {
+  const expanded = new Set<string>()
+
+  for (const type of types) {
+    expanded.add(type)
+    if (type === 'visual_essay') expanded.add('field_note')
+    if (type === 'programme_note') expanded.add('project_brief')
+    if (type === 'report') expanded.add('dispatch')
+  }
+
+  return Array.from(expanded)
 }
 
 export function sanitizeEditorialText(value: unknown, max = 500): string {
@@ -394,7 +484,7 @@ export function sanitizeEditorialSlug(value: unknown, fallbackTitle?: string): s
 }
 
 export function sanitizeEditorialType(value: unknown): EditorialType {
-  return EDITORIAL_TYPES.includes(value as EditorialType) ? (value as EditorialType) : 'editorial'
+  return canonicalEditorialType(value) || 'editorial'
 }
 
 export function sanitizeEditorialStatus(value: unknown): EditorialStatus {
@@ -453,7 +543,18 @@ export function editorialTypeAdminLabel(type: EditorialType): string {
 }
 
 export function editorialTypeAdminHint(type: EditorialType): string {
-  return `"${editorialTypeLabel(type)}" publishes under Mendpress section "${mendpressSectionLabel(type)}".`
+  switch (type) {
+    case 'podcast_episode':
+      return 'Podcast Episode = Dialogue.'
+    case 'audio_essay':
+      return 'Audio Essay = Editorial.'
+    case 'interview':
+      return 'Interview = Dialogue.'
+    case 'essay':
+      return 'Essay = Editorial.'
+    default:
+      return `${editorialTypeLabel(type)} = ${mendpressSectionLabel(type)}.`
+  }
 }
 
 function socialSummarySentence(value: string): string {
@@ -471,8 +572,8 @@ function mendpressSectionContextLine(type: EditorialType): string {
       return 'It stays close to people, practice, and the conversation around how cultural work is actually carried.'
     case 'visual_narrative':
       return 'It works through image, atmosphere, and lived detail, rather than summary alone.'
-    case 'reports':
-      return 'It frames invitations, dispatches, and project context as part of the public programme around Bayview Hub.'
+    case 'programme':
+      return 'It frames Bayview Hub’s public programme through notes, invitations, reports, and live notices.'
   }
 }
 
@@ -486,24 +587,25 @@ function mendpressThemeLine(source: EditorialLinkedInPackSource): string {
       return 'It is intended as a public-facing editorial text rather than campaign copy.'
     case 'essay':
       return 'It is intended as a public-facing editorial text rather than campaign copy.'
+    case 'audio_essay':
+      return 'The emphasis is on voice, pacing, and a spoken editorial line rather than a text-only essay.'
     case 'conversation':
       return 'The emphasis is on exchange, method, and a strong human voice carried in public.'
     case 'interview':
       return 'The emphasis is on a clear interview structure, with attention to the subject rather than generic promotion.'
-    case 'audio_essay':
-      return 'The emphasis is on voice, pacing, and a spoken editorial line rather than a text-only essay.'
-    case 'podcast_episode':
-      return 'The emphasis is on listening first, while still holding the piece inside the Mendpress editorial world.'
     case 'profile':
       return 'The emphasis is on voice, practice, and the relationship between people and place.'
-    case 'field_note':
+    case 'podcast_episode':
+      return 'The emphasis is on listening first, while still holding the piece inside the Mendpress editorial world.'
+    case 'visual_essay':
+    case 'photo_story':
+    case 'artwork_reading':
       return 'The emphasis is on atmosphere, sequence, and what can only be understood by staying with the image.'
+    case 'programme_note':
     case 'invitation':
+    case 'report':
+    case 'event_notice':
       return 'The emphasis is on what is being convened, and why the invitation matters in public.'
-    case 'project_brief':
-      return 'The emphasis is on programme logic, participation, and the practical shape of the work.'
-    case 'dispatch':
-      return 'The emphasis is on a shorter public note with a clear point of view.'
   }
 }
 
@@ -527,14 +629,15 @@ function mendpressSuggestedLinkedInImage(source: EditorialLinkedInPackSource): s
       return `${prefix} Prefer a strong cover image, guest portrait, or still that reads clearly at small sizes.`
     case 'profile':
       return `${prefix} Prefer a strong portrait or a clear image of the subject in context.`
-    case 'field_note':
+    case 'visual_essay':
+    case 'photo_story':
+    case 'artwork_reading':
       return `${prefix} Prefer an atmospheric landscape, object detail, or image-led sequence opener.`
+    case 'programme_note':
     case 'invitation':
+    case 'report':
+    case 'event_notice':
       return `${prefix} Prefer the event image, invitation artwork, or the clearest programme-facing visual.`
-    case 'project_brief':
-      return `${prefix} Prefer a project image, site view, plan, or visual that clarifies the opportunity.`
-    case 'dispatch':
-      return `${prefix} Prefer the strongest documentary image or detail that carries the note at a glance.`
   }
 }
 
@@ -588,12 +691,15 @@ export function mendpressSectionIdForType(type: EditorialType): MendpressSection
     case 'profile':
     case 'podcast_episode':
       return 'dialogue'
-    case 'field_note':
+    case 'visual_essay':
+    case 'photo_story':
+    case 'artwork_reading':
       return 'visual_narrative'
-    case 'dispatch':
+    case 'programme_note':
     case 'invitation':
-    case 'project_brief':
-      return 'reports'
+    case 'report':
+    case 'event_notice':
+      return 'programme'
   }
 }
 
@@ -640,12 +746,14 @@ export function editorialPublicPaths(slug: string, type: EditorialType): string[
     '/mendpress/editorial',
     '/mendpress/dialogue',
     '/mendpress/visual-narrative',
-    '/mendpress/reports',
+    '/mendpress/programme',
+    '/mendpress/listen',
     '/zh/mendpress',
     '/zh/mendpress/editorial',
     '/zh/mendpress/dialogue',
     '/zh/mendpress/visual-narrative',
-    '/zh/mendpress/reports',
+    '/zh/mendpress/programme',
+    '/zh/mendpress/listen',
     sectionPath,
     `/zh${sectionPath}`,
     articlePath,
@@ -676,13 +784,14 @@ function normalizeIsoString(value: unknown): string | null {
 
 function normalizeEntry(row: EditorialDbRow): EditorialEntry {
   const editorialType = sanitizeEditorialType(row.editorial_type)
+  const slug = sanitizeEditorialSlug(row.slug, row.title)
   const bodyMarkdown = sanitizeEditorialBody(row.body_markdown)
   const bodyMarkdownZh = sanitizeEditorialBody(row.body_markdown_zh, 80_000) || null
   const publishedAt = normalizeIsoString(row.published_at)
 
   return {
     id: row.id,
-    slug: sanitizeEditorialSlug(row.slug, row.title),
+    slug,
     title: sanitizeEditorialText(row.title, 180),
     titleZh: sanitizeEditorialText(row.title_zh, 180) || null,
     summary: sanitizeEditorialText(row.summary, 600),
@@ -714,7 +823,7 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
     speakers: sanitizeEditorialSpeakers(row.speakers),
     createdAt: normalizeIsoString(row.created_at),
     updatedAt: normalizeIsoString(row.updated_at),
-    path: editorialUrl(row.slug),
+    path: editorialUrl(slug),
     categoryPath: editorialCategoryPath(editorialType),
     readingTimeMinutes: estimateReadingTimeMinutes(
       [row.title, row.summary, bodyMarkdown].filter(Boolean).join(' ')
@@ -880,12 +989,12 @@ export async function listPublishedEditorialEntriesWithDiagnostics(options?: {
       ? Array.from(new Set(options.types.map((type) => sanitizeEditorialType(type))))
       : []
 
-    if (normalizedTypes.length > 1) {
-      query = query.in('editorial_type', normalizedTypes)
-    } else if (normalizedTypes.length === 1) {
-      query = query.eq('editorial_type', normalizedTypes[0])
+    if (normalizedTypes.length > 0) {
+      const dbTypes = editorialDbTypesForQuery(normalizedTypes)
+      query = dbTypes.length === 1 ? query.eq('editorial_type', dbTypes[0]) : query.in('editorial_type', dbTypes)
     } else if (options?.type) {
-      query = query.eq('editorial_type', options.type)
+      const dbTypes = editorialDbTypesForQuery([sanitizeEditorialType(options.type)])
+      query = dbTypes.length === 1 ? query.eq('editorial_type', dbTypes[0]) : query.in('editorial_type', dbTypes)
     }
     if (options?.excludeSlug) {
       query = query.neq('slug', sanitizeEditorialSlug(options.excludeSlug))
@@ -934,6 +1043,49 @@ export async function listPublishedEditorialEntries(options?: {
   strictRecency?: boolean
 }): Promise<EditorialEntry[]> {
   return (await listPublishedEditorialEntriesWithDiagnostics(options)).entries
+}
+
+function compareEditorialRecency(a: EditorialEntry, b: EditorialEntry): number {
+  if (a.pinned !== b.pinned) return Number(b.pinned) - Number(a.pinned)
+  return (b.publishedAt || '').localeCompare(a.publishedAt || '')
+}
+
+export function isMendpressAudioHubReady(counts: {
+  podcastEpisodeCount: number
+  totalAudioCount: number
+}): boolean {
+  return (
+    counts.podcastEpisodeCount >= MENDPRESS_AUDIO_HUB_PODCAST_THRESHOLD ||
+    counts.totalAudioCount >= MENDPRESS_AUDIO_HUB_TOTAL_THRESHOLD
+  )
+}
+
+export async function getMendpressAudioHubState(): Promise<MendpressAudioHubState> {
+  const [podcastEpisodes, audioEssays] = await Promise.all([
+    listPublishedEditorialEntries({
+      types: ['podcast_episode'],
+      limit: 24,
+      strictRecency: true,
+    }),
+    listPublishedEditorialEntries({
+      types: ['audio_essay'],
+      limit: 24,
+      strictRecency: true,
+    }),
+  ])
+
+  const featured = [...podcastEpisodes, ...audioEssays].sort(compareEditorialRecency)[0] || null
+  const podcastEpisodeCount = podcastEpisodes.length
+  const totalAudioCount = podcastEpisodes.length + audioEssays.length
+
+  return {
+    isReady: isMendpressAudioHubReady({ podcastEpisodeCount, totalAudioCount }),
+    featured,
+    podcastEpisodes,
+    audioEssays,
+    podcastEpisodeCount,
+    totalAudioCount,
+  }
 }
 
 export async function getPublishedEditorialEntryBySlug(
@@ -1203,104 +1355,121 @@ export function editorialHasChinesePageContent(entry: EditorialEntry): boolean {
   return Boolean(entry.titleZh && entry.summaryZh && entry.bodyMarkdownZh)
 }
 
-export function defaultEditorialPrimaryCta(entry: EditorialEntry): EditorialLink {
-  if (
-    isAudioFirstEditorialType(entry.editorialType) &&
-    entry.primaryCtaLabel === 'Listen on Mendpress'
-  ) {
-    return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
-  }
+export function mendpressNextStepCopy(
+  type: EditorialType,
+  locale: EditorialLocale = 'en'
+): MendpressNextStepCopy {
+  const section = mendpressSectionIdForType(type)
 
-  if (entry.primaryCtaLabel && entry.primaryCtaHref) {
-    return {
-      label: entry.primaryCtaLabel,
-      href: entry.primaryCtaHref,
-      external: entry.primaryCtaHref.startsWith('http') || entry.primaryCtaHref.startsWith('mailto:'),
+  if (locale === 'zh') {
+    switch (section) {
+      case 'editorial':
+        return {
+          eyebrow: '接下来',
+          title: '继续阅读 Mendpress',
+          body: '继续阅读 Editorial，浏览更多 Mendpress，或订阅接下来的新文章。',
+        }
+      case 'dialogue':
+        return {
+          eyebrow: '接下来',
+          title: '继续阅读 Mendpress',
+          body: '继续阅读 Dialogue，浏览更多对话内容，或订阅接下来的新文章。',
+        }
+      case 'visual_narrative':
+        return {
+          eyebrow: '接下来',
+          title: '继续阅读 Mendpress',
+          body: '继续阅读 Visual Narrative，浏览更多以图像为主的作品，或订阅后续发布。',
+        }
+      case 'programme':
+        return {
+          eyebrow: '接下来',
+          title: '继续了解 Bayview Hub',
+          body: '浏览即将到来的 programme，返回 Mendpress，或规划一次到访 Bayview Hub。',
+        }
     }
   }
 
+  switch (section) {
+    case 'editorial':
+      return {
+        eyebrow: 'WHERE TO NEXT',
+        title: 'Continue with Mendpress',
+        body: 'Continue through Editorial, explore more from Mendpress, or subscribe for future pieces.',
+      }
+    case 'dialogue':
+      return {
+        eyebrow: 'WHERE TO NEXT',
+        title: 'Continue with Mendpress',
+        body: 'Continue through Dialogue, explore more conversations, or subscribe for future pieces.',
+      }
+    case 'visual_narrative':
+      return {
+        eyebrow: 'WHERE TO NEXT',
+        title: 'Continue with Mendpress',
+        body: 'Continue through Visual Narrative, explore more image-led pieces, or subscribe for future work.',
+      }
+    case 'programme':
+      return {
+        eyebrow: 'WHERE TO NEXT',
+        title: 'Continue with Mendpress',
+        body: 'Explore upcoming programmes, return to Mendpress, or plan a visit to Bayview Hub.',
+      }
+  }
+}
+
+export function defaultEditorialPrimaryCta(
+  entry: EditorialEntry,
+  options?: { audioHubReady?: boolean }
+): EditorialLink {
+  const audioHubReady = Boolean(options?.audioHubReady)
+
   switch (entry.editorialType) {
     case 'editorial':
-      return { label: 'Read Mendpress', href: '/mendpress/editorial' }
     case 'essay':
-      return { label: 'Request Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true }
-    case 'conversation':
-      return { label: 'Subscribe to Bayview Notes', href: '/newsletter' }
-    case 'interview':
-      return { label: 'Start a Conversation', href: GALLERY_VIEWING_REQUEST_MAILTO, external: true }
     case 'audio_essay':
-      return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
-    case 'podcast_episode':
-      return { label: 'Listen on Mendpress', href: `${entry.path}#listen` }
-    case 'field_note':
-      return { label: 'Plan Your Visit', href: '/visit' }
+      return { label: 'Continue with Editorial', href: '/mendpress/editorial' }
+    case 'conversation':
+    case 'interview':
     case 'profile':
-      return { label: 'Start a Conversation', href: GALLERY_VIEWING_REQUEST_MAILTO, external: true }
+      return { label: 'More from Dialogue', href: '/mendpress/dialogue' }
+    case 'podcast_episode':
+      return audioHubReady
+        ? { label: 'Listen on Mendpress', href: MENDPRESS_AUDIO_HUB_ROUTE }
+        : { label: 'Listen now', href: '#listen' }
+    case 'visual_essay':
+    case 'photo_story':
+    case 'artwork_reading':
+      return { label: 'Explore Visual Narrative', href: '/mendpress/visual-narrative' }
+    case 'programme_note':
     case 'invitation':
-      return { label: 'See What Is On', href: '/events' }
-    case 'project_brief':
-      return { label: 'Start Feasibility Check', href: SSD_LANDING.feasibility }
-    case 'dispatch':
-      return { label: 'Subscribe to Bayview Notes', href: '/newsletter' }
+    case 'report':
+    case 'event_notice':
+      return { label: 'See what’s on', href: '/events' }
   }
 }
 
 export function editorialContextLinks(entry: EditorialEntry): EditorialLink[] {
-  switch (entry.editorialType) {
+  switch (mendpressSectionIdForType(entry.editorialType)) {
     case 'editorial':
-      return [
-        { label: 'Mendpress', href: '/mendpress' },
-        { label: 'Subscribe', href: '/newsletter' },
-      ]
-    case 'essay':
-      return [
-        { label: 'Subscribe', href: '/newsletter' },
-        { label: 'Gallery', href: GALLERY_EXTERNAL.archive, external: true },
-      ]
-    case 'conversation':
-      return [
-        { label: 'Dialogue', href: '/mendpress/dialogue' },
-        { label: 'Subscribe', href: '/newsletter' },
-      ]
-    case 'interview':
-      return [
-        { label: 'Dialogue', href: '/mendpress/dialogue' },
-        { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
-      ]
-    case 'audio_essay':
       return [
         { label: 'Editorial', href: '/mendpress/editorial' },
         { label: 'Subscribe', href: '/newsletter' },
       ]
-    case 'podcast_episode':
+    case 'dialogue':
       return [
         { label: 'Dialogue', href: '/mendpress/dialogue' },
         { label: 'Subscribe', href: '/newsletter' },
       ]
-    case 'field_note':
+    case 'visual_narrative':
       return [
-        { label: 'Visit Bayview Hub', href: '/visit' },
+        { label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
         { label: 'Subscribe', href: '/newsletter' },
       ]
-    case 'profile':
+    case 'programme':
       return [
-        { label: 'Private Viewing', href: GALLERY_EXTERNAL.openYourWall, external: true },
-        { label: 'Subscribe', href: '/newsletter' },
-      ]
-    case 'invitation':
-      return [
-        { label: 'Newsletter', href: '/newsletter' },
+        { label: 'Programme', href: '/mendpress/programme' },
         { label: 'Visit', href: '/visit' },
-      ]
-    case 'project_brief':
-      return [
-        { label: 'Feasibility', href: SSD_LANDING.feasibility },
-        { label: 'Partners', href: '/partners' },
-      ]
-    case 'dispatch':
-      return [
-        { label: 'Mendpress', href: '/mendpress' },
-        { label: 'Subscribe', href: '/newsletter' },
       ]
   }
 }
@@ -1344,5 +1513,5 @@ export const MENDPRESS_CATEGORY_LINKS = [
   { id: 'editorial', label: 'Editorial', href: '/mendpress/editorial' },
   { id: 'dialogue', label: 'Dialogue', href: '/mendpress/dialogue' },
   { id: 'visual_narrative', label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
-  { id: 'reports', label: 'Programme', href: '/mendpress/reports' },
+  { id: 'programme', label: 'Programme', href: '/mendpress/programme' },
 ] as const

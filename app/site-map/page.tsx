@@ -54,7 +54,7 @@ const siteMapData = [
       { label: 'Editorial', href: '/mendpress/editorial' },
       { label: 'Dialogue', href: '/mendpress/dialogue' },
       { label: 'Visual Narrative', href: '/mendpress/visual-narrative' },
-      { label: 'Programme', href: '/mendpress/reports' },
+      { label: 'Programme', href: '/mendpress/programme' },
     ],
   },
   {
