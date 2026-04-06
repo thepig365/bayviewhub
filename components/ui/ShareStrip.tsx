@@ -166,15 +166,17 @@ export function ShareStrip({
   )
 
   const packWrapClass = cn(
-    'mt-4 rounded-2xl border p-4 sm:p-5',
-    isDark ? 'border-white/12 bg-white/[0.04]' : 'border-border bg-natural-50 dark:border-neutral-700 dark:bg-bg/50'
+    'mt-5 rounded-[1.6rem] border px-5 py-5 sm:px-6 sm:py-6',
+    isDark
+      ? 'border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.055),rgba(255,255,255,0.02))]'
+      : 'border-border bg-[linear-gradient(180deg,rgba(250,246,238,0.88),rgba(255,255,255,0.96))] dark:border-neutral-700 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))]'
   )
 
   const packButtonClass = cn(
-    'inline-flex min-h-[42px] items-center rounded-lg px-4 py-2.5 text-[15px] leading-6 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:min-h-0 sm:text-sm sm:leading-5',
+    'inline-flex min-h-[42px] items-center rounded-full border px-4 py-2.5 text-[15px] leading-6 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:min-h-0 sm:text-sm sm:leading-5',
     isDark
-      ? 'bg-white/10 text-white hover:bg-white/15 focus-visible:ring-white/40 focus-visible:ring-offset-family-navy'
-      : 'bg-white text-fg hover:bg-natural-100 focus-visible:ring-accent/40 focus-visible:ring-offset-natural-100 dark:bg-white/10 dark:text-white dark:hover:bg-white/15 dark:focus-visible:ring-offset-neutral-900'
+      ? 'border-white/12 bg-white/5 text-white hover:bg-white/10 focus-visible:ring-white/40 focus-visible:ring-offset-family-navy'
+      : 'border-border bg-white/70 text-fg hover:bg-white focus-visible:ring-accent/40 focus-visible:ring-offset-natural-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:focus-visible:ring-offset-neutral-900'
   )
 
   const openAux = (v: ShareAuxModalVariant) => {
@@ -315,13 +317,16 @@ export function ShareStrip({
       {showSharingPackPanel && (titleText || summaryText) ? (
         <div className={packWrapClass}>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-[12px] uppercase tracking-[0.16em] text-fg/68 dark:text-white/58">{sharingPackLabel}</p>
-              <p className="mt-2 max-w-3xl text-[14px] leading-6 text-fg/82 dark:text-white/72">{sharingPackBody}</p>
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3">
+                <div className={cn('h-px w-10', isDark ? 'bg-white/20' : 'bg-accent/45 dark:bg-white/20')} />
+                <p className="text-[11px] uppercase tracking-[0.22em] text-fg/62 dark:text-white/56">{sharingPackLabel}</p>
+              </div>
+              <p className="mt-3 text-[14px] leading-6 text-fg/78 dark:text-white/68">{sharingPackBody}</p>
             </div>
             <button
               type="button"
-              className={linkClass}
+              className={cn(linkClass, 'text-[13px] uppercase tracking-[0.16em] sm:text-[12px]')}
               aria-expanded={sharingPackOpen}
               onClick={() => setSharingPackOpen((open) => !open)}
             >
@@ -330,18 +335,22 @@ export function ShareStrip({
           </div>
 
           {sharingPackOpen ? (
-            <div className="mt-4 space-y-4">
+            <div className="mt-5 space-y-5 border-t pt-5 dark:border-white/10">
               <div>
-                <p className="text-base font-medium text-fg dark:text-white">{titleText}</p>
+                <p className="max-w-3xl font-serif text-[1.3rem] leading-[1.35] text-fg dark:text-white md:text-[1.45rem]">
+                  {titleText}
+                </p>
                 {summaryText ? (
-                  <p className="mt-2 text-[15px] leading-7 text-fg/86 dark:text-white/76 md:text-sm md:leading-6">{summaryText}</p>
+                  <p className="mt-3 max-w-3xl text-[15px] leading-7 text-fg/82 dark:text-white/74 md:text-[15px]">
+                    {summaryText}
+                  </p>
                 ) : null}
-                <div className="mt-3">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-fg/58 dark:text-white/50">{canonicalLabel}</p>
-                  <p className="mt-1 break-all text-[13px] leading-6 text-fg/80 dark:text-white/68">{url}</p>
+                <div className="mt-4">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-fg/52 dark:text-white/48">{canonicalLabel}</p>
+                  <p className="mt-1.5 break-all text-[13px] leading-6 text-fg/72 dark:text-white/64">{url}</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-2.5 pt-1">
                 <button type="button" onClick={copyLink} className={packButtonClass}>
                   {copyLinkLabel}
                 </button>
