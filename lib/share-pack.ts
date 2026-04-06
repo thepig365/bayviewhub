@@ -23,6 +23,14 @@ type ShareImageInput = {
   theme?: ShareCardTheme
 }
 
+export type ShareCardPayload = {
+  title: string
+  summary: string
+  eyebrow?: string
+  footer?: string
+  theme?: ShareCardTheme
+}
+
 type SharePackInput = {
   title: string
   summary: string
@@ -55,6 +63,32 @@ function absoluteUrl(pathOrUrl: string): string {
   return `${SITE_CONFIG.url}${pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`}`
 }
 
+export function encodeShareCardPayload(payload: ShareCardPayload): string {
+  return encodeURIComponent(JSON.stringify(payload))
+}
+
+export function decodeShareCardPayload(encoded: string | null): ShareCardPayload | null {
+  if (!encoded) return null
+  try {
+    const parsed = JSON.parse(decodeURIComponent(encoded))
+    if (!parsed || typeof parsed !== 'object') return null
+    return {
+      title: cleanText(typeof parsed.title === 'string' ? parsed.title : 'Bayview Hub', 140),
+      summary: cleanText(
+        typeof parsed.summary === 'string'
+          ? parsed.summary
+          : 'A place for art, music, gardens, food, wine, workshops, beauty, and shared experience — shaped by gathering, community, and slower forms of connection on the Bayview Estate.',
+        360
+      ),
+      eyebrow: typeof parsed.eyebrow === 'string' ? cleanText(parsed.eyebrow, 90) : undefined,
+      footer: typeof parsed.footer === 'string' ? cleanText(parsed.footer, 90) : undefined,
+      theme: parsed.theme === 'mendpress' ? 'mendpress' : 'bayview',
+    }
+  } catch {
+    return null
+  }
+}
+
 export function buildShareImageUrl({
   title,
   summary,
@@ -63,11 +97,16 @@ export function buildShareImageUrl({
   theme = 'bayview',
 }: ShareImageInput): string {
   const params = new URLSearchParams()
-  params.set('title', cleanText(title, 140))
-  params.set('summary', cleanText(summary, 360))
-  params.set('theme', theme)
-  if (eyebrow) params.set('eyebrow', cleanText(eyebrow, 90))
-  if (footer) params.set('footer', cleanText(footer, 90))
+  params.set(
+    'payload',
+    encodeShareCardPayload({
+      title: cleanText(title, 140),
+      summary: cleanText(summary, 360),
+      eyebrow: eyebrow ? cleanText(eyebrow, 90) : undefined,
+      footer: footer ? cleanText(footer, 90) : undefined,
+      theme,
+    })
+  )
   return `${SITE_CONFIG.url}/share-card.png?${params.toString()}`
 }
 
