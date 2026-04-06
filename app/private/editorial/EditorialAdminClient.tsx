@@ -57,6 +57,16 @@ export function EditorialAdminClient({ entries }: Props) {
     }),
     [items]
   )
+  const chineseContentLabel = (entry: EditorialEntry) => {
+    const hasChineseContent = Boolean(
+      entry.titleZh ||
+        entry.summaryZh ||
+        entry.bodyMarkdownZh ||
+        entry.transcriptMarkdownZh ||
+        entry.showNotesMarkdownZh
+    )
+    return hasChineseContent ? 'Review Chinese' : 'Add Chinese'
+  }
 
   const copyUrl = async (path: string) => {
     try {
@@ -239,6 +249,11 @@ export function EditorialAdminClient({ entries }: Props) {
                     {entry.pinned ? <span>pinned</span> : null}
                     {entry.publishedAt ? <span>published {formatEditorialDate(entry.publishedAt)}</span> : null}
                     {entry.audioUrl ? <span>audio attached</span> : null}
+                    {entry.titleZh || entry.summaryZh || entry.bodyMarkdownZh || entry.transcriptMarkdownZh || entry.showNotesMarkdownZh ? (
+                      <span>Chinese present</span>
+                    ) : (
+                      <span>Chinese missing</span>
+                    )}
                   </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm md:mt-0 md:contents">
@@ -269,10 +284,22 @@ export function EditorialAdminClient({ entries }: Props) {
                     <Link href={`/private/editorial/${entry.id}`} className="text-fg underline underline-offset-4 hover:text-accent">
                       Edit
                     </Link>
+                    <Link
+                      href={`/private/editorial/${entry.id}#chinese-review`}
+                      className="text-fg underline underline-offset-4 hover:text-accent"
+                    >
+                      {chineseContentLabel(entry)}
+                    </Link>
                     {entry.status === 'published' ? (
                       <>
                         <Link href={entry.path} className="text-fg underline underline-offset-4 hover:text-accent">
                           Live
+                        </Link>
+                        <Link
+                          href={`/zh/mendpress/${entry.slug}`}
+                          className="text-fg underline underline-offset-4 hover:text-accent"
+                        >
+                          Live ZH
                         </Link>
                         <button
                           type="button"

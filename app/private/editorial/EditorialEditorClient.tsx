@@ -1230,6 +1230,30 @@ export function EditorialEditorClient({
           </button>
         </div>
 
+        {entry?.id ? (
+          <section className="mb-8 rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
+            <div className="flex flex-wrap items-center gap-3 text-sm">
+              <Link
+                href="#chinese-review"
+                className="rounded-full border border-border px-4 py-2 text-fg transition-colors hover:border-accent"
+              >
+                Jump to Chinese review
+              </Link>
+              {entry.status === 'published' ? (
+                <Link
+                  href={`/zh/mendpress/${entry.slug}`}
+                  className="rounded-full border border-border px-4 py-2 text-fg transition-colors hover:border-accent"
+                >
+                  Open live Chinese page
+                </Link>
+              ) : null}
+              <span className="text-xs text-muted">
+                English source lives above and remains protected when you use the Chinese review save.
+              </span>
+            </div>
+          </section>
+        ) : null}
+
         {!entry?.id ? (
           <section className="mb-8 rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
             <h2 className="text-xl font-serif font-semibold text-fg">Choose a publishing mode</h2>
@@ -1672,12 +1696,17 @@ export function EditorialEditorClient({
                 ) : null}
               </div>
 
-              <section className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
-                <h2 className="text-xl font-serif font-semibold text-fg">Chinese version</h2>
+              <section id="chinese-review" className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40 scroll-mt-24">
+                <h2 className="text-xl font-serif font-semibold text-fg">Chinese Review</h2>
                 <p className="mt-2 text-sm text-muted">
                   Review the Chinese against the English source here. The left column is read-only reference, and the Chinese review save only writes
                   Chinese fields so the English source stays protected.
                 </p>
+                <div className="mt-3 flex flex-wrap gap-3 text-xs uppercase tracking-[0.16em] text-muted">
+                  <span>English source</span>
+                  <span>Chinese editable</span>
+                  <span>Save revalidates `/zh` page</span>
+                </div>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${zhOverallBadge.className}`}>
                     {zhReviewState?.overall === 'mixed' ? 'Mixed state' : zhOverallBadge.label}
