@@ -192,49 +192,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const { slug } = await params
   const entry = await getPublishedEditorialEntryBySlug(slug)
   if (!entry) notFound()
-
-  if (!editorialHasChinesePageContent(entry)) {
-    return (
-      <main className="min-h-screen bg-bg py-16 md:py-20">
-        <div className="container mx-auto px-4">
-          <section className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-natural-100 px-6 py-10 shadow-md dark:border-border dark:bg-surface md:px-10">
-            <p className="eyebrow text-accent">Mendpress 中文入口</p>
-            <h1 className="mt-4 text-balance font-serif text-4xl font-semibold text-fg md:text-5xl">
-              该文章的完整中文版尚未发布
-            </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-fg/90 dark:text-white/90">
-              这条 Mendpress 路由已经支持中英切换，但这篇文章目前仍以英文为主版本发布。我们不会把仅有中文外壳的页面伪装成完整翻译稿。
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href={entry.path} variant="primary" size="md">
-                打开英文原页
-              </Button>
-              <Button href="/zh/mendpress" variant="outline" size="md">
-                返回 Mendpress 中文页
-              </Button>
-            </div>
-
-            <section className="mt-8 rounded-2xl border border-border bg-white p-6 dark:border-border dark:bg-bg/70">
-              <p className="eyebrow text-accent">当前英文原文</p>
-              <h2 className="mt-3 font-serif text-3xl font-semibold text-fg">{entry.title}</h2>
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fg/82 dark:text-white/82">
-                <span>{mendpressSectionLabelForLocale(entry.editorialType, 'zh')}</span>
-                <span aria-hidden>·</span>
-                <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
-                {entry.byline ? (
-                  <>
-                    <span aria-hidden>·</span>
-                    <span>{entry.byline}</span>
-                  </>
-                ) : null}
-              </div>
-              {entry.summary ? <p className="mt-4 text-base leading-8 text-fg/90 dark:text-white/90">{entry.summary}</p> : null}
-            </section>
-          </section>
-        </div>
-      </main>
-    )
-  }
+  const hasChinesePageContent = editorialHasChinesePageContent(entry)
 
   const relatedEntries = await listRelatedEditorialEntries(entry, 3)
   const englishUrl = editorialAbsoluteUrl(entry.slug)
@@ -294,6 +252,14 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
           <header className="rounded-[2.25rem] border border-border bg-natural-100 px-6 py-8 shadow-md dark:border-border dark:bg-surface md:px-10 md:py-12">
             <div className="mx-auto max-w-4xl">
               <div className="flex flex-wrap items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-fg/72 dark:text-white/72">
+                {!hasChinesePageContent ? (
+                  <>
+                    <span className="rounded-full bg-natural-300 px-3 py-1 text-fg/84 dark:bg-neutral-800 dark:text-white/82">
+                      中文版本待发布
+                    </span>
+                    <span className="text-fg/72 dark:text-white/72">/</span>
+                  </>
+                ) : null}
                 <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
                   {sectionLabel}
                 </span>
@@ -306,7 +272,9 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 {editorialTitleForLocale(entry, 'zh')}
               </h1>
               <p className="mt-6 max-w-3xl text-pretty text-xl leading-9 text-fg/90 dark:text-white/90 md:text-[1.8rem] md:leading-[1.6]">
-                {editorialSummaryForLocale(entry, 'zh')}
+                {hasChinesePageContent
+                  ? editorialSummaryForLocale(entry, 'zh')
+                  : '这篇文章的完整中文版本尚未正式发布。当前可先从这里进入英文原页，我们也会在中文内容完成后保持同一篇文章格式同步更新。'}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
                 {entry.byline ? <span className="font-medium text-fg dark:text-white">{entry.byline}</span> : null}
@@ -399,14 +367,57 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
 
           <div className="mt-12">
             <div className="mx-auto max-w-[46rem]">
-              {readingLayerNotice ? (
+              {!hasChinesePageContent ? (
+                <section className="mt-2 rounded-[1.9rem] border border-border bg-natural-100 px-6 py-7 shadow-sm dark:border-border dark:bg-surface md:px-8 md:py-8">
+                  <p className="eyebrow text-accent">中文版本待发布</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg md:text-[2.35rem]">
+                    这篇 Mendpress 文章尚未形成正式中文版
+                  </h2>
+                  <p className="mt-4 text-[1.02rem] leading-8 text-fg/88 dark:text-white/82 md:text-base md:leading-7">
+                    当前中文路由会保留与英文正文页相同的文章结构，但不会把尚未完成的中文内容伪装成完整译稿。你可以先进入英文原页阅读，我们会在中文内容生成并整理完成后同步更新这里。
+                  </p>
+                  <div className="mt-7 flex flex-wrap items-center gap-3">
+                    <Button href={englishUrl} variant="accent">
+                      打开英文原页
+                    </Button>
+                    <Link href="/zh/mendpress" className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                      返回 Mendpress 中文页
+                    </Link>
+                  </div>
+                </section>
+              ) : null}
+
+              {hasChinesePageContent && readingLayerNotice ? (
                 <section className="mt-8 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
                   <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
                 </section>
               ) : null}
-              {body ? <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" /> : null}
+              {hasChinesePageContent && body ? (
+                <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" />
+              ) : null}
 
-              {showNotes ? (
+              {!hasChinesePageContent ? (
+                <section className="mt-12 border-t border-border pt-10 dark:border-border">
+                  <p className="eyebrow text-accent">当前英文原文</p>
+                  <h2 className="mt-3 font-serif text-3xl font-semibold text-fg md:text-[2.35rem]">{entry.title}</h2>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">
+                    <span>{mendpressSectionLabelForLocale(entry.editorialType, 'zh')}</span>
+                    <span aria-hidden>·</span>
+                    <span>{formatEditorialDate(entry.publishedAt, 'zh')}</span>
+                    {entry.byline ? (
+                      <>
+                        <span aria-hidden>·</span>
+                        <span>{entry.byline}</span>
+                      </>
+                    ) : null}
+                  </div>
+                  <p className="mt-4 text-[1.02rem] leading-8 text-fg/88 dark:text-white/82 md:text-base md:leading-7">
+                    {entry.summary}
+                  </p>
+                </section>
+              ) : null}
+
+              {hasChinesePageContent && showNotes ? (
                 <section className="mt-14">
                   <p className="eyebrow text-accent">导读说明</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文导读与说明</h2>
@@ -414,7 +425,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 </section>
               ) : null}
 
-              {transcript ? (
+              {hasChinesePageContent && transcript ? (
                 <section className="mt-14">
                   <p className="eyebrow text-accent">中文稿本</p>
                   <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文稿本</h2>

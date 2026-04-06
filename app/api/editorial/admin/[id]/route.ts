@@ -21,9 +21,11 @@ import {
   isNewsletterAdminCookieValid,
   newsletterAdminConfigured,
 } from '@/lib/newsletter-admin'
+import { syncEditorialChineseTranslation } from '@/lib/editorial-translation'
 import { getSupabaseServer } from '@/lib/ssd-campaign-server'
 
 export const runtime = 'nodejs'
+export const maxDuration = 120
 
 async function rejectIfUnauthorized() {
   if (!newsletterAdminConfigured()) {
@@ -125,6 +127,7 @@ export async function PATCH(request: Request, { params }: Props) {
       editorialType: nextType,
     })
 
+    const translation = await syncEditorialChineseTranslation(data.id)
     const pathsToRevalidate = editorialPublicPaths(data.slug, nextType)
 
     for (const path of pathsToRevalidate) {
@@ -139,6 +142,7 @@ export async function PATCH(request: Request, { params }: Props) {
       ok: true,
       id: data.id,
       slug: data.slug,
+      translation,
       visibility,
     })
   } catch (error) {
