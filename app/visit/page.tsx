@@ -8,7 +8,7 @@ import { generateMetadata as genMeta } from '@/lib/utils'
 export const metadata: Metadata = genMeta({
   title: 'Visit',
   description:
-    'Visit Bayview Hub at 365 Purves Road, Main Ridge, Mornington Peninsula, Victoria 3928. Open Wednesday to Sunday, 11am to late. Art, food, wine, live music, accommodation, and art workshops. 90 minutes from Melbourne.',
+    'Plan a visit to Bayview Hub at 365 Purves Road, Main Ridge on the Mornington Peninsula. This page brings together directions, opening hours, contact details, nearby destinations, and the estate context behind art, food, wine, music, workshops, and slower gathering. It is the practical visitor page for understanding how to arrive, what to expect, and how Bayview fits into a broader cultural day on the Peninsula.',
   path: '/visit',
 })
 

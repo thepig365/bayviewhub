@@ -6,8 +6,12 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Dialogue',
-  description: 'Conversations, interviews, profiles, and podcast episodes from Mendpress at Bayview Hub.',
+  description:
+    'The Dialogue section of Mendpress brings together conversations, interviews, profiles, and podcast episodes shaped by human voice and real exchange. It is the part of the publication that stays closest to speech, encounter, and listening, holding spoken and text-led dialogue inside the broader Mendpress editorial world.',
   path: '/mendpress/dialogue',
+  theme: 'mendpress',
+  shareEyebrow: 'Dialogue / Mendpress',
+  shareFooter: 'Bayview Hub',
 })
 
 export default function MendpressDialoguePage() {

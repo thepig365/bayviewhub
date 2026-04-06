@@ -6,53 +6,37 @@ import { Footer } from '@/components/layout/Footer'
 import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import Script from 'next/script'
+import { buildBayviewDefaultSharePack, metadataFromSharePack } from '@/lib/share-pack'
 
 const HOME_DESCRIPTION =
-  'Bayview Hub is a place-based cultural estate on the Mornington Peninsula. Art, music, hospitality, workshops, edible gardens, and slow life — held together as one human ecology. Home of the Mendpress editorial publication and the Bayview Arts Gallery. Backyard second dwelling consultancy available across Victoria.'
+  'Bayview Hub is a cultural estate on the Mornington Peninsula where art, music, gardens, food, wine, workshops, beauty, and slower public life are gathered into one shared setting. It connects Mendpress, hospitality, creative programmes, and estate experience through community, conversation, and forms of presence that feel more grounded than generic lifestyle or business destinations.'
+
+const bayviewDefaultSharePack = buildBayviewDefaultSharePack()
 
 export const metadata: Metadata = {
+  ...metadataFromSharePack(bayviewDefaultSharePack, {
+    title: 'Bayview Hub | Cultural Estate, Mornington Peninsula — Art, Music, Hospitality & Mendpress',
+    description: HOME_DESCRIPTION,
+    authors: [{ name: SITE_CONFIG.name }],
+    keywords: [
+      'winery',
+      'restaurant',
+      'live music',
+      'art gallery',
+      'workshops',
+      'edible gardens',
+      'Victoria',
+      'Mornington Peninsula',
+      'destination',
+      'experiences',
+    ],
+  }),
   metadataBase: new URL(SITE_CONFIG.url),
   title: {
     default: 'Bayview Hub | Cultural Estate, Mornington Peninsula — Art, Music, Hospitality & Mendpress',
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description: HOME_DESCRIPTION,
-  keywords: [
-    'winery',
-    'restaurant',
-    'live music',
-    'art gallery',
-    'workshops',
-    'edible gardens',
-    'Victoria',
-    'Mornington Peninsula',
-    'destination',
-    'experiences',
-  ],
-  authors: [{ name: SITE_CONFIG.name }],
-  openGraph: {
-    type: 'website',
-    locale: 'en_AU',
-    url: SITE_CONFIG.url,
-    siteName: SITE_CONFIG.name,
-    title: 'Bayview Hub — Cultural Estate on the Mornington Peninsula',
-    description: HOME_DESCRIPTION,
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: SITE_CONFIG.name,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Bayview Hub — Cultural Estate on the Mornington Peninsula',
-    description:
-      'Bayview Hub is a place-based cultural estate on the Mornington Peninsula. Art, music, hospitality, workshops, edible gardens, and slow life — held together as one human ecology. Home of the Mendpress editorial publication and the Bayview Arts Gallery.',
-    images: ['/og-image.png'],
-  },
   robots: {
     index: true,
     follow: true,

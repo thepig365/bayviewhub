@@ -6,8 +6,12 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Programme',
-  description: 'Programme notes, invitations, reports, and event notices from Mendpress at Bayview Hub.',
+  description:
+    'Programme is the public-life section of Mendpress, gathering programme notes, invitations, reports, and event notices connected to Bayview Hub. It turns gatherings, announcements, and cultural activity into a coherent publishing surface, so public programme material is framed with context instead of appearing as isolated updates or event fragments.',
   path: '/mendpress/programme',
+  theme: 'mendpress',
+  shareEyebrow: 'Programme / Mendpress',
+  shareFooter: 'Bayview Hub',
 })
 
 export default function MendpressProgrammePage() {

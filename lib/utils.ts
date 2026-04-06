@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { localizedAlternates } from '@/lib/language-routing'
+import { buildSharePack, metadataFromSharePack, type SharePackType } from '@/lib/share-pack'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,41 +30,35 @@ export function generateMetadata(page: {
   description: string
   image?: string
   path?: string
+  type?: SharePackType
+  shareTitle?: string
+  shareSummary?: string
+  shareImage?: string
+  shareEyebrow?: string
+  shareFooter?: string
+  theme?: 'bayview' | 'mendpress'
 }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bayviewhub.me'
   const resolvedPath = page.path || ''
+  const sharePack = buildSharePack({
+    title: page.shareTitle || page.title,
+    summary: page.shareSummary || page.description,
+    path: resolvedPath || '/',
+    image: page.shareImage || page.image,
+    type: page.type || 'website',
+    eyebrow: page.shareEyebrow || 'Bayview Hub',
+    footer: page.shareFooter || 'Victoria',
+    theme: page.theme || 'bayview',
+  })
   const alternateMeta = localizedAlternates(resolvedPath || '/')
-  const canonicalUrl = `${baseUrl}${alternateMeta.canonicalPath}`
-  const fullUrl = `${baseUrl}${resolvedPath}`
-  const ogImage = page.image || `${baseUrl}/og-image.png`
-
-  return {
+  const metadata = metadataFromSharePack(sharePack, {
     title: page.title,
     description: page.description,
-    openGraph: {
-      title: page.title,
-      description: page.description,
-      url: fullUrl,
-      siteName: 'Bayview Hub',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: page.title,
-        },
-      ],
-      locale: alternateMeta.locale === 'zh' ? 'zh_CN' : 'en_AU',
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: page.title,
-      description: page.description,
-      images: [ogImage],
-    },
+  })
+
+  return {
+    ...metadata,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: metadata.alternates?.canonical || sharePack.canonicalUrl,
       languages: alternateMeta.languages,
     },
   }

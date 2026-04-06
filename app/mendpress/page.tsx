@@ -1,39 +1,30 @@
 import type { Metadata } from 'next'
 import { JournalCollectionPage } from '@/components/editorial/JournalCollectionPage'
 import { SITE_CONFIG } from '@/lib/constants'
+import { buildSharePack, metadataFromSharePack } from '@/lib/share-pack'
 
 export const revalidate = 300
 
 const MENDPRESS_DESCRIPTION =
-  'Mendpress is the editorial publication of Bayview Hub — Editorial, Dialogue, Visual Narrative, and Programme gathered into one public reading surface. Published from the Mornington Peninsula.'
+  'Mendpress is the editorial publication of Bayview Hub, gathering Editorial, Dialogue, Visual Narrative, and Programme into one public reading surface. It gives the Bayview inquiry language through essays, conversations, image-led pieces, and programme writing, offering a slower publishing rhythm than a blog or content feed and making the estate’s cultural life legible in public.'
+
+const mendpressSharePack = buildSharePack({
+  title: 'Mendpress',
+  summary: MENDPRESS_DESCRIPTION,
+  path: '/mendpress',
+  eyebrow: 'Mendpress',
+  footer: 'Editorial Publication',
+  theme: 'mendpress',
+  type: 'website',
+})
 
 export const metadata: Metadata = {
+  ...metadataFromSharePack(mendpressSharePack, {
+    title: { absolute: 'Mendpress — Editorial, Dialogue, Visual Narrative & Programme | Bayview Hub' },
+    description: MENDPRESS_DESCRIPTION,
+  }),
   title: { absolute: 'Mendpress — Editorial, Dialogue, Visual Narrative & Programme | Bayview Hub' },
   description: MENDPRESS_DESCRIPTION,
-  alternates: {
-    canonical: `${SITE_CONFIG.url}/mendpress`,
-  },
-  openGraph: {
-    title: 'Mendpress | Bayview Hub Editorial Publication',
-    description: MENDPRESS_DESCRIPTION,
-    url: `${SITE_CONFIG.url}/mendpress`,
-    siteName: SITE_CONFIG.name,
-    type: 'website',
-    images: [
-      {
-        url: `${SITE_CONFIG.url}/og-image.png`,
-        width: 1200,
-        height: 630,
-        alt: 'Mendpress',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Mendpress | Bayview Hub Editorial Publication',
-    description: 'Mendpress gathers Editorial, Dialogue, Visual Narrative, and Programme into one public reading surface.',
-    images: [`${SITE_CONFIG.url}/og-image.png`],
-  },
 }
 
 export default function MendpressPage() {

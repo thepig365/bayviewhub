@@ -31,6 +31,8 @@ export interface ShareStripProps {
   locale?: SiteLocale
 }
 
+const VISIBLE_SHARE_CHANNELS = ['copy_link', 'email', 'linkedin', 'facebook', 'x', 'more'] as const
+
 export function ShareStrip({
   url,
   mailtoSubject,
@@ -126,7 +128,12 @@ export function ShareStrip({
       )}
     >
       <p className={labelClass}>{label}</p>
-      <div className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2" role="group" aria-label={shareGroupLabel}>
+      <div
+        className="flex flex-wrap items-center gap-x-0 gap-y-1 sm:gap-y-2"
+        role="group"
+        aria-label={shareGroupLabel}
+        data-visible-share-channels={VISIBLE_SHARE_CHANNELS.join(',')}
+      >
         <button
           type="button"
           onClick={copyLink}

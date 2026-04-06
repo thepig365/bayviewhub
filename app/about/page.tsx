@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   ...genMeta({
     title: `About | ${SITE_CONFIG.name}`,
     description:
-      'Bayview Hub is a place-based cultural ecosystem at Main Ridge, Mornington Peninsula. It combines art, music, hospitality, edible gardens, workshops, and the Mendpress editorial publication under one coherent structure. Not a wellness brand — a serious cultural place.',
+      'Bayview Hub is a place-based cultural estate at Main Ridge on the Mornington Peninsula. It brings together art, music, hospitality, edible gardens, workshops, and the Mendpress editorial publication as one coherent public ecology. This page explains why those elements belong together, what kind of place Bayview is trying to become, and why it is being built as something more serious than a generic lifestyle or wellness brand.',
     path: '/about',
   }),
   title: {

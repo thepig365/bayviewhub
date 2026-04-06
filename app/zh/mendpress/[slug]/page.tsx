@@ -8,6 +8,7 @@ import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePa
 import { Button } from '@/components/ui/Button'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { SITE_CONFIG } from '@/lib/constants'
+import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
@@ -73,10 +74,13 @@ function articleDescription(entry: Awaited<ReturnType<typeof getPublishedEditori
 }
 
 function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  if (entry.heroImage) {
-    return entry.heroImage.startsWith('http') ? entry.heroImage : `${SITE_CONFIG.url}${entry.heroImage}`
-  }
-  return `${SITE_CONFIG.url}/og-image.png`
+  return buildShareImageUrl({
+    title: editorialTitleForLocale(entry, 'zh'),
+    summary: articleShareSummary(entry),
+    eyebrow: `${mendpressSectionLabelForLocale(entry.editorialType, 'zh')} / ${editorialTypeLabelForLocale(entry.editorialType, 'zh')} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
 }
 
 function formatDuration(value: number | null): string | null {
@@ -94,6 +98,18 @@ function isoDuration(value: number | null): string | undefined {
   const minutes = Math.floor((value % 3600) / 60)
   const seconds = value % 60
   return `PT${hours ? `${hours}H` : ''}${minutes ? `${minutes}M` : ''}${seconds || (!hours && !minutes) ? `${seconds}S` : ''}`
+}
+
+function articleShareSummary(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  return clampShareSummary(
+    [
+      editorialSummaryForLocale(entry, 'zh'),
+      chineseReadingExcerpt(entry, 520),
+      bodyExcerpt(entry.bodyMarkdown || '', 520),
+    ]
+      .filter(Boolean)
+      .join(' ')
+  )
 }
 
 function translateLinkLabel(label: string): string {
@@ -202,11 +218,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = editorialSeoTitleForLocale(entry, 'zh') || editorialTitleForLocale(entry, 'zh')
   const description = articleDescription(entry)
+  const shareSummary = articleShareSummary(entry)
   const ogImage = articleOgImage(entry)
-
-  return {
+  const sharePack = buildSharePack({
+    title,
+    summary: shareSummary,
+    path: `/zh/mendpress/${entry.slug}`,
+    image: ogImage,
+    type: 'article',
+    locale: 'zh',
+    eyebrow: `${mendpressSectionLabelForLocale(entry.editorialType, 'zh')} / ${editorialTypeLabelForLocale(entry.editorialType, 'zh')} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
+  const metadata = metadataFromSharePack(sharePack, {
     title,
     description,
+  })
+
+  return {
+    ...metadata,
     alternates: {
       canonical: chineseUrl,
       languages: {
@@ -219,17 +250,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       url: chineseUrl,
       title,
-      description,
+      description: shareSummary,
       siteName: SITE_CONFIG.name,
       locale: 'zh_CN',
       images: [{ url: ogImage, alt: editorialTitleForLocale(entry, 'zh') }],
       publishedTime: entry.publishedAt || undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage],
     },
   }
 }
@@ -296,6 +321,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const englishUrl = editorialAbsoluteUrl(entry.slug)
   const chineseUrl = `${SITE_CONFIG.url}/zh/mendpress/${entry.slug}`
   const description = articleDescription(entry)
+  const shareSummary = articleShareSummary(entry)
   const body = entry.bodyMarkdownZh || ''
   const transcript = editorialTranscriptForLocale(entry, 'zh')
   const showNotes = editorialShowNotesForLocale(entry, 'zh')
@@ -386,7 +412,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 url={chineseUrl}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                 mailtoIntro={`${description}\n\n阅读链接：`}
-                shortShareBlurb={description}
+                shortShareBlurb={shareSummary}
                 bordered={false}
                 label="分享这篇文章"
                 className="mt-7 max-w-4xl"
@@ -507,7 +533,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                       url={chineseUrl}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
                       mailtoIntro={`${description}\n\n阅读链接：`}
-                      shortShareBlurb={description}
+                      shortShareBlurb={shareSummary}
                       label="分享这篇内容"
                       locale="zh"
                     />

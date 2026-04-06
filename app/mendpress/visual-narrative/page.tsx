@@ -6,8 +6,12 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Visual Narrative',
-  description: 'Visual essays, photo stories, and artwork readings from Mendpress at Bayview Hub.',
+  description:
+    'Visual Narrative gathers the image-led side of Mendpress: visual essays, photo stories, and artwork readings shaped by sequence, atmosphere, and close attention. It is where Bayview Hub’s publishing surface works through images and visual interpretation rather than argument alone, giving the publication a slower and more spatial mode of reading.',
   path: '/mendpress/visual-narrative',
+  theme: 'mendpress',
+  shareEyebrow: 'Visual Narrative / Mendpress',
+  shareFooter: 'Bayview Hub',
 })
 
 export default function MendpressVisualNarrativePage() {

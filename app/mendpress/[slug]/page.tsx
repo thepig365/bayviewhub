@@ -9,6 +9,7 @@ import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePa
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
+import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
   defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
@@ -65,11 +66,25 @@ function articleDescription(entry: Awaited<ReturnType<typeof getPublishedEditori
   )
 }
 
+function articleShareSummary(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
+  return clampShareSummary(
+    [
+      editorialSummaryForLocale(entry, 'en'),
+      bodyExcerpt(editorialBodyForLocale(entry, 'en'), 520),
+    ]
+      .filter(Boolean)
+      .join(' ')
+  )
+}
+
 function articleOgImage(entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>) {
-  if (entry.heroImage) {
-    return entry.heroImage.startsWith('http') ? entry.heroImage : `${SITE_CONFIG.url}${entry.heroImage}`
-  }
-  return `${SITE_CONFIG.url}/og-image.png`
+  return buildShareImageUrl({
+    title: editorialTitleForLocale(entry, 'en'),
+    summary: articleShareSummary(entry),
+    eyebrow: `${mendpressSectionLabel(entry.editorialType)} / ${editorialTypeAdminLabel(entry.editorialType)} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
 }
 
 function formatDuration(value: number | null): string | null {
@@ -102,12 +117,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const articleTitle = editorialTitleForLocale(entry, 'en')
   const title = `${articleTitle} | Mendpress — Bayview Hub`
   const description = articleDescription(entry)
+  const shareSummary = articleShareSummary(entry)
   const url = editorialAbsoluteUrl(entry.slug)
   const ogImage = articleOgImage(entry)
-
-  return {
+  const sharePack = buildSharePack({
+    title: `${articleTitle} | Mendpress`,
+    summary: shareSummary,
+    path: `/mendpress/${entry.slug}`,
+    image: ogImage,
+    type: 'article',
+    eyebrow: `${mendpressSectionLabel(entry.editorialType)} / ${editorialTypeAdminLabel(entry.editorialType)} / Mendpress`,
+    footer: 'Mendpress',
+    theme: 'mendpress',
+  })
+  const metadata = metadataFromSharePack(sharePack, {
     title: { absolute: title },
     description,
+  })
+
+  return {
+    ...metadata,
     alternates: editorialHasChinesePageContent(entry)
       ? {
           canonical: url,
@@ -122,16 +151,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       url,
       title: `${articleTitle} | Mendpress`,
-      description,
+      description: shareSummary,
       siteName: SITE_CONFIG.name,
       images: [{ url: ogImage, alt: articleTitle }],
       publishedTime: entry.publishedAt || undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${articleTitle} | Mendpress`,
-      description,
-      images: [ogImage],
     },
   }
 }
@@ -151,6 +174,7 @@ export default async function MendpressEntryPage({ params }: Props) {
   const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'en')
   const absoluteUrl = editorialAbsoluteUrl(entry.slug)
   const description = articleDescription(entry)
+  const shareSummary = articleShareSummary(entry)
   const body = editorialBodyForLocale(entry, 'en')
   const transcript = editorialTranscriptForLocale(entry, 'en')
   const showNotes = editorialShowNotesForLocale(entry, 'en')
@@ -251,7 +275,7 @@ export default async function MendpressEntryPage({ params }: Props) {
                 url={absoluteUrl}
                 mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                 mailtoIntro={`${description}\n\nRead it here:`}
-                shortShareBlurb={description}
+                shortShareBlurb={shareSummary}
                 bordered={false}
                 label="Share this article"
                 className="mt-7 max-w-4xl"
@@ -363,7 +387,7 @@ export default async function MendpressEntryPage({ params }: Props) {
                       url={absoluteUrl}
                       mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
                       mailtoIntro={`${description}\n\nRead it here:`}
-                      shortShareBlurb={description}
+                      shortShareBlurb={shareSummary}
                       label="Share this piece"
                     />
                     <JournalSubscribePanel

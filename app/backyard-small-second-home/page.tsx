@@ -16,7 +16,7 @@ export const metadata = {
   ...genMeta({
     title: `Backyard Small Second Home (Victorian SSD) | Rules, Feasibility & Next Steps | ${SITE_CONFIG.name}`,
     description:
-      'Victorian SSD (Small Second Dwelling): up to 60 sqm GFA, same title, behind front wall, all-electric. Planning permit may be omitted only when fully Deemed-to-Comply; overlays often change that. Building permit still required. Rules, cost context, checklist.',
+      'This Bayview Hub guide explains the Victorian Small Second Dwelling pathway in public-facing terms: core SSD rules, planning context, feasibility questions, cost boundaries, and the next practical steps for owners considering a backyard small second home. It is designed as a serious orientation page rather than a sales funnel, helping people understand the regulatory shape of the pathway before they act.',
     path: '/backyard-small-second-home',
     image: `${SITE_CONFIG.url}/og-second-home.png`,
   }),

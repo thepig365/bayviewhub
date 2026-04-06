@@ -2,22 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/constants'
 import { WorkshopsEnquiryForm } from './WorkshopsEnquiryForm'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
-export const metadata: Metadata = {
-  title: {
-    absolute: 'Art Workshops Mornington Peninsula | Bayview Hub',
-  },
+export const metadata: Metadata = genMeta({
+  title: 'Art Workshops Mornington Peninsula | Bayview Hub',
   description:
-    'Non-clinical, place-based art workshops at Bayview Hub, Mornington Peninsula. Creative sessions in a working garden and studio environment at Main Ridge, Victoria.',
-  openGraph: {
-    title: 'Art Workshops Mornington Peninsula | Bayview Hub',
-    description: 'Non-clinical, place-based art workshops at Bayview Hub, Mornington Peninsula.',
-    url: 'https://www.bayviewhub.me/workshops',
-  },
-  alternates: {
-    canonical: 'https://www.bayviewhub.me/workshops',
-  },
-}
+    'Bayview Hub workshops are non-clinical, place-based creative sessions held in Main Ridge on the Mornington Peninsula. This page explains the workshop environment, how the estate context shapes the experience, and how to enquire about upcoming programmes. It is intended for people looking for serious, grounded creative practice rather than generic event marketing or clinical therapeutic claims.',
+  path: '/workshops',
+})
 
 const workshopsSchema = {
   '@context': 'https://schema.org',

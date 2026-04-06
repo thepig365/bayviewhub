@@ -6,8 +6,12 @@ export const revalidate = 300
 
 export const metadata: Metadata = genMeta({
   title: 'Mendpress Editorial',
-  description: 'Editorials, essays, and audio essays from Mendpress at Bayview Hub.',
+  description:
+    'The Editorial section of Mendpress gathers essays, editorials, and audio essays that carry Bayview Hub’s inquiry in public language. It is where thought is made explicit: longer-form writing on attention, culture, place, and meaning, shaped as a serious publishing surface rather than a fast-moving content feed.',
   path: '/mendpress/editorial',
+  theme: 'mendpress',
+  shareEyebrow: 'Editorial / Mendpress',
+  shareFooter: 'Bayview Hub',
 })
 
 export default function MendpressEditorialPage() {
