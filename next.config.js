@@ -116,6 +116,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/mendpress/reports',
+        destination: '/mendpress/programme',
+        permanent: true,
+      },
+      {
+        source: '/zh/mendpress/reports',
+        destination: '/zh/mendpress/programme',
+        permanent: true,
+      },
+      {
         source: '/journal/:slug',
         destination: '/mendpress/:slug',
         permanent: true,
