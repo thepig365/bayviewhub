@@ -4,17 +4,13 @@ import { notFound } from 'next/navigation'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
 import { JournalCard } from '@/components/editorial/JournalCard'
-import { MendpressInlineNewsletterCta } from '@/components/editorial/MendpressInlineNewsletterCta'
-import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
 import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
-  defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
   editorialBodyForLocale,
-  editorialContextLinks,
   editorialHasChinesePageContent,
   editorialSeoDescriptionForLocale,
   editorialSeoTitleForLocale,
@@ -24,13 +20,12 @@ import {
   editorialTranscriptForLocale,
   editorialTypeAdminLabel,
   formatEditorialDate,
-  getMendpressAudioHubState,
   getPublishedEditorialEntryBySlug,
   isAudioFirstEditorialType,
   listRelatedEditorialEntries,
-  mendpressNextStepCopy,
   mendpressSectionLabel,
 } from '@/lib/editorial'
+import { localizedHref } from '@/lib/language-routing'
 
 export const revalidate = 300
 
@@ -170,15 +165,10 @@ export default async function MendpressEntryPage({ params }: Props) {
   const entry = await getPublishedEditorialEntryBySlug(slug)
   if (!entry) notFound()
 
-  const [relatedEntries, audioHubState] = await Promise.all([
-    listRelatedEditorialEntries(entry, 3),
-    getMendpressAudioHubState(),
-  ])
-  const primaryCta = defaultEditorialPrimaryCta(entry, { audioHubReady: audioHubState.isReady })
-  const contextualLinks = editorialContextLinks(entry)
-  const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'en')
+  const relatedEntries = await listRelatedEditorialEntries(entry, 3)
   const sharePack = articleSharePack(entry)
   const absoluteUrl = sharePack.canonicalUrl
+  const sectionHref = localizedHref(entry.categoryPath, 'en')
   const description = articleDescription(entry)
   const shareSummary = sharePack.shareSummary
   const body = editorialBodyForLocale(entry, 'en')
@@ -189,6 +179,8 @@ export default async function MendpressEntryPage({ params }: Props) {
   const sectionLabel = mendpressSectionLabel(entry.editorialType)
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
   const audioFirst = isAudioFirstEditorialType(entry.editorialType)
+  const featuredRelatedEntry = relatedEntries[0] || null
+  const secondaryRelatedEntries = relatedEntries.slice(1)
   const keywordString = entry.tags.length
     ? entry.tags.join(', ')
     : 'art, attention, repair, presence, Mornington Peninsula, Bayview Hub, Mendpress'
@@ -337,49 +329,61 @@ export default async function MendpressEntryPage({ params }: Props) {
             </div>
           </header>
 
-          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-            <div className="min-w-0">
-              <div className="mx-auto max-w-[46rem]">
-                {body ? <EditorialBody body={body} className="mt-2 md:mt-4" locale="en" /> : null}
+          <div className="mt-12">
+            <div className="mx-auto max-w-[46rem]">
+              {body ? <EditorialBody body={body} className="mt-2 md:mt-4" locale="en" /> : null}
 
-                {showNotes ? (
-                  <section className="mt-14">
-                    <p className="eyebrow text-accent">Show notes</p>
-                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
-                    <EditorialBody body={showNotes} className="mt-6" locale="en" />
-                  </section>
-                ) : null}
+              {showNotes ? (
+                <section className="mt-14">
+                  <p className="eyebrow text-accent">Show notes</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Companion text</h2>
+                  <EditorialBody body={showNotes} className="mt-6" locale="en" />
+                </section>
+              ) : null}
 
-                {transcript ? (
-                  <section className="mt-14">
-                    <p className="eyebrow text-accent">Transcript</p>
-                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
-                    <EditorialBody body={transcript} className="mt-6" locale="en" />
-                  </section>
-                ) : null}
+              {transcript ? (
+                <section className="mt-14">
+                  <p className="eyebrow text-accent">Transcript</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">Full transcript</h2>
+                  <EditorialBody body={transcript} className="mt-6" locale="en" />
+                </section>
+              ) : null}
+            </div>
 
-                <MendpressInlineNewsletterCta className="mt-14" />
-              </div>
+            <section className="mt-24 border-t border-border pt-14 dark:border-border">
+              <div className="mx-auto max-w-[74rem]">
+                <h2 className="font-serif text-4xl font-semibold tracking-tight text-fg md:text-5xl">
+                  Continue with Mendpress
+                </h2>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
-                <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
-                  <div>
-                    <p className="eyebrow text-accent">Continue with Mendpress</p>
-                    <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
+                <div className="mt-12 space-y-16">
+                  <section>
+                    <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.5rem]">
                       More from {sectionLabel}
-                    </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                      Continue from this piece into the same editorial current, or step back out into the wider Mendpress publication.
+                    </h3>
+                    <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-lg md:leading-8">
+                      Stay with the same editorial current, or return to the wider Mendpress publication from here.
                     </p>
-                    {relatedEntries.length ? (
-                      <div className="mt-8 space-y-0">
-                        {relatedEntries.map((relatedEntry) => (
-                          <JournalCard key={relatedEntry.id} entry={relatedEntry} layout="stream" />
-                        ))}
+
+                    {featuredRelatedEntry ? (
+                      <div className="mt-9 space-y-8">
+                        <JournalCard entry={featuredRelatedEntry} layout="lead" />
+                        {secondaryRelatedEntries.length ? (
+                          <div className="grid gap-8 xl:grid-cols-2">
+                            {secondaryRelatedEntries.map((relatedEntry) => (
+                              <JournalCard key={relatedEntry.id} entry={relatedEntry} />
+                            ))}
+                          </div>
+                        ) : null}
+                        <div className="pt-1">
+                          <Link href={sectionHref} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                            Browse all {sectionLabel}
+                          </Link>
+                        </div>
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/60">
-                        <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
+                      <div className="mt-8 max-w-2xl">
+                        <p className="text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
                           The next related piece has not been published yet. Continue through the main Mendpress stream instead.
                         </p>
                         <div className="mt-4">
@@ -389,59 +393,50 @@ export default async function MendpressEntryPage({ params }: Props) {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </section>
 
-                  <div className="space-y-6">
-                    <ShareStrip
-                      url={absoluteUrl}
-                      shareTitle={sharePack.shareTitle}
-                      shareSummary={shareSummary}
-                      mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
-                      mailtoIntro={`${description}\n\nRead it here:`}
-                      shortShareBlurb={shareSummary}
-                      showSharingPackPanel
-                      label="Share this piece"
-                    />
-                    <JournalSubscribePanel
-                      compact
-                      body="Receive selected Mendpress pieces, invitations, and estate notes when there is something worth sharing."
-                      ctaLabel="Go to Newsletter"
-                      secondaryLabel="Explore Mendpress"
-                    />
+                  <div className="grid gap-14 border-t border-border pt-14 dark:border-border xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+                    <section>
+                      <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.35rem]">
+                        Share this piece
+                      </h3>
+                      <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
+                        Keep the title, summary, and link close at hand for posting manually, without losing the platform tools.
+                      </p>
+                      <ShareStrip
+                        url={absoluteUrl}
+                        shareTitle={sharePack.shareTitle}
+                        shareSummary={shareSummary}
+                        mailtoSubject={`${editorialTitleForLocale(entry, 'en')} | Mendpress`}
+                        mailtoIntro={`${description}\n\nRead it here:`}
+                        shortShareBlurb={shareSummary}
+                        showSharingPackPanel
+                        bordered={false}
+                        label="Share this piece"
+                        className="mt-7"
+                      />
+                    </section>
+
+                    <section className="xl:border-l xl:border-border xl:pl-12 dark:border-border">
+                      <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.35rem]">
+                        Stay with Mendpress
+                      </h3>
+                      <p className="mt-4 max-w-2xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
+                        Receive selected Mendpress pieces, invitations, and estate notes when there is something worth sharing.
+                      </p>
+                      <div className="mt-7 flex flex-wrap items-center gap-3">
+                        <Button href={localizedHref('/newsletter', 'en')} variant="accent">
+                          Go to Newsletter
+                        </Button>
+                        <Link href={localizedHref('/mendpress', 'en')} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                          Explore Mendpress
+                        </Link>
+                      </div>
+                    </section>
                   </div>
                 </div>
-              </section>
-            </div>
-
-            <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">{nextStepCopy.eyebrow}</p>
-                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">
-                  {nextStepCopy.title}
-                </h2>
-                <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  {nextStepCopy.body}
-                </p>
-                <div className="mt-6">
-                  <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">
-                    {primaryCta.label}
-                  </Button>
-                </div>
-                <div className="mt-4 flex flex-col gap-3 text-[15px] leading-6 md:text-sm md:leading-5">
-                  {contextualLinks.map((link) => (
-                    <Link
-                      key={`${link.href}-${link.label}`}
-                      href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noopener noreferrer' : undefined}
-                      className="text-fg underline underline-offset-4 hover:text-accent"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            </aside>
+              </div>
+            </section>
           </div>
         </article>
       </div>

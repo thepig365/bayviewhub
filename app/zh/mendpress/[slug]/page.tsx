@@ -4,15 +4,12 @@ import { notFound } from 'next/navigation'
 import { EditorialAudioPlayer } from '@/components/editorial/EditorialAudioPlayer'
 import { EditorialBody } from '@/components/editorial/EditorialBody'
 import { JournalCard } from '@/components/editorial/JournalCard'
-import { JournalSubscribePanel } from '@/components/editorial/JournalSubscribePanel'
 import { Button } from '@/components/ui/Button'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { SITE_CONFIG } from '@/lib/constants'
 import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
-  defaultEditorialPrimaryCta,
   editorialAbsoluteUrl,
-  editorialContextLinks,
   editorialHasChinesePageContent,
   editorialSeoDescriptionForLocale,
   editorialSeoTitleForLocale,
@@ -22,11 +19,9 @@ import {
   editorialTranscriptForLocale,
   editorialTypeLabelForLocale,
   formatEditorialDate,
-  getMendpressAudioHubState,
   getPublishedEditorialEntryBySlug,
   isAudioFirstEditorialType,
   listRelatedEditorialEntries,
-  mendpressNextStepCopy,
   mendpressSectionLabelForLocale,
 } from '@/lib/editorial'
 import { localizedHref } from '@/lib/language-routing'
@@ -124,76 +119,6 @@ function articleShareSummary(entry: NonNullable<Awaited<ReturnType<typeof getPub
       .filter(Boolean)
       .join(' ')
   )
-}
-
-function translateLinkLabel(label: string): string {
-  switch (label) {
-    case 'Mendpress':
-      return 'Mendpress'
-    case 'Subscribe':
-      return '订阅'
-    case 'Subscribe to Bayview Notes':
-      return '订阅 Bayview Notes'
-    case 'Dialogue':
-      return '对话'
-    case 'Programme':
-      return '项目'
-    case 'Visual Narrative':
-      return '视觉叙事'
-    case 'Gallery':
-      return '画廊'
-    case 'Partners':
-      return '合作方'
-    case 'Private Viewing':
-      return '私人观看'
-    case 'Editorial':
-      return '评论'
-    case 'Read Mendpress':
-      return '阅读 Mendpress'
-    case 'Continue with Editorial':
-      return '继续阅读 Editorial'
-    case 'More from Dialogue':
-      return '更多 Dialogue'
-    case 'Explore Visual Narrative':
-      return '浏览 Visual Narrative'
-    case 'Newsletter':
-      return '通讯页'
-    case 'Visit':
-      return '到访信息'
-    case 'Visit Bayview Hub':
-      return '到访 Bayview Hub'
-    case 'Request Private Viewing':
-      return '申请私人观看'
-    case 'Start a Conversation':
-      return '开始交流'
-    case 'Listen on Mendpress':
-      return '在 Mendpress 收听'
-    case 'Listen now':
-      return '立即收听'
-    case 'Plan Your Visit':
-      return '规划到访'
-    case 'See What Is On':
-    case 'See what’s on':
-      return '查看近期安排'
-    case 'Start Feasibility Check':
-      return '开始可行性检查'
-    case 'Feasibility':
-      return '可行性评估'
-    default:
-      return label
-  }
-}
-
-function localizedPrimaryCta(
-  entry: NonNullable<Awaited<ReturnType<typeof getPublishedEditorialEntryBySlug>>>,
-  audioHubReady: boolean
-) {
-  const base = defaultEditorialPrimaryCta(entry, { audioHubReady })
-  return {
-    ...base,
-    label: translateLinkLabel(base.label),
-    href: base.external || base.href.startsWith('#') ? base.href : localizedHref(base.href, 'zh'),
-  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -311,20 +236,11 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
     )
   }
 
-  const [relatedEntries, audioHubState] = await Promise.all([
-    listRelatedEditorialEntries(entry, 3),
-    getMendpressAudioHubState(),
-  ])
-  const primaryCta = localizedPrimaryCta(entry, audioHubState.isReady)
-  const contextualLinks = editorialContextLinks(entry).map((link) => ({
-    ...link,
-    label: translateLinkLabel(link.label),
-    href: link.external ? link.href : localizedHref(link.href, 'zh'),
-  }))
-  const nextStepCopy = mendpressNextStepCopy(entry.editorialType, 'zh')
+  const relatedEntries = await listRelatedEditorialEntries(entry, 3)
   const englishUrl = editorialAbsoluteUrl(entry.slug)
   const sharePack = articleSharePack(entry)
   const chineseUrl = sharePack.canonicalUrl
+  const sectionHref = localizedHref(entry.categoryPath, 'zh')
   const description = articleDescription(entry)
   const shareSummary = sharePack.shareSummary
   const body = entry.bodyMarkdownZh || ''
@@ -339,6 +255,8 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const sectionLabel = mendpressSectionLabelForLocale(entry.editorialType, 'zh')
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : '收听这篇内容'
   const audioFirst = isAudioFirstEditorialType(entry.editorialType)
+  const featuredRelatedEntry = relatedEntries[0] || null
+  const secondaryRelatedEntries = relatedEntries.slice(1)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': entry.audioUrl && isAudioFirstEditorialType(entry.editorialType) ? 'PodcastEpisode' : 'Article',
@@ -479,52 +397,66 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
             </div>
           </header>
 
-          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-            <div className="min-w-0">
-              <div className="mx-auto max-w-[46rem]">
-                {readingLayerNotice ? (
-                  <section className="mt-8 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
-                    <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
-                  </section>
-                ) : null}
-                {body ? <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" /> : null}
+          <div className="mt-12">
+            <div className="mx-auto max-w-[46rem]">
+              {readingLayerNotice ? (
+                <section className="mt-8 rounded-2xl border border-border bg-natural-100 px-5 py-4 dark:border-border dark:bg-surface">
+                  <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
+                </section>
+              ) : null}
+              {body ? <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" /> : null}
 
-                {showNotes ? (
-                  <section className="mt-14">
-                    <p className="eyebrow text-accent">导读说明</p>
-                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文导读与说明</h2>
-                    <EditorialBody body={showNotes} className="mt-6" locale="zh" />
-                  </section>
-                ) : null}
+              {showNotes ? (
+                <section className="mt-14">
+                  <p className="eyebrow text-accent">导读说明</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文导读与说明</h2>
+                  <EditorialBody body={showNotes} className="mt-6" locale="zh" />
+                </section>
+              ) : null}
 
-                {transcript ? (
-                  <section className="mt-14">
-                    <p className="eyebrow text-accent">中文稿本</p>
-                    <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文稿本</h2>
-                    <EditorialBody body={transcript} className="mt-6" locale="zh" />
-                  </section>
-                ) : null}
-              </div>
+              {transcript ? (
+                <section className="mt-14">
+                  <p className="eyebrow text-accent">中文稿本</p>
+                  <h2 className="mt-3 text-3xl font-serif font-semibold text-fg">中文稿本</h2>
+                  <EditorialBody body={transcript} className="mt-6" locale="zh" />
+                </section>
+              ) : null}
+            </div>
 
-              <section className="mt-16 rounded-[2rem] border border-border bg-natural-100 p-6 shadow-md dark:border-border dark:bg-surface md:p-8">
-                <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
-                  <div>
-                    <p className="eyebrow text-accent">继续阅读 Mendpress</p>
-                    <h2 className="mt-2 text-3xl font-serif font-semibold text-fg">
+            <section className="mt-24 border-t border-border pt-14 dark:border-border">
+              <div className="mx-auto max-w-[74rem]">
+                <h2 className="font-serif text-4xl font-semibold tracking-tight text-fg md:text-5xl">
+                  继续阅读 Mendpress
+                </h2>
+
+                <div className="mt-12 space-y-16">
+                  <section>
+                    <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.5rem]">
                       更多来自 {sectionLabel}
-                    </h2>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                      从这篇内容继续进入同一栏目，或回到 Mendpress 的公开发布流中继续阅读。
+                    </h3>
+                    <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-lg md:leading-8">
+                      顺着这篇内容继续进入同一栏目，或从这里回到更完整的 Mendpress 公共发布流。
                     </p>
-                    {relatedEntries.length ? (
-                      <div className="mt-8 space-y-0">
-                        {relatedEntries.map((relatedEntry) => (
-                          <JournalCard key={relatedEntry.id} entry={relatedEntry} layout="stream" locale="zh" />
-                        ))}
+
+                    {featuredRelatedEntry ? (
+                      <div className="mt-9 space-y-8">
+                        <JournalCard entry={featuredRelatedEntry} layout="lead" locale="zh" />
+                        {secondaryRelatedEntries.length ? (
+                          <div className="grid gap-8 xl:grid-cols-2">
+                            {secondaryRelatedEntries.map((relatedEntry) => (
+                              <JournalCard key={relatedEntry.id} entry={relatedEntry} locale="zh" />
+                            ))}
+                          </div>
+                        ) : null}
+                        <div className="pt-1">
+                          <Link href={sectionHref} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                            浏览更多 {sectionLabel}
+                          </Link>
+                        </div>
                       </div>
                     ) : (
-                      <div className="mt-8 rounded-3xl border border-border bg-natural-200 p-5 shadow-sm dark:border-border dark:bg-bg/60">
-                        <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
+                      <div className="mt-8 max-w-2xl">
+                        <p className="text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
                           下一篇相关内容尚未形成足够清晰的关联推荐。你可以先返回 Mendpress 主流继续阅读。
                         </p>
                         <div className="mt-4">
@@ -534,61 +466,51 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </section>
 
-                  <div className="space-y-6">
-                    <ShareStrip
-                      url={chineseUrl}
-                      shareTitle={sharePack.shareTitle}
-                      shareSummary={shareSummary}
-                      mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
-                      mailtoIntro={`${description}\n\n阅读链接：`}
-                      shortShareBlurb={shareSummary}
-                      showSharingPackPanel
-                      label="分享这篇内容"
-                      locale="zh"
-                    />
-                    <JournalSubscribePanel
-                      compact
-                      locale="zh"
-                      eyebrow="Bayview Notes"
-                      title="订阅 Bayview Notes"
-                      body="接收 Mendpress 精选文章、项目更新与 Bayview Hub 的公开动向。"
-                      ctaLabel="进入通讯页"
-                      secondaryLabel="浏览 Mendpress"
-                    />
+                  <div className="grid gap-14 border-t border-border pt-14 dark:border-border xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+                    <section>
+                      <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.35rem]">
+                        分享这篇内容
+                      </h3>
+                      <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
+                        标题、摘要与链接都放在这里，便于你手动带去 LinkedIn、小红书、微信或其他发布流程。
+                      </p>
+                      <ShareStrip
+                        url={chineseUrl}
+                        shareTitle={sharePack.shareTitle}
+                        shareSummary={shareSummary}
+                        mailtoSubject={`${editorialTitleForLocale(entry, 'zh')} | Mendpress`}
+                        mailtoIntro={`${description}\n\n阅读链接：`}
+                        shortShareBlurb={shareSummary}
+                        showSharingPackPanel
+                        bordered={false}
+                        label="分享这篇内容"
+                        locale="zh"
+                        className="mt-7"
+                      />
+                    </section>
+
+                    <section className="xl:border-l xl:border-border xl:pl-12 dark:border-border">
+                      <h3 className="font-serif text-[2rem] font-semibold leading-tight text-fg md:text-[2.35rem]">
+                        继续关注 Mendpress
+                      </h3>
+                      <p className="mt-4 max-w-2xl text-[1.02rem] leading-8 text-fg/84 dark:text-white/78 md:text-base md:leading-7">
+                        接收 Mendpress 精选文章、项目更新与 Bayview Hub 的公开动向，只在确有内容值得发送时寄出。
+                      </p>
+                      <div className="mt-7 flex flex-wrap items-center gap-3">
+                        <Button href={localizedHref('/newsletter', 'zh')} variant="accent">
+                          进入通讯页
+                        </Button>
+                        <Link href={localizedHref('/mendpress', 'zh')} className="text-[15px] leading-6 text-fg underline underline-offset-4 hover:text-accent md:text-sm md:leading-5">
+                          浏览 Mendpress
+                        </Link>
+                      </div>
+                    </section>
                   </div>
                 </div>
-              </section>
-            </div>
-
-            <aside className="space-y-6 lg:sticky lg:top-24">
-              <section className="rounded-3xl border border-border bg-natural-200 p-6 shadow-md dark:border-border dark:bg-surface">
-                <p className="eyebrow text-accent">{nextStepCopy.eyebrow}</p>
-                <h2 className="mt-3 text-2xl font-serif font-semibold text-fg">{nextStepCopy.title}</h2>
-                <p className="mt-3 text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">
-                  {nextStepCopy.body}
-                </p>
-                <div className="mt-6">
-                  <Button href={primaryCta.href} external={primaryCta.external} variant="accent" className="w-full">
-                    {primaryCta.label}
-                  </Button>
-                </div>
-                <div className="mt-4 flex flex-col gap-3 text-[15px] leading-6 md:text-sm md:leading-5">
-                  {contextualLinks.map((link) => (
-                    <Link
-                      key={`${link.href}-${link.label}`}
-                      href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noopener noreferrer' : undefined}
-                      className="text-fg underline underline-offset-4 hover:text-accent"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            </aside>
+              </div>
+            </section>
           </div>
         </article>
       </div>
