@@ -76,6 +76,10 @@ export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative
 export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
 
 const EDITORIAL_LOCALE_HERO_IMAGE_OVERRIDES: Partial<Record<string, Partial<Record<EditorialLocale, string>>>> = {
+  'from-mend-to-mendpress-to-bayview-hub': {
+    en: '/images/mendpress/from-mend-to-mendpress-to-bayview-hub-en.png',
+    zh: '/images/mendpress/from-mend-to-mendpress-to-bayview-hub-cn.png',
+  },
   'in-the-age-of-ai-learning-again-how-to-see-hear-and-be-present': {
     en: '/images/mendpress/in-the-age-of-ai-presence-cover-en.png',
     zh: '/images/mendpress/in-the-age-of-ai-presence-cover-cn.png',
