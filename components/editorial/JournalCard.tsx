@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { localizedHref, type SiteLocale } from '@/lib/language-routing'
 import { cn } from '@/lib/utils'
 import {
+  editorialHeroImageForLocale,
   editorialHasChineseCardContent,
   editorialSummaryForLocale,
   editorialTitleForLocale,
@@ -32,6 +33,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
   const categoryHref = localizedHref(entry.categoryPath, locale)
   const entryTitle = editorialTitleForLocale(entry, locale)
   const entrySummary = editorialSummaryForLocale(entry, locale)
+  const heroImage = editorialHeroImageForLocale(entry, locale)
   const hasChineseCard = editorialHasChineseCardContent(entry)
   const isLead = layout === 'lead'
   const isStream = layout === 'stream'
@@ -132,7 +134,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
             </div>
           </div>
 
-          {entry.heroImage ? (
+          {heroImage ? (
             <Link
               href={entryHref}
               className={cn(
@@ -141,7 +143,7 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
               )}
             >
               <img
-                src={entry.heroImage}
+                src={heroImage}
                 alt={entryTitle}
                 className={cn(
                   'h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]',
@@ -168,10 +170,10 @@ export function JournalCard({ entry, locale = 'en', layout = 'card' }: Props) {
         'overflow-hidden rounded-3xl border border-border bg-natural-100 shadow-md transition-colors hover:border-accent dark:border-border dark:bg-surface',
       )}
     >
-      {entry.heroImage ? (
+      {heroImage ? (
         <Link href={entryHref} className="block bg-natural-200 dark:bg-neutral-900">
           <img
-            src={entry.heroImage}
+            src={heroImage}
             alt={entryTitle}
             className="aspect-[16/10] h-full w-full object-cover"
           />
