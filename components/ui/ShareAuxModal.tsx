@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { type SiteLocale } from '@/lib/language-routing'
 import { buildPreparedShareText, sharePageQrImageUrl } from '@/lib/share-links'
 import { cn } from '@/lib/utils'
@@ -75,6 +75,18 @@ export function ShareAuxModal({
 }: ShareAuxModalProps) {
   const [copiedPack, setCopiedPack] = useState(false)
   const [copiedSummary, setCopiedSummary] = useState(false)
+  const safeVariant = variant ?? 'wechat'
+  const cfg = copy[safeVariant]
+  const pageTitle = cleanText(pageTitleProp || summary || '')
+  const pageSummary = (summary || '').trim()
+  const preparedText = buildPreparedShareText({
+    title: pageTitle,
+    summary: pageSummary,
+    url,
+  })
+  const qrSrc = sharePageQrImageUrl(url, 200)
+  const modalTitle = locale === 'zh' ? cfg.titleZh : cfg.title
+  const body = locale === 'zh' ? cfg.bodyZh : cfg.body
 
   useEffect(() => {
     if (!open) return
@@ -93,22 +105,6 @@ export function ShareAuxModal({
   }, [open])
 
   if (!open || !variant) return null
-
-  const cfg = copy[variant]
-  const qrSrc = sharePageQrImageUrl(url, 200)
-  const modalTitle = locale === 'zh' ? cfg.titleZh : cfg.title
-  const body = locale === 'zh' ? cfg.bodyZh : cfg.body
-  const pageTitle = cleanText(pageTitleProp || summary || '')
-  const pageSummary = (summary || '').trim()
-  const preparedText = useMemo(
-    () =>
-      buildPreparedShareText({
-        title: pageTitle,
-        summary: pageSummary,
-        url,
-      }),
-    [pageSummary, pageTitle, url]
-  )
 
   async function copyPreparedText() {
     try {
