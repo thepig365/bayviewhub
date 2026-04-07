@@ -7,7 +7,7 @@ import { JournalCard } from '@/components/editorial/JournalCard'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
-import { topEditorialTags } from '@/lib/editorial-tags'
+import { topEditorialTagLabels } from '@/lib/editorial-tags'
 import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
   editorialAbsoluteUrl,
@@ -135,7 +135,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metadata = metadataFromSharePack(sharePack, {
     title: { absolute: title },
     description,
-    keywords: entry.tags.slice(0, 5),
+    keywords: topEditorialTagLabels(entry.tags, 'en', 5),
   })
 
   return {
@@ -181,13 +181,13 @@ export default async function MendpressEntryPage({ params }: Props) {
   const durationLabel = formatDuration(entry.audioDurationSeconds)
   const entryTypeLabel = editorialTypeAdminLabel(entry.editorialType)
   const sectionLabel = mendpressSectionLabel(entry.editorialType)
-  const visibleTags = topEditorialTags(entry.tags, 3)
+  const visibleTags = topEditorialTagLabels(entry.tags, 'en', 3)
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
   const audioFirst = isAudioFirstEditorialType(entry.editorialType)
   const featuredRelatedEntry = relatedEntries[0] || null
   const secondaryRelatedEntries = relatedEntries.slice(1)
   const keywordString = entry.tags.length
-    ? entry.tags.join(', ')
+    ? topEditorialTagLabels(entry.tags, 'en', 5).join(', ')
     : 'art, attention, repair, presence, Mornington Peninsula, Bayview Hub, Mendpress'
   const jsonLd = {
     '@context': 'https://schema.org',

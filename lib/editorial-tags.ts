@@ -1,4 +1,4 @@
-import type { EditorialType } from '@/lib/editorial'
+import type { EditorialLocale, EditorialType } from '@/lib/editorial'
 
 export const EDITORIAL_TAG_MIN_RECOMMENDED = 2
 export const EDITORIAL_TAG_MAX = 5
@@ -41,6 +41,38 @@ export const EDITORIAL_TAGS = EDITORIAL_TAG_GROUPS.flatMap((group) => group.tags
 export type EditorialTag = (typeof EDITORIAL_TAGS)[number]
 
 const EDITORIAL_TAG_SET = new Set<string>(EDITORIAL_TAGS)
+const EDITORIAL_TAG_EN_LABELS: Record<EditorialTag, string> = {
+  内在生活: 'Inner Life',
+  在场: 'Presence',
+  真实经验: 'Lived Experience',
+  自我修复: 'Self Repair',
+  注意力: 'Attention',
+  慢生活: 'Slow Living',
+  连接与共同体: 'Connection & Community',
+  人与自然: 'People & Nature',
+  艺术与生活: 'Art & Everyday Life',
+  当代生活反思: 'Contemporary Life Reflection',
+  内在安顿: 'Inner Grounding',
+  自我疏离: 'Self Estrangement',
+  感知恢复: 'Perceptual Recovery',
+  关系修复: 'Relational Repair',
+  身体与感官: 'Body & Senses',
+  时间与节奏: 'Time & Rhythm',
+  经验深化: 'Deepened Experience',
+  艺术体验: 'Art Experience',
+  音乐现场: 'Live Music',
+  花园与自然: 'Gardens & Nature',
+  食物与共享: 'Food & Sharing',
+  工作坊: 'Workshops',
+  空间与氛围: 'Space & Atmosphere',
+  共同在场: 'Shared Presence',
+  编辑部文章: 'Editorial Desk',
+  思想写作: 'Reflective Writing',
+  公共对话: 'Public Dialogue',
+  视觉叙事: 'Visual Narrative',
+  现场记录: 'Field Notes',
+  文化观察: 'Cultural Observation',
+}
 
 function coerceEditorialTagInput(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -118,4 +150,16 @@ export function suggestedEditorialTagsForType(type: EditorialType): EditorialTag
 
 export function topEditorialTags(tags: string[], limit = 3): EditorialTag[] {
   return sanitizeCuratedEditorialTags(tags).slice(0, limit)
+}
+
+export function editorialTagLabel(tag: EditorialTag, locale: EditorialLocale): string {
+  return locale === 'zh' ? tag : EDITORIAL_TAG_EN_LABELS[tag]
+}
+
+export function topEditorialTagLabels(
+  tags: string[],
+  locale: EditorialLocale,
+  limit = 3
+): string[] {
+  return topEditorialTags(tags, limit).map((tag) => editorialTagLabel(tag, locale))
 }
