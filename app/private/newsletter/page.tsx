@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NewsletterAdminClient } from '@/app/private/newsletter/NewsletterAdminClient'
@@ -104,6 +105,14 @@ export default async function PrivateNewsletterPage() {
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
+        <div className="mx-auto mb-6 flex max-w-6xl justify-end">
+          <Link
+            href="/private/distribution"
+            className="rounded-lg border border-border px-4 py-3 text-sm text-fg transition-colors hover:border-accent dark:border-border"
+          >
+            Distribution console
+          </Link>
+        </div>
         <NewsletterAdminClient
           activeSubscriberCount={activeSubscriberCount}
           recentCampaigns={recentCampaigns}

@@ -49,6 +49,12 @@ export default async function PrivateEditorialPage() {
               >
                 Newsletter admin
               </Link>
+              <Link
+                href="/private/distribution"
+                className="rounded-lg border border-border px-4 py-3 text-sm text-fg transition-colors hover:border-accent dark:border-border"
+              >
+                Distribution console
+              </Link>
               <Link href="/private/editorial/new" className="rounded-lg bg-accent px-4 py-3 text-sm font-medium text-white">
                 New piece
               </Link>
