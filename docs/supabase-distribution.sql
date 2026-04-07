@@ -27,6 +27,8 @@ create index if not exists share_actions_page_type_idx on public.share_actions (
 create index if not exists share_actions_platform_idx on public.share_actions (platform);
 create index if not exists share_actions_hostname_pathname_idx on public.share_actions (hostname, pathname);
 
+grant insert on table public.share_actions to service_role;
+
 alter table public.share_actions enable row level security;
 
 do $$
