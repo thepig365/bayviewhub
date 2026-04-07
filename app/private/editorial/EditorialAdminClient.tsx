@@ -92,7 +92,7 @@ export function EditorialAdminClient({ entries }: Props) {
     publishedAt: entry.publishedAt || '',
     heroImage: entry.heroImage || '',
     byline: entry.byline || '',
-    tags: entry.tags.join(', '),
+    tags: entry.tags,
     primaryCtaLabel: entry.primaryCtaLabel || '',
     primaryCtaHref: entry.primaryCtaHref || '',
     seoTitle: entry.seoTitle || '',

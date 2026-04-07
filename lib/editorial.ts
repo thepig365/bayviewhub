@@ -2,6 +2,10 @@ import { type SupabaseClient } from '@supabase/supabase-js'
 import {
   SITE_CONFIG,
 } from '@/lib/constants'
+import {
+  sanitizeCuratedEditorialTags,
+  validateEditorialTagsInput,
+} from '@/lib/editorial-tags'
 import { getSupabaseServer } from '@/lib/ssd-campaign-server'
 
 export const EDITORIAL_TYPES = [
@@ -815,7 +819,7 @@ function normalizeEntry(row: EditorialDbRow): EditorialEntry {
     seoTitleZh: sanitizeEditorialText(row.seo_title_zh, 180) || null,
     seoDescription: sanitizeEditorialText(row.seo_description, 300) || null,
     seoDescriptionZh: sanitizeEditorialText(row.seo_description_zh, 300) || null,
-    tags: sanitizeEditorialTags(row.tags),
+    tags: sanitizeCuratedEditorialTags(row.tags),
     byline: sanitizeEditorialText(row.byline, 120) || null,
     pinned: Boolean(row.pinned),
     audioUrl: sanitizeHref(row.audio_url),
@@ -1257,9 +1261,14 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
       : publishedAtInput
         ? normalizeIsoString(publishedAtInput)
         : null
+  const { tags, error: tagError } = validateEditorialTagsInput(body.tags)
 
   if (!title || !summary) {
     return { payload: null, error: 'Title and summary are required.' }
+  }
+
+  if (tagError) {
+    return { payload: null, error: tagError }
   }
 
   if ((editorialMode === 'written' || editorialMode === 'hybrid') && !bodyMarkdown) {
@@ -1303,7 +1312,7 @@ export function buildEditorialWritePayload(body: Record<string, unknown>): {
       seo_title_zh: sanitizeEditorialText(body.seoTitleZh, 180) || null,
       seo_description: sanitizeEditorialText(body.seoDescription, 300) || null,
       seo_description_zh: sanitizeEditorialText(body.seoDescriptionZh, 300) || null,
-      tags: sanitizeEditorialTags(body.tags),
+      tags,
       byline: sanitizeEditorialText(body.byline, 120) || null,
       pinned: Boolean(body.pinned),
       audio_url: audioUrl,

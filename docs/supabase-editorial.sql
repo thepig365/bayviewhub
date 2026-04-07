@@ -83,6 +83,46 @@ alter table public.editorial_entries
   add column if not exists speakers text[] not null default '{}';
 
 alter table public.editorial_entries
+  drop constraint if exists editorial_entries_tags_curated_check;
+
+alter table public.editorial_entries
+  add constraint editorial_entries_tags_curated_check check (
+    coalesce(tags, '{}'::text[]) <@ array[
+      '内在生活',
+      '在场',
+      '真实经验',
+      '自我修复',
+      '注意力',
+      '慢生活',
+      '连接与共同体',
+      '人与自然',
+      '艺术与生活',
+      '当代生活反思',
+      '内在安顿',
+      '自我疏离',
+      '感知恢复',
+      '关系修复',
+      '身体与感官',
+      '时间与节奏',
+      '经验深化',
+      '艺术体验',
+      '音乐现场',
+      '花园与自然',
+      '食物与共享',
+      '工作坊',
+      '空间与氛围',
+      '共同在场',
+      '编辑部文章',
+      '思想写作',
+      '公共对话',
+      '视觉叙事',
+      '现场记录',
+      '文化观察'
+    ]::text[]
+    and cardinality(coalesce(tags, '{}'::text[])) <= 5
+  );
+
+alter table public.editorial_entries
   drop constraint if exists editorial_entries_editorial_type_check;
 
 alter table public.editorial_entries

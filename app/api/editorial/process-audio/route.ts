@@ -8,8 +8,10 @@ import {
   sanitizeEditorialSpeakers,
   sanitizeEditorialText,
   sanitizeEditorialTags,
+  type EditorialType,
   sanitizeEditorialType,
 } from '@/lib/editorial'
+import { suggestedEditorialTagsForType } from '@/lib/editorial-tags'
 import {
   PRIMARY_AUDIO_TRANSCRIPTION_MAX_BYTES,
   primaryAudioTranscriptionLimitMessage,
@@ -319,7 +321,7 @@ async function draftEditorialMaterials({
   apiKey: string
   title: string
   summary: string
-  editorialType: string
+  editorialType: EditorialType
   transcript: string
   speakers: string[]
   deadlineMs: number
@@ -436,7 +438,7 @@ async function draftEditorialMaterials({
       titleZh: sanitizeEditorialText(parsed.titleZh, 180) || '',
       summary: sanitizeEditorialText(parsed.summary, 600) || '',
       summaryZh: sanitizeEditorialText(parsed.summaryZh, 600) || '',
-      tags: sanitizeEditorialTags(parsed.tags).slice(0, 8),
+      tags: suggestedEditorialTagsForType(editorialType),
       seoTitle: sanitizeEditorialText(parsed.seoTitle, 180) || '',
       seoTitleZh: sanitizeEditorialText(parsed.seoTitleZh, 180) || '',
       seoDescription: sanitizeEditorialText(parsed.seoDescription, 300) || '',

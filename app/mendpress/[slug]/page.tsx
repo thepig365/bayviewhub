@@ -7,6 +7,7 @@ import { JournalCard } from '@/components/editorial/JournalCard'
 import { ShareStrip } from '@/components/ui/ShareStrip'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
+import { topEditorialTags } from '@/lib/editorial-tags'
 import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
   editorialAbsoluteUrl,
@@ -134,6 +135,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metadata = metadataFromSharePack(sharePack, {
     title: { absolute: title },
     description,
+    keywords: entry.tags.slice(0, 5),
   })
 
   return {
@@ -179,6 +181,7 @@ export default async function MendpressEntryPage({ params }: Props) {
   const durationLabel = formatDuration(entry.audioDurationSeconds)
   const entryTypeLabel = editorialTypeAdminLabel(entry.editorialType)
   const sectionLabel = mendpressSectionLabel(entry.editorialType)
+  const visibleTags = topEditorialTags(entry.tags, 3)
   const audioLeadTitle = isAudioFirstEditorialType(entry.editorialType) ? entryTypeLabel : 'Listen to this piece'
   const audioFirst = isAudioFirstEditorialType(entry.editorialType)
   const featuredRelatedEntry = relatedEntries[0] || null
@@ -271,6 +274,18 @@ export default async function MendpressEntryPage({ params }: Props) {
                   </>
                 ) : null}
               </div>
+              {visibleTags.length ? (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {visibleTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/16 bg-white/6 px-3 py-1 text-[12px] tracking-[0.08em] text-fg/78 dark:text-white/78"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
               <ShareStrip
                 url={absoluteUrl}
                 shareTitle={sharePack.shareTitle}

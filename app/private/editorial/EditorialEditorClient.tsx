@@ -5,6 +5,14 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { upload } from '@vercel/blob/client'
 import { LinkedInPackPanel } from '@/components/editorial/LinkedInPackPanel'
 import type { EditorialEntry, EditorialMode, EditorialStatus, EditorialType } from '@/lib/editorial'
+import {
+  EDITORIAL_TAG_GROUPS,
+  EDITORIAL_TAG_MAX,
+  EDITORIAL_TAG_MIN_RECOMMENDED,
+  isEditorialTag,
+  type EditorialTag,
+  suggestedEditorialTagsForType,
+} from '@/lib/editorial-tags'
 import type { EditorialChineseFieldKey, EditorialChineseReviewSummary } from '@/lib/editorial-admin'
 import {
   editorialAbsoluteUrlFromPath,
@@ -372,7 +380,10 @@ export function EditorialEditorClient({
   const [publishedAt, setPublishedAt] = useState(toDateTimeLocal(entry?.publishedAt || null))
   const [heroImage, setHeroImage] = useState(entry?.heroImage || '')
   const [byline, setByline] = useState(entry?.byline || '')
-  const [tags, setTags] = useState((entry?.tags || []).join(', '))
+  const [tags, setTags] = useState<EditorialTag[]>(() => {
+    const existing = (entry?.tags || []).filter((tag): tag is EditorialTag => isEditorialTag(tag))
+    return existing.length ? existing : suggestedEditorialTagsForType(entry?.editorialType || 'editorial')
+  })
   const [primaryCtaLabel, setPrimaryCtaLabel] = useState(entry?.primaryCtaLabel || '')
   const [primaryCtaHref, setPrimaryCtaHref] = useState(entry?.primaryCtaHref || '')
   const [seoTitle, setSeoTitle] = useState(entry?.seoTitle || '')
@@ -421,7 +432,7 @@ export function EditorialEditorClient({
     publishedAt: toDateTimeLocal(entry?.publishedAt || null),
     heroImage: entry?.heroImage || '',
     byline: entry?.byline || '',
-    tags: (entry?.tags || []).join(', '),
+    tags: (entry?.tags || []).filter((tag): tag is EditorialTag => isEditorialTag(tag)),
     primaryCtaLabel: entry?.primaryCtaLabel || '',
     primaryCtaHref: entry?.primaryCtaHref || '',
     seoTitle: entry?.seoTitle || '',
@@ -447,6 +458,7 @@ export function EditorialEditorClient({
 
   const publicSlug = useMemo(() => sanitizeEditorialSlug(slug, title), [slug, title])
   const publicPath = useMemo(() => (publicSlug ? `/mendpress/${publicSlug}` : entry?.path || ''), [entry?.path, publicSlug])
+  const suggestedTags = useMemo(() => suggestedEditorialTagsForType(editorialType), [editorialType])
   const chineseFieldsDirty = useMemo(
     () =>
       titleZh !== (entry?.titleZh || '') ||
@@ -468,6 +480,14 @@ export function EditorialEditorClient({
   const audioReady = Boolean(audioUrl)
   const audioUploadPending = editorialMode === 'audio' && !audioReady
   const revealAudioFields = editorialMode !== 'audio' || audioReady
+  const missingSuggestedTags = suggestedTags.filter((tag) => !tags.includes(tag))
+  const tagWarning = tags.length < EDITORIAL_TAG_MIN_RECOMMENDED ? `Select at least ${EDITORIAL_TAG_MIN_RECOMMENDED} tags when you can.` : ''
+  const tagLimitReached = tags.length >= EDITORIAL_TAG_MAX
+
+  useEffect(() => {
+    if (tags.length) return
+    setTags(suggestedTags)
+  }, [suggestedTags, tags.length])
 
   const markChineseReviewState = () => {
     const nextState: EditorialChineseReviewSummary = {
@@ -569,7 +589,7 @@ export function EditorialEditorClient({
       slug: publicSlug || entry?.slug || '',
       editorialType,
       heroImage: heroImage.trim() || entry?.heroImage || null,
-      tags: sanitizeEditorialTags(tags),
+      tags,
       path: publicPath || entry?.path || '',
       seoTitle: seoTitle.trim() || entry?.seoTitle || null,
       byline: byline.trim() || entry?.byline || null,
@@ -599,6 +619,25 @@ export function EditorialEditorClient({
     if (!MODE_TYPE_OPTIONS[nextMode].includes(editorialType)) {
       setEditorialType(MODE_TYPE_OPTIONS[nextMode][0])
     }
+  }
+
+  const toggleTag = (tag: EditorialTag) => {
+    setTags((current) => {
+      if (current.includes(tag)) {
+        return current.filter((item) => item !== tag)
+      }
+      if (current.length >= EDITORIAL_TAG_MAX) {
+        return current
+      }
+      return [...current, tag]
+    })
+  }
+
+  const applySuggestedTags = () => {
+    setTags((current) => {
+      const next = Array.from(new Set([...current, ...suggestedTags]))
+      return next.slice(0, EDITORIAL_TAG_MAX) as EditorialTag[]
+    })
   }
 
   const canChoosePrimaryAudio = audioUploadEnabled && audioUploadState !== 'loading'
@@ -699,7 +738,9 @@ export function EditorialEditorClient({
     const nextTitleZh = typeof metadata.titleZh === 'string' ? metadata.titleZh.trim() : ''
     const nextSummary = typeof metadata.summary === 'string' ? metadata.summary.trim() : ''
     const nextSummaryZh = typeof metadata.summaryZh === 'string' ? metadata.summaryZh.trim() : ''
-    const nextTags = Array.isArray(metadata.tags) ? sanitizeEditorialTags(metadata.tags).join(', ') : ''
+    const nextTags = Array.isArray(metadata.tags)
+      ? metadata.tags.filter((tag: unknown): tag is EditorialTag => isEditorialTag(tag))
+      : []
     const nextSeoTitle = typeof metadata.seoTitle === 'string' ? metadata.seoTitle.trim() : ''
     const nextSeoTitleZh = typeof metadata.seoTitleZh === 'string' ? metadata.seoTitleZh.trim() : ''
     const nextSeoDescription = typeof metadata.seoDescription === 'string' ? metadata.seoDescription.trim() : ''
@@ -715,7 +756,7 @@ export function EditorialEditorClient({
     if (!titleZh.trim() && nextTitleZh) setTitleZh(nextTitleZh)
     if (!summary.trim() && nextSummary) setSummary(nextSummary)
     if (!summaryZh.trim() && nextSummaryZh) setSummaryZh(nextSummaryZh)
-    if (!tags.trim() && nextTags) setTags(nextTags)
+    if (!tags.length && nextTags.length) setTags(nextTags as EditorialTag[])
     if (!seoTitle.trim() && nextSeoTitle) setSeoTitle(nextSeoTitle)
     if (!seoTitleZh.trim() && nextSeoTitleZh) setSeoTitleZh(nextSeoTitleZh)
     if (!seoDescription.trim() && nextSeoDescription) setSeoDescription(nextSeoDescription)
@@ -1906,17 +1947,108 @@ export function EditorialEditorClient({
                     placeholder="Mendpress Editorial Desk"
                   />
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-fg">Tags</label>
-                  <input
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    className={FIELD_BASE_CLASS}
-                    placeholder="listening, memory, public life"
-                  />
-                  {aiMetadataSuggestions.seoKeywords.length ? (
-                    <p className="mt-2 text-xs text-muted">AI topic terms available below if you want them.</p>
-                  ) : null}
+                <div className="md:col-span-2">
+                  <div className="rounded-2xl border border-border bg-white/80 p-5 dark:border-border dark:bg-neutral-950/40">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <label className="mb-2 block text-sm font-medium text-fg">Curated tags</label>
+                        <p className="text-sm text-muted">
+                          Select from the fixed Mendpress vocabulary only. Recommended range: {EDITORIAL_TAG_MIN_RECOMMENDED}-{EDITORIAL_TAG_MAX}.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="rounded-full border border-border px-3 py-1 text-xs text-muted">
+                          {tags.length}/{EDITORIAL_TAG_MAX} selected
+                        </span>
+                        <button
+                          type="button"
+                          onClick={applySuggestedTags}
+                          disabled={!missingSuggestedTags.length}
+                          className="rounded-full border border-border px-3 py-1 text-xs font-medium text-fg transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Accept suggested tags
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {tags.map((tag) => (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => toggleTag(tag)}
+                          className="rounded-full border border-accent bg-accent/12 px-3 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/18"
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                      {!tags.length ? <span className="text-sm text-muted">No tags selected yet.</span> : null}
+                    </div>
+
+                    {tagWarning ? <p className="mt-3 text-sm text-amber-700 dark:text-amber-300">{tagWarning}</p> : null}
+                    {tagLimitReached ? (
+                      <p className="mt-2 text-xs text-muted">Remove one tag before adding another.</p>
+                    ) : null}
+
+                    <div className="mt-5">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Suggested first</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {suggestedTags.map((tag) => {
+                          const selected = tags.includes(tag)
+                          return (
+                            <button
+                              key={tag}
+                              type="button"
+                              onClick={() => toggleTag(tag)}
+                              disabled={!selected && tagLimitReached}
+                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                                selected
+                                  ? 'border-accent bg-accent/12 font-medium text-accent'
+                                  : 'border-accent/35 bg-accent/5 text-fg hover:border-accent'
+                              } disabled:cursor-not-allowed disabled:opacity-60`}
+                            >
+                              {tag}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="mt-5 grid gap-4 md:grid-cols-2">
+                      {EDITORIAL_TAG_GROUPS.map((group) => (
+                        <div key={group.id} className="rounded-2xl border border-border bg-natural-50/80 p-4 dark:bg-surface/70">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{group.label}</p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {group.tags.map((tag) => {
+                              const selected = tags.includes(tag)
+                              const suggested = suggestedTags.includes(tag)
+                              return (
+                                <button
+                                  key={tag}
+                                  type="button"
+                                  onClick={() => toggleTag(tag)}
+                                  disabled={!selected && tagLimitReached}
+                                  className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                                    selected
+                                      ? 'border-accent bg-accent/12 font-medium text-accent'
+                                      : suggested
+                                        ? 'border-accent/35 bg-accent/5 text-fg hover:border-accent'
+                                        : 'border-border bg-white/90 text-fg hover:border-accent dark:bg-neutral-900/70'
+                                  } disabled:cursor-not-allowed disabled:opacity-60`}
+                                >
+                                  {tag}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {aiMetadataSuggestions.seoKeywords.length ? (
+                      <p className="mt-4 text-xs text-muted">Suggested topic terms remain available below for SEO notes, but article tags stay curated.</p>
+                    ) : null}
+                  </div>
                 </div>
               </div>
 
