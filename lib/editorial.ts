@@ -71,6 +71,13 @@ export type EditorialLocale = 'en' | 'zh'
 export const MENDPRESS_SECTION_IDS = ['editorial', 'dialogue', 'visual_narrative', 'programme'] as const
 export type MendpressSectionId = (typeof MENDPRESS_SECTION_IDS)[number]
 
+const EDITORIAL_LOCALE_HERO_IMAGE_OVERRIDES: Partial<Record<string, Partial<Record<EditorialLocale, string>>>> = {
+  'in-the-age-of-ai-learning-again-how-to-see-hear-and-be-present': {
+    en: '/images/mendpress/in-the-age-of-ai-presence-cover-en.png',
+    zh: '/images/mendpress/in-the-age-of-ai-presence-cover-cn.png',
+  },
+}
+
 export const MENDPRESS_AUDIO_HUB_ROUTE = '/mendpress/listen'
 export const MENDPRESS_AUDIO_HUB_PODCAST_THRESHOLD = 3
 export const MENDPRESS_AUDIO_HUB_TOTAL_THRESHOLD = 5
@@ -1337,6 +1344,10 @@ export function editorialTranscriptForLocale(entry: EditorialEntry, locale: Edit
 
 export function editorialShowNotesForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
   return locale === 'zh' ? entry.showNotesMarkdownZh || null : entry.showNotesMarkdown
+}
+
+export function editorialHeroImageForLocale(entry: EditorialEntry, locale: EditorialLocale): string | null {
+  return EDITORIAL_LOCALE_HERO_IMAGE_OVERRIDES[entry.slug]?.[locale] || entry.heroImage
 }
 
 export function editorialHasChineseCardContent(entry: EditorialEntry): boolean {

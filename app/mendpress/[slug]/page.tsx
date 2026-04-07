@@ -12,6 +12,7 @@ import {
   editorialAbsoluteUrl,
   editorialBodyForLocale,
   editorialHasChinesePageContent,
+  editorialHeroImageForLocale,
   editorialSeoDescriptionForLocale,
   editorialSeoTitleForLocale,
   editorialShowNotesForLocale,
@@ -172,6 +173,7 @@ export default async function MendpressEntryPage({ params }: Props) {
   const description = articleDescription(entry)
   const shareSummary = sharePack.shareSummary
   const body = editorialBodyForLocale(entry, 'en')
+  const heroImage = editorialHeroImageForLocale(entry, 'en')
   const transcript = editorialTranscriptForLocale(entry, 'en')
   const showNotes = editorialShowNotesForLocale(entry, 'en')
   const durationLabel = formatDuration(entry.audioDurationSeconds)
@@ -305,9 +307,9 @@ export default async function MendpressEntryPage({ params }: Props) {
                 </div>
               ) : null}
 
-              {entry.heroImage ? (
+              {heroImage ? (
                 <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-200 dark:border-border dark:bg-surface">
-                  <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
+                  <img src={heroImage} alt={editorialTitleForLocale(entry, 'en')} className="h-auto w-full object-cover" />
                 </div>
               ) : null}
 

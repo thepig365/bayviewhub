@@ -10,6 +10,7 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { buildShareImageUrl, buildSharePack, clampShareSummary, metadataFromSharePack } from '@/lib/share-pack'
 import {
   editorialAbsoluteUrl,
+  editorialHeroImageForLocale,
   editorialHasChinesePageContent,
   editorialSeoDescriptionForLocale,
   editorialSeoTitleForLocale,
@@ -202,6 +203,7 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
   const description = articleDescription(entry)
   const shareSummary = sharePack.shareSummary
   const body = entry.bodyMarkdownZh || ''
+  const heroImage = editorialHeroImageForLocale(entry, 'zh')
   const transcript = editorialTranscriptForLocale(entry, 'zh')
   const showNotes = editorialShowNotesForLocale(entry, 'zh')
   const readingLayerNotice =
@@ -340,9 +342,9 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                 </div>
               ) : null}
 
-              {entry.heroImage ? (
+              {heroImage ? (
                 <div className="overflow-hidden rounded-[1.9rem] border border-border bg-natural-200 dark:border-border dark:bg-surface">
-                  <img src={entry.heroImage} alt={editorialTitleForLocale(entry, 'zh')} className="h-auto w-full object-cover" />
+                  <img src={heroImage} alt={editorialTitleForLocale(entry, 'zh')} className="h-auto w-full object-cover" />
                 </div>
               ) : null}
 
