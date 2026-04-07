@@ -1,5 +1,4 @@
 import { buildShareMailto, facebookShareUrl, linkedInShareUrl } from '@/lib/share-links'
-import { distributionQrUrl } from '@/lib/distribution/qr'
 import { buildTrackedDistributionUrl, defaultDistributionUtmFields, normalizeDistributionUtmFields } from '@/lib/distribution/utm'
 import type {
   DistributionAnalysisResult,
@@ -38,6 +37,10 @@ function cleanTitle(value: string | null | undefined): string {
     .replace(/\s+—\s+Bayview Hub$/i, '')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+function trimBookTitle(value: string): string {
+  return cleanTitle(value).replace(/^《+/, '').replace(/》+$/, '').trim()
 }
 
 function firstNonEmpty(values: Array<string | null | undefined>): string | null {
@@ -177,81 +180,121 @@ function copyLocaleForPlatform(platform: DistributionPlatform, pageLocale: Distr
 
 function zhLeadTitleForChinesePlatforms(analysis: DistributionAnalysisResult): string {
   const title = preferredTitle(analysis, 'zh')
-  if (containsChinese(title)) return title
-  const normalized = cleanTitle(title).replace(/^《+/, '').replace(/》+$/, '')
-  return `《${normalized}》`
+  if (containsChinese(title)) return trimBookTitle(title)
+  return trimBookTitle(title)
 }
 
-function linkedInBody(analysis: DistributionAnalysisResult, title: string, description: string, trackedUrl: string, locale: CopyLocale): string {
+function linkedInBody(_analysis: DistributionAnalysisResult, _title: string, description: string, trackedUrl: string, locale: CopyLocale): string {
   if (locale === 'zh') {
     return shortText(`来自 Bayview Hub 的一页内容：${description} 链接：${trackedUrl}`, 320)
   }
   return shortText(`${description} Read more: ${trackedUrl}`, 320)
 }
 
-function emailBody(analysis: DistributionAnalysisResult, description: string, trackedUrl: string, locale: CopyLocale): string {
+function emailCopy(analysis: DistributionAnalysisResult, title: string, description: string, trackedUrl: string, locale: CopyLocale) {
   if (locale === 'zh') {
-    return shortText(`转你一页来自 Bayview Hub 的内容：${description}\n\n打开链接：${trackedUrl}`, 360)
+    return {
+      subject: shortText(title, 120),
+      intro: shortText(`转你一页来自 Bayview Hub 的${descriptorLabel(analysis.pageType, 'zh')}。${description}`, 220),
+      body: shortText(`转你一页来自 Bayview Hub 的内容。\n\n${description}\n\n打开链接：${trackedUrl}`, 360),
+    }
   }
-  return shortText(`Sharing this page from Bayview Hub.\n\n${description}\n\nOpen here: ${trackedUrl}`, 360)
+  return {
+    subject: shortText(title, 120),
+    intro: shortText(`Sending this Bayview Hub page because the framing is stronger than a standard social post.`, 220),
+    body: shortText(`Sharing this page from Bayview Hub.\n\n${description}\n\nOpen here: ${trackedUrl}`, 360),
+  }
 }
 
-function wechatBody(analysis: DistributionAnalysisResult, trackedUrl: string): { title: string; body: string; pack: string } {
+function wechatBody(analysis: DistributionAnalysisResult, trackedUrl: string) {
   const title = zhLeadTitleForChinesePlatforms(analysis)
-  const descriptor = descriptorLabel(analysis.pageType, 'zh')
   const description = preferredDescription(analysis, 'zh')
-  const body = containsChinese(description)
-    ? shortText(`${description} 适合先扫码打开原页，再带入微信聊天或朋友圈。`, 150)
-    : shortText(`Bayview Hub 的一页${descriptor}：${title}。建议先扫码打开原页，再决定是否转发到微信。`, 150)
+  const friendText = shortText(`这页我先存一下，感觉值得你打开看看：${title}。${description} 先扫码进原页，读完再决定要不要继续转。`, 150)
+  const momentsText = shortText(`最近看到这页，适合慢一点读：${title}。${description} 我会先扫码打开原页，再决定怎么发到朋友圈。`, 150)
   return {
     title,
-    body,
-    pack: chinesePack(title, body, trackedUrl),
+    body: friendText,
+    pack: chinesePack(title, friendText, trackedUrl),
+    variants: [
+      {
+        label: '私聊 / 转给朋友版',
+        text: `${friendText}\n\n${trackedUrl}`,
+      },
+      {
+        label: '朋友圈式分享版',
+        text: `${momentsText}\n\n${trackedUrl}`,
+      },
+    ],
   }
 }
 
-function xiaohongshuBody(analysis: DistributionAnalysisResult, trackedUrl: string): { title: string; body: string; pack: string } {
+function xiaohongshuVisualAngle(analysis: DistributionAnalysisResult): string {
+  switch (analysis.pageType) {
+    case 'gallery_landing':
+    case 'gallery_protocol':
+      return '适合配空间局部、墙面细节、观看动线一类的图，不要堆品牌字卡。'
+    case 'ssd_landing':
+      return '适合配规则清单、地块草图、页面局部截图，不要做成硬广海报。'
+    default:
+      return '适合配页面主视觉、段落截图或阅读场景，不要做成夸张封面。'
+  }
+}
+
+function xiaohongshuTagSuggestions(analysis: DistributionAnalysisResult): string[] {
+  switch (analysis.pageType) {
+    case 'gallery_landing':
+    case 'gallery_protocol':
+      return ['私人观看', '策展方式', '空间阅读']
+    case 'ssd_landing':
+      return ['SSD', '居住研究', '规则梳理']
+    case 'dialogue_article':
+      return ['对话', '阅读笔记', '内容摘记']
+    default:
+      return ['阅读笔记', '内容分享', 'BayviewHub']
+  }
+}
+
+function xiaohongshuBody(analysis: DistributionAnalysisResult, trackedUrl: string) {
   const title = zhLeadTitleForChinesePlatforms(analysis)
-  const descriptor = descriptorLabel(analysis.pageType, 'zh')
   const description = preferredDescription(analysis, 'zh')
-  const body = containsChinese(description)
-    ? shortText(`${description} 更适合先扫码打开，再整理成一则简短笔记说明。`, 130)
-    : shortText(`先存这页 Bayview Hub 的${descriptor}：${title}。建议扫码打开原页后，再整理成一则简短笔记。`, 130)
+  const noteTitle = shortText(title, 30)
+  const body = shortText(`${description} 我会先扫码打开原页，再整理成一则短笔记，重点只讲一个判断，不把它写成宣传文。`, 135)
   return {
-    title,
+    title: noteTitle,
     body,
-    pack: chinesePack(title, body, trackedUrl),
+    pack: chinesePack(noteTitle, body, trackedUrl),
+    visualAngle: xiaohongshuVisualAngle(analysis),
+    tags: xiaohongshuTagSuggestions(analysis),
   }
 }
 
-function redditTitleVariants(analysis: DistributionAnalysisResult, title: string, description: string, locale: CopyLocale): string[] {
-  const descriptor = descriptorLabel(analysis.pageType, locale)
+function redditTitleVariants(analysis: DistributionAnalysisResult, title: string, _description: string, locale: CopyLocale): string[] {
   if (locale === 'zh') {
     return [
       shortText(title, 140),
-      shortText(`这页${descriptor}的 framing 你会买账吗？`, 140),
-      shortText(`关于「${title}」的一页内容，值得讨论的点在哪里？`, 140),
+      shortText(`这种页面 framing 在中文语境里成立吗：${cleanTitle(title)}`, 140),
+      shortText(`如果把这页当讨论起点，它最值得辩的点是什么？`, 140),
     ]
   }
 
   switch (analysis.pageType) {
     case 'gallery_landing':
       return [
-        shortText(title, 140),
-        shortText(`Would a private-wall viewing network like this actually work?`, 140),
-        shortText(`Private viewing as a curatorial model: ${title}`, 140),
+        shortText(`Would a mediated private-wall viewing network actually work?`, 140),
+        shortText(`Private viewing as curation instead of marketplace exposure`, 140),
+        shortText(`Does this page make a convincing case for private-wall exhibition?`, 140),
       ]
     case 'ssd_landing':
       return [
-        shortText(title, 140),
         shortText(`Is a rules-first SSD guide more useful than a design-first pitch?`, 140),
-        shortText(`Victorian SSD guide: ${cleanTitle(title)}`, 140),
+        shortText(`Does this explain Victorian SSD better than a typical landing page?`, 140),
+        shortText(`How would you critique this “rules first” SSD framing?`, 140),
       ]
     default:
       return [
-        shortText(title, 140),
-        shortText(`How does this framing land for you: ${cleanTitle(title)}?`, 140),
-        shortText(`${cleanTitle(title)}: substantial editorial framing or project branding?`, 140),
+        shortText(`Does this page earn its editorial framing, or just assert it?`, 140),
+        shortText(`How well does this long-form framing carry beyond brand context?`, 140),
+        shortText(`Substantive editorial argument or project self-description: ${cleanTitle(title)}`, 140),
       ]
   }
 }
@@ -260,30 +303,65 @@ function redditDiscussionBody(analysis: DistributionAnalysisResult, locale: Copy
   if (locale === 'zh') {
     switch (analysis.pageType) {
       case 'gallery_landing':
-        return '把这页当作一个策展模型来讨论，而不是单纯转发。它提出的是“私人墙面 + 受控观看关系”的路径，这种方式在你看来成立吗？'
+        return '把这页当成策展模型来讨论，而不是单纯转发。它提出的是“私人墙面 + 受控观看关系”的路径，你会觉得这套方法成立吗？'
       case 'ssd_landing':
-        return '把这页当作讨论起点，而不是推广页。它试图用“规则优先”的方式解释 Victorian SSD，你觉得这种公共表达更有用吗？'
+        return '把这页当作规则表达方式来讨论，而不是推广页。它试图用“规则优先”的方法解释 Victorian SSD，这种 public-facing 写法真的更有效吗？'
       default:
-        return '把这页当作讨论起点，而不是推广页。你会觉得它的 framing 是扎实的，还是过度自我说明？'
+        return '把这页当作 framing 讨论，而不是品牌转发。它试图做的不只是介绍自己，而是建立一种内容姿态，这点你会买账吗？'
     }
   }
 
   switch (analysis.pageType) {
     case 'gallery_landing':
-      return 'Posting this for discussion rather than promotion. The page proposes a mediated private-wall viewing network instead of a public marketplace. Does that feel workable as a curatorial model?'
+      return 'Sharing this as a discussion prompt rather than promotion. The page argues for a mediated private-wall viewing network instead of open-market exposure. Does that seem viable as a curatorial model?'
     case 'ssd_landing':
-      return 'Posting this as a discussion prompt, not a promo. The page frames Victorian SSD as a rules-first public guide rather than a sales funnel. Is that actually the more useful approach?'
+      return 'Posting this as a discussion prompt, not a promo. The page frames Victorian SSD as a rules-first public guide rather than a sales funnel. Is that actually the better way to explain the topic?'
     default:
-      return 'Posting this as a discussion prompt rather than promotion. The page is trying to make a broader argument, not just announce itself. Does the framing feel substantive to you?'
+      return 'Posting this for critique rather than promotion. The page tries to hold an editorial argument rather than just announce itself. Does that framing feel earned to you?'
   }
 }
 
-function substackIntro(analysis: DistributionAnalysisResult, description: string, trackedUrl: string, locale: CopyLocale): string {
-  const descriptor = descriptorLabel(analysis.pageType, locale)
+function redditSuitabilityNote(analysis: DistributionAnalysisResult, locale: CopyLocale): string {
   if (locale === 'zh') {
-    return shortText(`这周想分享 Bayview Hub 的一页${descriptor}。与其把它当成社交平台文案，不如把它当成一段可继续展开的编辑入口：${description} 原页链接：${trackedUrl}`, 460)
+    switch (analysis.pageType) {
+      case 'gallery_landing':
+        return '适合在讨论策展模型、观看机制、私人展示路径时使用。'
+      case 'ssd_landing':
+        return '适合在讨论政策解释、规划表达或“规则如何被公众理解”时使用。'
+      default:
+        return '只有当你准备发起真正讨论时才适合，不建议当普通转链。'
+    }
   }
-  return shortText(`One page worth carrying into a newsletter this week from Bayview Hub: ${descriptor} framing with a clearer editorial shape than a standard social post. ${description} Read the full page here: ${trackedUrl}`, 460)
+
+  switch (analysis.pageType) {
+    case 'gallery_landing':
+      return 'Best when the thread is about curation models, private display, or mediated access.'
+    case 'ssd_landing':
+      return 'Best when the thread is about planning rules, public explanation, or policy framing.'
+    default:
+      return 'Best only when you can anchor a genuine discussion thread, not just a drive-by link share.'
+  }
+}
+
+function substackSubjectLine(title: string, description: string, locale: CopyLocale): string {
+  if (locale === 'zh') {
+    return shortText(`这周想转你一页：${trimBookTitle(title)}`, 120)
+  }
+  return shortText(`One Bayview page worth carrying forward this week`, 120)
+}
+
+function substackDek(analysis: DistributionAnalysisResult, description: string, locale: CopyLocale): string {
+  if (locale === 'zh') {
+    return shortText(`把这页${descriptorLabel(analysis.pageType, 'zh')}当作编辑入口，而不是社交平台文案。${description}`, 180)
+  }
+  return shortText(`A ${descriptorLabel(analysis.pageType, 'en')} with enough editorial shape to carry into a newsletter handoff. ${description}`, 180)
+}
+
+function substackIntro(analysis: DistributionAnalysisResult, description: string, trackedUrl: string, locale: CopyLocale): string {
+  if (locale === 'zh') {
+    return shortText(`这次想转一页 Bayview Hub 的${descriptorLabel(analysis.pageType, 'zh')}。不是因为它适合做社交平台扩散，而是因为它更像一个可以继续展开的编辑入口：${description} 原页链接：${trackedUrl}`, 460)
+  }
+  return shortText(`Why I’m sending this: the page carries more editorial shape than a normal social caption and can work as a newsletter handoff. ${description} Read the full page here: ${trackedUrl}`, 460)
 }
 
 function redditUrl(trackedUrl: string, title: string): string {
@@ -340,13 +418,16 @@ export function buildDistributionSharePack({
         copyMode: 'copy_text',
         openActionUrl: facebookShareUrl(trackedUrl),
       }
-    case 'email':
+    case 'email': {
+      const email = emailCopy(analysis, title, description, trackedUrl, locale)
       return {
         platform,
         platformLabel: 'Email',
         recommendationStatus: status,
-        suggestedTitle: shortText(title, 120),
-        suggestedBody: emailBody(analysis, description, trackedUrl, locale),
+        suggestedTitle: email.subject,
+        suggestedBody: email.body,
+        emailSubject: email.subject,
+        emailIntro: email.intro,
         ctaNote:
           locale === 'zh'
             ? '把它当成一封简短转发邮件，不要写成社交平台长帖。'
@@ -358,11 +439,12 @@ export function buildDistributionSharePack({
         trackedUrl,
         copyMode: 'copy_email_pack',
         openActionUrl: buildShareMailto({
-          subject: shortText(title, 120),
-          intro: shortText(description, 220),
+          subject: email.subject,
+          intro: email.intro,
           url: trackedUrl,
         }),
       }
+    }
     case 'wechat': {
       const wechatPack = wechatBody(analysis, trackedUrl)
       return {
@@ -371,12 +453,13 @@ export function buildDistributionSharePack({
         recommendationStatus: status,
         suggestedTitle: wechatPack.title,
         suggestedBody: wechatPack.body,
-        ctaNote: '先扫码打开原页，再决定是否带入微信聊天、群聊或朋友圈。',
+        ctaNote: '先扫码打开原页，再决定是否带入私聊、群聊或朋友圈。',
         postingNote: `${statusLabel}. 当前采用的是二维码 handoff，不是直接分享到微信。`,
         trackedUrl,
         copyMode: 'copy_wechat_pack',
-        qrUrl: distributionQrUrl(trackedUrl),
+        qrValue: trackedUrl,
         chineseCopyPack: wechatPack.pack,
+        wechatVariants: wechatPack.variants,
       }
     }
     case 'xiaohongshu': {
@@ -386,17 +469,21 @@ export function buildDistributionSharePack({
         platformLabel: 'Xiaohongshu',
         recommendationStatus: status,
         suggestedTitle: xiaohongshuPack.title,
+        noteTitleSuggestion: xiaohongshuPack.title,
         suggestedBody: xiaohongshuPack.body,
-        ctaNote: '把它写成一则简短笔记说明，而不是硬推或夸张口吻。',
+        ctaNote: '把它整理成短笔记，而不是硬推或夸张口吻。',
         postingNote: `${statusLabel}. 更适合“先扫码打开，再整理成一则短笔记”的 handoff。`,
         trackedUrl,
         copyMode: 'copy_xiaohongshu_pack',
-        qrUrl: distributionQrUrl(trackedUrl),
+        qrValue: trackedUrl,
         chineseCopyPack: xiaohongshuPack.pack,
+        visualAngleNote: xiaohongshuPack.visualAngle,
+        tagSuggestions: xiaohongshuPack.tags,
       }
     }
     case 'reddit': {
       const titleVariants = redditTitleVariants(analysis, title, description, locale)
+      const suitabilityNote = redditSuitabilityNote(analysis, locale)
       return {
         platform,
         platformLabel: 'Reddit',
@@ -415,9 +502,11 @@ export function buildDistributionSharePack({
         copyMode: 'copy_text',
         openActionUrl: redditUrl(trackedUrl, titleVariants[0]),
         titleVariants,
+        suitabilityNote,
       }
     }
-    case 'substack':
+    case 'substack': {
+      const newsletterSubject = substackSubjectLine(title, description, locale)
       return {
         platform,
         platformLabel: 'Substack',
@@ -434,9 +523,11 @@ export function buildDistributionSharePack({
             : `${statusLabel}. Strongest when the page anchors a short editorial introduction.`,
         trackedUrl,
         copyMode: 'copy_text',
-        subtitle: shortText(description, 160),
+        newsletterSubject,
+        subtitle: substackDek(analysis, description, locale),
         introParagraph: substackIntro(analysis, description, trackedUrl, locale),
       }
+    }
   }
 }
 

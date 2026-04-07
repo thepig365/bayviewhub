@@ -33,6 +33,8 @@ export type DistributionShareMode =
   | 'copy_xiaohongshu_pack'
   | 'copy_email_pack'
 
+export type DistributionShareResultStatus = 'drafted' | 'posted' | 'cancelled'
+
 export type DistributionRecommendationStatus = 'recommended' | 'use_with_care' | 'not_primary'
 
 export type DistributionMetadata = {
@@ -80,10 +82,21 @@ export type DistributionSharePack = {
   copyMode: DistributionShareMode
   openActionUrl?: string | null
   chineseCopyPack?: string | null
-  qrUrl?: string | null
+  qrValue?: string | null
   titleVariants?: string[]
   subtitle?: string | null
   introParagraph?: string | null
+  emailSubject?: string | null
+  emailIntro?: string | null
+  newsletterSubject?: string | null
+  suitabilityNote?: string | null
+  noteTitleSuggestion?: string | null
+  visualAngleNote?: string | null
+  tagSuggestions?: string[]
+  wechatVariants?: Array<{
+    label: string
+    text: string
+  }>
 }
 
 export type DistributionLogPayload = {
@@ -101,4 +114,56 @@ export type DistributionLogPayload = {
   utmContent: string
   shareTextVariant?: string | null
   metadataSnapshot: Record<string, unknown>
+}
+
+export type DistributionManualMetrics = {
+  likes?: number
+  comments?: number
+  shares?: number
+  opens?: number
+  subscribers?: number
+}
+
+export type DistributionShareActionRecord = {
+  id: string
+  createdAt: string
+  url: string
+  canonicalUrl: string
+  hostname: string
+  pathname: string
+  pageType: DistributionPageType
+  pageLocale: SiteLocale
+  platform: DistributionPlatform
+  shareMode: DistributionShareMode
+  utmSource: string | null
+  utmMedium: string | null
+  utmCampaign: string | null
+  utmContent: string | null
+  shareTextVariant: string | null
+}
+
+export type DistributionShareActionResultRecord = {
+  id: string
+  createdAt: string
+  shareActionId: string
+  platform: DistributionPlatform
+  status: DistributionShareResultStatus
+  externalPostUrl: string | null
+  externalPostNotes: string | null
+  manualMetrics: DistributionManualMetrics
+  lastCheckedAt: string | null
+}
+
+export type DistributionHistoryItem = {
+  action: DistributionShareActionRecord
+  result: DistributionShareActionResultRecord | null
+}
+
+export type DistributionResultPayload = {
+  shareActionId: string
+  platform: DistributionPlatform
+  status: DistributionShareResultStatus
+  externalPostUrl?: string | null
+  externalPostNotes?: string | null
+  manualMetrics?: DistributionManualMetrics | null
 }

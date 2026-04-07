@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     if (!result.ok) {
       return NextResponse.json({ ok: false, error: result.error }, { status: 500 })
     }
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, action: result.action })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Log failed.'
     return NextResponse.json({ ok: false, error: message }, { status: 400 })

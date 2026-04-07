@@ -1,4 +1,5 @@
 import { getSupabaseServer } from '@/lib/ssd-campaign-server'
+import { mapDistributionShareActionRecord } from '@/lib/distribution/history'
 import type { DistributionLogPayload } from '@/lib/distribution/types'
 
 function sanitize(value: unknown, max = 240): string | null {
@@ -8,7 +9,18 @@ function sanitize(value: unknown, max = 240): string | null {
   return clean.slice(0, max)
 }
 
-export async function logDistributionShareAction(payload: DistributionLogPayload): Promise<{ ok: true } | { ok: false; error: string }> {
+export async function logDistributionShareAction(
+  payload: DistributionLogPayload
+): Promise<
+  | {
+      ok: true
+      action: NonNullable<ReturnType<typeof mapDistributionShareActionRecord>>
+    }
+  | {
+      ok: false
+      error: string
+    }
+> {
   const supabase = getSupabaseServer()
   if (!supabase) {
     return { ok: false, error: 'Database not configured.' }
@@ -31,7 +43,13 @@ export async function logDistributionShareAction(payload: DistributionLogPayload
     metadata_snapshot: payload.metadataSnapshot,
   }
 
-  const { error } = await supabase.from('share_actions').insert(row)
+  const { data, error } = await supabase
+    .from('share_actions')
+    .insert(row)
+    .select(
+      'id, created_at, url, canonical_url, hostname, pathname, page_type, page_locale, platform, share_mode, utm_source, utm_medium, utm_campaign, utm_content, share_text_variant'
+    )
+    .single()
   if (error) {
     console.warn('[Distribution] share action log failed', error)
     return {
@@ -39,5 +57,14 @@ export async function logDistributionShareAction(payload: DistributionLogPayload
       error: error.message || 'Insert failed.',
     }
   }
-  return { ok: true }
+
+  const action = mapDistributionShareActionRecord((data || {}) as Record<string, unknown>)
+  if (!action) {
+    return {
+      ok: false,
+      error: 'Insert succeeded but returned an unexpected action payload.',
+    }
+  }
+
+  return { ok: true, action }
 }

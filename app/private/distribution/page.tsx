@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { DistributionConsoleClient } from '@/app/private/distribution/DistributionConsoleClient'
+import { listRecentDistributionHistory } from '@/lib/distribution/history'
 import {
   NEWSLETTER_ADMIN_COOKIE,
   isNewsletterAdminCookieValid,
@@ -27,6 +28,8 @@ export default async function PrivateDistributionPage() {
     redirect('/private/editorial/login')
   }
 
+  const initialHistory = await listRecentDistributionHistory()
+
   return (
     <main className="min-h-screen bg-bg py-16">
       <div className="container mx-auto px-4">
@@ -37,7 +40,7 @@ export default async function PrivateDistributionPage() {
               <h1 className="text-4xl font-serif font-bold text-fg">Bayview Share Engine</h1>
               <p className="mt-3 max-w-3xl text-muted">
                 Internal distribution console for Bayview-owned URLs: validate, inspect metadata, classify page type,
-                prepare UTM links, assemble platform packs, generate QR handoffs, and log share operations.
+                prepare UTM links, assemble platform packs, generate local QR handoffs, and review what was actually posted.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -56,7 +59,7 @@ export default async function PrivateDistributionPage() {
             </div>
           </div>
 
-          <DistributionConsoleClient />
+          <DistributionConsoleClient initialHistory={initialHistory} />
         </div>
       </div>
     </main>
