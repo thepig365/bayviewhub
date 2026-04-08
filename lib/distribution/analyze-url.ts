@@ -97,6 +97,16 @@ function extractCanonical(html: string): string | null {
   return null
 }
 
+function extractLeadParagraph(html: string): string | null {
+  const matches = html.match(/<p\b[^>]*>([\s\S]*?)<\/p>/gi) || []
+  for (const match of matches) {
+    const body = match.replace(/^<p\b[^>]*>/i, '').replace(/<\/p>$/i, '')
+    const text = stripTags(body)
+    if (text.length >= 80) return text
+  }
+  return null
+}
+
 function extractJsonLdTypes(html: string): string[] {
   const matches = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi) || []
   const types = new Set<string>()
@@ -142,6 +152,7 @@ function extractMetadata(html: string): DistributionMetadata {
     twitterImage: extractMetaContent(html, 'name', 'twitter:image'),
     htmlLang: matchAttr(firstMatch(html, /<html\b[^>]*>/i) || '', 'lang'),
     h1: stripTags(firstMatch(html, /<h1[^>]*>([\s\S]*?)<\/h1>/i)),
+    leadParagraph: extractLeadParagraph(html),
     jsonLdTypes: extractJsonLdTypes(html),
   }
 }
@@ -175,6 +186,7 @@ function buildWarnings(
   if (!metadata.ogDescription) warnings.push('Missing og:description.')
   if (!metadata.ogImage) warnings.push('Missing og:image.')
   if (!metadata.h1) warnings.push('No H1 detected in the HTML response.')
+  if (!metadata.leadParagraph) warnings.push('No strong lead paragraph detected in the HTML response.')
   if (!metadata.ogTitle && !metadata.twitterTitle) {
     warnings.push('Share title metadata is weak; packs may fall back to H1 or HTML title.')
   }
@@ -207,7 +219,7 @@ function buildWarnings(
     if (containsChinese(metadata.h1) && looksEnglishFirst(metadata.title)) {
       warnings.push('Chinese path has an English HTML title; localized packs will avoid it when a Chinese on-page title exists.')
     }
-    if (!descriptionCandidates.some((value) => containsChinese(value))) {
+    if (!descriptionCandidates.some((value) => containsChinese(value)) && !containsChinese(metadata.leadParagraph)) {
       warnings.push('Chinese path lacks Chinese summary metadata; localized packs will use a conservative Chinese fallback.')
     }
   }

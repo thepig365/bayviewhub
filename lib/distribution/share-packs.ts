@@ -134,6 +134,8 @@ function zhDescriptionFallback(analysis: DistributionAnalysisResult): string {
     case 'gallery_landing':
     case 'gallery_protocol':
       return `这是一页来自 Bayview Hub 的${descriptor}，适合先打开原页了解其策展与访问方式。`
+    case 'hub_page':
+      return '这是一页来自 Bayview Hub 的站点入口，适合先打开原页理解它到底提供什么，再决定如何转发。'
     default:
       return `这是一页来自 Bayview Hub 的${descriptor}，可先打开原页，再决定如何转发。`
   }
@@ -153,7 +155,12 @@ function enDescriptionFallback(analysis: DistributionAnalysisResult): string {
 }
 
 function preferredDescription(analysis: DistributionAnalysisResult, locale: CopyLocale): string {
-  const candidates = [analysis.metadata.ogDescription, analysis.metadata.twitterDescription, analysis.metadata.metaDescription]
+  const candidates = [
+    analysis.metadata.ogDescription,
+    analysis.metadata.twitterDescription,
+    analysis.metadata.metaDescription,
+    analysis.metadata.leadParagraph,
+  ]
 
   if (locale === 'zh') {
     const chinese = firstMatching(candidates, (value) => containsChinese(value))
@@ -184,6 +191,25 @@ function zhLeadTitleForChinesePlatforms(analysis: DistributionAnalysisResult): s
   return trimBookTitle(title)
 }
 
+function zhPackTitleSuggestion(analysis: DistributionAnalysisResult): string {
+  const baseTitle = zhLeadTitleForChinesePlatforms(analysis)
+  if (containsChinese(baseTitle)) return baseTitle
+
+  switch (analysis.pageType) {
+    case 'editorial_article':
+      return shortText(`值得慢读的一页：${baseTitle}`, 30)
+    case 'gallery_landing':
+    case 'gallery_protocol':
+      return shortText(`关于观看邀请的一页：${baseTitle}`, 30)
+    case 'ssd_landing':
+      return shortText(`先把规则看清的一页：${baseTitle}`, 30)
+    case 'hub_page':
+      return shortText(`先认识 Bayview Hub：${baseTitle}`, 30)
+    default:
+      return shortText(`先看这页：${baseTitle}`, 30)
+  }
+}
+
 function linkedInBody(_analysis: DistributionAnalysisResult, _title: string, description: string, trackedUrl: string, locale: CopyLocale): string {
   if (locale === 'zh') {
     return shortText(`来自 Bayview Hub 的一页内容：${description} 链接：${trackedUrl}`, 320)
@@ -209,8 +235,33 @@ function emailCopy(analysis: DistributionAnalysisResult, title: string, descript
 function wechatBody(analysis: DistributionAnalysisResult, trackedUrl: string) {
   const title = zhLeadTitleForChinesePlatforms(analysis)
   const description = preferredDescription(analysis, 'zh')
-  const friendText = shortText(`这页我先存一下，感觉值得你打开看看：${title}。${description} 先扫码进原页，读完再决定要不要继续转。`, 150)
-  const momentsText = shortText(`最近看到这页，适合慢一点读：${title}。${description} 我会先扫码打开原页，再决定怎么发到朋友圈。`, 150)
+  let friendText = ''
+  let momentsText = ''
+
+  switch (analysis.pageType) {
+    case 'editorial_article':
+      friendText = shortText(`这篇更适合慢一点读：${title}。${description} 我会先扫码打开原页，再决定要不要转给你。`, 150)
+      momentsText = shortText(`最近读到这篇，适合留一点时间慢慢看：${title}。${description} 我会先扫码进原页，再决定怎么发到朋友圈。`, 150)
+      break
+    case 'gallery_landing':
+    case 'gallery_protocol':
+      friendText = shortText(`这页是关于观看入口和访问方式的：${title}。${description} 先扫码进原页，看清楚再决定要不要转。`, 150)
+      momentsText = shortText(`最近看到一个更偏策展和访问关系的页面：${title}。${description} 适合先扫码打开，再决定怎么发朋友圈。`, 150)
+      break
+    case 'ssd_landing':
+      friendText = shortText(`这页更像实用规则入口：${title}。${description} 先扫码看原页，再判断是不是要转给正在研究 SSD 的人。`, 150)
+      momentsText = shortText(`如果最近在看 SSD，这页属于先把规则弄清的一类内容：${title}。${description} 我会先扫码打开原页。`, 150)
+      break
+    case 'hub_page':
+      friendText = shortText(`这页比较适合先认识 Bayview Hub 在做什么：${title}。${description} 先扫码看原页，再决定要不要继续转。`, 150)
+      momentsText = shortText(`最近看到一页比较能说明 Bayview Hub 气质和方向的内容：${title}。${description} 适合先扫码打开。`, 150)
+      break
+    default:
+      friendText = shortText(`这页我先存一下，感觉值得你打开看看：${title}。${description} 先扫码进原页，读完再决定要不要继续转。`, 150)
+      momentsText = shortText(`最近看到这页，适合慢一点读：${title}。${description} 我会先扫码打开原页，再决定怎么发到朋友圈。`, 150)
+      break
+  }
+
   return {
     title,
     body: friendText,
@@ -230,11 +281,15 @@ function wechatBody(analysis: DistributionAnalysisResult, trackedUrl: string) {
 
 function xiaohongshuVisualAngle(analysis: DistributionAnalysisResult): string {
   switch (analysis.pageType) {
+    case 'editorial_article':
+      return '适合配段落截图、书页式留白或安静阅读场景，不要做成情绪海报。'
     case 'gallery_landing':
     case 'gallery_protocol':
       return '适合配空间局部、墙面细节、观看动线一类的图，不要堆品牌字卡。'
     case 'ssd_landing':
       return '适合配规则清单、地块草图、页面局部截图，不要做成硬广海报。'
+    case 'hub_page':
+      return '适合配站点首页局部、空间片段或内容目录感画面，不要做成招商封面。'
     default:
       return '适合配页面主视觉、段落截图或阅读场景，不要做成夸张封面。'
   }
@@ -242,11 +297,15 @@ function xiaohongshuVisualAngle(analysis: DistributionAnalysisResult): string {
 
 function xiaohongshuTagSuggestions(analysis: DistributionAnalysisResult): string[] {
   switch (analysis.pageType) {
+    case 'editorial_article':
+      return ['阅读笔记', '长文', '在场']
     case 'gallery_landing':
     case 'gallery_protocol':
       return ['私人观看', '策展方式', '空间阅读']
     case 'ssd_landing':
       return ['SSD', '居住研究', '规则梳理']
+    case 'hub_page':
+      return ['空间体验', '内容入口', 'BayviewHub']
     case 'dialogue_article':
       return ['对话', '阅读笔记', '内容摘记']
     default:
@@ -257,8 +316,28 @@ function xiaohongshuTagSuggestions(analysis: DistributionAnalysisResult): string
 function xiaohongshuBody(analysis: DistributionAnalysisResult, trackedUrl: string) {
   const title = zhLeadTitleForChinesePlatforms(analysis)
   const description = preferredDescription(analysis, 'zh')
-  const noteTitle = shortText(title, 30)
-  const body = shortText(`${description} 我会先扫码打开原页，再整理成一则短笔记，重点只讲一个判断，不把它写成宣传文。`, 135)
+  const noteTitle = zhPackTitleSuggestion(analysis)
+  let body = ''
+
+  switch (analysis.pageType) {
+    case 'editorial_article':
+      body = shortText(`这页更像一篇值得慢读的内容，不急着转。${description} 我会先扫码打开原页，再整理成一则简短阅读笔记，只保留一个判断。`, 135)
+      break
+    case 'gallery_landing':
+    case 'gallery_protocol':
+      body = shortText(`这页不是普通展讯，更像关于观看方式和访问关系的说明。${description} 适合先扫码打开，再整理成一则短笔记。`, 135)
+      break
+    case 'ssd_landing':
+      body = shortText(`这页适合拿来做“先把 SSD 规则看清”的短笔记。${description} 我会先扫码进原页，再整理成简短说明，不写成推广文。`, 135)
+      break
+    case 'hub_page':
+      body = shortText(`这页比较适合当作 Bayview Hub 的入口说明。${description} 我会先扫码打开原页，再整理成一则克制的介绍笔记。`, 135)
+      break
+    default:
+      body = shortText(`${description} 我会先扫码打开原页，再整理成一则短笔记，重点只讲一个判断，不把它写成宣传文。`, 135)
+      break
+  }
+
   return {
     title: noteTitle,
     body,

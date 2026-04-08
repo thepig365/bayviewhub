@@ -34,6 +34,13 @@ export type DistributionShareMode =
   | 'copy_email_pack'
 
 export type DistributionShareResultStatus = 'drafted' | 'posted' | 'cancelled'
+export type DistributionCompletenessState =
+  | 'no_result'
+  | 'drafted_incomplete'
+  | 'posted_missing_url'
+  | 'posted_missing_metrics'
+  | 'posted_complete'
+  | 'cancelled'
 
 export type DistributionRecommendationStatus = 'recommended' | 'use_with_care' | 'not_primary'
 
@@ -49,6 +56,7 @@ export type DistributionMetadata = {
   twitterImage: string | null
   htmlLang: string | null
   h1: string | null
+  leadParagraph: string | null
   jsonLdTypes: string[]
 }
 

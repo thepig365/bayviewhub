@@ -28,7 +28,7 @@ export default async function PrivateDistributionPage() {
     redirect('/private/editorial/login')
   }
 
-  const initialHistory = await listRecentDistributionHistory()
+  const initialHistory = await listRecentDistributionHistory(120)
 
   return (
     <main className="min-h-screen bg-bg py-16">

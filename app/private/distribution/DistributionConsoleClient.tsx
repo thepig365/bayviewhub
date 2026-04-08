@@ -1,15 +1,28 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
+import {
+  distributionCompleteness,
+  distributionCompletenessTone,
+} from '@/lib/distribution/completeness'
+import { DISTRIBUTION_LOCAL_QR_NOTE, distributionQrDataUrl } from '@/lib/distribution/local-qr'
+import { summarizeDistributionPerformance } from '@/lib/distribution/performance-summary'
+import {
+  type DistributionDateRange,
+  filterDistributionHistory,
+  type DistributionReviewFilters,
+  type DistributionReviewSort,
+} from '@/lib/distribution/review-filters'
 import { distributionShareResultStatusLabel } from '@/lib/distribution/result-status'
 import { buildDistributionSharePacks } from '@/lib/distribution/share-packs'
-import { DISTRIBUTION_LOCAL_QR_NOTE, distributionQrDataUrl } from '@/lib/distribution/local-qr'
 import { buildTrackedDistributionUrl, defaultDistributionUtmFields } from '@/lib/distribution/utm'
 import type {
   DistributionAnalysisResult,
+  DistributionCompletenessState,
   DistributionHistoryItem,
   DistributionManualMetrics,
+  DistributionPageType,
   DistributionPlatform,
   DistributionShareActionRecord,
   DistributionShareActionResultRecord,
@@ -20,6 +33,21 @@ import type {
 } from '@/lib/distribution/types'
 
 const PLATFORMS: DistributionPlatform[] = ['linkedin', 'facebook', 'email', 'wechat', 'xiaohongshu', 'reddit', 'substack']
+const DATE_RANGES: Array<{ value: DistributionDateRange; label: string }> = [
+  { value: 'all', label: 'All loaded' },
+  { value: '7d', label: 'Last 7 days' },
+  { value: '30d', label: 'Last 30 days' },
+  { value: '90d', label: 'Last 90 days' },
+]
+const COMPLETENESS_OPTIONS: Array<{ value: DistributionCompletenessState | 'all'; label: string }> = [
+  { value: 'all', label: 'All completeness states' },
+  { value: 'no_result', label: 'No result yet' },
+  { value: 'drafted_incomplete', label: 'Drafted, still incomplete' },
+  { value: 'posted_missing_url', label: 'Posted, missing URL' },
+  { value: 'posted_missing_metrics', label: 'Posted, missing metrics' },
+  { value: 'posted_complete', label: 'Posted, review-complete' },
+  { value: 'cancelled', label: 'Cancelled' },
+]
 
 type AnalyzeResponse =
   | {
@@ -111,6 +139,18 @@ function initHistoryFormMap(items: DistributionHistoryItem[]): Record<string, Hi
   return Object.fromEntries(items.map((item) => [item.action.id, createHistoryFormState(item.result)]))
 }
 
+function initialReviewFilters(): DistributionReviewFilters {
+  return {
+    platform: 'all',
+    pageType: 'all',
+    resultStatus: 'all',
+    completeness: 'all',
+    dateRange: 'all',
+    keyword: '',
+    sort: 'newest',
+  }
+}
+
 function stringifyMetric(value: number | undefined): string {
   return typeof value === 'number' && Number.isFinite(value) ? String(value) : ''
 }
@@ -124,6 +164,21 @@ function metricsFromFormState(form: HistoryFormState): DistributionManualMetrics
     if (Number.isFinite(value) && value >= 0) next[key] = Math.round(value)
   }
   return next
+}
+
+function metricEntries(metrics: DistributionManualMetrics | null | undefined): Array<{ label: string; value: number }> {
+  const labels: Record<keyof DistributionManualMetrics, string> = {
+    likes: 'Likes',
+    comments: 'Comments',
+    shares: 'Shares',
+    opens: 'Opens',
+    subscribers: 'Subscribers',
+  }
+
+  return (['likes', 'comments', 'shares', 'opens', 'subscribers'] as const)
+    .map((key) => ({ key, value: metrics?.[key] }))
+    .filter((entry): entry is { key: keyof DistributionManualMetrics; value: number } => typeof entry.value === 'number')
+    .map((entry) => ({ label: labels[entry.key], value: entry.value }))
 }
 
 function packText(pack: DistributionSharePack): string {
@@ -169,7 +224,7 @@ function historyStatusTone(status: DistributionShareResultStatus | null) {
     case 'posted':
       return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
     case 'cancelled':
-      return 'border-red-500/25 bg-red-500/10 text-red-700 dark:text-red-300'
+      return 'border-slate-500/30 bg-slate-500/10 text-slate-700 dark:text-slate-300'
     case 'drafted':
       return 'border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300'
     default:
@@ -204,6 +259,10 @@ function formatDateTime(value: string): string {
   return date.toLocaleString()
 }
 
+function sortLabel(value: DistributionReviewSort): string {
+  return value === 'oldest' ? 'Oldest first' : 'Newest first'
+}
+
 export function DistributionConsoleClient({ initialHistory }: { initialHistory: DistributionHistoryItem[] }) {
   const [urlInput, setUrlInput] = useState('')
   const [analysis, setAnalysis] = useState<DistributionAnalysisResult | null>(null)
@@ -216,6 +275,7 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
   const [historyForms, setHistoryForms] = useState<Record<string, HistoryFormState>>(() => initHistoryFormMap(initialHistory))
   const [savingHistoryId, setSavingHistoryId] = useState<string | null>(null)
   const [historyFeedback, setHistoryFeedback] = useState<Record<string, string>>({})
+  const [reviewFilters, setReviewFilters] = useState<DistributionReviewFilters>(() => initialReviewFilters())
 
   const sharePacks = useMemo(() => {
     if (!analysis || !utmByPlatform) return []
@@ -225,6 +285,18 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
   const selectedUtm = analysis && utmByPlatform ? utmByPlatform[selectedPlatform] : null
   const selectedTrackedUrl =
     analysis && selectedUtm ? buildTrackedDistributionUrl(analysis.normalizedUrl, selectedUtm) : ''
+
+  const availablePlatforms = useMemo(
+    () => Array.from(new Set(historyItems.map((item) => item.action.platform))).sort((a, b) => a.localeCompare(b)),
+    [historyItems]
+  )
+  const availablePageTypes = useMemo(
+    () => Array.from(new Set(historyItems.map((item) => item.action.pageType))).sort((a, b) => a.localeCompare(b)),
+    [historyItems]
+  )
+
+  const filteredHistory = useMemo(() => filterDistributionHistory(historyItems, reviewFilters), [historyItems, reviewFilters])
+  const summary = useMemo(() => summarizeDistributionPerformance(filteredHistory), [filteredHistory])
 
   async function handleAnalyze(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -275,13 +347,20 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
     }))
   }
 
+  function updateReviewFilter<K extends keyof DistributionReviewFilters>(key: K, value: DistributionReviewFilters[K]) {
+    setReviewFilters((current) => ({
+      ...current,
+      [key]: value,
+    }))
+  }
+
   function prependHistoryAction(action: DistributionShareActionRecord) {
     setHistoryItems((current) => {
       const existing = current.find((item) => item.action.id === action.id)
       if (existing) {
         return current.map((item) => (item.action.id === action.id ? { ...item, action } : item))
       }
-      return [{ action, result: null }, ...current].slice(0, 18)
+      return [{ action, result: null }, ...current].slice(0, 120)
     })
     setHistoryForms((current) => ({
       ...current,
@@ -462,6 +541,7 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
               <SummaryField label="Canonical" value={analysis.metadata.canonical || '—'} mono />
               <SummaryField label="og:title" value={analysis.metadata.ogTitle || '—'} />
               <SummaryField label="og:description" value={analysis.metadata.ogDescription || '—'} />
+              <SummaryField label="Lead paragraph" value={analysis.metadata.leadParagraph || '—'} />
               <SummaryField label="og:image" value={analysis.metadata.ogImage || '—'} mono />
               <SummaryField label="H1" value={analysis.metadata.h1 || '—'} />
               <SummaryField label="JSON-LD types" value={analysis.metadata.jsonLdTypes.join(', ') || '—'} mono />
@@ -608,19 +688,166 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
       <section className={sectionClass}>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">Recent activity</p>
-            <h2 className="mt-2 text-2xl font-serif font-semibold text-fg">History and result capture</h2>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">Recent judgement summary</p>
+            <h2 className="mt-2 text-2xl font-serif font-semibold text-fg">Operational distribution signals</h2>
             <p className="mt-2 max-w-3xl text-sm text-muted">
-              Record what happened after a share action: drafted, posted, or cancelled, plus external URL, short notes, and optional manual metrics.
+              Compact counts for the current review set: what has been logged, what has been posted, and what still needs follow-up.
             </p>
           </div>
+          <p className="text-sm text-muted">Based on {filteredHistory.length} visible items from the loaded recent review window.</p>
         </div>
 
-        {historyItems.length ? (
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <SummaryStatCard label="Recent share actions" value={summary.totalActions} detail="Visible review-set actions" />
+          <SummaryStatCard label="Result records" value={summary.totalResults} detail="Drafted, posted, or cancelled outcomes" />
+          <SummaryStatCard label="No result yet" value={summary.totalActionsWithoutResult} detail="Logged actions still missing a result record" />
+          <SummaryStatCard label="Drafted" value={summary.draftedCount} detail="Results marked drafted" />
+          <SummaryStatCard label="Posted" value={summary.postedCount} detail="Results marked posted" />
+          <SummaryStatCard label="Cancelled" value={summary.cancelledCount} detail="Results marked cancelled" />
+        </div>
+
+        <div className="mt-6 grid gap-5 xl:grid-cols-2">
+          <AggregateTable
+            title="By platform"
+            rows={summary.byPlatform.map((row) => ({
+              label: platformLabel(row.key),
+              totalActions: row.totalActions,
+              totalPostedResults: row.totalPostedResults,
+              totalIncompleteItems: row.totalIncompleteItems,
+            }))}
+          />
+          <AggregateTable
+            title="By page type"
+            rows={summary.byPageType.map((row) => ({
+              label: row.key,
+              totalActions: row.totalActions,
+              totalPostedResults: row.totalPostedResults,
+              totalIncompleteItems: row.totalIncompleteItems,
+            }))}
+          />
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-border bg-natural-50 p-4 dark:border-white/10 dark:bg-white/5">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">Manual metric totals</p>
+          <MetricBadgeRow metrics={summary.manualMetricTotals} emptyLabel="No manual metrics are visible in the current review set yet." />
+        </div>
+      </section>
+
+      <section className={sectionClass}>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">Recent activity</p>
+            <h2 className="mt-2 text-2xl font-serif font-semibold text-fg">History, filtering, and result capture</h2>
+            <p className="mt-2 max-w-3xl text-sm text-muted">
+              Filter by platform, page type, status, completeness, time window, and keyword to find the items that still need judgement or cleanup.
+            </p>
+          </div>
+          <p className="text-sm text-muted">
+            Showing {filteredHistory.length} of {historyItems.length} loaded actions · {sortLabel(reviewFilters.sort)}
+          </p>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+          <FilterField label="Platform">
+            <select
+              value={reviewFilters.platform}
+              onChange={(event) => updateReviewFilter('platform', event.target.value as DistributionPlatform | 'all')}
+              className={inputClass}
+            >
+              <option value="all">All platforms</option>
+              {availablePlatforms.map((platform) => (
+                <option key={platform} value={platform}>
+                  {platformLabel(platform)}
+                </option>
+              ))}
+            </select>
+          </FilterField>
+          <FilterField label="Page type">
+            <select
+              value={reviewFilters.pageType}
+              onChange={(event) => updateReviewFilter('pageType', event.target.value as DistributionPageType | 'all')}
+              className={inputClass}
+            >
+              <option value="all">All page types</option>
+              {availablePageTypes.map((pageType) => (
+                <option key={pageType} value={pageType}>
+                  {pageType}
+                </option>
+              ))}
+            </select>
+          </FilterField>
+          <FilterField label="Result status">
+            <select
+              value={reviewFilters.resultStatus}
+              onChange={(event) =>
+                updateReviewFilter('resultStatus', event.target.value as DistributionShareResultStatus | 'none' | 'all')
+              }
+              className={inputClass}
+            >
+              <option value="all">All result states</option>
+              <option value="none">No result yet</option>
+              <option value="drafted">Drafted</option>
+              <option value="posted">Posted</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </FilterField>
+          <FilterField label="Completeness">
+            <select
+              value={reviewFilters.completeness}
+              onChange={(event) => updateReviewFilter('completeness', event.target.value as DistributionCompletenessState | 'all')}
+              className={inputClass}
+            >
+              {COMPLETENESS_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </FilterField>
+          <FilterField label="Date range">
+            <select
+              value={reviewFilters.dateRange}
+              onChange={(event) => updateReviewFilter('dateRange', event.target.value as DistributionDateRange)}
+              className={inputClass}
+            >
+              {DATE_RANGES.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </FilterField>
+          <FilterField label="Sort">
+            <select
+              value={reviewFilters.sort}
+              onChange={(event) => updateReviewFilter('sort', event.target.value as DistributionReviewSort)}
+              className={inputClass}
+            >
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </FilterField>
+        </div>
+
+        <div className="mt-4">
+          <FilterField label="Keyword search">
+            <input
+              value={reviewFilters.keyword}
+              onChange={(event) => updateReviewFilter('keyword', event.target.value)}
+              placeholder="Search pathname, tracked URL, external post URL, or notes"
+              className={inputClass}
+            />
+          </FilterField>
+        </div>
+
+        {filteredHistory.length ? (
           <div className="mt-6 space-y-4">
-            {historyItems.map((item) => {
+            {filteredHistory.map((item) => {
               const form = historyForms[item.action.id] || createHistoryFormState(item.result)
               const resultStatus = item.result?.status || null
+              const completeness = distributionCompleteness(item)
+              const metrics = item.result?.manualMetrics || {}
+
               return (
                 <article key={item.action.id} className="rounded-[1.5rem] border border-border bg-natural-50 p-5 dark:border-white/10 dark:bg-white/5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
@@ -635,12 +862,16 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                         <span className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.14em] ${historyStatusTone(resultStatus)}`}>
                           {resultStatus ? distributionShareResultStatusLabel(resultStatus) : 'No result yet'}
                         </span>
+                        <span className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.14em] ${distributionCompletenessTone(completeness.state)}`}>
+                          {completeness.label}
+                        </span>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-fg dark:text-white">{item.action.pathname}</p>
                         <p className="mt-1 text-sm text-muted">
                           {item.action.pageType} • {formatDateTime(item.action.createdAt)}
                         </p>
+                        <p className="mt-2 max-w-3xl text-sm text-fg/78 dark:text-white/72">{completeness.description}</p>
                       </div>
                     </div>
                     {item.result?.externalPostUrl ? (
@@ -660,6 +891,11 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                     <SummaryField label="Canonical URL" value={item.action.canonicalUrl} mono />
                     <SummaryField label="Hostname" value={item.action.hostname} mono />
                     <SummaryField label="Locale" value={item.action.pageLocale} />
+                  </div>
+
+                  <div className="mt-5 rounded-2xl border border-border bg-white p-4 dark:border-white/10 dark:bg-white/5">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">Visible manual metrics</p>
+                    <MetricBadgeRow metrics={metrics} emptyLabel="No manual metrics saved yet for this result." />
                   </div>
 
                   <div className="mt-5 grid gap-4 xl:grid-cols-2">
@@ -698,11 +934,7 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                       <EditableField label="comments" value={form.comments} onChange={(value) => updateHistoryForm(item.action.id, { comments: value })} />
                       <EditableField label="shares" value={form.shares} onChange={(value) => updateHistoryForm(item.action.id, { shares: value })} />
                       <EditableField label="opens" value={form.opens} onChange={(value) => updateHistoryForm(item.action.id, { opens: value })} />
-                      <EditableField
-                        label="subscribers"
-                        value={form.subscribers}
-                        onChange={(value) => updateHistoryForm(item.action.id, { subscribers: value })}
-                      />
+                      <EditableField label="subscribers" value={form.subscribers} onChange={(value) => updateHistoryForm(item.action.id, { subscribers: value })} />
                     </div>
                   </div>
 
@@ -715,19 +947,15 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                     >
                       {savingHistoryId === item.action.id ? 'Saving...' : 'Save result'}
                     </button>
-                    {item.result?.lastCheckedAt ? (
-                      <p className="text-sm text-muted">Last updated {formatDateTime(item.result.lastCheckedAt)}</p>
-                    ) : null}
-                    {historyFeedback[item.action.id] ? (
-                      <p className="text-sm text-fg/80 dark:text-white/75">{historyFeedback[item.action.id]}</p>
-                    ) : null}
+                    {item.result?.lastCheckedAt ? <p className="text-sm text-muted">Last updated {formatDateTime(item.result.lastCheckedAt)}</p> : null}
+                    {historyFeedback[item.action.id] ? <p className="text-sm text-fg/80 dark:text-white/75">{historyFeedback[item.action.id]}</p> : null}
                   </div>
                 </article>
               )
             })}
           </div>
         ) : (
-          <p className="mt-6 text-sm text-muted">No recent share actions yet. Once you copy or open a platform from this console, it will appear here for review.</p>
+          <p className="mt-6 text-sm text-muted">No matching review items. Adjust the filters or search terms to widen the current review set.</p>
         )}
       </section>
     </div>
@@ -763,6 +991,90 @@ function LocalQrPanel({ value, label }: { value: string; label: string }) {
       )}
       <p className="mt-3 text-[12px] leading-5 text-fg/68">{DISTRIBUTION_LOCAL_QR_NOTE}</p>
     </div>
+  )
+}
+
+function SummaryStatCard({ label, value, detail }: { label: string; value: number; detail: string }) {
+  return (
+    <div className="rounded-2xl border border-border bg-natural-50 p-4 dark:border-white/10 dark:bg-white/5">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">{label}</p>
+      <p className="mt-2 text-3xl font-serif font-semibold text-fg dark:text-white">{value}</p>
+      <p className="mt-2 text-sm text-muted">{detail}</p>
+    </div>
+  )
+}
+
+function AggregateTable({
+  title,
+  rows,
+}: {
+  title: string
+  rows: Array<{
+    label: string
+    totalActions: number
+    totalPostedResults: number
+    totalIncompleteItems: number
+  }>
+}) {
+  return (
+    <div className="rounded-2xl border border-border bg-natural-50 p-4 dark:border-white/10 dark:bg-white/5">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">{title}</p>
+      {rows.length ? (
+        <div className="mt-4 space-y-3">
+          {rows.map((row) => (
+            <div key={row.label} className="grid grid-cols-[minmax(0,1.6fr)_0.8fr_0.8fr_0.8fr] gap-3 text-sm text-fg dark:text-white">
+              <p className="truncate">{row.label}</p>
+              <p>{row.totalActions}</p>
+              <p>{row.totalPostedResults}</p>
+              <p>{row.totalIncompleteItems}</p>
+            </div>
+          ))}
+          <div className="grid grid-cols-[minmax(0,1.6fr)_0.8fr_0.8fr_0.8fr] gap-3 border-t border-border pt-3 text-[11px] uppercase tracking-[0.14em] text-fg/55 dark:border-white/10 dark:text-white/55">
+            <p>Label</p>
+            <p>Actions</p>
+            <p>Posted</p>
+            <p>Incomplete</p>
+          </div>
+        </div>
+      ) : (
+        <p className="mt-3 text-sm text-muted">No rows in the current review set.</p>
+      )}
+    </div>
+  )
+}
+
+function MetricBadgeRow({
+  metrics,
+  emptyLabel,
+}: {
+  metrics: DistributionManualMetrics | null | undefined
+  emptyLabel: string
+}) {
+  const entries = metricEntries(metrics)
+  if (!entries.length) {
+    return <p className="mt-3 text-sm text-muted">{emptyLabel}</p>
+  }
+
+  return (
+    <div className="mt-3 flex flex-wrap gap-2">
+      {entries.map((entry) => (
+        <span
+          key={entry.label}
+          className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-[12px] tracking-[0.08em] text-accent"
+        >
+          {entry.label}: {entry.value}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function FilterField({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="block">
+      <span className="text-[11px] uppercase tracking-[0.18em] text-fg/60 dark:text-white/55">{label}</span>
+      <div className="mt-2">{children}</div>
+    </label>
   )
 }
 
