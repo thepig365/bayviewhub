@@ -45,6 +45,8 @@ function zhFooterLabel(label: string): string {
       return '编辑后台登录'
     case 'Newsletter Login':
       return '通讯后台登录'
+    case 'Distribution Console':
+      return '分发控制台'
     case 'Programs':
       return '项目'
     case 'Founding Partners':
@@ -211,6 +213,11 @@ export function Footer() {
               <li>
                 <Link href="/private/newsletter/login" className="text-[15px] leading-7 text-shell-footer-muted/75 hover:text-accent transition-colors md:text-base">
                   {t('Newsletter Login', locale)}
+                </Link>
+              </li>
+              <li>
+                <Link href="/private/distribution" className="text-[15px] leading-7 text-shell-footer-muted/75 hover:text-accent transition-colors md:text-base">
+                  {t('Distribution Console', locale)}
                 </Link>
               </li>
             </ul>
