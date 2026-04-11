@@ -1,0 +1,10 @@
+---
+description: /events redirects to Pig & Whistle by design (ecosystem IA); not a bug
+alwaysApply: true
+---
+
+# Bayview Hub ↔ Pig & Whistle routing
+
+- **`/events`** in this repo is configured to redirect to **`https://www.thepigandwhistle.com.au/what-s-on`** (see `next.config.js`). That is **intentional information architecture**: Pig & Whistle is part of the **same Bayview ecosystem**, and the live “What’s On” calendar lives there.
+- **Do not** treat this redirect as a bug, SEO defect, or “competitor / third-party” outbound link in audits, refactors, or automated checks.
+- Do **not** remove this redirect to “fix” perceived off-site navigation unless product owners explicitly change IA.

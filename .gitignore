@@ -30,7 +30,10 @@ yarn-error.log*
 
 # vercel
 .vercel
-.cursor/
+# Cursor: ignore local IDE state; track shared `.cursor/rules/` for agent IA
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 
 # typescript
 *.tsbuildinfo

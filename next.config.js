@@ -90,6 +90,7 @@ const nextConfig = {
         destination: 'https://gallery.bayviewhub.me',
         permanent: false,
       },
+      // Intentional IA: /events → Pig & Whistle "What's On" (same Bayview ecosystem; not a competitor redirect).
       {
         source: '/events',
         destination: 'https://www.thepigandwhistle.com.au/what-s-on',
