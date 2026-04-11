@@ -1,11 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { FOUNDING_ROLES } from '@/lib/constants'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
+import { getAttribution, track } from '@/lib/analytics'
 
 export default function PartnersPage() {
+  const formStarted = useRef(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,6 +36,16 @@ export default function PartnersPage() {
       const data = await res.json()
       
       if (data.ok) {
+        const sp =
+          typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+        const attr = getAttribution(sp)
+        track('form_submit', {
+          form_id: 'partners_directory_application',
+          page_section: 'partners_landing',
+          page_path: '/partners',
+          outcome: 'success',
+          ...attr,
+        })
         setStatus('success')
         setFormData({
           name: '',
@@ -170,7 +182,23 @@ export default function PartnersPage() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border">
+              <form
+                onSubmit={handleSubmit}
+                onFocusCapture={() => {
+                  if (formStarted.current) return
+                  formStarted.current = true
+                  const sp =
+                    typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+                  const attr = getAttribution(sp)
+                  track('form_start', {
+                    form_id: 'partners_directory_application',
+                    page_section: 'partners_landing',
+                    page_path: '/partners',
+                    ...attr,
+                  })
+                }}
+                className="space-y-6 bg-natural-50 rounded-2xl p-8 dark:bg-surface dark:border dark:border-border"
+              >
               <div>
                 <label htmlFor="partner-name" className="block text-base font-medium text-fg mb-2">
                   Name <span className="text-red-500">*</span>

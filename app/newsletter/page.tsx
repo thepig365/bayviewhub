@@ -4,8 +4,9 @@ import { NewsletterForm } from '@/components/ui/NewsletterForm'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: 'Newsletter',
-  description: 'Subscribe to Bayview Notes for selected Mendpress pieces, invitations, and estate updates.',
+  title: 'Newsletter — Bayview Notes',
+  description:
+    'Subscribe to Bayview Notes for selected Mendpress publications, event invitations, and estate updates when there is something worth sending. Unsubscribe any time.',
   path: '/newsletter',
 })
 

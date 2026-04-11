@@ -15,6 +15,7 @@ import {
 } from '@/lib/constants'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { SimpleThemeToggle } from '@/components/theme/SimpleThemeToggle'
+import { TrackedOutboundConversionLink } from '@/components/analytics/TrackedOutboundConversionLink'
 import { localizedHref, localeFromPathname } from '@/lib/language-routing'
 
 function zhFooterLabel(label: string): string {
@@ -235,6 +236,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link
+                  href={localizedHref('/art-gallery/founding-partners', locale)}
+                  className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base"
+                >
+                  {locale === 'zh' ? '艺术画廊 — 创始策展合作' : 'Arts Gallery — founding curator'}
+                </Link>
+              </li>
+              <li>
                 <Link href={localizedHref(SSD_LANDING.overview, locale)} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
                   {t('Backyard Small Second Home', locale)}
                 </Link>
@@ -264,9 +273,14 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href={GALLERY_EXTERNAL.openYourWall} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
+                <TrackedOutboundConversionLink
+                  href={GALLERY_EXTERNAL.openYourWall}
+                  eventName="private_viewing_request"
+                  pageSection="footer_gallery"
+                  className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base"
+                >
                   {t('Private Viewing', locale)}
-                </a>
+                </TrackedOutboundConversionLink>
               </li>
               <li>
                 <a href={GALLERY_EXTERNAL.passportRegister} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
@@ -274,9 +288,14 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href={GALLERY_VIEWING_REQUEST_MAILTO} className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
+                <TrackedOutboundConversionLink
+                  href={GALLERY_VIEWING_REQUEST_MAILTO}
+                  eventName="private_viewing_request"
+                  pageSection="footer_gallery"
+                  className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base"
+                >
                   {t('Request private viewing access', locale)}
-                </a>
+                </TrackedOutboundConversionLink>
               </li>
               <li>
                 <a href={GALLERY_EXTERNAL.archive} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
@@ -284,9 +303,14 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href={GALLERY_EXTERNAL.submit} target="_blank" rel="noopener noreferrer" className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base">
+                <TrackedOutboundConversionLink
+                  href={GALLERY_EXTERNAL.submit}
+                  eventName="artist_submission_start"
+                  pageSection="footer_gallery"
+                  className="text-[15px] leading-7 text-shell-footer-muted hover:text-accent transition-colors md:text-base"
+                >
                   {t('Submit artwork', locale)}
-                </a>
+                </TrackedOutboundConversionLink>
               </li>
             </ul>
           </div>

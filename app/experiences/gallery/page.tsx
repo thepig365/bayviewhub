@@ -1,12 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { SITE_CONFIG } from '@/lib/constants'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
+import { TrackedTelLink } from '@/components/analytics/TrackedTelLink'
+import { getAttribution, track } from '@/lib/analytics'
 
 const galleryEoiFieldClass = `${CONTRAST_FORM_CONTROL_CLASS} text-lg focus:ring-accent dark:focus:ring-accent`
 
 export default function GalleryPage() {
+  const formStarted = useRef(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,6 +42,22 @@ export default function GalleryPage() {
       const data = await res.json()
       
       if (data.ok) {
+        const sp =
+          typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+        const attr = getAttribution(sp)
+        track('partner_eoi_submit', {
+          form_id: 'gallery_founding_curator_eoi',
+          page_section: 'experiences_gallery',
+          page_path: '/experiences/gallery',
+          ...attr,
+        })
+        track('form_submit', {
+          form_id: 'gallery_founding_curator_eoi',
+          page_section: 'experiences_gallery',
+          page_path: '/experiences/gallery',
+          outcome: 'success',
+          ...attr,
+        })
         setStatus('success')
         setFormData({
           name: '',
@@ -154,7 +173,23 @@ export default function GalleryPage() {
                 <p className="text-subtle">We'll reach out if aligned.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form
+                onSubmit={handleSubmit}
+                onFocusCapture={() => {
+                  if (formStarted.current) return
+                  formStarted.current = true
+                  const sp =
+                    typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+                  const attr = getAttribution(sp)
+                  track('form_start', {
+                    form_id: 'gallery_founding_curator_eoi',
+                    page_section: 'experiences_gallery',
+                    page_path: '/experiences/gallery',
+                    ...attr,
+                  })
+                }}
+                className="space-y-5"
+              >
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-muted text-base mb-2">Name *</label>
@@ -227,7 +262,9 @@ export default function GalleryPage() {
         <p className="text-fg">
           <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-accent transition-colors">{SITE_CONFIG.email}</a>
           {' · '}
-          <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-accent transition-colors">{SITE_CONFIG.phone}</a>
+          <TrackedTelLink href={`tel:${SITE_CONFIG.phone}`} pageSection="experiences_gallery" className="hover:text-accent transition-colors">
+            {SITE_CONFIG.phone}
+          </TrackedTelLink>
         </p>
       </section>
     </div>

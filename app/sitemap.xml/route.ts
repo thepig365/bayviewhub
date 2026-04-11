@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { listPublishedEditorialEntries } from '@/lib/editorial'
+import { editorialHasChinesePageContent, listPublishedEditorialEntries, type EditorialEntry } from '@/lib/editorial'
 
 const BASE_URL = 'https://www.bayviewhub.me'
 
@@ -18,6 +18,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/zh/mendpress/dialogue', priority: 0.72, changeFreq: 'weekly' },
   { path: '/zh/mendpress/visual-narrative', priority: 0.72, changeFreq: 'weekly' },
   { path: '/zh/mendpress/programme', priority: 0.72, changeFreq: 'weekly' },
+  { path: '/zh/mendpress/listen', priority: 0.7, changeFreq: 'weekly' },
   { path: '/zh/partners', priority: 0.8, changeFreq: 'monthly' },
   { path: '/zh/partners/founding', priority: 0.8, changeFreq: 'monthly' },
   { path: '/zh/invest', priority: 0.76, changeFreq: 'monthly' },
@@ -44,6 +45,7 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/mendpress/dialogue', priority: 0.72, changeFreq: 'weekly' },
   { path: '/mendpress/visual-narrative', priority: 0.72, changeFreq: 'weekly' },
   { path: '/mendpress/programme', priority: 0.72, changeFreq: 'weekly' },
+  { path: '/mendpress/listen', priority: 0.7, changeFreq: 'weekly' },
   { path: '/partners', priority: 0.85, changeFreq: 'monthly' },
   { path: '/partners/founding', priority: 0.85, changeFreq: 'monthly' },
   { path: '/partners/edible-gardens', priority: 0.85, changeFreq: 'monthly' },
@@ -59,6 +61,15 @@ const ROUTES: { path: string; priority: number; changeFreq: string }[] = [
   { path: '/evidence/visitor-traffic', priority: 0.6, changeFreq: 'monthly' },
 ]
 
+function urlEntry(loc: string, lastmod: string, changeFreq: string, priority: number): string {
+  return `  <url>
+    <loc>${escapeXml(loc)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changeFreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`
+}
+
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
@@ -72,26 +83,22 @@ export async function GET() {
   const lastmod = new Date().toISOString().split('T')[0]
   const editorialEntries = await listPublishedEditorialEntries({ limit: 200 })
 
+  const editorialUrlBlocks = editorialEntries.flatMap((entry: EditorialEntry) => {
+    const entryLastmod = (entry.updatedAt || entry.publishedAt || lastmod).split('T')[0]
+    const en = urlEntry(`${BASE_URL}${entry.path}`, entryLastmod, 'monthly', 0.74)
+    if (editorialHasChinesePageContent(entry)) {
+      const zh = urlEntry(`${BASE_URL}/zh/mendpress/${entry.slug}`, entryLastmod, 'monthly', 0.72)
+      return [en, zh]
+    }
+    return [en]
+  })
+
   const urls = [
     ...ROUTES.map(({ path, priority, changeFreq }) => {
       const loc = `${BASE_URL}${path}`
-      return `  <url>
-    <loc>${escapeXml(loc)}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${changeFreq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`
+      return urlEntry(loc, lastmod, changeFreq, priority)
     }),
-    ...editorialEntries.map((entry) => {
-      const loc = `${BASE_URL}${entry.path}`
-      const entryLastmod = (entry.updatedAt || entry.publishedAt || lastmod).split('T')[0]
-      return `  <url>
-    <loc>${escapeXml(loc)}</loc>
-    <lastmod>${entryLastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.74</priority>
-  </url>`
-    }),
+    ...editorialUrlBlocks,
   ].join('\n')
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

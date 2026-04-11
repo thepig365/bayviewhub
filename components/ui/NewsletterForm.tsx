@@ -1,11 +1,16 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import { type SiteLocale } from '@/lib/language-routing'
+import { getAttribution, track } from '@/lib/analytics'
 import { Button } from './Button'
 
 export function NewsletterForm({ locale = 'en' }: { locale?: SiteLocale }) {
+  const pathname = usePathname() || '/newsletter'
+  const pageSection = locale === 'zh' ? 'newsletter_zh' : 'newsletter'
+  const formStarted = useRef(false)
   const [email, setEmail] = useState('')
   const [interests, setInterests] = useState<string[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -44,6 +49,22 @@ export function NewsletterForm({ locale = 'en' }: { locale?: SiteLocale }) {
       console.log('[Newsletter Client] Response:', { status: response.status, data })
 
       if (response.ok) {
+        const sp =
+          typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+        const attr = getAttribution(sp)
+        track('newsletter_signup', {
+          form_id: 'newsletter_bayview_notes',
+          page_section: pageSection,
+          page_path: pathname,
+          ...attr,
+        })
+        track('form_submit', {
+          form_id: 'newsletter_bayview_notes',
+          page_section: pageSection,
+          page_path: pathname,
+          outcome: 'success',
+          ...attr,
+        })
         setStatus('success')
         setEmail('')
         setInterests([])
@@ -68,6 +89,19 @@ export function NewsletterForm({ locale = 'en' }: { locale?: SiteLocale }) {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onFocus={() => {
+            if (formStarted.current) return
+            formStarted.current = true
+            const sp =
+              typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+            const attr = getAttribution(sp)
+            track('form_start', {
+              form_id: 'newsletter_bayview_notes',
+              page_section: pageSection,
+              page_path: pathname,
+              ...attr,
+            })
+          }}
           required
           className={`${CONTRAST_FORM_CONTROL_CLASS} text-base focus:border-transparent`}
           placeholder={locale === 'zh' ? 'name@example.com' : 'your@email.com'}

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { MapPin, Clock, Phone, Mail, Car, Train } from 'lucide-react'
 import { SITE_CONFIG, SITE_HOURS } from '@/lib/constants'
 import { generateMetadata as genMeta } from '@/lib/utils'
+import { TrackedTelLink } from '@/components/analytics/TrackedTelLink'
 
 export const metadata: Metadata = genMeta({
   title: 'Visit',
@@ -130,12 +131,13 @@ export default function VisitPage() {
                   <Phone className="w-6 h-6 text-primary-600 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-bold text-fg mb-1">Phone</h3>
-                    <a
+                    <TrackedTelLink
                       href={`tel:${SITE_CONFIG.phone}`}
+                      pageSection="visit_contact"
                       className="text-primary-700 hover:underline dark:text-primary-300"
                     >
                       {SITE_CONFIG.phone}
-                    </a>
+                    </TrackedTelLink>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">

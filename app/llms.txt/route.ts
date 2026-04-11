@@ -50,7 +50,8 @@ Design and build consultancy for Victorian homeowners seeking to add a second dw
 - Small Second Dwelling: https://www.bayviewhub.me/backyard-small-second-home
 - SSD feasibility tool: https://www.bayviewhub.me/backyard-small-second-home/feasibility-check
 - Victoria SSD rules: https://www.bayviewhub.me/backyard-small-second-home/victoria-rules
-- Founding Partners: https://www.bayviewhub.me/art-gallery/founding-partners
+- Gallery founding curator (canonical): https://www.bayviewhub.me/art-gallery/founding-partners
+- Short URL (redirects to the same page): https://www.bayviewhub.me/founding-partners
 - Arts Gallery (public collection): https://gallery.bayviewhub.me/archive
 - Mend Index Protocol: https://gallery.bayviewhub.me/protocol
 

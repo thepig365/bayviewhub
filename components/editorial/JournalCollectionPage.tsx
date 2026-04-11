@@ -91,6 +91,19 @@ export async function JournalCollectionPage({
               {title}
             </h1>
             <p className={cn('mx-auto mt-5 max-w-3xl text-[1.06rem] leading-8 md:text-lg', introClass)}>{intro}</p>
+            {locale === 'en' ? (
+              <p className="mx-auto mt-6 max-w-2xl text-center text-[15px] leading-7 text-accent md:text-base">
+                <Link href="/mendpress/listen" className="font-medium underline underline-offset-4 hover:text-fg">
+                  Audio hub — Listen on Mendpress
+                </Link>
+              </p>
+            ) : (
+              <p className="mx-auto mt-6 max-w-2xl text-center text-[15px] leading-7 text-accent md:text-base">
+                <Link href="/zh/mendpress/listen" className="font-medium underline underline-offset-4 hover:text-fg">
+                  音频入口 — 在 Mendpress 收听
+                </Link>
+              </p>
+            )}
           </div>
 
           <div className="mt-10">

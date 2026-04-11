@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Wine, Clock, MapPin, Phone, Mail, Users, Award, Grape, Calendar } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { TrackedTelLink } from '@/components/analytics/TrackedTelLink'
+import { track } from '@/lib/analytics'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -165,9 +167,9 @@ export default function CellarDoorPage() {
             <div className="flex items-center space-x-2 md:space-x-3">
               <Phone className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
               <div>
-                <Link href={`tel:${SITE_CONFIG.phone}`} className="hover:text-accent transition-colors text-base font-semibold">
+                <TrackedTelLink href={`tel:${SITE_CONFIG.phone}`} pageSection="cellar_door_hero" className="hover:text-accent transition-colors text-base font-semibold">
                   {SITE_CONFIG.phone}
-                </Link>
+                </TrackedTelLink>
               </div>
             </div>
           </div>
@@ -529,6 +531,12 @@ export default function CellarDoorPage() {
                   size="lg"
                   className="text-white border-white hover:bg-white hover:text-fg"
                   external
+                  onClick={() =>
+                    track('phone_click', {
+                      page_section: 'cellar_door_wine_club',
+                      link_destination: `tel:${SITE_CONFIG.phone}`,
+                    })
+                  }
                 >
                   <Phone className="w-5 h-5 mr-2" />
                   Call Us
@@ -582,6 +590,12 @@ export default function CellarDoorPage() {
                 size="lg"
                 className="text-white border-white hover:bg-white hover:text-fg"
                 external
+                onClick={() =>
+                  track('phone_click', {
+                    page_section: 'cellar_door_booking',
+                    link_destination: `tel:${SITE_CONFIG.phone}`,
+                  })
+                }
               >
                 <Phone className="w-5 h-5 mr-2" />
                 Call to Book

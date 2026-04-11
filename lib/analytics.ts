@@ -73,7 +73,6 @@ export function track(eventName: string, props?: TrackProps) {
 
   if (typeof window.plausible === 'function') {
     window.plausible(eventName, Object.keys(flat).length ? { props: flat } : undefined)
-    return
   }
 
   if (typeof window.gtag === 'function') {

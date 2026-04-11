@@ -15,6 +15,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/founding-partners',
+        destination: '/art-gallery/founding-partners',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [{ type: 'host', value: 'bayviewhub.me' }],
         destination: 'https://www.bayviewhub.me/:path*',

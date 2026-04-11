@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { HomeModule } from '@/components/ui/HomeModule'
 import { EXPERIENCES, GALLERY_EXTERNAL, SITE_CONFIG, SSD_LANDING, SSD_QUICK_LINKS } from '@/lib/constants'
 import { CONTRAST_FORM_CONTROL_ROW_CLASS } from '@/lib/contrast-form-field-class'
+import { TrackedTelLink } from '@/components/analytics/TrackedTelLink'
 import { ChevronLeft, ChevronRight, MapPin, Phone, Mail } from 'lucide-react'
 
 type HeroCta = { label: string; href: string; external?: boolean }
@@ -386,13 +387,14 @@ export default function HomePage() {
                 
                 {/* Contact Icons */}
                 <div className="flex gap-4">
-                  <a 
+                  <TrackedTelLink
                     href={`tel:${SITE_CONFIG.phone}`}
+                    pageSection="home_contact_grid"
                     className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
                     aria-label="Call us"
                   >
                     <Phone className="w-4 h-4" />
-                  </a>
+                  </TrackedTelLink>
                   <a 
                     href={`mailto:${SITE_CONFIG.email}`}
                     className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-colors"

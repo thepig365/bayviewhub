@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
+import { getAttribution, track } from '@/lib/analytics'
 
 type FormState = {
   name: string
@@ -13,6 +15,8 @@ type FormState = {
 }
 
 export function WorkshopsEnquiryForm() {
+  const pathname = usePathname() || '/workshops'
+  const formStarted = useRef(false)
   const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
@@ -41,6 +45,23 @@ export function WorkshopsEnquiryForm() {
         setErrorMessage(data.error || `Something went wrong. Please email ${SITE_CONFIG.email}.`)
         return
       }
+
+      const sp =
+        typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+      const attr = getAttribution(sp)
+      track('workshop_enquiry_submit', {
+        form_id: 'workshops_enquiry',
+        page_section: 'workshops',
+        page_path: pathname,
+        ...attr,
+      })
+      track('form_submit', {
+        form_id: 'workshops_enquiry',
+        page_section: 'workshops',
+        page_path: pathname,
+        outcome: 'success',
+        ...attr,
+      })
 
       setStatus('success')
       setFormData({
@@ -88,6 +109,19 @@ export function WorkshopsEnquiryForm() {
           type="text"
           required
           value={formData.name}
+          onFocus={() => {
+            if (formStarted.current) return
+            formStarted.current = true
+            const sp =
+              typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams()
+            const attr = getAttribution(sp)
+            track('form_start', {
+              form_id: 'workshops_enquiry',
+              page_section: 'workshops',
+              page_path: pathname,
+              ...attr,
+            })
+          }}
           onChange={(event) => setFormData((current) => ({ ...current, name: event.target.value }))}
           className={CONTRAST_FORM_CONTROL_CLASS}
         />

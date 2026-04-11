@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
@@ -33,6 +33,7 @@ const INITIAL_STATE: FormState = {
 }
 
 export function EdibleGardensEOIForm() {
+  const formStarted = useRef(false)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle')
   const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState<FormState>(INITIAL_STATE)
@@ -66,15 +67,27 @@ export function EdibleGardensEOIForm() {
 
       track('eg_form_submit_success', {
         ...utm,
+        form_id: 'edible_gardens_eoi',
+        page_section: 'partners_edible_gardens',
         forwardedWebhook: String(Boolean(data?.forwardedWebhook)),
         emailedOwner: String(Boolean(data?.emailedOwner)),
         emailedApplicant: String(Boolean(data?.emailedApplicant)),
+      })
+      track('form_submit', {
+        ...utm,
+        form_id: 'edible_gardens_eoi',
+        page_section: 'partners_edible_gardens',
+        outcome: 'success',
       })
       setStatus('submitted')
     } catch (err: any) {
       setStatus('idle')
       setError(err?.message || 'Something went wrong. Please try again.')
-      track('eg_form_submit_error', getAttribution(params))
+      track('eg_form_submit_error', {
+        ...getAttribution(params),
+        form_id: 'edible_gardens_eoi',
+        page_section: 'partners_edible_gardens',
+      })
     }
   }
 
@@ -94,6 +107,16 @@ export function EdibleGardensEOIForm() {
   return (
     <form
       onSubmit={onSubmit}
+      onFocusCapture={() => {
+        if (formStarted.current) return
+        formStarted.current = true
+        const utm = getAttribution(params)
+        track('form_start', {
+          ...utm,
+          form_id: 'edible_gardens_eoi',
+          page_section: 'partners_edible_gardens',
+        })
+      }}
       className="space-y-6 rounded-2xl p-8 bg-white shadow-lg border border-border dark:bg-surface dark:border-border"
     >
       {error ? (

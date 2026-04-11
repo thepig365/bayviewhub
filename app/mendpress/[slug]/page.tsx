@@ -28,6 +28,7 @@ import {
   mendpressSectionLabel,
 } from '@/lib/editorial'
 import { localizedHref } from '@/lib/language-routing'
+import { ArticleReadSentinel } from '@/components/analytics/ArticleReadSentinel'
 
 export const revalidate = 300
 
@@ -348,6 +349,7 @@ export default async function MendpressEntryPage({ params }: Props) {
 
           <div className="mt-12">
             <div className="mx-auto max-w-[46rem]">
+              {body ? <ArticleReadSentinel slug={entry.slug} locale="en" /> : null}
               {body ? <EditorialBody body={body} className="mt-2 md:mt-4" locale="en" /> : null}
 
               {showNotes ? (
