@@ -91,11 +91,6 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/events',
-        destination: 'https://www.thepigandwhistle.com.au/what-s-on',
-        permanent: false,
-      },
-      {
         source: '/journal/essays',
         destination: '/mendpress/editorial',
         permanent: true,
