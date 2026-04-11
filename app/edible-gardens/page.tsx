@@ -1,14 +1,37 @@
 import React from 'react'
-import { SITE_CONFIG } from '@/lib/constants'
-import { generateMetadata as genMeta } from '@/lib/utils'
+import type { Metadata } from 'next'
+import { buildSharePack, metadataFromSharePack } from '@/lib/share-pack'
 import { EdibleGardensClient } from './EdibleGardensClient'
 
-export const metadata = genMeta({
-  title: `Edible Gardens — Coming Soon | ${SITE_CONFIG.name}`,
-  description:
-    'A subscription-based edible gardens program is coming to Bayview Hub. Join the Founding Families waitlist for seasonal harvest boxes, garden days, and hands-on growing experiences.',
+const EDIBLE_GARDENS_DESCRIPTION =
+  'A subscription-based edible gardens program is coming to Bayview Hub. Join the Founding Families waitlist for seasonal harvest boxes, garden days, and hands-on growing experiences.'
+
+const edibleGardensSharePack = buildSharePack({
+  title: 'Edible Gardens',
+  summary: EDIBLE_GARDENS_DESCRIPTION,
   path: '/edible-gardens',
+  eyebrow: 'Bayview Hub',
+  footer: 'Victoria',
+  theme: 'bayview',
+  type: 'website',
 })
+
+export const metadata: Metadata = {
+  ...metadataFromSharePack(edibleGardensSharePack, {
+    title: { absolute: 'Edible Gardens | Bayview Hub' },
+    description: EDIBLE_GARDENS_DESCRIPTION,
+    robots: {
+      index: false,
+      follow: false,
+    },
+  }),
+  title: { absolute: 'Edible Gardens | Bayview Hub' },
+  description: EDIBLE_GARDENS_DESCRIPTION,
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 export default function EdibleGardensPage() {
   return (
