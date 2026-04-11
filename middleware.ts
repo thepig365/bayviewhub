@@ -16,6 +16,19 @@ export function middleware(req: NextRequest) {
   // Legacy path redirects (/second-home, /backyard-second-home/*) are handled in next.config.js.
   // Do NOT add path-based redirects here — single source of truth avoids chains and crawler confusion.
 
+  // Intentional IA: /events → Pig & Whistle What's On (ecosystem; not a competitor redirect).
+  // next.config.js also declares this; production middleware ensures runtime always exits before app/events.
+  if (
+    isReadMethod &&
+    process.env.NODE_ENV === 'production' &&
+    req.nextUrl.pathname === '/events'
+  ) {
+    return NextResponse.redirect(
+      new URL('https://www.thepigandwhistle.com.au/what-s-on'),
+      307
+    )
+  }
+
   // Vanity subdomain -> canonical page (avoid duplicate content / keep SEO clean)
   if (hostname === 'secondhome.bayviewhub.me') {
     const url = req.nextUrl.clone()
