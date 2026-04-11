@@ -27,7 +27,7 @@ import {
   mendpressSectionLabelForLocale,
 } from '@/lib/editorial'
 import { localizedHref } from '@/lib/language-routing'
-import { ArticleReadSentinel } from '@/components/analytics/ArticleReadSentinel'
+import { ArticleReadDepthTracker } from '@/components/analytics/ArticleReadDepthTracker'
 
 export const revalidate = 300
 
@@ -410,14 +410,14 @@ export default async function ChineseMendpressEntryPage({ params }: Props) {
                   <p className="text-[15px] leading-7 text-fg/88 dark:text-white/88 md:text-sm">{readingLayerNotice}</p>
                 </section>
               ) : null}
-              {hasChinesePageContent && body ? <ArticleReadSentinel slug={entry.slug} locale="zh" /> : null}
               {hasChinesePageContent && body ? (
-                <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" />
+                <ArticleReadDepthTracker slug={entry.slug} locale="zh">
+                  <EditorialBody body={body} className={readingLayerNotice ? 'mt-8' : 'mt-2 md:mt-4'} locale="zh" />
+                </ArticleReadDepthTracker>
               ) : null}
 
               {!hasChinesePageContent ? (
                 <section className="mt-12 border-t border-border pt-10 dark:border-border">
-                  <ArticleReadSentinel slug={entry.slug} locale="zh" />
                   <p className="eyebrow text-accent">当前英文原文</p>
                   <h2 className="mt-3 font-serif text-3xl font-semibold text-fg md:text-[2.35rem]">{entry.title}</h2>
                   <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-6 text-fg/82 dark:text-white/82 md:text-sm md:leading-5">

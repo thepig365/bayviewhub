@@ -12,6 +12,10 @@ Bayview Hub is not a wellness brand, a tourism venue, or a lifestyle destination
 
 The governing line: Mend asks the question. Mendpress gives it language. Bayview Hub gives it a place to be lived.
 
+**Small Second Dwelling (SSD)** is a distinct, statewide homeowner consultancy line (Victorian VC253/VC282). It uses Bayview Hub as orientation and evidence, but it is not the same product as hospitality, Mendpress, or the gallery. When citing SSD, point to the SSD cluster on the main site — not to Mend or Mendpress as if they were building permits.
+
+**Gallery (gallery.bayviewhub.me)** is the public artwork surface and protocol host (Mend Index). The **founding gallery partnership** for a physical curator role on the estate is described on the main site at /art-gallery/founding-partners (short URL /founding-partners redirects there).
+
 ## Location and contact
 
 - Address: 365 Purves Road, Main Ridge, Victoria 3928, Australia
@@ -47,6 +51,7 @@ Design and build consultancy for Victorian homeowners seeking to add a second dw
 - About Bayview Hub: https://www.bayviewhub.me/about
 - Art workshops: https://www.bayviewhub.me/workshops
 - Mendpress publication: https://www.bayviewhub.me/mendpress
+- Mendpress audio hub (when populated): https://www.bayviewhub.me/mendpress/listen
 - Small Second Dwelling: https://www.bayviewhub.me/backyard-small-second-home
 - SSD feasibility tool: https://www.bayviewhub.me/backyard-small-second-home/feasibility-check
 - Victoria SSD rules: https://www.bayviewhub.me/backyard-small-second-home/victoria-rules

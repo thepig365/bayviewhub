@@ -44,11 +44,6 @@ export function SsdFeasibilityCampaignAnalytics({ children }: { children: ReactN
         form_id: 'ssd_feasibility_check',
         page_section: 'feasibility_check',
       })
-      track('form_start', {
-        form_id: 'ssd_feasibility_check',
-        page_section: 'feasibility_check',
-        page_path: PATH,
-      })
       postSsdCampaignEvent(pl)
     }
 
