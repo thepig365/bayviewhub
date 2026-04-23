@@ -1,23 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server'
+import {
+  CANONICAL_HOST,
+  findSubdomainRoute,
+  resolveSubdomainDestination,
+} from '@/lib/subdomain-routing'
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || ''
   const hostname = host.split(':')[0].toLowerCase()
   const isReadMethod = req.method === 'GET' || req.method === 'HEAD'
 
-  // Canonical host: apex -> www (preserve path + query; permanent redirect)
+  // 1) Marketing subdomain aliases (single source of truth: lib/subdomain-routing.ts).
+  //    Must run BEFORE the apex→www canonicalisation so e.g. secondhome.bayviewhub.me
+  //    doesn't first get rewritten through the apex check.
+  const aliasRoute = findSubdomainRoute(hostname)
+  if (isReadMethod && aliasRoute) {
+    if (aliasRoute.mode === 'redirect') {
+      const target = resolveSubdomainDestination(aliasRoute, new URL(req.url))
+      return NextResponse.redirect(target.toString(), aliasRoute.status ?? 308)
+    }
+    if (aliasRoute.mode === 'rewrite' && !aliasRoute.external) {
+      const url = req.nextUrl.clone()
+      url.pathname = aliasRoute.destination
+      return NextResponse.rewrite(url)
+    }
+  }
+
+  // 2) Canonical host: apex → www (preserve path + query; permanent redirect)
   if (isReadMethod && hostname === 'bayviewhub.me') {
     const url = req.nextUrl.clone()
-    url.hostname = 'www.bayviewhub.me'
+    url.hostname = CANONICAL_HOST
     url.protocol = 'https:'
     return NextResponse.redirect(url, 308)
   }
 
-  // Legacy path redirects (/second-home, /backyard-second-home/*) are handled in next.config.js.
-  // Do NOT add path-based redirects here — single source of truth avoids chains and crawler confusion.
-
-  // Intentional IA: /events → Pig & Whistle What's On (ecosystem; not a competitor redirect).
-  // next.config.js also declares this; production middleware ensures runtime always exits before app/events.
+  // 3) Intentional IA: /events → Pig & Whistle "What's On" (same Bayview ecosystem; not a competitor redirect).
+  //    next.config.js also declares this; production middleware ensures runtime always exits before app/events.
+  //    Legacy path redirects (/second-home, /backyard-second-home/*) live in next.config.js.
   if (
     isReadMethod &&
     process.env.NODE_ENV === 'production' &&
@@ -29,22 +48,9 @@ export function middleware(req: NextRequest) {
     )
   }
 
-  // Vanity subdomain -> canonical page (avoid duplicate content / keep SEO clean)
-  if (hostname === 'secondhome.bayviewhub.me') {
-    const url = req.nextUrl.clone()
-    url.hostname = 'www.bayviewhub.me'
-    url.protocol = 'https:'
-    url.pathname = '/backyard-small-second-home'
-    // Preserve query params (UTMs, etc.)
-    return NextResponse.redirect(url, 308)
-  }
-
   return NextResponse.next()
 }
 
 export const config = {
   matcher: ['/((?!_next|api|favicon.ico).*)'],
 }
-
-
-
