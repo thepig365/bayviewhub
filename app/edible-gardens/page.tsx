@@ -3,6 +3,12 @@ import type { Metadata } from 'next'
 import { buildSharePack, metadataFromSharePack } from '@/lib/share-pack'
 import { EdibleGardensClient } from './EdibleGardensClient'
 
+// NOTE: This hub page is intentionally `robots: noindex, nofollow` while the Edible
+// Gardens subscription programme is pre-launch (Coming Soon). The page is a waitlist
+// capture, not a live product. Accordingly it is excluded from app/sitemap.xml/route.ts.
+// The sibling page /edible-gardens/how-it-works describes the intended mechanics and
+// remains indexable. When the programme goes live, flip `robots.index` to true and
+// re-add the path to the sitemap ROUTES array.
 const EDIBLE_GARDENS_DESCRIPTION =
   'A subscription-based edible gardens program is coming to Bayview Hub. Join the Founding Families waitlist for seasonal harvest boxes, garden days, and hands-on growing experiences.'
 

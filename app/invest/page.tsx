@@ -6,10 +6,12 @@ import { TrendingUp, Users, Target, Award } from 'lucide-react'
 import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const metadata: Metadata = genMeta({
-  title: 'Invest',
+  title: 'Invest in Bayview Hub | Destination-led Expansion, Mornington Peninsula',
   description:
-    'Explore Bayview Hub investment opportunities across hospitality, arts, events, and edible gardens with scalable destination-led growth.',
+    'Bayview Hub is a working cultural estate on the Mornington Peninsula expanding from a proven hospitality and live-music base into arts, workshops, edible gardens, and accommodation. This page outlines the investment thesis, the kinds of capital partners we are talking to, and how to open a serious conversation about destination-led growth — not a generic lifestyle pitch or paid waitlist.',
   path: '/invest',
+  shareEyebrow: 'Invest / Bayview Hub',
+  shareFooter: 'Mornington Peninsula',
 })
 
 export default function InvestPage() {

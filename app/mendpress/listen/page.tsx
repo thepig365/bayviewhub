@@ -1,23 +1,20 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MendpressListenHubPage } from '@/components/editorial/MendpressListenHubPage'
-import { SITE_CONFIG } from '@/lib/constants'
 import { getMendpressAudioHubState } from '@/lib/editorial'
+import { generateMetadata as genMeta } from '@/lib/utils'
 
 export const revalidate = 300
 
-export const metadata: Metadata = {
-  title: 'Listen on Mendpress',
+export const metadata: Metadata = genMeta({
+  title: 'Listen on Mendpress — Audio Essays, Conversations & Spoken Pieces',
   description:
-    'Conversations, audio essays, and spoken pieces from Mendpress — gathered in one place for slower listening. When the hub is not yet populated, use individual Mendpress articles with audio.',
-  alternates: {
-    canonical: `${SITE_CONFIG.url}/mendpress/listen`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+    'The Listen hub gathers Mendpress audio essays, conversations, interviews, and spoken pieces in one slower reading surface. When the hub is not yet populated, individual Mendpress pieces with audio players carry the audio experience on their own article pages. It is the part of the publication that stays closest to voice, attention, and human exchange.',
+  path: '/mendpress/listen',
+  theme: 'mendpress',
+  shareEyebrow: 'Listen / Mendpress',
+  shareFooter: 'Bayview Hub',
+})
 
 export default async function MendpressListenPage() {
   const state = await getMendpressAudioHubState()
