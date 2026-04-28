@@ -84,6 +84,8 @@ function zhFooterLabel(label: string): string {
       return '提交作品'
     case 'Theme:':
       return '主题:'
+    case 'Founder':
+      return '创始人'
     case 'Partners':
       return '合作方'
     case 'Site Map':
@@ -343,6 +345,9 @@ export function Footer() {
       <div className="border-t border-shell-footer-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base">
+            <Link href={localizedHref('/founder', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
+              {t('Founder', locale)}
+            </Link>
             <Link href={localizedHref('/partners', locale)} className="text-shell-footer-muted hover:text-accent transition-colors tracking-wide uppercase">
               {t('Partners', locale)}
             </Link>
