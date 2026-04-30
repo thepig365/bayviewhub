@@ -5,6 +5,12 @@ export interface AnswerCapsuleProps {
   definition: string
   /** 3–7 bullet key facts (verified facts only) */
   facts: string[]
+  /** Optional UI labels when content is localized */
+  headings?: {
+    quickAnswer?: string
+    sources?: string
+    lastUpdatedPrefix?: string
+  }
   /** Evidence / Sources links */
   sources?: { label: string; href: string }[]
   /** Last updated date */
@@ -20,6 +26,7 @@ export interface AnswerCapsuleProps {
 export function AnswerCapsule({
   definition,
   facts,
+  headings,
   sources = [],
   lastUpdated,
   className = '',
@@ -38,7 +45,7 @@ export function AnswerCapsule({
       aria-label="Answer capsule"
     >
       <h3 className={`text-sm font-bold uppercase tracking-wider ${textMuted} mb-3`}>
-        Quick Answer
+        {headings?.quickAnswer ?? 'Quick Answer'}
       </h3>
       <p className={`${textColor} font-medium mb-4`}>{definition}</p>
       <ul className="space-y-2 mb-4">
@@ -51,7 +58,7 @@ export function AnswerCapsule({
       </ul>
       {sources.length > 0 && (
         <div className={`pt-3 border-t ${borderColor}`}>
-          <p className={`text-sm font-medium ${textMuted} mb-2`}>Evidence / Sources</p>
+          <p className={`text-sm font-medium ${textMuted} mb-2`}>{headings?.sources ?? 'Evidence / Sources'}</p>
           <ul className="space-y-1">
             {sources.map((s, i) => (
               <li key={i}>
@@ -69,7 +76,7 @@ export function AnswerCapsule({
         </div>
       )}
       <p className={`text-sm ${textMuted} mt-4`}>
-        Last updated: {lastUpdated}
+        {headings?.lastUpdatedPrefix ?? 'Last updated:'} {lastUpdated}
       </p>
     </aside>
   )
