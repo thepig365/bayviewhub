@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "editorial:integrity": "node scripts/editorial-integrity-check.mjs"
+    "editorial:integrity": "node scripts/editorial-integrity-check.mjs",
+    "translate:google-ssd-help": "node scripts/google-translate-ssd-cli.mjs help",
+    "translate:google-one": "node scripts/google-translate-ssd-cli.mjs one"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
