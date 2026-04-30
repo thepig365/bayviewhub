@@ -1,15 +1,159 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { GALLERY_EXTERNAL, SITE_CONFIG } from '@/lib/constants'
 import { CONTRAST_FORM_CONTROL_CLASS } from '@/lib/contrast-form-field-class'
 import { TrackedOutboundConversionLink } from '@/components/analytics/TrackedOutboundConversionLink'
 import { TrackedTelLink } from '@/components/analytics/TrackedTelLink'
 import { getAttribution, track } from '@/lib/analytics'
+import { localizedHref } from '@/lib/language-routing'
 
 const galleryEoiFieldClass = `${CONTRAST_FORM_CONTROL_CLASS} text-lg focus:ring-accent dark:focus:ring-accent`
 
-export function ArtGalleryClient() {
+type Locale = 'en' | 'zh'
+
+const COPY: Record<
+  Locale,
+  {
+    imgAlt: string
+    heroEyebrow: string
+    heroTitle: string
+    heroSub: string
+    heroBodyLead: string
+    heroVisitors: string
+    heroEvidenceNote: string
+    visitGallery: string
+    inquireNow: string
+    spaceEyebrow: string
+    spaceTitle: string
+    spaceDesc: string
+    ecoEyebrow: string
+    ecoVisitors: string
+    ecoVisitorsNote: string
+    ecoDesc: string
+    partnerEyebrow: string
+    partnerTitle: string
+    partnerDesc: string
+    artistsEyebrow: string
+    artistsTitle: string
+    artistsDesc: string
+    submitCuration: string
+    exhibitionEnquiry: string
+    nextEyebrow: string
+    formTitle: string
+    seriousOnly: string
+    successTitle: string
+    successDesc: string
+    nameLbl: string
+    emailLbl: string
+    backgroundLbl: string
+    visionLbl: string
+    backgroundPlaceholder: string
+    visionPlaceholder: string
+    submitting: string
+    submitBtn: string
+    errorEmail: string
+    footerPrefer: string
+  }
+> = {
+  en: {
+    imgAlt: 'Gallery artwork',
+    heroEyebrow: 'Founding Partnership',
+    heroTitle: 'A Gallery Inside A Living Destination',
+    heroSub: '— Not a White Cube in Isolation.',
+    heroBodyLead:
+      "Build a contemporary gallery within Bayview Hub's 30-acre estate — with dining, wine, music, gardens, and ",
+    heroVisitors: 'estimated 50k+ annual visitors',
+    heroEvidenceNote: ' (see Evidence) already in motion.',
+    visitGallery: 'Visit Gallery',
+    inquireNow: 'Inquire Now',
+    spaceEyebrow: 'The Space',
+    spaceTitle: 'Beyond The White Cube',
+    spaceDesc: 'A gallery integrated into a living destination. Art encountered in context — not sterile isolation.',
+    ecoEyebrow: 'The Ecosystem',
+    ecoVisitors: 'Estimated 50k+ Annual Visitors',
+    ecoVisitorsNote: '(see Evidence)',
+    ecoDesc:
+      'Restaurant, cellar door, gardens, live music. The audience arrives for hospitality — you curate what they discover.',
+    partnerEyebrow: 'The Partnership',
+    partnerTitle: 'Founding Terms',
+    partnerDesc:
+      'No commercial rent. Full creative autonomy. Revenue share or equity hybrid negotiable.',
+    artistsEyebrow: 'Physical Gallery',
+    artistsTitle: 'For Artists & Galleries',
+    artistsDesc:
+      "Submit your work for curatorial review. Selected artists are invited to exhibit at Bayview Hub's physical gallery. Sales are handled in-person during exhibitions and private viewings.",
+    submitCuration: 'Submit for Curation',
+    exhibitionEnquiry: 'Exhibition Enquiry',
+    nextEyebrow: 'Next Step',
+    formTitle: 'Inquire About Partnership',
+    seriousOnly: 'Serious inquiries only.',
+    successTitle: 'Inquiry Received',
+    successDesc: "We'll reach out if aligned.",
+    nameLbl: 'Name *',
+    emailLbl: 'Email *',
+    backgroundLbl: 'Background *',
+    visionLbl: 'Vision *',
+    backgroundPlaceholder: 'Curation, gallery, or relevant experience',
+    visionPlaceholder: 'What would you build here?',
+    submitting: 'Submitting...',
+    submitBtn: 'Submit Inquiry',
+    errorEmail: 'Error. Email:',
+    footerPrefer: 'Prefer direct conversation?',
+  },
+  zh: {
+    imgAlt: '美术馆作品配图',
+    heroEyebrow: '创始合作关系',
+    heroTitle: '把美术馆放进一个真正生活着的度假目的地',
+    heroSub: '——不是孤零零的白盒子。',
+    heroBodyLead:
+      '在 Bayview Hub 占地约三十英亩的庄园环境里建设一座当代美术馆——这里有餐饮、酒窖、园艺、音乐，以及 ',
+    heroVisitors: '预计每年访客达 5 万以上',
+    heroEvidenceNote: '（见客流量证据页）等资源已在运转。',
+    visitGallery: '访问线上展厅',
+    inquireNow: '立即咨询合作',
+    spaceEyebrow: '空间叙事',
+    spaceTitle: '超越白盒子',
+    spaceDesc: '美术馆嵌入复合型目的地——艺术在语境里被遇见，而不是被关在无菌空间里。',
+    ecoEyebrow: '客群与生态',
+    ecoVisitors: '预计每年访客 5 万+',
+    ecoVisitorsNote: '（详见证据页）',
+    ecoDesc:
+      '餐厅、酒窖、园艺、现场音乐——人们为餐饮与到访而来，你选择他们在这里看见什么样的艺术。',
+    partnerEyebrow: '合作方式',
+    partnerTitle: '创始条款概要',
+    partnerDesc:
+      '无商业地产式固定租金；创作自主度高；收益分成或类股权安排的混合条款可商谈。',
+    artistsEyebrow: '线下实体展厅',
+    artistsTitle: '致艺术家与画廊伙伴',
+    artistsDesc:
+      '提交作品以供策展甄选。入围艺术家可受邀于 Bayview Hub 线下空间展出；销售在展览期间与私密观展场景中完成。',
+    submitCuration: '提交策展审阅',
+    exhibitionEnquiry: '展览与合作垂询',
+    nextEyebrow: '下一步',
+    formTitle: '合作意向咨询',
+    seriousOnly: '仅限认真、可推进的合作沟通。',
+    successTitle: '已收到意向',
+    successDesc: '如方向契合，我们会联系你。',
+    nameLbl: '姓名 *',
+    emailLbl: '邮箱 *',
+    backgroundLbl: '背景 *',
+    visionLbl: '设想 *',
+    backgroundPlaceholder: '策展、画廊或相关经验',
+    visionPlaceholder: '你在此想建立什么样的项目？',
+    submitting: '提交中…',
+    submitBtn: '提交咨询',
+    errorEmail: '提交出错。可发邮件至',
+    footerPrefer: '更想直接沟通？',
+  },
+}
+
+export function ArtGalleryClient({ locale = 'en' }: { locale?: Locale }) {
+  const pathname = usePathname() || (locale === 'zh' ? '/zh/art-gallery/founding-partners' : '/art-gallery/founding-partners')
+  const t = COPY[locale]
+  const evidenceHref = localizedHref('/evidence/visitor-traffic', locale)
+
   const formStarted = useRef(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -49,13 +193,13 @@ export function ArtGalleryClient() {
         track('partner_eoi_submit', {
           form_id: 'gallery_founding_curator_eoi',
           page_section: 'art_gallery_founding_partners',
-          page_path: '/art-gallery/founding-partners',
+          page_path: pathname,
           ...attr,
         })
         track('form_submit', {
           form_id: 'gallery_founding_curator_eoi',
           page_section: 'art_gallery_founding_partners',
-          page_path: '/art-gallery/founding-partners',
+          page_path: pathname,
           outcome: 'success',
           ...attr,
         })
@@ -81,13 +225,12 @@ export function ArtGalleryClient() {
 
   return (
     <>
-      {/* Hero: Split Screen */}
       <section className="min-h-[80vh] flex">
         <div className="hidden md:flex w-1/2 bg-neutral-800 items-center justify-center">
           <div className="w-full h-full relative overflow-hidden">
             <img
               src="/images/gallery-artwork.jpg"
-              alt="Gallery artwork"
+              alt={t.imgAlt}
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
             />
           </div>
@@ -95,18 +238,28 @@ export function ArtGalleryClient() {
 
         <div className="w-full md:w-1/2 flex items-center justify-center px-8 md:px-16 py-20">
           <div className="max-w-lg">
-            <p className="text-accent text-sm tracking-[0.3em] uppercase mb-6">Founding Partnership</p>
+            <p className="text-accent text-sm tracking-[0.3em] uppercase mb-6">{t.heroEyebrow}</p>
 
-            <h1 className="text-fg text-5xl md:text-6xl leading-tight mb-6" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-              A Gallery Inside A Living Destination
+            <h1
+              className="text-fg text-5xl md:text-6xl leading-tight mb-6"
+              style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}
+            >
+              {t.heroTitle}
             </h1>
 
             <p className="text-muted italic text-3xl mb-8" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              — Not a White Cube in Isolation.
+              {t.heroSub}
             </p>
 
-            <p className="text-muted mb-10 text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8', maxWidth: '650px' }}>
-              Build a contemporary gallery within Bayview Hub&apos;s 30-acre estate — with dining, wine, music, gardens, and <a href="/evidence/visitor-traffic" className="text-accent hover:underline">estimated 50k+ annual visitors</a> (see Evidence) already in motion.
+            <p
+              className="text-muted mb-10 text-lg"
+              style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8', maxWidth: '650px' }}
+            >
+              {t.heroBodyLead}
+              <a href={evidenceHref} className="text-accent hover:underline">
+                {t.heroVisitors}
+              </a>
+              {t.heroEvidenceNote}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -116,63 +269,67 @@ export function ArtGalleryClient() {
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-accent text-white text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
               >
-                Visit Gallery
+                {t.visitGallery}
               </a>
-              <a href="#inquiry" className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all">
-                Inquire Now
+              <a
+                href="#inquiry"
+                className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all"
+              >
+                {t.inquireNow}
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Value Grid: 3 Columns */}
       <section className="py-16 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-px bg-border">
             <div className="bg-bg p-10">
-              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">The Space</p>
+              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">{t.spaceEyebrow}</p>
               <h3 className="text-fg text-3xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-                Beyond The White Cube
+                {t.spaceTitle}
               </h3>
               <p className="text-muted text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
-                A gallery integrated into a living destination. Art encountered in context — not sterile isolation.
+                {t.spaceDesc}
               </p>
             </div>
 
             <div className="bg-bg p-10">
-              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">The Ecosystem</p>
+              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">{t.ecoEyebrow}</p>
               <h3 className="text-fg text-3xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-                <a href="/evidence/visitor-traffic" className="text-accent hover:underline">Estimated 50k+ Annual Visitors</a> (see Evidence)
+                <a href={evidenceHref} className="text-accent hover:underline">
+                  {t.ecoVisitors}
+                </a>{' '}
+                {t.ecoVisitorsNote}
               </h3>
               <p className="text-muted text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
-                Restaurant, cellar door, gardens, live music. The audience arrives for hospitality — you curate what they discover.
+                {t.ecoDesc}
               </p>
             </div>
 
             <div className="bg-bg p-10">
-              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">The Partnership</p>
+              <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">{t.partnerEyebrow}</p>
               <h3 className="text-fg text-3xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-                Founding Terms
+                {t.partnerTitle}
               </h3>
               <p className="text-muted text-lg" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
-                No commercial rent. Full creative autonomy. Revenue share or equity hybrid negotiable.
+                {t.partnerDesc}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* For Artists & Galleries */}
       <section className="py-16 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">Physical Gallery</p>
+            <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">{t.artistsEyebrow}</p>
             <h2 className="text-fg text-4xl mb-6" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-              For Artists & Galleries
+              {t.artistsTitle}
             </h2>
             <p className="text-muted text-lg mb-8" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.8' }}>
-              Submit your work for curatorial review. Selected artists are invited to exhibit at BayviewHub&apos;s physical gallery. Sales are handled in-person during exhibitions and private viewings.
+              {t.artistsDesc}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <TrackedOutboundConversionLink
@@ -181,36 +338,35 @@ export function ArtGalleryClient() {
                 pageSection="art_gallery_founding_partners"
                 className="px-6 py-3 bg-accent text-white text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
               >
-                Submit for Curation
+                {t.submitCuration}
               </TrackedOutboundConversionLink>
               <a
                 href="#inquiry"
                 className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all"
               >
-                Exhibition Enquiry
+                {t.exhibitionEnquiry}
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Inquiry Form */}
       <section id="inquiry" className="py-16 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="max-w-xl mx-auto">
-            <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4 text-center">Next Step</p>
+            <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4 text-center">{t.nextEyebrow}</p>
             <h2 className="text-fg text-4xl mb-4 text-center" style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.03em' }}>
-              Inquire About Partnership
+              {t.formTitle}
             </h2>
             <p className="text-subtle text-center mb-8 text-lg" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Serious inquiries only.
+              {t.seriousOnly}
             </p>
 
             {status === 'success' ? (
               <div className="border border-border p-8 text-center">
                 <div className="text-accent text-4xl mb-4">✓</div>
-                <h3 className="text-fg text-xl mb-2">Inquiry Received</h3>
-                <p className="text-subtle">We&apos;ll reach out if aligned.</p>
+                <h3 className="text-fg text-xl mb-2">{t.successTitle}</h3>
+                <p className="text-subtle">{t.successDesc}</p>
               </div>
             ) : (
               <form
@@ -224,7 +380,7 @@ export function ArtGalleryClient() {
                   track('form_start', {
                     form_id: 'gallery_founding_curator_eoi',
                     page_section: 'art_gallery_founding_partners',
-                    page_path: '/art-gallery/founding-partners',
+                    page_path: pathname,
                     ...attr,
                   })
                 }}
@@ -232,7 +388,7 @@ export function ArtGalleryClient() {
               >
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-muted text-sm mb-2">Name *</label>
+                    <label className="block text-muted text-sm mb-2">{t.nameLbl}</label>
                     <input
                       type="text"
                       required
@@ -242,7 +398,7 @@ export function ArtGalleryClient() {
                     />
                   </div>
                   <div>
-                    <label className="block text-muted text-sm mb-2">Email *</label>
+                    <label className="block text-muted text-sm mb-2">{t.emailLbl}</label>
                     <input
                       type="email"
                       required
@@ -254,25 +410,25 @@ export function ArtGalleryClient() {
                 </div>
 
                 <div>
-                  <label className="block text-muted text-sm mb-2">Background *</label>
+                  <label className="block text-muted text-sm mb-2">{t.backgroundLbl}</label>
                   <textarea
                     required
                     rows={2}
                     value={formData.background}
                     onChange={(e) => setFormData({ ...formData, background: e.target.value })}
-                    placeholder="Curation, gallery, or relevant experience"
+                    placeholder={t.backgroundPlaceholder}
                     className={galleryEoiFieldClass}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-muted text-sm mb-2">Vision *</label>
+                  <label className="block text-muted text-sm mb-2">{t.visionLbl}</label>
                   <textarea
                     required
                     rows={2}
                     value={formData.vision}
                     onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
-                    placeholder="What would you build here?"
+                    placeholder={t.visionPlaceholder}
                     className={galleryEoiFieldClass}
                   />
                 </div>
@@ -282,12 +438,12 @@ export function ArtGalleryClient() {
                   disabled={status === 'loading'}
                   className="w-full px-6 py-4 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all disabled:opacity-50"
                 >
-                  {status === 'loading' ? 'Submitting...' : 'Submit Inquiry'}
+                  {status === 'loading' ? t.submitting : t.submitBtn}
                 </button>
 
                 {status === 'error' && (
                   <p className="text-muted text-center text-sm">
-                    Error. Email: {SITE_CONFIG.email}
+                    {t.errorEmail} {SITE_CONFIG.email}
                   </p>
                 )}
               </form>
@@ -296,11 +452,12 @@ export function ArtGalleryClient() {
         </div>
       </section>
 
-      {/* Footer Contact */}
       <section className="py-12 border-t border-border text-center">
-        <p className="text-muted mb-2">Prefer direct conversation?</p>
+        <p className="text-muted mb-2">{t.footerPrefer}</p>
         <p className="text-fg">
-          <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-accent transition-colors">{SITE_CONFIG.email}</a>
+          <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-accent transition-colors">
+            {SITE_CONFIG.email}
+          </a>
           {' · '}
           <TrackedTelLink href={`tel:${SITE_CONFIG.phone}`} pageSection="art_gallery_founding_partners" className="hover:text-accent transition-colors">
             {SITE_CONFIG.phone}
