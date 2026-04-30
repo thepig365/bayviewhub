@@ -40,7 +40,7 @@ export default function CostRentRoiPageZh() {
     <main className="min-h-screen bg-bg">
       <SsdPageHero
         title="成本、租金与价值——究竟是什么在拖动数字"
-        explainer="以下仅为量级参考，不构成报价；最终金额取决于地块、结构、丛林火灾等级、配套服务与饰面等因素——本页帮助理解驱动力，而非精确算账。"
+        explainer="以下仅为量级参考，不构成报价；最终金额取决于地块、结构、丛林火灾等级、配套服务与饰面等因素——本页重在说明哪些因素会牵动总价，而不是逐项精算。"
         primaryHref={feasibility}
         primaryLabel="运行可行性筛查"
         secondaryHref={victoriaRules}
@@ -78,7 +78,7 @@ export default function CostRentRoiPageZh() {
               <Link href={`${overview}#ssd-house-archetypes`} className="font-medium text-accent underline-offset-4 hover:underline">
                 SSD 总览页的房型版块
               </Link>
-              ——本页聚焦成本驱动力与下方的层级拆解。
+              ——本页聚焦影响造价的因素与下方的层级拆解。
             </p>
           </div>
         </div>
