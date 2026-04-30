@@ -77,16 +77,15 @@ export default function SsdApproachPageZh() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl space-y-6 text-base leading-relaxed text-muted">
             <p>
-              许多家庭需要一个<strong className="text-fg">独立的第二小屋</strong>，理由很朴素：长辈需要近在咫尺却不住同一间次卧、年轻人需要一扇关得上的门、工作间不该永远是餐桌，
-              或是希望在同一块产权证上有一处可长租的空间。这些都常见。
-              SSD 框架，就是州政府写下来的<strong className="text-fg">那条「在满足条件时可以走较轻规划路径」的盒子</strong>。
+              很多家庭需要一个<strong className="text-fg">独立的第二小屋</strong>，原因很朴实：长辈需要近在咫尺而不住同一间卧室，年轻人需要一个可以关闭的私人空间，工作间不应永远是餐桌，或者希望在同一产权证上拥有一个可租赁的房间。这些情况都很常见。
+              SSD 框架是州政府制定的<strong className="text-fg">一个符合条件时能走简易审批路径的框架</strong>。
             </p>
             <p>
-              维州规则锁定了体量（建面 60㎡ 上限）、坐落位置（主房前墙后方）、能源形式（全屋电气）以及
-              <strong className="text-fg">必须留在同一产权上</strong>等条件。你若想要别的方案会很受挫——但若能在盒子内行事，这些恰恰是审批端会逐项核对的标尺。
+              维州规定了体量（建面 60㎡ 上限）、坐落（主房前墙后方）、能耗形式（全屋电气）以及
+              <strong className="text-fg">必须保留在同一产权证上</strong>等硬性要求。若你想要其他方案，可能会遭遇挫折——但若符合这些条件，审批方会依据这些标准逐项核验。
             </p>
             <p>
-              我们要做的，是尽早直白地说出这种取舍：若当真匹配，谈话会围绕「真正能递交什么」；若不匹配，可以尽早切换到标准规划路径或更小任务书，省时间。
+              我们希望尽早明确这种取舍关系：如果条件匹配，后续讨论将聚焦于可递交的内容；若不匹配，则能及时转为标准规划路径或更简化的任务方案，节省时间。
             </p>
           </div>
         </div>
