@@ -61,7 +61,7 @@ export default function ChineseBackyardSmallSecondHomePage() {
             <h1 className="mt-4 text-4xl font-serif font-bold leading-tight text-fg md:text-5xl">
               什么是维州后院第二小住宅路径？
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-fg/80 dark:text-white/80">
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-fg dark:text-white/80">
               这是 Bayview Hub 用来解释 Victorian Small Second Dwelling 路径的日常中文版本：
               它指的是在同一产权证地块上，通过州级 SSD 框架判断是否能增添一座更小体量的第二居所。
             </p>
@@ -85,19 +85,19 @@ export default function ChineseBackyardSmallSecondHomePage() {
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
             <div className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface/50">
               <h2 className="font-serif text-2xl font-semibold text-fg">它不是“再加盖一栋”这么简单</h2>
-              <p className="mt-3 leading-8 text-fg/80 dark:text-white/80">
+              <p className="mt-3 leading-8 text-fg dark:text-white/80">
                 Title、图层、退让、能效、建房许可以及场地事实是绑在一起的；条文只是起跑线而不是自动批文。
               </p>
             </div>
             <div className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface/50">
               <h2 className="font-serif text-2xl font-semibold text-fg">它为什么仍然值得谈</h2>
-              <p className="mt-3 leading-8 text-fg/80 dark:text-white/80">
+              <p className="mt-3 leading-8 text-fg dark:text-white/80">
                 它可以回应照护、隐私、工作或同址资产配置等真实需求，而非只用投机话术谈这条路径。
               </p>
             </div>
             <div className="rounded-2xl bg-natural-50 p-6 dark:border dark:border-border dark:bg-surface/50">
               <h2 className="font-serif text-2xl font-semibold text-fg">下一步怎么做</h2>
-              <p className="mt-3 leading-8 text-fg/80 dark:text-white/80">
+              <p className="mt-3 leading-8 text-fg dark:text-white/80">
                 比渲染幻想图更早的是可行性：规则、图层、坡度、出入口与配套服务能否真的支撑你走完整流程。
               </p>
             </div>
@@ -110,8 +110,7 @@ export default function ChineseBackyardSmallSecondHomePage() {
           <div className="mx-auto max-w-5xl">
             <h2 className="text-3xl font-serif font-bold text-fg">中文子页一览</h2>
             <p className="mt-4 max-w-3xl leading-8 text-fg/85 dark:text-white/85">
-              以下为已翻译的核心主题页，路径均位于 <span className="font-mono text-sm">/zh/backyard-small-second-home/...</span>{' '}
-              与你的英文书签一一对应，可在语言切换时保持语境连续。
+              以下整理了后院小型第二住宅的几个核心主题，方便你按自己的情况逐步了解政策、成本、可行性和适用场景。
             </p>
             <ul className="mt-10 grid gap-4 sm:grid-cols-2">
               {TOPIC_LINKS.map(({ label, description, hrefEn }) => (
@@ -125,7 +124,7 @@ export default function ChineseBackyardSmallSecondHomePage() {
                   >
                     {label}
                   </Link>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-fg">{description}</p>
                 </li>
               ))}
             </ul>
