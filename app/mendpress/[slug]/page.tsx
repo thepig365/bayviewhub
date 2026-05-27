@@ -28,6 +28,7 @@ import {
   mendpressSectionLabel,
 } from '@/lib/editorial'
 import { localizedHref } from '@/lib/language-routing'
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
 import { ArticleReadDepthTracker } from '@/components/analytics/ArticleReadDepthTracker'
 
 export const revalidate = 300
@@ -141,7 +142,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     ...metadata,
-    alternates: editorialHasChinesePageContent(entry)
+    alternates: editorialHasChinesePageContent(entry) && isChineseLocalePublicEnabled()
       ? {
           canonical: url,
           languages: {

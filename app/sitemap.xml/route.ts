@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { editorialHasChinesePageContent, listPublishedEditorialEntries, type EditorialEntry } from '@/lib/editorial'
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
 
 const BASE_URL = 'https://www.bayviewhub.me'
 
@@ -114,20 +115,25 @@ function escapeXml(str: string): string {
 
 export async function GET() {
   const lastmod = new Date().toISOString().split('T')[0]
+  const chineseEnabled = isChineseLocalePublicEnabled()
   const editorialEntries = await listPublishedEditorialEntries({ limit: 200 })
 
   const editorialUrlBlocks = editorialEntries.flatMap((entry: EditorialEntry) => {
     const entryLastmod = (entry.updatedAt || entry.publishedAt || lastmod).split('T')[0]
     const en = urlEntry(`${BASE_URL}${entry.path}`, entryLastmod, 'monthly', 0.74)
-    if (editorialHasChinesePageContent(entry)) {
+    if (chineseEnabled && editorialHasChinesePageContent(entry)) {
       const zh = urlEntry(`${BASE_URL}/zh/mendpress/${entry.slug}`, entryLastmod, 'monthly', 0.72)
       return [en, zh]
     }
     return [en]
   })
 
+  const publicRoutes = chineseEnabled
+    ? ROUTES
+    : ROUTES.filter((route) => !route.path.startsWith('/zh'))
+
   const urls = [
-    ...ROUTES.map(({ path, priority, changeFreq }) => {
+    ...publicRoutes.map(({ path, priority, changeFreq }) => {
       const loc = `${BASE_URL}${path}`
       return urlEntry(loc, lastmod, changeFreq, priority)
     }),

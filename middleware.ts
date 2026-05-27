@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { toEnglishPathname } from '@/lib/language-routing'
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
 import {
   CANONICAL_HOST,
   findSubdomainRoute,
@@ -10,9 +12,6 @@ export function middleware(req: NextRequest) {
   const hostname = host.split(':')[0].toLowerCase()
   const isReadMethod = req.method === 'GET' || req.method === 'HEAD'
 
-  // 1) Marketing subdomain aliases (single source of truth: lib/subdomain-routing.ts).
-  //    Must run BEFORE the apex→www canonicalisation so e.g. secondhome.bayviewhub.me
-  //    doesn't first get rewritten through the apex check.
   const aliasRoute = findSubdomainRoute(hostname)
   if (isReadMethod && aliasRoute) {
     if (aliasRoute.mode === 'redirect') {
@@ -26,7 +25,6 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  // 2) Canonical host: apex → www (preserve path + query; permanent redirect)
   if (isReadMethod && hostname === 'bayviewhub.me') {
     const url = req.nextUrl.clone()
     url.hostname = CANONICAL_HOST
@@ -34,9 +32,16 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
-  // 3) Intentional IA: /events → Pig & Whistle "What's On" (same Bayview ecosystem; not a competitor redirect).
-  //    next.config.js also declares this; production middleware ensures runtime always exits before app/events.
-  //    Legacy path redirects (/second-home, /backyard-second-home/*) live in next.config.js.
+  if (
+    isReadMethod &&
+    !isChineseLocalePublicEnabled() &&
+    (req.nextUrl.pathname === '/zh' || req.nextUrl.pathname.startsWith('/zh/'))
+  ) {
+    const url = req.nextUrl.clone()
+    url.pathname = toEnglishPathname(req.nextUrl.pathname)
+    return NextResponse.redirect(url, 307)
+  }
+
   if (
     isReadMethod &&
     process.env.NODE_ENV === 'production' &&

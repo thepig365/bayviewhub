@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
 
 const BASE = 'https://www.bayviewhub.me'
 const GALLERY = 'https://gallery.bayviewhub.me'
@@ -128,6 +129,9 @@ export async function GET() {
   ]
 
   for (const section of SECTIONS) {
+    if (!isChineseLocalePublicEnabled() && section.heading === 'Chinese (Simplified) surface') {
+      continue
+    }
     lines.push(`## ${section.heading}`)
     for (const { url, label } of section.items) {
       lines.push(`${BASE}${url} — ${label}`)

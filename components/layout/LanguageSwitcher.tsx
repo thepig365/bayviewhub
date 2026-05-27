@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { isSwitchablePublicPath, languageSwitchTarget, localeFromPathname } from '@/lib/language-routing'
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
 
 type Props = {
   className?: string
@@ -23,7 +24,7 @@ export function LanguageSwitcher({
   separatorClassName,
 }: Props) {
   const pathname = usePathname() || '/'
-  if (!isSwitchablePublicPath(pathname)) return null
+  if (!isChineseLocalePublicEnabled() || !isSwitchablePublicPath(pathname)) return null
 
   const currentLocale = localeFromPathname(pathname)
   const { targetPath } = languageSwitchTarget(pathname)
