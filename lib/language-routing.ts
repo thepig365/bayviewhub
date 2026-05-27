@@ -1,3 +1,5 @@
+import { isChineseLocalePublicEnabled } from '@/lib/locale-config'
+
 export type SiteLocale = 'en' | 'zh'
 
 export const LOCALE_COOKIE = 'bayviewhub_locale'
@@ -77,6 +79,7 @@ export function toChinesePathname(pathname: string): string {
 }
 
 export function isSwitchablePublicPath(pathname: string): boolean {
+  if (!isChineseLocalePublicEnabled()) return false
   const normalized = normalizePathname(pathname)
   if (STATIC_EXCLUDES.has(normalized)) return false
   return !EXCLUDED_PREFIXES.some((prefix) => normalized === prefix || normalized.startsWith(`${prefix}/`))
@@ -145,6 +148,13 @@ export function localizedAlternates(pathname: string): {
 } {
   const normalized = normalizePathname(pathname)
   const locale = localeFromPathname(normalized)
+
+  if (!isChineseLocalePublicEnabled()) {
+    return {
+      canonicalPath: locale === 'zh' ? toEnglishPathname(normalized) : normalized,
+      locale: 'en',
+    }
+  }
 
   if (locale === 'zh') {
     const englishExact = exactEnglishEquivalentForChinese(normalized)
