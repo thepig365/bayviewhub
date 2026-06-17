@@ -55,7 +55,7 @@ export default async function PrivateEditorialPage() {
               >
                 Distribution console
               </Link>
-              <Link href="/private/editorial/new" className="rounded-lg bg-accent px-4 py-3 text-sm font-medium text-white">
+              <Link href="/private/editorial/new" className="rounded-lg bg-accent px-4 py-3 text-sm font-medium text-[var(--accent-fg)]">
                 New piece
               </Link>
             </div>

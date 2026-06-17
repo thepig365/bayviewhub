@@ -42,7 +42,7 @@ export default function ChineseAboutPage() {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href={localizedHref('/experiences', 'zh')}
-              className="inline-flex items-center justify-center rounded bg-accent px-6 py-3 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-accent-hover"
+              className="inline-flex items-center justify-center rounded bg-accent px-6 py-3 text-base font-semibold uppercase tracking-wide text-[var(--accent-fg)] transition-colors hover:bg-accent-hover"
             >
               浏览 Bayview Hub
             </Link>

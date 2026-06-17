@@ -72,7 +72,7 @@ export function MendpressInlineNewsletterCta({ className = '' }: Props) {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-[var(--accent-fg)] transition-colors hover:bg-accent-hover disabled:opacity-60"
           >
             {status === 'loading' ? 'Subscribing…' : 'Subscribe'}
           </button>

@@ -361,7 +361,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Wine className="w-6 h-6 text-fg" />
+                    <Wine className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">20% Off All Wines</h3>
                 </div>
@@ -373,7 +373,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Award className="w-6 h-6 text-fg" />
+                    <Award className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">Exclusive Releases</h3>
                 </div>
@@ -385,7 +385,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Users className="w-6 h-6 text-fg" />
+                    <Users className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">Member Events</h3>
                 </div>
@@ -397,7 +397,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Grape className="w-6 h-6 text-fg" />
+                    <Grape className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">Vineyard Tours</h3>
                 </div>
@@ -409,7 +409,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Mail className="w-6 h-6 text-fg" />
+                    <Mail className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">Quarterly Shipments</h3>
                 </div>
@@ -421,7 +421,7 @@ export default function CellarDoorPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/15 transition-colors">
                 <div className="flex items-center mb-4">
                   <div className="bg-accent rounded-full p-3 mr-4">
-                    <Calendar className="w-6 h-6 text-fg" />
+                    <Calendar className="w-6 h-6 text-[var(--accent-fg)]" />
                   </div>
                   <h3 className="text-xl font-bold">Priority Bookings</h3>
                 </div>
@@ -468,13 +468,13 @@ export default function CellarDoorPage() {
                 </Button>
               </div>
 
-              <div className="bg-accent-500 rounded-2xl p-8 text-fg border-4 border-accent-600 shadow-2xl relative">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-800 text-white px-6 py-2 rounded-full text-base font-bold">
+              <div className="bg-accent-500 rounded-2xl p-8 text-[var(--accent-fg)] border-4 border-accent-600 shadow-2xl relative">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-800 text-[var(--accent-fg)] px-6 py-2 rounded-full text-base font-bold">
                   MOST POPULAR
                 </div>
-                <h3 className="text-2xl font-serif font-bold mb-2 text-fg">Premium Membership</h3>
-                <p className="text-4xl font-bold text-fg mb-4">$350 <span className="text-lg font-normal text-muted">/year</span></p>
-                <ul className="space-y-3 mb-6 text-fg">
+                <h3 className="text-2xl font-serif font-bold mb-2 text-[var(--accent-fg)]">Premium Membership</h3>
+                <p className="text-4xl font-bold text-[var(--accent-fg)] mb-4">$350 <span className="text-lg font-normal text-[var(--accent-fg)]/80">/year</span></p>
+                <ul className="space-y-3 mb-6 text-[var(--accent-fg)]">
                   <li className="flex items-start">
                     <span className="text-accent mr-2 font-bold">✓</span>
                     <span><strong>All Classic benefits</strong></span>

@@ -672,7 +672,7 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                       <button
                         type="button"
                         onClick={() => openPlatform(pack)}
-                        className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+                        className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-[var(--accent-fg)] transition-colors hover:bg-accent/90"
                       >
                         Open platform
                       </button>
@@ -943,7 +943,7 @@ export function DistributionConsoleClient({ initialHistory }: { initialHistory: 
                       type="button"
                       onClick={() => saveResult(item)}
                       disabled={savingHistoryId === item.action.id}
-                      className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-[var(--accent-fg)] transition-colors hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {savingHistoryId === item.action.id ? 'Saving...' : 'Save result'}
                     </button>

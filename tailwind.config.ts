@@ -36,7 +36,7 @@ const config: Config = {
           DEFAULT: 'var(--fg)',
           foreground: 'var(--bg)',
           50: 'var(--accent-soft)',
-          100: '#f0f9fa',
+          100: '#f0ebe3',
           200: 'var(--accent-soft)',
           300: 'var(--accent)',
           400: 'var(--accent)',

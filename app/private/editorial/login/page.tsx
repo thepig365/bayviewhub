@@ -71,7 +71,7 @@ function PrivateEditorialLoginInner() {
             <button
               type="submit"
               disabled={status === 'loading' || notConfigured}
-              className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
+              className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-[var(--accent-fg)] transition-colors hover:bg-accent-hover disabled:opacity-60"
             >
               {status === 'loading' ? 'Signing in…' : 'Sign In'}
             </button>

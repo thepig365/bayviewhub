@@ -267,13 +267,13 @@ export function ArtGalleryClient({ locale = 'en' }: { locale?: Locale }) {
                 href="https://gallery.bayviewhub.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-accent text-white text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
+                className="px-6 py-3 bg-accent text-[var(--accent-fg)] text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
               >
                 {t.visitGallery}
               </a>
               <a
                 href="#inquiry"
-                className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all"
+                className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-[var(--accent-fg)] hover:border-accent transition-all"
               >
                 {t.inquireNow}
               </a>
@@ -336,13 +336,13 @@ export function ArtGalleryClient({ locale = 'en' }: { locale?: Locale }) {
                 href={`${GALLERY_EXTERNAL.base}/portal/submit`}
                 eventName="artist_submission_start"
                 pageSection="art_gallery_founding_partners"
-                className="px-6 py-3 bg-accent text-white text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
+                className="px-6 py-3 bg-accent text-[var(--accent-fg)] text-sm tracking-wide uppercase hover:bg-accent-hover transition-all"
               >
                 {t.submitCuration}
               </TrackedOutboundConversionLink>
               <a
                 href="#inquiry"
-                className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all"
+                className="px-6 py-3 border border-border text-fg text-sm tracking-wide uppercase hover:bg-accent hover:text-[var(--accent-fg)] hover:border-accent transition-all"
               >
                 {t.exhibitionEnquiry}
               </a>
@@ -436,7 +436,7 @@ export function ArtGalleryClient({ locale = 'en' }: { locale?: Locale }) {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full px-6 py-4 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all disabled:opacity-50"
+                  className="w-full px-6 py-4 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-[var(--accent-fg)] hover:border-accent transition-all disabled:opacity-50"
                 >
                   {status === 'loading' ? t.submitting : t.submitBtn}
                 </button>

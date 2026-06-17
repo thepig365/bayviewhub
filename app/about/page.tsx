@@ -96,7 +96,7 @@ export default function AboutPage() {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/experiences"
-              className="inline-flex items-center justify-center rounded bg-accent px-6 py-3 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-accent-hover"
+              className="inline-flex items-center justify-center rounded bg-accent px-6 py-3 text-base font-semibold uppercase tracking-wide text-[var(--accent-fg)] transition-colors hover:bg-accent-hover"
             >
               Explore Bayview Hub
             </Link>
