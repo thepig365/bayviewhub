@@ -57,7 +57,7 @@ function NewsletterUnsubscribeInner() {
               type="button"
               onClick={handleUnsubscribe}
               disabled={!email || !sig}
-              className="px-6 py-3 rounded-lg bg-accent text-white hover:bg-accent-hover transition-colors disabled:opacity-50"
+              className="px-6 py-3 rounded-lg bg-accent text-[var(--accent-fg)] hover:bg-accent-hover transition-colors disabled:opacity-50"
             >
               Confirm Unsubscribe
             </button>

@@ -109,7 +109,7 @@ export default function GalleryPage() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <a href="#inquiry" className="px-6 py-3 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all">
+              <a href="#inquiry" className="px-6 py-3 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-[var(--accent-fg)] hover:border-accent transition-all">
                 Inquire Now
               </a>
             </div>
@@ -240,7 +240,7 @@ export default function GalleryPage() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full px-6 py-4 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-white hover:border-accent transition-all disabled:opacity-50"
+                  className="w-full px-6 py-4 border border-border text-fg text-base tracking-wide uppercase hover:bg-accent hover:text-[var(--accent-fg)] hover:border-accent transition-all disabled:opacity-50"
                 >
                   {status === 'loading' ? 'Submitting...' : 'Submit Inquiry'}
                 </button>

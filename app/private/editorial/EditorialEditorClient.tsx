@@ -1445,7 +1445,7 @@ export function EditorialEditorClient({
                     disabled={!canChoosePrimaryAudio}
                     className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm ${
                       canChoosePrimaryAudio
-                        ? 'bg-accent font-medium text-white'
+                        ? 'bg-accent font-medium text-[var(--accent-fg)]'
                         : 'border border-border text-fg'
                     }`}
                   >
@@ -1761,7 +1761,7 @@ export function EditorialEditorClient({
                     type="button"
                     onClick={submitChineseReview}
                     disabled={!entry?.id || status === 'loading'}
-                    className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-[var(--accent-fg)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {status === 'loading' ? 'Saving…' : 'Save Chinese review'}
                   </button>
@@ -2211,7 +2211,7 @@ export function EditorialEditorClient({
                 type="button"
                 onClick={() => submit('published')}
                 disabled={status === 'loading'}
-                className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
+                className="w-full rounded-lg bg-accent px-4 py-3 font-medium text-[var(--accent-fg)] transition-colors hover:bg-accent-hover disabled:opacity-60"
               >
                 {status === 'loading' ? 'Publishing…' : 'Publish'}
               </button>

@@ -389,7 +389,7 @@ export function NewsletterAdminClient({
                 type="button"
                 onClick={() => submit('send_all')}
                 disabled={status === 'loading'}
-                className="mt-3 w-full rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60"
+                className="mt-3 w-full rounded-lg bg-accent px-4 py-3 font-medium text-[var(--accent-fg)] transition-colors hover:bg-accent-hover disabled:opacity-60"
               >
                 Send To All Active Subscribers
               </button>

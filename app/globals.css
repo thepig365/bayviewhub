@@ -16,11 +16,13 @@
     --muted: #374151;
     --subtle: #4B5563;
     --border: #E5E7EB;
-    --accent: #c9a84c;
-    --accent-hover: #e0c070;
-    --accent-soft: #A8D5DD;
+    /* Accent: warm espresso fill + cream foreground (replaces gold/yellow backgrounds) */
+    --accent: #1a1408;
+    --accent-hover: #2e261c;
+    --accent-fg: #f5ede0;
+    --accent-soft: #ede8df;
     --accent-text: #1a1408;
-    --text-muted: #a89060;
+    --text-muted: #6b6358;
     /* Shell: footer / deep bands align with warm header dark (#1a1408), not cool slate */
     --shell-footer: #1a1408;
     --shell-footer-deep: #100c07;
@@ -49,9 +51,10 @@
     --muted: #D1D5DB;
     --subtle: #9CA3AF;
     --border: #334155;
-    --accent: #c9a84c;
-    --accent-hover: #e0c070;
-    --accent-soft: #4a3810;
+    --accent: #d4c8b0;
+    --accent-hover: #e5dcc8;
+    --accent-fg: #1a1408;
+    --accent-soft: #2a2418;
     /* Legacy */
     --background: 0 0% 7%;
     --foreground: 0 0% 98%;

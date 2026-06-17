@@ -138,7 +138,7 @@ export function ChineseHomeHero() {
         </div>
       </div>
 
-      <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
+      <div className="md:w-[40%] bg-shell-footer flex items-center relative z-10 order-2 md:order-1">
         <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
           <p className="text-white/80 text-[15px] leading-6 md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
             {slide.category}

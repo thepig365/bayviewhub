@@ -179,7 +179,7 @@ export default function HomePage() {
         </div>
 
         {/* Text Panel - Bottom on Mobile, Left on Desktop */}
-        <div className="md:w-[40%] bg-accent flex items-center relative z-10 order-2 md:order-1">
+        <div className="md:w-[40%] bg-shell-footer flex items-center relative z-10 order-2 md:order-1">
           <div className="px-6 md:px-12 lg:px-16 py-10 md:py-16">
             {/* Category Label */}
             <p className="text-white/80 text-[15px] leading-6 md:text-base font-semibold tracking-widest uppercase mb-3 md:mb-4">
@@ -284,7 +284,7 @@ export default function HomePage() {
             <div className="mt-8">
               <Link
                 href="/experiences"
-                className="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3 bg-accent text-[var(--accent-fg)] font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
               >
                 Explore Bayview Hub
               </Link>
@@ -320,7 +320,7 @@ export default function HomePage() {
               </ul>
               <Link
                 href={SSD_LANDING.overview}
-                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-[var(--accent-fg)] font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
               >
                 Go to overview
               </Link>
@@ -356,7 +356,7 @@ export default function HomePage() {
                 href={GALLERY_EXTERNAL.archive}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-white font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
+                className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-accent text-[var(--accent-fg)] font-semibold text-base tracking-wide uppercase rounded hover:bg-accent-hover transition-colors"
               >
                 Browse collection
               </a>
@@ -390,14 +390,14 @@ export default function HomePage() {
                   <TrackedTelLink
                     href={`tel:${SITE_CONFIG.phone}`}
                     pageSection="home_contact_grid"
-                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
+                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-[var(--accent-fg)] transition-colors"
                     aria-label="Call us"
                   >
                     <Phone className="w-4 h-4" />
                   </TrackedTelLink>
                   <a 
                     href={`mailto:${SITE_CONFIG.email}`}
-                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
+                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-[var(--accent-fg)] transition-colors"
                     aria-label="Email us"
                   >
                     <Mail className="w-4 h-4" />
@@ -406,7 +406,7 @@ export default function HomePage() {
                     href="https://www.google.com/maps/dir/?api=1&destination=365+Purves+Road,+Main+Ridge,+Victoria+3928"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
+                    className="w-10 h-10 rounded-full border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-[var(--accent-fg)] transition-colors"
                     aria-label="Get directions"
                   >
                     <MapPin className="w-4 h-4" />
@@ -557,7 +557,7 @@ export default function HomePage() {
                       <button
                         type="submit"
                         disabled={newsletterStatus === 'loading'}
-                        className="px-8 py-4 bg-accent text-white font-semibold tracking-wide uppercase rounded hover:bg-accent-hover transition-colors whitespace-nowrap disabled:opacity-60"
+                        className="px-8 py-4 bg-accent text-[var(--accent-fg)] font-semibold tracking-wide uppercase rounded hover:bg-accent-hover transition-colors whitespace-nowrap disabled:opacity-60"
                       >
                         {newsletterStatus === 'loading' ? 'Signing up…' : 'Sign Up'}
                       </button>

@@ -28,9 +28,9 @@ export function Button({
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-primary-900'
   
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
+    primary: 'bg-primary-600 text-[var(--accent-fg)] hover:bg-primary-700 focus:ring-primary-500',
     secondary: 'bg-primary-800 text-white hover:bg-primary-900 focus:ring-primary-600',
-    accent: 'bg-accent text-white hover:bg-accent-hover focus:ring-accent',
+    accent: 'bg-accent text-[var(--accent-fg)] hover:bg-accent-hover focus:ring-accent',
     outline: 'border border-border text-fg hover:bg-fg hover:text-bg focus:ring-accent',
   }
   
